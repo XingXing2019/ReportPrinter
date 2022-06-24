@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ReportPrinter/ReportPrinterLibrary/obj
+/ReportPrinter/ReportPrinterLibrary/bin/Debug/netcoreapp3.1
+/ReportPrinter/RaphaelService/bin/Debug/netcoreapp3.1
+/ReportPrinter/RaphaelService/obj
+/ReportPrinter/MalachiService/bin/Debug
+/ReportPrinter/MalachiService/obj

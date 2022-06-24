@@ -1,9 +1,0 @@
-2022-06-24 22:30:39.8804|INFO |MalachiService start running
-2022-06-24 22:30:40.3781|INFO |MalachiService.Code.Service.PrintReportMessageConsumerServiceStart: MalachiService start listening PrintPdfReport queue
-2022-06-24 22:30:40.4181|INFO |MalachiService.Code.Service.PrintReportMessageConsumerServiceStart: MalachiService start listening PrintLabelReport queue
-2022-06-24 22:32:23.8756|INFO |MalachiService start running
-2022-06-24 22:32:24.3890|INFO |PrintReportMessageConsumerService.Start: MalachiService start listening PrintPdfReport queue
-2022-06-24 22:32:24.4561|INFO |PrintReportMessageConsumerService.Start: MalachiService start listening PrintLabelReport queue
-2022-06-24 22:35:10.5311|INFO |MalachiService.Main: MalachiService start running
-2022-06-24 22:35:11.1853|INFO |PrintReportMessageConsumerService.Start: MalachiService start listening PrintPdfReport queue
-2022-06-24 22:35:11.2396|INFO |PrintReportMessageConsumerService.Start: MalachiService start listening PrintLabelReport queue

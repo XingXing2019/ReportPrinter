@@ -96,3 +96,4 @@ D:\C#\Projects\ReportPrinter\ReportPrinter\MalachiService\bin\Debug\netcoreapp3.
 D:\C#\Projects\ReportPrinter\ReportPrinter\MalachiService\bin\Debug\netcoreapp3.1\NLog.dll
 D:\C#\Projects\ReportPrinter\ReportPrinter\MalachiService\bin\Debug\netcoreapp3.1\ReportPrinterLibrary.dll
 D:\C#\Projects\ReportPrinter\ReportPrinter\MalachiService\bin\Debug\netcoreapp3.1\ReportPrinterLibrary.pdb
+D:\C#\Projects\ReportPrinter\ReportPrinter\MalachiService\bin\Debug\netcoreapp3.1\Config.xml

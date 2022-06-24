@@ -8,7 +8,8 @@ namespace MalachiService
     {
         static int Main(string[] args)
         {
-            Logger.Info($"MalachiService start running");
+            var procName = $"MalachiService.{nameof(Main)}";
+            Logger.Info($"MalachiService start running", procName);
 
             return (int)HostFactory.Run(cfg =>
             {

@@ -17,10 +17,14 @@
 
   <ItemGroup>
     <Folder Include="Code\Message\" />
+    <Folder Include="Code\Configuration\" />
     <Folder Include="Code\Service\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

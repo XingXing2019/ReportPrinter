@@ -1,13 +1,19 @@
-﻿using System;
-using RaphaelService;
+﻿using MalachiService.Code.Service;
+using Topshelf;
+using Logger = ReportPrinterLibrary.Log.Logger;
 
 namespace MalachiService
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            var a = new Class1();
+            Logger.Info($"MalachiService start running");
+
+            return (int)HostFactory.Run(cfg =>
+            {
+                cfg.Service(x => new PrintReportMessageConsumerService());
+            });
         }
     }
 }

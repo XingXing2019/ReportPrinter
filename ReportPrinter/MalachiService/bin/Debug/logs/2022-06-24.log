@@ -1,0 +1,8 @@
+2022-06-24 16:50:21.2297|INFO |MalachiService start running
+2022-06-24 16:50:21.9277|DEBUG|MalachiService start listening PrintPdfReport queue
+2022-06-24 16:53:50.3666|INFO |MalachiService start running
+2022-06-24 16:53:50.9228|INFO |MalachiService start listening PrintPdfReport queue
+2022-06-24 16:53:51.0240|INFO |MalachiService start listening PrintLabelReport queue
+2022-06-24 16:55:55.0874|INFO |MalachiService start running
+2022-06-24 16:55:55.3720|INFO |MalachiService start listening PrintPdfReport queue
+2022-06-24 16:55:55.4033|INFO |MalachiService start listening PrintLabelReport queue

@@ -1,0 +1,10 @@
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\bin\Debug\netcoreapp3.1\RaphaelService.deps.json
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\bin\Debug\netcoreapp3.1\RaphaelService.dll
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\bin\Debug\netcoreapp3.1\RaphaelService.pdb
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\obj\Debug\netcoreapp3.1\RaphaelService.csproj.AssemblyReference.cache
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\obj\Debug\netcoreapp3.1\RaphaelService.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\obj\Debug\netcoreapp3.1\RaphaelService.AssemblyInfoInputs.cache
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\obj\Debug\netcoreapp3.1\RaphaelService.AssemblyInfo.cs
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\obj\Debug\netcoreapp3.1\RaphaelService.csproj.CoreCompileInputs.cache
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\obj\Debug\netcoreapp3.1\RaphaelService.dll
+D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\obj\Debug\netcoreapp3.1\RaphaelService.pdb

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MalachiService", "MalachiService\MalachiService.csproj", "{091C1DE7-569E-45C5-9C5D-44FDC11162E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaphaelService", "RaphaelService\RaphaelService.csproj", "{47BFCEE5-F951-4E2A-ACAD-22FF8A810E7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{091C1DE7-569E-45C5-9C5D-44FDC11162E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091C1DE7-569E-45C5-9C5D-44FDC11162E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091C1DE7-569E-45C5-9C5D-44FDC11162E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091C1DE7-569E-45C5-9C5D-44FDC11162E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47BFCEE5-F951-4E2A-ACAD-22FF8A810E7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47BFCEE5-F951-4E2A-ACAD-22FF8A810E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47BFCEE5-F951-4E2A-ACAD-22FF8A810E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47BFCEE5-F951-4E2A-ACAD-22FF8A810E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B7128C9-58BE-4FB4-805E-5A015B942266}
+	EndGlobalSection
+EndGlobal

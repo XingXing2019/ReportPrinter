@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using NLog;
+﻿using NLog;
 
 namespace ReportPrinterLibrary.Log
 {

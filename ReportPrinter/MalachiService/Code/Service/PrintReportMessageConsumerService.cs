@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
-using MalachiService.Code.Configuration;
+using MalachiService.Code.Config;
 using MalachiService.Code.Consumer;
 using MassTransit;
-using ReportPrinterLibrary.Configuration;
+using ReportPrinterLibrary.Config;
 using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 using Topshelf;
 
 namespace MalachiService.Code.Service
@@ -12,13 +13,11 @@ namespace MalachiService.Code.Service
     public class PrintReportMessageConsumerService : ServiceControl
     {
         private IBusControl _bus;
-        private const string _pdfQueue = "PrintPdfReport";
-        private const string _labelQueue = "PrintLabelReport";
         private readonly RabbitMQConfig _rabbitMqConfig;
 
         public PrintReportMessageConsumerService()
         {
-            _rabbitMqConfig = new ConfigReader<RabbitMQConfig>().ReadConfig();
+            _rabbitMqConfig = ConfigReader<RabbitMQConfig>.ReadConfig();
         }
 
         public bool Start(HostControl hostControl)
@@ -33,15 +32,15 @@ namespace MalachiService.Code.Service
                     h.Password(_rabbitMqConfig.Password);
                 });
 
-                cfg.ReceiveEndpoint(_pdfQueue, e =>
+                cfg.ReceiveEndpoint(QueueName.PDF_QUEUE, e =>
                 {
-                    Logger.Info($"MalachiService start listening {_pdfQueue} queue", procName);
+                    Logger.Info($"MalachiService start listening {QueueName.PDF_QUEUE} queue", procName);
                     e.Consumer<PrintPdfReportConsumer>();
                 });
 
-                cfg.ReceiveEndpoint(_labelQueue, e =>
+                cfg.ReceiveEndpoint(QueueName.LABEL_QUEUE, e =>
                 {
-                    Logger.Info($"MalachiService start listening {_labelQueue} queue", procName);
+                    Logger.Info($"MalachiService start listening {QueueName.LABEL_QUEUE} queue", procName);
                     e.Consumer<PrintLabelReportConsumer>();
                 });
             });

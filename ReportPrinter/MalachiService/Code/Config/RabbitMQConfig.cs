@@ -1,4 +1,4 @@
-﻿namespace MalachiService.Code.Configuration
+﻿namespace MalachiService.Code.Config
 {
     public class RabbitMQConfig
     {

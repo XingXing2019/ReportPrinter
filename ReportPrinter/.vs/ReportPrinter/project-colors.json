@@ -25,7 +25,17 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Miscellaneous Files",
       "ColorIndex": -1
+    },
+    "0a9e259e-77b7-4461-a0f5-63b31cc0fe73": {
+      "ProjectGuid": "0a9e259e-77b7-4461-a0f5-63b31cc0fe73",
+      "DisplayName": "ProctorService",
+      "ColorIndex": 4
+    },
+    "17a466a0-0891-468f-8006-5d0553a91ebd": {
+      "ProjectGuid": "17a466a0-0891-468f-8006-5d0553a91ebd",
+      "DisplayName": "CosmoService",
+      "ColorIndex": 5
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 6
 }

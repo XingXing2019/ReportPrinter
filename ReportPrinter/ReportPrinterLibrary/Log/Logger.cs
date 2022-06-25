@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using System.Text.Json;
+using NLog;
 
 namespace ReportPrinterLibrary.Log
 {
@@ -22,6 +23,16 @@ namespace ReportPrinterLibrary.Log
         {
             message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
             _logger.Error(message);
+        }
+
+        public static void LogJson(string message, object obj, string procName)
+        {
+            message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
+            var option = new JsonSerializerOptions { WriteIndented = true };
+            var json = JsonSerializer.Serialize(obj, option);
+
+            message = $"{message}\n{json}";
+            _logger.Debug(message);
         }
     }
 }

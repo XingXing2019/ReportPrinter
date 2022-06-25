@@ -1,6 +1,7 @@
 ﻿using System;
-using MassTransit;
-using ProctorService.Code.Producer;
+using CosmoService.Code.Producer;
+using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 
 namespace CosmoService.Code.Form
@@ -17,12 +18,12 @@ namespace CosmoService.Code.Form
             var producer = CommandProducerFactory.CreateCommandProducer(QueueName.PDF_QUEUE);
             object message = new
             {
-                MessageId = InVar.Id,
+                MessageId = Guid.NewGuid(),
                 TemplateId = "template",
                 PrinterId = "printer",
                 SqlVariables = new[]
                 {
-                    new { Name = "a", Value = "1" },
+                    new { Name = "a", Value = "1" }, 
                     new { Name = "b", Value = "2" },
                 },
                 NumberOfCopy = 1,

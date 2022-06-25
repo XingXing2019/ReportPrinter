@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ReportPrinterLibrary.RabbitMQ.Message;
 
-namespace ProctorService.Code.Producer
+namespace CosmoService.Code.Producer
 {
     public class PrintPdfCommandProducer : CommandProducerBase
     {

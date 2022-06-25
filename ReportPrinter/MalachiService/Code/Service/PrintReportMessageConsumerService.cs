@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using MalachiService.Code.Config;
 using MalachiService.Code.Consumer;
 using MassTransit;
+using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.Config.Helper;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MalachiService.Code.Config;
 using MassTransit;
+using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.Config.Helper;
 using ReportPrinterLibrary.Log;
 
-namespace ProctorService.Code.Producer
+namespace CosmoService.Code.Producer
 {
     public abstract class CommandProducerBase
     {
@@ -25,6 +25,7 @@ namespace ProctorService.Code.Producer
         {
             var procName = $"{this.GetType().Name}.{nameof(Produce)}";
             Logger.Debug($"Start publishing message to queue: {QueueName}", procName);
+            Logger.LogJson($"Message content", message, procName);
 
             var source = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await Bus.StartAsync(source.Token);

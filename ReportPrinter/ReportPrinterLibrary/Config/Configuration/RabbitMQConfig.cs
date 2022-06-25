@@ -1,4 +1,4 @@
-﻿namespace MalachiService.Code.Config
+﻿namespace ReportPrinterLibrary.Config.Configuration
 {
     public class RabbitMQConfig
     {

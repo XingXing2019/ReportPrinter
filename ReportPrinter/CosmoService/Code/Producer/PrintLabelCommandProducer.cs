@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ProctorService.Code.Producer
+namespace CosmoService.Code.Producer
 {
     public class PrintLabelCommandProducer : CommandProducerBase
     {

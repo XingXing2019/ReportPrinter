@@ -2,7 +2,7 @@
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 
-namespace ProctorService.Code.Producer
+namespace CosmoService.Code.Producer
 {
     public class CommandProducerFactory
     {

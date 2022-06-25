@@ -3,7 +3,7 @@ using System.Threading;
 using MalachiService.Code.Config;
 using MalachiService.Code.Consumer;
 using MassTransit;
-using ReportPrinterLibrary.Config;
+using ReportPrinterLibrary.Config.Helper;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 using Topshelf;
@@ -26,7 +26,7 @@ namespace MalachiService.Code.Service
 
             _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                cfg.Host("localhost", "/", h =>
+                cfg.Host(_rabbitMqConfig.Host, _rabbitMqConfig.VirtualHost, h =>
                 {
                     h.Username(_rabbitMqConfig.UserName);
                     h.Password(_rabbitMqConfig.Password);

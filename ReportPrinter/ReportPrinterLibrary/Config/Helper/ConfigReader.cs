@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using ReportPrinterLibrary.Log;
 
-namespace ReportPrinterLibrary.Config
+namespace ReportPrinterLibrary.Config.Helper
 {
     public static class ConfigReader<T>
     {

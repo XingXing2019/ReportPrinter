@@ -8,3 +8,6 @@
 /ReportPrinter/RaphaelService/obj
 /ReportPrinter/MalachiService/bin/Debug
 /ReportPrinter/MalachiService/obj
+/ReportPrinter/ProctorService/bin/Debug/netcoreapp3.1
+/ReportPrinter/ProctorService/obj
+/ReportPrinter/ProctorService/bin/Debug/logs

@@ -11,7 +11,6 @@ namespace MalachiService.Code.Consumer
         {
             var msg = context.Message;
             var a = new Class1();
-            await a.DoSometing();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ProctorService.Code.Producer
         public async Task Produce(object message)
         {
             var procName = $"{this.GetType().Name}.{nameof(Produce)}";
-            Logger.Debug($"Start publish message to queue: {QueueName}", procName);
+            Logger.Debug($"Start publishing message to queue: {QueueName}", procName);
 
             var source = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await Bus.StartAsync(source.Token);
@@ -32,10 +32,11 @@ namespace ProctorService.Code.Producer
             try
             {
                 await SendMessage(message);
+                Logger.Debug($"Success publishing message to queue: {QueueName}", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during send message. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during sending message. Ex: {ex.Message}", procName);
             }
             finally
             {

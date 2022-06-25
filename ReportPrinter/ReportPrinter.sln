@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaphaelService", "RaphaelSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportPrinterLibrary", "ReportPrinterLibrary\ReportPrinterLibrary.csproj", "{0BC8A107-F53A-4256-9D84-4CA688563C65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProctorService", "ProctorService\ProctorService.csproj", "{0A9E259E-77B7-4461-A0F5-63B31CC0FE73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmoService", "CosmoService\CosmoService.csproj", "{17A466A0-0891-468F-8006-5D0553A91EBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{0BC8A107-F53A-4256-9D84-4CA688563C65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BC8A107-F53A-4256-9D84-4CA688563C65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BC8A107-F53A-4256-9D84-4CA688563C65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A9E259E-77B7-4461-A0F5-63B31CC0FE73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A9E259E-77B7-4461-A0F5-63B31CC0FE73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A9E259E-77B7-4461-A0F5-63B31CC0FE73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A9E259E-77B7-4461-A0F5-63B31CC0FE73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A466A0-0891-468F-8006-5D0553A91EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A466A0-0891-468F-8006-5D0553A91EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A466A0-0891-468F-8006-5D0553A91EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A466A0-0891-468F-8006-5D0553A91EBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

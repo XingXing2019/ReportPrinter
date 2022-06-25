@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using MassTransit;
 using ProctorService.Code.Producer;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 
-namespace ProctorService
+namespace CosmoService.Code.Form
 {
-    internal class Program
+    public partial class Form1 : System.Windows.Forms.Form
     {
-        static async Task Main(string[] args)
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
         {
             var producer = CommandProducerFactory.CreateCommandProducer(QueueName.PDF_QUEUE);
             object message = new

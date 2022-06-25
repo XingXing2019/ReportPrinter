@@ -6,6 +6,7 @@ namespace ReportPrinterLibrary.RabbitMQ.Message
 {
     public interface IPrintReport : CorrelatedBy<Guid>
     {
+        Guid CorrelationId { get; }
         Guid MessageId { get; }
         string TemplateId { get; }
         string PrinterId { get; }

@@ -1,8 +1,6 @@
 ﻿using System;
 using CosmoService.Code.Producer;
 using MassTransit;
-using ReportPrinterLibrary.Log;
-using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 
 namespace CosmoService.Code.Form

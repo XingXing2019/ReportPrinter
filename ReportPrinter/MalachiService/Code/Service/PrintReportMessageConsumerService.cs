@@ -3,7 +3,6 @@ using System.Threading;
 using MalachiService.Code.Consumer;
 using MassTransit;
 using ReportPrinterLibrary.Config.Configuration;
-using ReportPrinterLibrary.Config.Helper;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 using Topshelf;
@@ -17,7 +16,7 @@ namespace MalachiService.Code.Service
 
         public PrintReportMessageConsumerService()
         {
-            _rabbitMqConfig = ConfigReader<RabbitMQConfig>.ReadConfig();
+            _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
         }
 
         public bool Start(HostControl hostControl)

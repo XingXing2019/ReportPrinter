@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using ReportPrinterLibrary.Config.Configuration;
-using ReportPrinterLibrary.Config.Helper;
 using ReportPrinterLibrary.Log;
 
 namespace CosmoService.Code.Producer
@@ -17,7 +16,7 @@ namespace CosmoService.Code.Producer
         protected CommandProducerBase(string queueName)
         {
             QueueName = queueName;
-            _rabbitMqConfig = ConfigReader<RabbitMQConfig>.ReadConfig();
+            _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
             Bus = CreateBus(queueName);
         }
 

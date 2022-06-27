@@ -2,28 +2,31 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
+using ReportPrinterDatabase.Manager.MessageManager;
 using ReportPrinterLibrary.Config.Configuration;
-using ReportPrinterLibrary.Config.Helper;
 using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.RabbitMQ.Message;
 
 namespace CosmoService.Code.Producer
 {
-    public abstract class CommandProducerBase
+    public abstract class CommandProducerBase<T> where T : IMessage
     {
         protected readonly string QueueName;
+        protected readonly IMessageManager<T> Manager;
         protected IBusControl Bus;
         private readonly RabbitMQConfig _rabbitMqConfig;
 
-        protected CommandProducerBase(string queueName)
+        protected CommandProducerBase(string queueName, IMessageManager<T> manager)
         {
             QueueName = queueName;
-            _rabbitMqConfig = ConfigReader<RabbitMQConfig>.ReadConfig();
+            Manager = manager;
+            _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
             Bus = CreateBus(queueName);
         }
 
-        public async Task Produce(object message)
+        public async Task ProduceAsync(T message)
         {
-            var procName = $"{this.GetType().Name}.{nameof(Produce)}";
+            var procName = $"{this.GetType().Name}.{nameof(ProduceAsync)}";
             Logger.Debug($"Start publishing message to queue: {QueueName}", procName);
             Logger.LogJson($"Message content", message, procName);
 
@@ -32,12 +35,14 @@ namespace CosmoService.Code.Producer
 
             try
             {
-                await SendMessage(message);
+                await SendMessageAsync(message);
                 Logger.Debug($"Success publishing message to queue: {QueueName}", procName);
+
+                await PostMessageAsync(message);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during sending message. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during producing message. Ex: {ex.Message}", procName);
             }
             finally
             {
@@ -45,7 +50,8 @@ namespace CosmoService.Code.Producer
             }
         }
 
-        protected abstract Task SendMessage(object message);
+        protected abstract Task SendMessageAsync(T message);
+        protected abstract Task PostMessageAsync(T message);
 
 
         #region Helper

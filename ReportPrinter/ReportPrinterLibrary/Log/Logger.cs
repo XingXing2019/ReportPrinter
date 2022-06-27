@@ -19,6 +19,12 @@ namespace ReportPrinterLibrary.Log
             _logger.Debug(message);
         }
 
+        public static void Warn(string message, string procName)
+        {
+            message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
+            _logger.Warn(message);
+        }
+
         public static void Error(string message, string procName)
         {
             message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";

@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<RabbitMQConfig>
-	<UserName>guest</UserName>
-	<Password>guest</Password>
-	<Host>localhost</Host>
-	<VirtualHost>/</VirtualHost>
-</RabbitMQConfig>
+<AppConfig>
+	<RabbitMQConfig>
+		<UserName>guest</UserName>
+		<Password>guest</Password>
+		<Host>localhost</Host>
+		<VirtualHost>/</VirtualHost>
+	</RabbitMQConfig>
+	<DatabaseConfigList>
+		<DatabaseConfig Id="ReportPrinter" DatabaseName="ReportPrinter">
+			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinter</ConnectionString>
+		</DatabaseConfig>
+	</DatabaseConfigList>
+</AppConfig>

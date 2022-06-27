@@ -10,3 +10,7 @@
 /ReportPrinter/MalachiService/obj
 /ReportPrinter/CosmoService/obj
 /ReportPrinter/CosmoService/bin/Debug
+/ReportPrinter/ReportPrinterDatabase/bin/Debug/netcoreapp3.1
+/ReportPrinter/ReportPrinterDatabase/obj
+/ReportPrinter/ReportPrinterDatabase/SqlQuery/.vs
+/ReportPrinter/ReportPrinterDatabase/SqlQuery/Database/.vs

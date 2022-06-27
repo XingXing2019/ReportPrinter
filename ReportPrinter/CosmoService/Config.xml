@@ -7,8 +7,8 @@
 		<VirtualHost>/</VirtualHost>
 	</RabbitMQConfig>
 	<DatabaseConfigList>
-		<DatabaseConfig Id="AccountingSystem" DatabaseName="AccountingSystem">
-			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=AccountingSystem</ConnectionString>
+		<DatabaseConfig Id="ReportPrinter" DatabaseName="ReportPrinter">
+			<ConnectionString>Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ReportPrinter;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False</ConnectionString>
 		</DatabaseConfig>
 	</DatabaseConfigList>
 </AppConfig>

@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
+    <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

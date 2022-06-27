@@ -35,7 +35,12 @@
       "ProjectGuid": "17a466a0-0891-468f-8006-5d0553a91ebd",
       "DisplayName": "CosmoService",
       "ColorIndex": 5
+    },
+    "952dec22-2a68-4f58-af16-e45e76005607": {
+      "ProjectGuid": "952dec22-2a68-4f58-af16-e45e76005607",
+      "DisplayName": "ReportPrinterDatabase",
+      "ColorIndex": 6
     }
   },
-  "NextColorIndex": 6
+  "NextColorIndex": 7
 }

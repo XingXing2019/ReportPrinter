@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using MassTransit;
+﻿using System.Collections.Generic;
 
-namespace ReportPrinterLibrary.RabbitMQ.Message
+namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
 {
-    public interface IPrintReport : CorrelatedBy<Guid>
+    public interface IPrintReport : IMessage
     {
-        Guid CorrelationId { get; }
-        Guid MessageId { get; }
         string TemplateId { get; }
         string PrinterId { get; }
         List<SqlVariable> SqlVariables { get; }

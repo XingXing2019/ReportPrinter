@@ -3,6 +3,7 @@ using MassTransit;
 using RaphaelService;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message;
+using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
 namespace MalachiService.Code.Consumer
 {

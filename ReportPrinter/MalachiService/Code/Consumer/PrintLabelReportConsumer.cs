@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MassTransit;
 using ReportPrinterLibrary.RabbitMQ.Message;
+using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
 namespace MalachiService.Code.Consumer
 {

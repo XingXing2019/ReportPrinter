@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Threading;
 using NLog;
 
 namespace ReportPrinterLibrary.Log
@@ -9,36 +10,44 @@ namespace ReportPrinterLibrary.Log
 
         public static void Info(string message, string procName)
         {
-            message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
-            _logger.Info(message);
+            _logger.Info(FormatMessage(message, procName));
         }
 
         public static void Debug(string message, string procName)
         {
-            message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
-            _logger.Debug(message);
+            _logger.Debug(FormatMessage(message, procName));
         }
 
         public static void Warn(string message, string procName)
         {
-            message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
-            _logger.Warn(message);
+            _logger.Warn(FormatMessage(message, procName));
         }
 
         public static void Error(string message, string procName)
         {
-            message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
-            _logger.Error(message);
+            _logger.Error(FormatMessage(message, procName));
         }
 
         public static void LogJson(string message, object obj, string procName)
         {
-            message = string.IsNullOrEmpty(procName) ? message : $"{procName}: {message}";
+            message = FormatMessage(message, procName);
             var option = new JsonSerializerOptions { WriteIndented = true };
             var json = JsonSerializer.Serialize(obj, option);
 
             message = $"{message}\n{json}";
             _logger.Debug(message);
         }
+
+
+        #region Helper
+
+        private static string FormatMessage(string message, string procName)
+        {
+            var threadId = Thread.CurrentThread.ManagedThreadId;
+            message = string.IsNullOrEmpty(procName) ? message : $"{procName} | {message}";
+            return $" Thread:{threadId} | {message}";
+        }
+
+        #endregion
     }
 }

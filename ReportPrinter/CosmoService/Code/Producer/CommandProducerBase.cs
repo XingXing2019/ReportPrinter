@@ -36,7 +36,7 @@ namespace CosmoService.Code.Producer
             try
             {
                 await SendMessageAsync(message);
-                Logger.Debug($"Success publishing message to queue: {QueueName}", procName);
+                Logger.Debug($"Success publishing message: {message.MessageId} to queue: {QueueName}", procName);
 
                 await PostMessageAsync(message);
             }

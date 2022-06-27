@@ -61,6 +61,12 @@ namespace ReportPrinterDatabase.Context
                     .HasColumnType("datetime")
                     .HasColumnName("PRM_ReceiveTime");
 
+                entity.Property(e => e.ReportType)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("PRM_ReportType");
+
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasMaxLength(20)

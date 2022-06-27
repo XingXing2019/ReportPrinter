@@ -2,7 +2,7 @@
 
 namespace ReportPrinterDatabase.Manager.MessageManager
 {
-    public interface IMessageManager : IManager<IMessage>
+    public interface IMessageManager<T> : IManager<T>
     {
         
     }

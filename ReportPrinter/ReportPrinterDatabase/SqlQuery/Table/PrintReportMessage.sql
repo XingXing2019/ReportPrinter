@@ -4,9 +4,10 @@ BEGIN
 	CREATE TABLE [dbo].[PrintReportMessage] (
 		[PRM_MessageId] UNIQUEIDENTIFIER NOT NULL,
 		[PRM_CorrelationId] UNIQUEIDENTIFIER NULL,
+		[PRM_ReportType] VARCHAR(10) NOT NULL CHECK([PRM_ReportType] IN ('PDF', 'Label')),
 		[PRM_TemplateId] VARCHAR(100) NOT NULL,
 		[PRM_PrinterId] VARCHAR(100) NULL,
-		[PRM_NumberOfCopy] INT NULL,
+		[PRM_NumberOfCopy] INT NOT NULL,
 		[PRM_HasReprintFlag] BIT NULL,
 		[PRM_PublishTime] DATETIME NULL,
 		[PRM_ReceiveTime] DATETIME NULL,

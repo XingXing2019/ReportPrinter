@@ -9,14 +9,14 @@ using ReportPrinterLibrary.RabbitMQ.Message;
 
 namespace CosmoService.Code.Producer
 {
-    public abstract class CommandProducerBase
+    public abstract class CommandProducerBase<T> where T : IMessage
     {
         protected readonly string QueueName;
-        protected readonly IMessageManager Manager;
+        protected readonly IMessageManager<T> Manager;
         protected IBusControl Bus;
         private readonly RabbitMQConfig _rabbitMqConfig;
 
-        protected CommandProducerBase(string queueName, IMessageManager manager)
+        protected CommandProducerBase(string queueName, IMessageManager<T> manager)
         {
             QueueName = queueName;
             Manager = manager;
@@ -24,9 +24,9 @@ namespace CosmoService.Code.Producer
             Bus = CreateBus(queueName);
         }
 
-        public async Task Produce(IMessage message)
+        public async Task ProduceAsync(T message)
         {
-            var procName = $"{this.GetType().Name}.{nameof(Produce)}";
+            var procName = $"{this.GetType().Name}.{nameof(ProduceAsync)}";
             Logger.Debug($"Start publishing message to queue: {QueueName}", procName);
             Logger.LogJson($"Message content", message, procName);
 
@@ -35,14 +35,14 @@ namespace CosmoService.Code.Producer
 
             try
             {
-                await SendMessage(message);
+                await SendMessageAsync(message);
                 Logger.Debug($"Success publishing message to queue: {QueueName}", procName);
 
-                await PostMessage(message);
+                await PostMessageAsync(message);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during sending message. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during producing message. Ex: {ex.Message}", procName);
             }
             finally
             {
@@ -50,8 +50,8 @@ namespace CosmoService.Code.Producer
             }
         }
 
-        protected abstract Task SendMessage(IMessage message);
-        protected abstract Task PostMessage(IMessage message);
+        protected abstract Task SendMessageAsync(T message);
+        protected abstract Task PostMessageAsync(T message);
 
 
         #region Helper

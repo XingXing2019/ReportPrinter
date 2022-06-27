@@ -212,7 +212,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating status of message: {id} in PrintReportMessages table. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating status of message: {id} to {status} in PrintReportMessages table. Ex: {ex.Message}", procName);
                 throw;
             }
         }

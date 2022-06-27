@@ -2,8 +2,10 @@
 using System.Threading;
 using MalachiService.Code.Consumer;
 using MassTransit;
+using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 using Topshelf;
 
@@ -13,10 +15,12 @@ namespace MalachiService.Code.Service
     {
         private IBusControl _bus;
         private readonly RabbitMQConfig _rabbitMqConfig;
+        private readonly IPrintReportMessageManager<IPrintReport> _manager;
 
         public PrintReportMessageConsumerService()
         {
             _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
+            _manager = new EfPrintReportMessageManager();
         }
 
         public bool Start(HostControl hostControl)
@@ -34,13 +38,13 @@ namespace MalachiService.Code.Service
                 cfg.ReceiveEndpoint(QueueName.PDF_QUEUE, e =>
                 {
                     Logger.Info($"MalachiService start listening {QueueName.PDF_QUEUE} queue", procName);
-                    e.Consumer<PrintPdfReportConsumer>();
+                    e.Consumer(() => new PrintPdfReportConsumer(_manager));
                 });
 
                 cfg.ReceiveEndpoint(QueueName.LABEL_QUEUE, e =>
                 {
                     Logger.Info($"MalachiService start listening {QueueName.LABEL_QUEUE} queue", procName);
-                    e.Consumer<PrintLabelReportConsumer>();
+                    e.Consumer(() => new PrintLabelReportConsumer(_manager));
                 });
             });
 

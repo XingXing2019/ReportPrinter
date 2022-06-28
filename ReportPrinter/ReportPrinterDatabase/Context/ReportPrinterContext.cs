@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportPrinterDatabase.Database;
 using ReportPrinterDatabase.Entity;
+using ReportPrinterLibrary.Config.Configuration;
 
 #nullable disable
 
@@ -8,7 +9,13 @@ namespace ReportPrinterDatabase.Context
 {
     public partial class ReportPrinterContext : DbContext
     {
-        public ReportPrinterContext() { }
+        private readonly string _connectionString;
+
+        public ReportPrinterContext()
+        {
+            var targetDatabase = AppConfig.Instance.TargetDatabase;
+            _connectionString = DatabaseManager.Instance.GetConnectionString(targetDatabase);
+        }
 
         public ReportPrinterContext(DbContextOptions<ReportPrinterContext> options)
             : base(options) { }
@@ -20,8 +27,7 @@ namespace ReportPrinterDatabase.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = DatabaseManager.Instance.GetConnectionString(DatabaseName.ReportPrinter);
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseSqlServer(_connectionString);
             }
         }
 

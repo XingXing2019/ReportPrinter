@@ -11,4 +11,5 @@
 			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinter</ConnectionString>
 		</DatabaseConfig>
 	</DatabaseConfigList>
+	<TargetDatabase>ReportPrinter</TargetDatabase>
 </AppConfig>

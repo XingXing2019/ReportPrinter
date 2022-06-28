@@ -7,10 +7,11 @@
 		<VirtualHost>/</VirtualHost>
 	</RabbitMQConfig>
 	<DatabaseConfigList>
-		<DatabaseConfig Id="ReportPrinter" DatabaseName="ReportPrinter">
-			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinter</ConnectionString>
+		<DatabaseConfig Id="ReportPrinterTest" DatabaseName="ReportPrinterTest">
+			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinterTest</ConnectionString>
 		</DatabaseConfig>
 	</DatabaseConfigList>
+	<TargetDatabase>ReportPrinterTest</TargetDatabase>
 	<ServicePathConfigList>
 		<ServicePathConfig>
 			<Id>MalachiService</Id>

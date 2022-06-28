@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CosmoService.Code.Producer.PrintReportCommand;
+using MalachiService.Code.Service;
 using NUnit.Framework;
 using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.Message;
@@ -30,10 +31,8 @@ namespace ReportPrinterUnitTest.RabbitMQ
 
         [Test]
         [TestCase(QueueName.PDF_QUEUE, ReportTypeEnum.PDF)]
-        //[TestCase(QueueName.LABEL_QUEUE, ReportTypeEnum.Label)]
         public async Task TestPrintReport(string queueName, ReportTypeEnum reportType)
         {
-            Process service = null;
             try
             {
                 var mgr = new PrintReportMessageManager();
@@ -47,21 +46,10 @@ namespace ReportPrinterUnitTest.RabbitMQ
                 Assert.NotNull(actualMessage);
                 AssetMessage(expectedMessage, actualMessage);
                 Assert.AreEqual(MessageStatus.Publish.ToString(), actualMessage.Status);
-
-                service = Process.Start(ServicePath[_serviceName]);
-                Thread.Sleep(1000 * 5);
-                actualMessage = await Manager.Get(expectedMessage.MessageId);
-                Assert.NotNull(actualMessage);
-                AssetMessage(expectedMessage, actualMessage);
-                Assert.AreEqual(MessageStatus.Complete.ToString(), actualMessage.Status);
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                service?.Kill();
             }
         }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using MassTransit;
 
 namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
 {
@@ -7,8 +9,8 @@ namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
 
     public class PrintPdfReport : IPrintPdfReport
     {
-        public Guid MessageId { get; set; }
-        public Guid? CorrelationId { get; set; }
+        public Guid MessageId { get; set; } = Guid.NewGuid();
+        public Guid? CorrelationId { get; set; } = InVar.Id;
         public string ReportType { get; } = ReportTypeEnum.PDF.ToString();
         public string TemplateId { get; set; }
         public string PrinterId { get; set; }
@@ -19,5 +21,7 @@ namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
         public DateTime? CompleteTime { get; set; }
         public string Status { get; set; }
         public List<SqlVariable> SqlVariables { get; set; }
+
+        public bool IsValid => !string.IsNullOrEmpty(TemplateId) && SqlVariables.All(x => x.IsValid);
     }
 }

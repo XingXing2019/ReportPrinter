@@ -15,12 +15,16 @@ namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
         public DateTime? CompleteTime { get; set; }
         public string Status { get; set; }
         List<SqlVariable> SqlVariables { get; set; }
+
+        bool IsValid { get; }
     }
 
     public class SqlVariable
     {
         public string Name { get; set; }
         public string Value { get; set; }
+
+        public bool IsValid => !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Value);
     }
 
     public enum ReportTypeEnum

@@ -40,7 +40,12 @@
       "ProjectGuid": "952dec22-2a68-4f58-af16-e45e76005607",
       "DisplayName": "ReportPrinterDatabase",
       "ColorIndex": 6
+    },
+    "4a9f2a9c-acbc-441c-a8bb-ac478b015e95": {
+      "ProjectGuid": "4a9f2a9c-acbc-441c-a8bb-ac478b015e95",
+      "DisplayName": "ReportPrinterUnitTest",
+      "ColorIndex": 7
     }
   },
-  "NextColorIndex": 7
+  "NextColorIndex": 8
 }

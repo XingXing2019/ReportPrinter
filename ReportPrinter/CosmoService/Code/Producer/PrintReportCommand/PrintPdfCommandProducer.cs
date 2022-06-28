@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ReportPrinterDatabase.Manager.MessageManager;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
-namespace CosmoService.Code.Producer
+namespace CosmoService.Code.Producer.PrintReportCommand
 {
     public class PrintPdfCommandProducer : CommandProducerBase<IPrintReport>
     {

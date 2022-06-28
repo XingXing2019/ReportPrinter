@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MassTransit;
 using RaphaelService;
+using RaphaelService.MessageHandler.PrintReportMessageHandler;
 using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
 namespace MalachiService.Code.Consumer
@@ -19,9 +22,18 @@ namespace MalachiService.Code.Consumer
             var message = context.Message;
             Logger.LogJson($"{nameof(PrintLabelReportConsumer)} receive message", message, procName);
 
-            await PatchMessageStatus(message);
+            await PatchMessageStatus(message, MessageStatus.Receive);
 
-            var a = new Class1();
+            try
+            {
+                await ConsumeMessage(message);
+                await PatchMessageStatus(message, MessageStatus.Complete);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during consuming message: {message.MessageId}. Ex: {ex.Message}", procName);
+                await PatchMessageStatus(message, MessageStatus.Error);
+            }
         }
     }
 }

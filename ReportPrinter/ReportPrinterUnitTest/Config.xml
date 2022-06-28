@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AppConfig>
+	<RabbitMQConfig>
+		<UserName>guest</UserName>
+		<Password>guest</Password>
+		<Host>localhost</Host>
+		<VirtualHost>/</VirtualHost>
+	</RabbitMQConfig>
+	<DatabaseConfigList>
+		<DatabaseConfig Id="ReportPrinterTest" DatabaseName="ReportPrinterTest">
+			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinterTest</ConnectionString>
+		</DatabaseConfig>
+	</DatabaseConfigList>
+	<TargetDatabase>ReportPrinterTest</TargetDatabase>
+	<ServicePathConfigList>
+		<ServicePathConfig>
+			<Id>MalachiService</Id>
+			<Path>D:\C#\Projects\ReportPrinter\ReportPrinter\MalachiService\bin\Debug\netcoreapp3.1\MalachiService.exe</Path>
+		</ServicePathConfig>
+	</ServicePathConfigList>
+</AppConfig>

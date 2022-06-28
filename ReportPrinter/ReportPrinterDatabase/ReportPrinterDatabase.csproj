@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="Manager\MessageManager\PrintReportMessage\" />
     <Folder Include="SqlQuery\Database\" />
   </ItemGroup>
 

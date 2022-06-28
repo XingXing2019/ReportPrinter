@@ -11,7 +11,7 @@ using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
 {
-    public class EfPrintReportMessageManager : IPrintReportMessageManager<IPrintReport>
+    public class PrintReportMessageManager : IPrintReportMessageManager<IPrintReport>
     {
         public async Task Post(IPrintReport message)
         {
@@ -182,6 +182,23 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
             
         }
 
+        public async Task DeleteAll()
+        {
+            var procName = $"{this.GetType().Name}.{nameof(DeleteAll)}";
+
+            try
+            {
+                using var context = new ReportPrinterContext();
+                context.PrintReportMessages.RemoveRange(context.PrintReportMessages);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during deleting all messages from PrintReportMessages table. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
         public async Task PatchStatus(Guid id, MessageStatus status)
         {
             var procName = $"{this.GetType().Name}.{nameof(PatchStatus)}";
@@ -207,7 +224,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
                         entity.CompleteTime = DateTime.Now;
 
                     await context.SaveChangesAsync();
-                    Logger.Debug($"Update status of message: {id} in PrintReportMessages table", procName);
+                    Logger.Debug($"Update status of message: {id} to {status} in PrintReportMessages table", procName);
                 }
             }
             catch (Exception ex)

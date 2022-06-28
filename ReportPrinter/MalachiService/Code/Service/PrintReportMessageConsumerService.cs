@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using GreenPipes;
 using MalachiService.Code.Consumer;
 using MassTransit;
 using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
@@ -20,7 +21,7 @@ namespace MalachiService.Code.Service
         public PrintReportMessageConsumerService()
         {
             _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
-            _manager = new EfPrintReportMessageManager();
+            _manager = new PrintReportMessageManager();
         }
 
         public bool Start(HostControl hostControl)

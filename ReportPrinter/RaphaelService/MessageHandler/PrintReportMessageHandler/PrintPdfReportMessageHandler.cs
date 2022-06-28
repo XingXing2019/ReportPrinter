@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message;
 
 namespace RaphaelService.MessageHandler.PrintReportMessageHandler
@@ -7,7 +8,8 @@ namespace RaphaelService.MessageHandler.PrintReportMessageHandler
     {
         public async Task Handle(IMessage message)
         {
-            //throw new System.NotImplementedException();
+            var procName = $"{this.GetType().Name}.{nameof(Handle)}";
+            await Task.Run(() => Logger.Debug($"Process message: {message.MessageId}", procName));
         }
     }
 }

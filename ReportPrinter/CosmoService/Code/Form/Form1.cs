@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CosmoService.Code.Producer;
 using CosmoService.Code.Producer.PrintReportCommand;
 using MassTransit;
 using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 
@@ -19,7 +17,7 @@ namespace CosmoService.Code.Form
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var producer = PrintReportProducerFactory.CreatePrintReportProducer(QueueName.PDF_QUEUE, new EfPrintReportMessageManager());
+            var producer = PrintReportProducerFactory.CreatePrintReportProducer(QueueName.PDF_QUEUE, new PrintReportMessageManager());
             var message = new PrintPdfReport
             {
                 CorrelationId = InVar.Id,
@@ -40,10 +38,8 @@ namespace CosmoService.Code.Form
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            var mgr = new EfPrintReportMessageManager();
-            //await mgr.Delete(new Guid("66A89C35-5001-4AAD-865F-11F7DD1AAD55"));
-
-            await mgr.PatchStatus(new Guid("B3E374F8-0B4B-4C42-8719-288F827C65BE"), MessageStatus.Receive);
+            var mgr = new PrintReportMessageManager();
+            await mgr.DeleteAll();
         }
     }
 }

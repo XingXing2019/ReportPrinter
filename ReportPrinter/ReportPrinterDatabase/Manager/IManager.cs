@@ -11,5 +11,6 @@ namespace ReportPrinterDatabase.Manager
         Task<IList<T>> GetAll();
         Task Put(T obj);
         Task Delete(Guid id);
+        Task DeleteAll();
     }
 }

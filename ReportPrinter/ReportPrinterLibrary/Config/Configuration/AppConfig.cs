@@ -7,6 +7,7 @@ namespace ReportPrinterLibrary.Config.Configuration
     {
         public RabbitMQConfig RabbitMQConfig { get; set; }
         public List<DatabaseConfig> DatabaseConfigList { get; set; }
+        public List<ServicePathConfig> ServicePathConfigList { get; set; }
 
         private static AppConfig _instance;
         private static readonly object _lock = new object();

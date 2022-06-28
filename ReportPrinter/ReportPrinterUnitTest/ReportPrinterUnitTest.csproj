@@ -13,4 +13,18 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CosmoService\CosmoService.csproj" />
+    <ProjectReference Include="..\MalachiService\MalachiService.csproj" />
+    <ProjectReference Include="..\RaphaelService\RaphaelService.csproj" />
+    <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
+    <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

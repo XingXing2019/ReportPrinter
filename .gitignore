@@ -17,4 +17,5 @@
 /ReportPrinter/ReportPrinterUnitTest/obj
 /ReportPrinter/ReportPrinterUnitTest/bin/Debug/netcoreapp3.1
 /ReportPrinter/ReportPrinterUnitTest/bin/Debug/logs
+*/.vs
 *.user

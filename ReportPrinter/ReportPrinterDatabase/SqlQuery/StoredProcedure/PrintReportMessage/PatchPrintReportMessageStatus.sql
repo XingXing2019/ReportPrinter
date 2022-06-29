@@ -1,4 +1,3 @@
-USE ReportPrinter;
 IF OBJECT_ID('PatchPrintReportMessageStatus', 'P') IS NOT NULL
 BEGIN
 	DROP PROCEDURE PatchPrintReportMessageStatus
@@ -11,7 +10,7 @@ CREATE PROCEDURE PatchPrintReportMessageStatus
 AS
 BEGIN
 	UPDATE
-		[PrintReportMessage]
+		[dbo].[PrintReportMessage]
 	SET 
 		[PRM_Status] = @status,
 		[PRM_PublishTime] = 

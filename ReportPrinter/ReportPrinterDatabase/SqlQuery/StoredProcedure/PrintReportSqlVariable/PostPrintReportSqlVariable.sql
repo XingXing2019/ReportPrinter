@@ -1,4 +1,3 @@
-USE ReportPrinter;
 IF OBJECT_ID('PostPrintReportSqlVariable', 'P') IS NOT NULL
 BEGIN
 	DROP PROCEDURE PostPrintReportSqlVariable
@@ -11,7 +10,7 @@ CREATE PROCEDURE PostPrintReportSqlVariable
 	@value VARCHAR(100)
 AS
 BEGIN
-	INSERT INTO [PrintReportSqlVariable] (
+	INSERT INTO [dbo].[PrintReportSqlVariable] (
 		[PRSV_SqlVariableId],
 		[PRSV_MessageId],
 		[PRSV_Name],

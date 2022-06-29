@@ -1,4 +1,3 @@
-USE ReportPrinter;
 IF OBJECT_ID('PostPrintReportMessage', 'P') IS NOT NULL
 BEGIN
 	DROP PROCEDURE PostPrintReportMessage
@@ -15,7 +14,7 @@ CREATE PROCEDURE PostPrintReportMessage
 	@hasReprintFlag BIT
 AS
 BEGIN
-	INSERT INTO [PrintReportMessage] (
+	INSERT INTO [dbo].[PrintReportMessage] (
 		[PRM_MessageId],
 		[PRM_CorrelationId],
 		[PRM_ReportType],

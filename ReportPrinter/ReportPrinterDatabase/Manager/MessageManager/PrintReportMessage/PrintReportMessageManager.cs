@@ -36,7 +36,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
 
                 spList.AddRange(message.SqlVariables.Select(x => new PostPrintReportSqlVariable(message.MessageId, x.Name, x.Value)));
 
-                var rows = await _executor.ExecuteAsync(spList.ToArray());
+                var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Record message: {message.MessageId}, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
             }
         }
 
-        public async Task<IPrintReport> Get(Guid meessageId)
+        public async Task<IPrintReport> Get(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
@@ -60,20 +60,13 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
             throw new NotImplementedException();
         }
 
-        public async Task Put(IPrintReport message)
-        {
-            var procName = $"{this.GetType().Name}.{nameof(Put)}";
-
-            throw new NotImplementedException();
-        }
-
         public async Task Delete(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Delete)}";
 
             try
             {
-                var rows = await _executor.ExecuteAsync(new DeletePrintReportMessage(messageId));
+                var rows = await _executor.ExecuteNonQueryAsync(new DeletePrintReportMessage(messageId));
                 Logger.Debug($"Delete message: {messageId}, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -89,7 +82,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                var rows = await _executor.ExecuteAsync(new DeleteAllPrintReportMessage());
+                var rows = await _executor.ExecuteNonQueryAsync(new DeleteAllPrintReportMessage());
                 Logger.Debug($"Delete all messages, {rows} rows affected", procName);
             }
             catch (Exception ex)
@@ -105,7 +98,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                var rows = await _executor.ExecuteAsync(new PatchPrintReportMessageStatus(messageId, status));
+                var rows = await _executor.ExecuteNonQueryAsync(new PatchPrintReportMessageStatus(messageId, status));
                 Logger.Debug($"Update status of message: {messageId} to {status}, {rows} row affected", procName);
             }
             catch (Exception ex)

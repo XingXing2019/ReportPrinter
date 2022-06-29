@@ -105,55 +105,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
             }
 
         }
-
-        public async Task Put(IPrintReport message)
-        {
-            var procName = $"{this.GetType().Name}.{nameof(Put)}";
-
-            try
-            {
-                using var context = new ReportPrinterContext();
-                var entity = await context.PrintReportMessages
-                    .Include(x => x.PrintReportSqlVariables)
-                    .FirstOrDefaultAsync(x => x.MessageId == message.MessageId);
-
-                if (entity == null)
-                {
-                    Logger.Debug($"Message: {message.MessageId} does not exist", procName);
-                }
-                else
-                {
-                    entity.MessageId = message.MessageId;
-                    entity.CorrelationId = message.CorrelationId;
-                    entity.ReportType = message.ReportType.ToString();
-                    entity.TemplateId = message.TemplateId;
-                    entity.PrinterId = message.PrinterId;
-                    entity.NumberOfCopy = message.NumberOfCopy;
-                    entity.HasReprintFlag = message.HasReprintFlag;
-                    entity.PublishTime = message.PublishTime;
-                    entity.ReceiveTime = message.ReceiveTime;
-                    entity.CompleteTime = message.CompleteTime;
-                    entity.Status = message.Status;
-
-                    entity.PrintReportSqlVariables = message.SqlVariables.Select(x => new PrintReportSqlVariable
-                    {
-                        SqlVariableId = Guid.NewGuid(),
-                        Message = entity,
-                        Name = x.Name,
-                        Value = x.Value
-                    }).ToList();
-
-                    await context.SaveChangesAsync();
-                    Logger.Debug($"Update message: {message.MessageId}", procName);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Exception happened during updating message: {message.MessageId}. Ex: {ex.Message}", procName);
-                throw;
-            }
-        }
-
+        
         public async Task Delete(Guid id)
         {
             var procName = $"{this.GetType().Name}.{nameof(Delete)}";

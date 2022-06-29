@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SqlQuery\StoredProcedure\DeletePrintReportSqlVariable.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="SqlQuery\Database\" />
   </ItemGroup>

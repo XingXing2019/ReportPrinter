@@ -44,8 +44,8 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
                 printReportMessage.PrintReportSqlVariables = sqlVariables;
                 context.PrintReportMessages.Add(printReportMessage);
 
-                await context.SaveChangesAsync();
-                Logger.Debug($"Record message: {message.MessageId}", procName);
+                var rows = await context.SaveChangesAsync();
+                Logger.Debug($"Record message: {message.MessageId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
             }
         }
         
-        public async Task<IPrintReport> Get(Guid id)
+        public async Task<IPrintReport> Get(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
@@ -63,19 +63,19 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
                 using var context = new ReportPrinterContext();
                 var entity = await context.PrintReportMessages
                     .Include(x => x.PrintReportSqlVariables)
-                    .FirstOrDefaultAsync(x => x.MessageId == id);
+                    .FirstOrDefaultAsync(x => x.MessageId == messageId);
 
                 if (entity == null)
                     return null;
 
                 var message = CreateMessage(entity);
 
-                Logger.Debug($"Retrieve message: {id}", procName);
+                Logger.Debug($"Retrieve message: {messageId}", procName);
                 return message;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during retrieving message: {id}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during retrieving message: {messageId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -93,7 +93,9 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
 
                 var messages = new List<IPrintReport>();
                 foreach (var entity in entities)
+                {
                     messages.Add(CreateMessage(entity));
+                }
 
                 Logger.Debug($"Retrieve all messages", procName);
                 return messages;
@@ -106,29 +108,29 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
 
         }
         
-        public async Task Delete(Guid id)
+        public async Task Delete(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Delete)}";
 
             try
             {
                 using var context = new ReportPrinterContext();
-                var entity = await context.PrintReportMessages.FindAsync(id);
+                var entity = await context.PrintReportMessages.FindAsync(messageId);
 
                 if (entity == null)
                 {
-                    Logger.Debug($"Message: {id} does not exist", procName);
+                    Logger.Debug($"Message: {messageId} does not exist", procName);
                 }
                 else
                 {
                     context.PrintReportMessages.Remove(entity);
-                    await context.SaveChangesAsync();
-                    Logger.Debug($"Delete message: {id}", procName);
+                    var rows = await context.SaveChangesAsync();
+                    Logger.Debug($"Delete message: {messageId}, {rows} row affected", procName);
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during deleting message: {id}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during deleting message: {messageId}. Ex: {ex.Message}", procName);
                 throw;
             }
 
@@ -142,7 +144,8 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
             {
                 using var context = new ReportPrinterContext();
                 context.PrintReportMessages.RemoveRange(context.PrintReportMessages);
-                await context.SaveChangesAsync();
+                var rows = await context.SaveChangesAsync();
+                Logger.Debug($"Delete all messages, {rows} rows affected", procName);
             }
             catch (Exception ex)
             {
@@ -175,8 +178,8 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
                     else if (status == MessageStatus.Complete)
                         entity.CompleteTime = DateTime.Now;
 
-                    await context.SaveChangesAsync();
-                    Logger.Debug($"Update status of message: {messageId} to {status}", procName);
+                    var rows = await context.SaveChangesAsync();
+                    Logger.Debug($"Update status of message: {messageId} to {status}, {rows} row affected", procName);
                 }
             }
             catch (Exception ex)

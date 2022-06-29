@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NLog.Fluent;
 using ReportPrinterDatabase.Executor;
 using ReportPrinterDatabase.StoredProcedures;
 using ReportPrinterDatabase.StoredProcedures.PrintReportMessage;

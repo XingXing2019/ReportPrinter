@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CosmoService.Code.Producer.PrintReportCommand;
-using MalachiService.Code.Service;
 using NUnit.Framework;
 using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
@@ -20,7 +20,7 @@ namespace ReportPrinterUnitTest.RabbitMQ
 
         public PrintReportTest()
         {
-            Manager = new PrintReportMessageManager();
+            Manager = new PrintReportMessageEFCoreManager();
         }
 
         [TearDown]

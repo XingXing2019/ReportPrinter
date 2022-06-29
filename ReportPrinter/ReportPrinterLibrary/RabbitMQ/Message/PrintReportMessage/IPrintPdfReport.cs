@@ -11,7 +11,7 @@ namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
     {
         public Guid MessageId { get; set; } = Guid.NewGuid();
         public Guid? CorrelationId { get; set; } = InVar.Id;
-        public string ReportType { get; } = ReportTypeEnum.PDF.ToString();
+        public ReportTypeEnum ReportType { get; } = ReportTypeEnum.PDF;
         public string TemplateId { get; set; }
         public string PrinterId { get; set; }
         public int NumberOfCopy { get; set; } = 1;

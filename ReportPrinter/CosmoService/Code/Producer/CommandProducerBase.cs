@@ -35,14 +35,14 @@ namespace CosmoService.Code.Producer
 
             try
             {
+                await PostMessageAsync(message);
                 await SendMessageAsync(message);
                 Logger.Debug($"Success publishing message: {message.MessageId} to queue: {QueueName}", procName);
-
-                await PostMessageAsync(message);
             }
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during producing message. Ex: {ex.Message}", procName);
+                await DeleteMessageAsync(message.MessageId);
             }
             finally
             {
@@ -52,7 +52,7 @@ namespace CosmoService.Code.Producer
 
         protected abstract Task SendMessageAsync(T message);
         protected abstract Task PostMessageAsync(T message);
-
+        protected abstract Task DeleteMessageAsync(Guid messageId);
 
         #region Helper
 

@@ -6,6 +6,6 @@ namespace ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage
 {
     public interface IPrintReportMessageManager<T> : IMessageManager<T>
     {
-        public Task PatchStatus(Guid id, MessageStatus status);
+        public Task PatchStatus(Guid messageId, MessageStatus status);
     }
 }

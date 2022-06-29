@@ -6,13 +6,13 @@ namespace RaphaelService.MessageHandler.PrintReportMessageHandler
 {
     public class PrintReportMessageHandlerFactory
     {
-        public static IMessageHandler CreatePrintReportMessageHandler(string reportType)
+        public static IMessageHandler CreatePrintReportMessageHandler(ReportTypeEnum reportType)
         {
             var procName = $"PrintReportMessageHandlerFactory.{nameof(CreatePrintReportMessageHandler)}";
 
-            if (reportType == ReportTypeEnum.PDF.ToString())
+            if (reportType == ReportTypeEnum.PDF)
                 return new PrintPdfReportMessageHandler();
-            else if (reportType == ReportTypeEnum.Label.ToString())
+            else if (reportType == ReportTypeEnum.Label)
                 return new PrintLabelMessageHandler();
             else
             {

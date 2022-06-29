@@ -5,7 +5,7 @@ namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
 {
     public interface IPrintReport : IMessage
     {
-        public string ReportType { get; }
+        public ReportTypeEnum ReportType { get; }
         string TemplateId { get; set; }
         string PrinterId { get; set; }
         int NumberOfCopy { get; set; }

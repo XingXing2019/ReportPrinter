@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 using ReportPrinterDatabase.Database;
 using ReportPrinterDatabase.Entity;
 using ReportPrinterLibrary.Config.Configuration;
@@ -10,11 +12,13 @@ namespace ReportPrinterDatabase.Context
     public partial class ReportPrinterContext : DbContext
     {
         private readonly string _connectionString;
+        private readonly LoggerFactory _loggerFactory;
 
         public ReportPrinterContext()
         {
             var targetDatabase = AppConfig.Instance.TargetDatabase;
             _connectionString = DatabaseManager.Instance.GetConnectionString(targetDatabase);
+            _loggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
         }
 
         public ReportPrinterContext(DbContextOptions<ReportPrinterContext> options)
@@ -28,6 +32,7 @@ namespace ReportPrinterDatabase.Context
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(_connectionString);
+                optionsBuilder.UseLoggerFactory(_loggerFactory);
             }
         }
 

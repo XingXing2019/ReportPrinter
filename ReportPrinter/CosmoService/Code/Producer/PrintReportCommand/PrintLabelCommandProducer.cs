@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ReportPrinterDatabase.Manager.MessageManager;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
@@ -17,6 +18,11 @@ namespace CosmoService.Code.Producer.PrintReportCommand
         protected override Task PostMessageAsync(IPrintReport message)
         {
             throw new System.NotImplementedException();
+        }
+
+        protected override Task DeleteMessageAsync(Guid messageId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

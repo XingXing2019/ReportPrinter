@@ -18,7 +18,7 @@ namespace CosmoService.Code.Form
         private async void btnSend_Click(object sender, EventArgs e)
         {
             var queueName = rdbPDF.Checked ? QueueName.PDF_QUEUE : QueueName.LABEL_QUEUE;
-            var producer = PrintReportProducerFactory.CreatePrintReportProducer(queueName, new PrintReportMessageManager());
+            var producer = PrintReportProducerFactory.CreatePrintReportProducer(queueName, new PrintReportMessageEFCoreManager());
             
             var hasError = false;
             if (rdbPDF.Checked)

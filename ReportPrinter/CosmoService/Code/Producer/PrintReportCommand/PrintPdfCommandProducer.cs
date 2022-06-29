@@ -20,5 +20,10 @@ namespace CosmoService.Code.Producer.PrintReportCommand
         {
             await Manager.Post(message);
         }
+
+        protected override async Task DeleteMessageAsync(Guid messageId)
+        {
+            await Manager.Delete(messageId);
+        }
     }
 }

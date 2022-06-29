@@ -21,7 +21,7 @@ namespace MalachiService.Code.Service
         public PrintReportMessageConsumerService()
         {
             _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
-            _manager = new PrintReportMessageManager();
+            _manager = new PrintReportMessageEFCoreManager();
         }
 
         public bool Start(HostControl hostControl)

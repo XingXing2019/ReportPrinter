@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
-namespace RabbitMQLibrary.Code.Producer.PrintReportCommand
+namespace CosmoService.Code.Producer.PrintReportCommand
 {
-    public class PrintPdfCommandProducer : CommandProducerBase<IPrintReport>
+    public class PrintPdfCommandProducer : CosmoService.Code.Producer.CommandProducerBase<IPrintReport>
     {
         public PrintPdfCommandProducer(string queueName, IMessageManager<IPrintReport> manager) 
             : base(queueName, manager) { }

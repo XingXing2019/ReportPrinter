@@ -7,7 +7,7 @@ using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message;
 
-namespace RabbitMQLibrary.Code.Producer
+namespace CosmoService.Code.Producer
 {
     public abstract class CommandProducerBase<T> where T : IMessage
     {

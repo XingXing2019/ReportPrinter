@@ -5,4 +5,24 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.0.0" />
+    <PackageReference Include="Topshelf" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RabbitMQLibrary\RabbitMQLibrary.csproj" />
+    <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
+    <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

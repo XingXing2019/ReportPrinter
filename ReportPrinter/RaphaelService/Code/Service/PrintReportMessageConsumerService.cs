@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
-using GreenPipes;
-using MalachiService.Code.Consumer;
 using MassTransit;
+using RaphaelService.Code.Consumer;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.Log;
@@ -10,7 +9,7 @@ using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 using Topshelf;
 
-namespace MalachiService.Code.Service
+namespace RaphaelService.Code.Service
 {
     public class PrintReportMessageConsumerService : ServiceControl
     {
@@ -38,13 +37,13 @@ namespace MalachiService.Code.Service
 
                 cfg.ReceiveEndpoint(QueueName.PDF_QUEUE, e =>
                 {
-                    Logger.Info($"MalachiService start listening {QueueName.PDF_QUEUE} queue", procName);
+                    Logger.Info($"RaphaelService start listening {QueueName.PDF_QUEUE} queue", procName);
                     e.Consumer(() => new PrintPdfReportConsumer(_manager));
                 });
 
                 cfg.ReceiveEndpoint(QueueName.LABEL_QUEUE, e =>
                 {
-                    Logger.Info($"MalachiService start listening {QueueName.LABEL_QUEUE} queue", procName);
+                    Logger.Info($"RaphaelService start listening {QueueName.LABEL_QUEUE} queue", procName);
                     e.Consumer(() => new PrintLabelReportConsumer(_manager));
                 });
             });

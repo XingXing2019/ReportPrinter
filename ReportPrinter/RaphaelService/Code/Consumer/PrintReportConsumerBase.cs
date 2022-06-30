@@ -3,7 +3,7 @@ using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
-namespace MalachiService.Code.Consumer
+namespace RaphaelService.Code.Consumer
 {
     public abstract class PrintReportConsumerBase
     {

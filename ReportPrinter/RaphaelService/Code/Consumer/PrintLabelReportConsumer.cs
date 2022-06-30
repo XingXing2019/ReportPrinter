@@ -3,7 +3,7 @@ using MassTransit;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
-namespace MalachiService.Code.Consumer
+namespace RaphaelService.Code.Consumer
 {
     public class PrintLabelReportConsumer : PrintReportConsumerBase, IConsumer<IPrintLabelReport>
     {

@@ -3,18 +3,16 @@
 ################################################################################
 
 /ReportPrinter/ReportPrinterLibrary/obj
-/ReportPrinter/ReportPrinterLibrary/bin/Debug/netcoreapp3.1
+/ReportPrinter/ReportPrinterLibrary/bin
 /ReportPrinter/RaphaelService/obj
-/ReportPrinter/RaphaelService/bin/Debug
+/ReportPrinter/RaphaelService/bin
 /ReportPrinter/CosmoService/obj
-/ReportPrinter/CosmoService/bin/Debug
-/ReportPrinter/ReportPrinterDatabase/bin/Debug/netcoreapp3.1
+/ReportPrinter/CosmoService/bin
 /ReportPrinter/ReportPrinterDatabase/obj
+/ReportPrinter/ReportPrinterDatabase/bin
 /ReportPrinter/ReportPrinterDatabase/SqlQuery/.vs
 /ReportPrinter/ReportPrinterDatabase/SqlQuery/Database/.vs
 /ReportPrinter/ReportPrinterUnitTest/obj
-/ReportPrinter/ReportPrinterUnitTest/bin/Debug
-/ReportPrinter/RabbitMQLibrary/obj
-/ReportPrinter/RabbitMQLibrary/bin/Debug
+/ReportPrinter/ReportPrinterUnitTest/bin
 */.vs
 *.user

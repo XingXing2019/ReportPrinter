@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
-using RabbitMQLibrary.Code.Producer.PrintReportCommand;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
+using PrintReportProducerFactory = CosmoService.Code.Producer.PrintReportCommand.PrintReportProducerFactory;
 
 namespace CosmoService.Code.Form
 {

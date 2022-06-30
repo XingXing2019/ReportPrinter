@@ -12,7 +12,7 @@ namespace ReportPrinterUnitTest.RabbitMQ
 {
     public class PrintReportTest : TestBase<IPrintReport>
     {
-        private const string _serviceName = "MalachiService";
+        private const string _serviceName = "RaphaelService";
 
         public PrintReportTest()
         {

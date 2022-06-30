@@ -6,7 +6,7 @@ using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
-namespace MalachiService.Code.Consumer
+namespace RaphaelService.Code.Consumer
 {
     public class PrintPdfReportConsumer : PrintReportConsumerBase, IConsumer<IPrintPdfReport>
     {

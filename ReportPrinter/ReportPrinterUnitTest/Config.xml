@@ -14,8 +14,8 @@
 	<TargetDatabase>ReportPrinterTest</TargetDatabase>
 	<ServicePathConfigList>
 		<ServicePathConfig>
-			<Id>MalachiService</Id>
-			<Path>D:\C#\Projects\ReportPrinter\ReportPrinter\MalachiService\bin\Debug\netcoreapp3.1\MalachiService.exe</Path>
+			<Id>RaphaelService</Id>
+			<Path>D:\C#\Projects\ReportPrinter\ReportPrinter\RaphaelService\bin\Debug\netcoreapp3.1\RaphaelService.exe</Path>
 		</ServicePathConfig>
 	</ServicePathConfigList>
 </AppConfig>

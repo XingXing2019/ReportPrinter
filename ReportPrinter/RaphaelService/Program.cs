@@ -1,12 +1,20 @@
-﻿using System;
+﻿using RaphaelService.Code.Service;
+using ReportPrinterLibrary.Log;
+using Topshelf;
 
 namespace RaphaelService
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var procName = $"RaphaelService.{nameof(Main)}";
+            Logger.Info($"RaphaelService start running", procName);
+
+            return (int)HostFactory.Run(cfg =>
+            {
+                cfg.Service(x => new PrintReportMessageConsumerService());
+            });
         }
     }
 }

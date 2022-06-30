@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MassTransit;
-using RaphaelService;
-using RaphaelService.MessageHandler.PrintReportMessageHandler;
-using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;

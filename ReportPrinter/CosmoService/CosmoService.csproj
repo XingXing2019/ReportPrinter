@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RabbitMQLibrary\RabbitMQLibrary.csproj" />
     <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
     <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
   </ItemGroup>

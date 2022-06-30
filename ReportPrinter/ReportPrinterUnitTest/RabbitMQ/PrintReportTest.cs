@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CosmoService.Code.Producer.PrintReportCommand;
 using NUnit.Framework;
-using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;

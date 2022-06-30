@@ -16,7 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CosmoService\CosmoService.csproj" />
     <ProjectReference Include="..\MalachiService\MalachiService.csproj" />
-    <ProjectReference Include="..\RaphaelService\RaphaelService.csproj" />
     <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
     <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
   </ItemGroup>

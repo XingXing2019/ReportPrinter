@@ -1,5 +1,5 @@
 ﻿using System;
-using ReportPrinterDatabase.Manager.MessageManager;
+using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;

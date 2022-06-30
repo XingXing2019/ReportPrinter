@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 

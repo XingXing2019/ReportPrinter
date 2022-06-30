@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RaphaelService\RaphaelService.csproj" />
     <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
     <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
   </ItemGroup>

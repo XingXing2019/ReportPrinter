@@ -3,7 +3,7 @@ using System.Threading;
 using GreenPipes;
 using MalachiService.Code.Consumer;
 using MassTransit;
-using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;

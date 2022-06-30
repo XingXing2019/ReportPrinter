@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using CosmoService.Code.Producer.PrintReportCommand;
-using ReportPrinterDatabase.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.Message;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;

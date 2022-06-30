@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
-using ReportPrinterDatabase.Manager.MessageManager;
+using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterLibrary.Config.Configuration;
 using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ReportPrinterLibrary.RabbitMQ.Message;
+using ReportPrinterLibrary.Code.RabbitMQ.Message;
 
 namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 {

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Code\Init\" />
+    <Folder Include="Code\PDF\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PdfiumViewer">
+      <HintPath>Code\Plugin\PdfiumViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp">
+      <HintPath>Code\Plugin\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing">
+      <HintPath>Code\Plugin\zxing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

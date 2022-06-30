@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using ReportPrinterDatabase.Code.Database;
 using ReportPrinterDatabase.Code.Entity;
-using ReportPrinterLibrary.Config.Configuration;
+using ReportPrinterLibrary.Code.Config.Configuration;
 
 #nullable disable
 

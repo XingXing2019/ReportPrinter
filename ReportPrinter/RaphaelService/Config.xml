@@ -10,6 +10,9 @@
 		<DatabaseConfig Id="ReportPrinter" DatabaseName="ReportPrinter">
 			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinter</ConnectionString>
 		</DatabaseConfig>
+		<DatabaseConfig Id="AccountingSystem" DatabaseName="AccountingSystem">
+			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=AccountingSystem</ConnectionString>
+		</DatabaseConfig>
 	</DatabaseConfigList>
 	<TargetDatabase>ReportPrinter</TargetDatabase>
 </AppConfig>

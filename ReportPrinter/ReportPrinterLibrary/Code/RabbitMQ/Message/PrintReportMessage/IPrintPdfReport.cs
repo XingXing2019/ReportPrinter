@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MassTransit;
 
-namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
+namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
 {
     public interface IPrintPdfReport : IPrintReport { }
 

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace ReportPrinterLibrary.Config.Helper
+namespace ReportPrinterLibrary.Code.Config.Helper
 {
     public class ConfigPath
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
+namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
 {
     public interface IPrintReport : IMessage
     {

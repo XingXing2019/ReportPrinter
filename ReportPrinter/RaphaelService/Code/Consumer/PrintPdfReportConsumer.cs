@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using MassTransit;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterLibrary.Log;
-using ReportPrinterLibrary.RabbitMQ.Message;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.RabbitMQ.Message;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelService.Code.Consumer
 {
@@ -18,7 +18,7 @@ namespace RaphaelService.Code.Consumer
             var procName = $"{this.GetType().Name}.{nameof(Consume)}";
 
             var message = context.Message;
-            Logger.LogJson($"{nameof(PrintLabelReportConsumer)} receive message", message, procName);
+            Logger.LogJson($"{this.GetType().Name} receive message", message, procName);
 
             await PatchMessageStatus(message, MessageStatus.Receive);
 

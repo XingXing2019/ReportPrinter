@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ReportPrinterLibrary.Config.Configuration;
-using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Database
 {

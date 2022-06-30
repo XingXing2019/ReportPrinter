@@ -1,5 +1,5 @@
 ﻿using System;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterDatabase.Code.StoredProcedures.PrintReportMessage
 {

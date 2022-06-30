@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MassTransit;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelService.Code.Consumer
 {

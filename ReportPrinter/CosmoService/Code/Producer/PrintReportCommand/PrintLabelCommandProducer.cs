@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace CosmoService.Code.Producer.PrintReportCommand
 {

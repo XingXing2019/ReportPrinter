@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
-using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.Code.Log;
 
-namespace ReportPrinterLibrary.RabbitMQ.Message
+namespace ReportPrinterLibrary.Code.RabbitMQ.Message
 {
     public class MessageDeserializer<T>
     {

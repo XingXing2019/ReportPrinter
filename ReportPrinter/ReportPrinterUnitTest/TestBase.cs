@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Manager;
-using ReportPrinterLibrary.Config.Configuration;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest
 {

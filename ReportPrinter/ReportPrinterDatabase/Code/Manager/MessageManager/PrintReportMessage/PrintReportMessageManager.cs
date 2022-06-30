@@ -6,9 +6,9 @@ using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.StoredProcedures;
 using ReportPrinterDatabase.Code.StoredProcedures.PrintReportMessage;
 using ReportPrinterDatabase.Code.StoredProcedures.PrintReportSqlVariable;
-using ReportPrinterLibrary.Log;
-using ReportPrinterLibrary.RabbitMQ.Message;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.RabbitMQ.Message;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 {

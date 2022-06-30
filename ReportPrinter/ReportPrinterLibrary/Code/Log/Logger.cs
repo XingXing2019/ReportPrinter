@@ -2,7 +2,7 @@
 using System.Threading;
 using NLog;
 
-namespace ReportPrinterLibrary.Log
+namespace ReportPrinterLibrary.Code.Log
 {
     public static class Logger
     {

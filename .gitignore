@@ -16,3 +16,5 @@
 /ReportPrinter/ReportPrinterUnitTest/bin
 */.vs
 *.user
+/ReportPrinter/RaphaelLibrary/obj
+/ReportPrinter/RaphaelLibrary/bin/Debug/netcoreapp3.1

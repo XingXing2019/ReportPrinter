@@ -1,5 +1,5 @@
 ﻿using RaphaelService.Code.Service;
-using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.Code.Log;
 using Topshelf;
 
 namespace RaphaelService

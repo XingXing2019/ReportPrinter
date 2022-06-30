@@ -4,7 +4,7 @@ using ReportPrinterLibrary.Log;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.RabbitMQ.MessageQueue;
 
-namespace CosmoService.Code.Producer.PrintReportCommand
+namespace RabbitMQLibrary.Code.Producer.PrintReportCommand
 {
     public class PrintReportProducerFactory
     {

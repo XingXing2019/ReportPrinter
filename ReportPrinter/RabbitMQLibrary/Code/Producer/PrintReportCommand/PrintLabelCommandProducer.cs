@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
 
-namespace CosmoService.Code.Producer.PrintReportCommand
+namespace RabbitMQLibrary.Code.Producer.PrintReportCommand
 {
     public class PrintLabelCommandProducer : CommandProducerBase<IPrintReport>
     {

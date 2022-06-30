@@ -19,3 +19,5 @@
 /ReportPrinter/ReportPrinterUnitTest/bin/Debug/logs
 */.vs
 *.user
+/ReportPrinter/RabbitMQLibrary/bin/Debug/netcoreapp3.1
+/ReportPrinter/RabbitMQLibrary/obj

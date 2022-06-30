@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportPrinterUnitTest", "Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportPrinterLibrary", "ReportPrinterLibrary\ReportPrinterLibrary.csproj", "{734709E3-677B-4674-84E4-B565BF0BC784}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaphaelService", "RaphaelService\RaphaelService.csproj", "{8204C298-F5F6-40D9-8F4D-6BF103170536}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQLibrary", "RabbitMQLibrary\RabbitMQLibrary.csproj", "{54EBF4A6-478B-4BBD-A4DC-F3AB05FE0B85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{734709E3-677B-4674-84E4-B565BF0BC784}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{734709E3-677B-4674-84E4-B565BF0BC784}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{734709E3-677B-4674-84E4-B565BF0BC784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8204C298-F5F6-40D9-8F4D-6BF103170536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8204C298-F5F6-40D9-8F4D-6BF103170536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8204C298-F5F6-40D9-8F4D-6BF103170536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8204C298-F5F6-40D9-8F4D-6BF103170536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54EBF4A6-478B-4BBD-A4DC-F3AB05FE0B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54EBF4A6-478B-4BBD-A4DC-F3AB05FE0B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54EBF4A6-478B-4BBD-A4DC-F3AB05FE0B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54EBF4A6-478B-4BBD-A4DC-F3AB05FE0B85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

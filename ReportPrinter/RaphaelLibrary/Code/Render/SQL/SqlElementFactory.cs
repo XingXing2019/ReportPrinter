@@ -1,8 +1,9 @@
 ﻿using System;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Init.SQL;
 using ReportPrinterLibrary.Code.Log;
 
-namespace RaphaelLibrary.Code.Init.SQL
+namespace RaphaelLibrary.Code.Render.SQL
 {
     public class SqlElementFactory
     {

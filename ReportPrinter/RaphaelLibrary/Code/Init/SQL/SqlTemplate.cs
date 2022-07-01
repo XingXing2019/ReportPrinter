@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Init.SQL

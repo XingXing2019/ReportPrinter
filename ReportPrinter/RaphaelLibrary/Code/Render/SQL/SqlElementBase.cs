@@ -1,8 +1,7 @@
-﻿using System;
-using System.Xml;
+﻿using System.Xml;
 using RaphaelLibrary.Code.Common;
 
-namespace RaphaelLibrary.Code.Init.SQL
+namespace RaphaelLibrary.Code.Render.SQL
 {
     public abstract class SqlElementBase : IXmlReader
     {

@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <Folder Include="Code\Common\" />
-    <Folder Include="Code\PDF\" />
+    <Folder Include="Code\Init\PDF\" />
+    <Folder Include="Code\Print\" />
+    <Folder Include="Code\Render\PDF\" />
   </ItemGroup>
 
   <ItemGroup>

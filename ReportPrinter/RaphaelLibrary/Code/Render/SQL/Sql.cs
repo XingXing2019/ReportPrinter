@@ -5,7 +5,7 @@ using RaphaelLibrary.Code.Common;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
-namespace RaphaelLibrary.Code.Init.SQL
+namespace RaphaelLibrary.Code.Render.SQL
 {
     public class Sql : SqlElementBase
     {

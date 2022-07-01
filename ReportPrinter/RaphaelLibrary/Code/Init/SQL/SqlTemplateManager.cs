@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml;
 using NLog.Fluent;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Init.SQL

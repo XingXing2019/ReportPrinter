@@ -3,7 +3,7 @@
 	<SqlTemplateList>
 		<SqlTemplate>.\Config\SQL\PrintPdfQuery.xml</SqlTemplate>
 	</SqlTemplateList>
-	<ReportTemplateList>
-		<ReportTemplate>.\Config\Report\ListOfContent.xml</ReportTemplate>
-	</ReportTemplateList>
+	<PdfTemplateList>
+		<PdfTemplate>.\Config\Report\ListOfContent.xml</PdfTemplate>
+	</PdfTemplateList>
 </RaphaelConfig>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SqlTemplate Id="PrintPdfQuery">
+	<Sql Id="TransactionInfo" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				TransactionID,
+				CONVERT(DATE, TransactionDate) AS TransactionDate,
+				GLAccount,
+				PostSequence,
+				BatchEntry,
+				VendorCode,
+				Debit,
+				Credit,
+				ExchangeRate,
+				Description
+			FROM
+				Transactions
+			JOIN
+				GlAccounts
+			ON
+				AccountNumber = GlAccount
+			WHERE
+				AccountNumber = '%%%AccountNumber%%%'
+		</Query>
+		<Variable Name="AccountNumber" />
+	</Sql>
+	<Sql Id="VendorInfo" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				VendorID,
+				VendorName,
+				ShortName,
+				GroupID,
+				CurrencyCode
+			FROM
+				Vendors
+			WHERE
+				CurrencyCode = '%%%CurrencyCode%%%'
+		</Query>
+		<Variable Name="CurrencyCode" />
+	</Sql>
+</SqlTemplate>

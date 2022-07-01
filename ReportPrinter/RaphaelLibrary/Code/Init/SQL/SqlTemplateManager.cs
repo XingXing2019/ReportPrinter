@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using NLog.Fluent;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
@@ -43,10 +42,10 @@ namespace RaphaelLibrary.Code.Init.SQL
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var sqlTemplates = node.SelectNodes(XmlElementName.SQL_TEMPLATE);
+            var sqlTemplates = node.SelectNodes(XmlElementName.S_SQL_TEMPLATE);
             if (sqlTemplates == null || sqlTemplates.Count == 0)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.SQL_TEMPLATE, node);
+                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_SQL_TEMPLATE, node);
                 Logger.Error(missingXmlLog, procName);
                 return false;
             }
@@ -64,7 +63,7 @@ namespace RaphaelLibrary.Code.Init.SQL
                 var xmlDoc = new XmlDocument();
                 xmlDoc.Load(path);
 
-                var sqlTemplate = SqlElementFactory.CreateSqlElement(XmlElementName.SQL_TEMPLATE);
+                var sqlTemplate = SqlElementFactory.CreateSqlElement(XmlElementName.S_SQL_TEMPLATE);
 
                 if (!sqlTemplate.ReadXml(xmlDoc.DocumentElement))
                 {
@@ -80,10 +79,23 @@ namespace RaphaelLibrary.Code.Init.SQL
                 _sqlTemplateList.Add(sqlTemplate.Id, sqlTemplate);
             }
 
+            if (_sqlTemplateList.Count == 0)
+            {
+                Logger.Error($"There is no valid sql template in the config", procName);
+                return false;
+            }
+
             Logger.Info($"Success to initialize sql template manager with {_sqlTemplateList.Count} sql template(s)", procName);
             return true;
         }
 
+        /// <summary>
+        /// Get a copy of sql
+        /// </summary>
+        /// <param name="sqlTemplateId"></param>
+        /// <param name="sqlId"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public bool TryGetSql(string sqlTemplateId, string sqlId, out Sql sql)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryGetSql)}";

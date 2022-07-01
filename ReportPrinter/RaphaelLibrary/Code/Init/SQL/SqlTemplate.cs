@@ -19,26 +19,26 @@ namespace RaphaelLibrary.Code.Init.SQL
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var id = node.Attributes?[XmlElementName.ID]?.Value;
+            var id = node.Attributes?[XmlElementName.S_ID]?.Value;
             if (string.IsNullOrEmpty(id))
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.ID, node);
+                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_ID, node);
                 Logger.Error(missingXmlLog, procName);
                 return false;
             }
             Id = id;
 
-            var sqls = node.SelectNodes(XmlElementName.SQL);
+            var sqls = node.SelectNodes(XmlElementName.S_SQL);
             if (sqls == null || sqls.Count == 0)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.SQL, node);
+                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_SQL, node);
                 Logger.Error(missingXmlLog, procName);
                 return false;
             }
 
             foreach (XmlNode sqlNode in sqls)
             {
-                var sql = SqlElementFactory.CreateSqlElement(XmlElementName.SQL);
+                var sql = SqlElementFactory.CreateSqlElement(XmlElementName.S_SQL);
 
                 if (!sql.ReadXml(sqlNode))
                 {
@@ -60,14 +60,14 @@ namespace RaphaelLibrary.Code.Init.SQL
 
         public override SqlElementBase Clone()
         {
-            var sqlTemplate = (SqlTemplate)base.Clone();
-            sqlTemplate._sqlLists = new Dictionary<string, SqlElementBase>();
+            var cloned = (SqlTemplate)base.Clone();
+            cloned._sqlLists = new Dictionary<string, SqlElementBase>();
             foreach (var id in this._sqlLists.Keys)
             {
-                sqlTemplate._sqlLists.Add(id, _sqlLists[id].Clone());
+                cloned._sqlLists.Add(id, _sqlLists[id].Clone());
             }
 
-            return sqlTemplate;
+            return cloned;
         }
 
         public bool TryGetSql(string sqlId, out Sql sql)

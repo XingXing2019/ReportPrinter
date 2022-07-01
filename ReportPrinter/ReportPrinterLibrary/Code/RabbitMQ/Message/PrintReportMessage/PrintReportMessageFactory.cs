@@ -1,7 +1,7 @@
 ﻿using System;
-using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.Code.Log;
 
-namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
+namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
 {
     public class PrintReportMessageFactory
     {

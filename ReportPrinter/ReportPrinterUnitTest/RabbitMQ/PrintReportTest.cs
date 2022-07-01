@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using CosmoService.Code.Producer.PrintReportCommand;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterLibrary.RabbitMQ.Message;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
-using ReportPrinterLibrary.RabbitMQ.MessageQueue;
+using ReportPrinterLibrary.Code.RabbitMQ.Message;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.RabbitMQ.MessageQueue;
 
 namespace ReportPrinterUnitTest.RabbitMQ
 {

@@ -4,7 +4,7 @@ using System.Transactions;
 using Microsoft.Data.SqlClient;
 using ReportPrinterDatabase.Code.Database;
 using ReportPrinterDatabase.Code.StoredProcedures;
-using ReportPrinterLibrary.Config.Configuration;
+using ReportPrinterLibrary.Code.Config.Configuration;
 
 namespace ReportPrinterDatabase.Code.Executor
 {

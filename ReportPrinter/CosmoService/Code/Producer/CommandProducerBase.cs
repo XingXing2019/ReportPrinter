@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
-using ReportPrinterLibrary.Config.Configuration;
-using ReportPrinterLibrary.Log;
-using ReportPrinterLibrary.RabbitMQ.Message;
+using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.RabbitMQ.Message;
 
 namespace CosmoService.Code.Producer
 {

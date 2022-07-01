@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
+using RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterLibrary.RabbitMQ.Message;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.RabbitMQ.Message;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelService.Code.Consumer
 {
@@ -21,8 +22,8 @@ namespace RaphaelService.Code.Consumer
 
         protected async Task ConsumeMessage(IPrintReport message)
         {
-            //var handler = PrintReportMessageHandlerFactory.CreatePrintReportMessageHandler(message.ReportType);
-            //await handler.Handle(message);
+            var handler = PrintReportMessageHandlerFactory.CreatePrintReportMessageHandler(message.ReportType);
+            await handler.Handle(message);
         }
     }
 }

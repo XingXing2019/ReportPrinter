@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
-using ReportPrinterLibrary.Log;
+using ReportPrinterLibrary.Code.Log;
 
-namespace ReportPrinterLibrary.Config.Helper
+namespace ReportPrinterLibrary.Code.Config.Helper
 {
     public static class ConfigReader<T>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
+namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
 {
     public interface IPrintReport : IMessage
     {
@@ -19,12 +19,16 @@ namespace ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage
         bool IsValid { get; }
     }
 
-    public class SqlVariable
+    public class SqlVariable : ICloneable
     {
         public string Name { get; set; }
         public string Value { get; set; }
 
         public bool IsValid => !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Value);
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 
     public enum ReportTypeEnum

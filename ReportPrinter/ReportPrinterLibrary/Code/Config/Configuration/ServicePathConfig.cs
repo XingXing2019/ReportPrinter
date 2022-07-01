@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace ReportPrinterLibrary.Config.Configuration
+﻿namespace ReportPrinterLibrary.Code.Config.Configuration
 {
     public class ServicePathConfig
     {

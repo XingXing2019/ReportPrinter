@@ -1,4 +1,4 @@
-﻿namespace ReportPrinterLibrary.RabbitMQ.MessageQueue
+﻿namespace ReportPrinterLibrary.Code.RabbitMQ.MessageQueue
 {
     public class QueueName
     {

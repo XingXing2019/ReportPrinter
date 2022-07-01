@@ -1,4 +1,4 @@
-﻿namespace ReportPrinterLibrary.Config.Configuration
+﻿namespace ReportPrinterLibrary.Code.Config.Configuration
 {
     public class RabbitMQConfig
     {

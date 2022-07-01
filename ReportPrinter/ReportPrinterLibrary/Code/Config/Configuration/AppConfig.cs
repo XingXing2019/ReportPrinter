@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ReportPrinterLibrary.Config.Helper;
+using ReportPrinterLibrary.Code.Config.Helper;
 
-namespace ReportPrinterLibrary.Config.Configuration
+namespace ReportPrinterLibrary.Code.Config.Configuration
 {
     public class AppConfig
     {

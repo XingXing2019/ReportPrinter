@@ -3,10 +3,10 @@ using System.Threading;
 using MassTransit;
 using RaphaelService.Code.Consumer;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterLibrary.Config.Configuration;
-using ReportPrinterLibrary.Log;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
-using ReportPrinterLibrary.RabbitMQ.MessageQueue;
+using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.RabbitMQ.MessageQueue;
 using Topshelf;
 
 namespace RaphaelService.Code.Service

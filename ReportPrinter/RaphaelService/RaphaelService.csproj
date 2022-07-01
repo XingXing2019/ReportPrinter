@@ -11,17 +11,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RaphaelLibrary\RaphaelLibrary.csproj" />
     <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
     <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config\SQL\PrintPdfQuery.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\RaphaelService.Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Config\PDF\" />
   </ItemGroup>
 
 </Project>

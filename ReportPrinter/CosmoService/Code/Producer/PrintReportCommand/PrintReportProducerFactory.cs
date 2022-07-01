@@ -1,8 +1,8 @@
 ﻿using System;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
-using ReportPrinterLibrary.Log;
-using ReportPrinterLibrary.RabbitMQ.Message.PrintReportMessage;
-using ReportPrinterLibrary.RabbitMQ.MessageQueue;
+using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.RabbitMQ.MessageQueue;
 
 namespace CosmoService.Code.Producer.PrintReportCommand
 {

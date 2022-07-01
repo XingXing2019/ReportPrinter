@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReportPrinterLibrary.RabbitMQ.Message
+namespace ReportPrinterLibrary.Code.RabbitMQ.Message
 {
     public interface IMessage
     {

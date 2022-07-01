@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config\PDF\AccountingReport.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Config\SQL\PrintPdfQuery.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -29,10 +32,6 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Config\PDF\" />
   </ItemGroup>
 
 </Project>

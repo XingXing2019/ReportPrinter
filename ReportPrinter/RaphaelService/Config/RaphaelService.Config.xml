@@ -4,6 +4,6 @@
 		<SqlTemplate>.\Config\SQL\PrintPdfQuery.xml</SqlTemplate>
 	</SqlTemplateList>
 	<PdfTemplateList>
-		<PdfTemplate>.\Config\Report\ListOfContent.xml</PdfTemplate>
+		<PdfTemplate>.\Config\PDF\AccountingReport.xml</PdfTemplate>
 	</PdfTemplateList>
 </RaphaelConfig>

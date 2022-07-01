@@ -11,9 +11,9 @@ namespace RaphaelLibrary.Code.Render.SQL
         {
             var procName = $"SqlElementFactory.{nameof(CreateSqlElement)}";
 
-            if (name == XmlElementName.SQL)
+            if (name == XmlElementName.S_SQL)
                 return new Sql();
-            else if (name == XmlElementName.SQL_TEMPLATE)
+            else if (name == XmlElementName.S_SQL_TEMPLATE)
                 return new SqlTemplate();
             else
             {

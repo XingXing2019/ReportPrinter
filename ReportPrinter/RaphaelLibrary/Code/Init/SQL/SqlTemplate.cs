@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
 
@@ -19,24 +20,24 @@ namespace RaphaelLibrary.Code.Init.SQL
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var id = node.Attributes?[XmlElementName.S_ID]?.Value;
+            var id = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ID);
             if (string.IsNullOrEmpty(id))
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_ID, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_ID, node, procName);
                 return false;
             }
             Id = id;
 
-            var sqls = node.SelectNodes(XmlElementName.S_SQL);
+            var sqls = node.SelectNodes(XmlElementHelper.S_SQL);
             if (sqls == null || sqls.Count == 0)
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_SQL, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL, node, procName);
                 return false;
             }
 
             foreach (XmlNode sqlNode in sqls)
             {
-                var sql = SqlElementFactory.CreateSqlElement(XmlElementName.S_SQL);
+                var sql = SqlElementFactory.CreateSqlElement(XmlElementHelper.S_SQL);
 
                 if (!sql.ReadXml(sqlNode))
                 {

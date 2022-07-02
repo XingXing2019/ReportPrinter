@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Code\Common\" />
     <Folder Include="Code\Init\PDF\" />
     <Folder Include="Code\Print\" />
     <Folder Include="Code\Render\PDF\Manager\" />
@@ -13,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PdfSharp" Version="1.50.5147" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,14 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="PdfiumViewer">
-      <HintPath>Code\Plugin\PdfiumViewer.dll</HintPath>
-    </Reference>
     <Reference Include="PdfSharp">
       <HintPath>Code\Plugin\PdfSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="zxing">
-      <HintPath>Code\Plugin\zxing.dll</HintPath>
     </Reference>
   </ItemGroup>
 

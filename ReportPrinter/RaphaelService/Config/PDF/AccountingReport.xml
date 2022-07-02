@@ -1,6 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber">
 	<ReportHeader Height="1*" Rows="3" Columns="3">
+		<Text Margin="10 20 10 20" Padding="0 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center"
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Italic" BrushColor="Red" Opacity="0.5">
+			<Type>Text</Type>
+			<Row>1</Row>
+			<Column>1</Column>
+			<RowSpan>1</RowSpan>
+			<ColumnSpan>2</ColumnSpan>
+			<Content>Hello World</Content>
+		</Text>
+		
+		<Text Margin="10 20 10 20" Padding="0 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center"
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Italic" BrushColor="Red">
+			<Type>Sql</Type>
+			<Row>2</Row>
+			<Column>2</Column>
+			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+			<SqlId>GlAccount</SqlId>
+			<SqlResColumn>Description</SqlResColumn>
+		</Text>
 
+		<Text Margin="10 20 10 20" Padding="0 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center"
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Italic" BrushColor="Red">
+			<Type>Timestamp</Type>
+			<Row>3</Row>
+			<Column>3</Column>
+			<Mask>yyyy-MM-dd</Mask>
+		</Text>
 	</ReportHeader>
 </PdfTemplate>

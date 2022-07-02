@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Render.PDF.Helper;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -22,31 +23,31 @@ namespace RaphaelLibrary.Code.Render.SQL
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var id = node.Attributes?[XmlElementName.S_ID]?.Value;
+            var id = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ID);
             if (string.IsNullOrEmpty(id))
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_ID, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_ID, node, procName);
                 return false;
             }
             Id = id;
 
-            var databaseId = node.Attributes?[XmlElementName.S_DATABASE_ID]?.Value;
+            var databaseId = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_DATABASE_ID);
             if (string.IsNullOrEmpty(databaseId))
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_DATABASE_ID, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_DATABASE_ID, node, procName);
                 return false;
             }
             _databaseId = databaseId;
 
-            var query = node.SelectSingleNode(XmlElementName.S_QUERY)?.InnerText;
+            var query = node.SelectSingleNode(XmlElementHelper.S_QUERY)?.InnerText;
             if (string.IsNullOrEmpty(query))
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_QUERY, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_QUERY, node, procName);
                 return false;
             }
             _query = query;
 
-            var variables = node.SelectNodes(XmlElementName.S_VARIABLE);
+            var variables = node.SelectNodes(XmlElementHelper.S_VARIABLE);
             if (variables == null || variables.Count == 0)
             {
                 Logger.Debug($"SQL: {id} does not need variable to execute", procName);
@@ -55,10 +56,10 @@ namespace RaphaelLibrary.Code.Render.SQL
             {
                 foreach (XmlNode variableNode in variables)
                 {
-                    var name = variableNode.Attributes?[XmlElementName.S_NAME]?.Value;
+                    var name = XmlElementHelper.GetAttribute(variableNode, XmlElementHelper.S_NAME);
                     if (string.IsNullOrEmpty(name))
                     {
-                        Logger.LogMissingXmlLog(XmlElementName.S_NAME, node, procName);
+                        Logger.LogMissingXmlLog(XmlElementHelper.S_NAME, node, procName);
                         return false;
                     }
 
@@ -83,7 +84,7 @@ namespace RaphaelLibrary.Code.Render.SQL
             cloned._sqlVariables = new Dictionary<string, SqlVariable>();
             foreach (var id in this._sqlVariables.Keys)
             {
-                cloned._sqlVariables.Add(id, (SqlVariable)_sqlVariables[id].Clone());
+                cloned._sqlVariables.Add(id, _sqlVariables[id].Clone());
             }
 
             return cloned;

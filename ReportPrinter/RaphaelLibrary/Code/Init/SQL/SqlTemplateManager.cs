@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
 
@@ -42,10 +43,10 @@ namespace RaphaelLibrary.Code.Init.SQL
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var sqlTemplates = node.SelectNodes(XmlElementName.S_SQL_TEMPLATE);
+            var sqlTemplates = node.SelectNodes(XmlElementHelper.S_SQL_TEMPLATE);
             if (sqlTemplates == null || sqlTemplates.Count == 0)
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_SQL_TEMPLATE, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_TEMPLATE, node, procName);
                 return false;
             }
 
@@ -62,7 +63,7 @@ namespace RaphaelLibrary.Code.Init.SQL
                 var xmlDoc = new XmlDocument();
                 xmlDoc.Load(path);
 
-                var sqlTemplate = SqlElementFactory.CreateSqlElement(XmlElementName.S_SQL_TEMPLATE);
+                var sqlTemplate = SqlElementFactory.CreateSqlElement(XmlElementHelper.S_SQL_TEMPLATE);
 
                 if (!sqlTemplate.ReadXml(xmlDoc.DocumentElement))
                 {

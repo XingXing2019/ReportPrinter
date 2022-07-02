@@ -21,38 +21,50 @@ namespace RaphaelLibrary.Code.Init.PDF
         private string _fileNameSuffix;
         private string _savePath;
 
+        private HashSet<string> _rendererInHeaderFooter;
+        private HashSet<string> _rendererInBody;
+
         public PdfTemplate()
         {
             _pdfStructureList = new Dictionary<PdfStructure, PdfStructureBase>();
+            _rendererInHeaderFooter = new HashSet<string>
+            {
+                XmlElementHelper.S_TEXT
+            };
+
+            _rendererInBody = new HashSet<string>
+            {
+
+            };
         }
 
         public bool ReadXml(XmlNode node)
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var id = node.Attributes?[XmlElementName.S_ID]?.Value;
+            var id = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ID);
             if (string.IsNullOrEmpty(id))
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_ID, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_ID, node, procName);
                 return false;
             }
             Id = id;
             _fileName = id;
 
-            var pageSizeStr = node.Attributes?[XmlElementName.S_PAGE_SIZE]?.Value;
+            var pageSizeStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_PAGE_SIZE);
             if (!PageHelper.TryGetPageSize(pageSizeStr, out var pageSize))
             {
                 pageSize = PageSizeConverter.ToSize(PageSize.A4);
-                Logger.LogDefaultValue(XmlElementName.S_PAGE_SIZE, PageSize.A4, procName);
+                Logger.LogDefaultValue(XmlElementHelper.S_PAGE_SIZE, PageSize.A4, procName);
             }
 
             _pageSize = pageSize;
 
-            var orientationStr = node.Attributes?[XmlElementName.S_ORIENTATION]?.Value;
+            var orientationStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ORIENTATION);
             if (!Enum.TryParse(orientationStr, out Orientation orientation))
             {
                 orientation = Orientation.Portrait;
-                Logger.LogDefaultValue(XmlElementName.S_ORIENTATION, orientation, procName);
+                Logger.LogDefaultValue(XmlElementHelper.S_ORIENTATION, orientation, procName);
             }
 
             if (orientation == Orientation.Landscape)
@@ -62,21 +74,30 @@ namespace RaphaelLibrary.Code.Init.PDF
                 pageSize.Width = temp;
             }
 
-            var savePath = node.Attributes?[XmlElementName.S_SAVE_PATH]?.Value;
+            var savePath = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_SAVE_PATH);
             if (string.IsNullOrEmpty(savePath))
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_SAVE_PATH, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_SAVE_PATH, node, procName);
                 return false;
             }
             _savePath = savePath;
 
-            var fileNameSuffix = node.Attributes?[XmlElementName.S_FILE_NAME_SUFFIX]?.Value;
+            var fileNameSuffix = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_FILE_NAME_SUFFIX);
             if (string.IsNullOrEmpty(fileNameSuffix))
             {
-                Logger.LogMissingXmlLog(XmlElementName.S_FILE_NAME_SUFFIX, node, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_FILE_NAME_SUFFIX, node, procName);
                 return false;
             }
             _fileNameSuffix = fileNameSuffix;
+
+            var reportHeaderNode = node.SelectSingleNode(XmlElementHelper.S_ReportHeader);
+            var reportHeader = new PdfReportHeader(_rendererInHeaderFooter);
+            if (!reportHeader.ReadXml(reportHeaderNode))
+            {
+                return false;
+            }
+            _pdfStructureList.Add(PdfStructure.PdfReportHeader, reportHeader);
+
 
             Logger.Info($"Success to read pdf template: {Id}, page size: {_pageSize.Width} : {_pageSize.Height}, Orientation: {orientation}, " +
                         $"file name suffix: {_fileNameSuffix}, save path: {_savePath}", procName);
@@ -89,7 +110,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             cloned._pdfStructureList = new Dictionary<PdfStructure, PdfStructureBase>();
             foreach (var structure in this._pdfStructureList.Keys)
             {
-                cloned._pdfStructureList.Add(structure, this._pdfStructureList[structure]);
+                cloned._pdfStructureList.Add(structure, this._pdfStructureList[structure].Clone());
             }
 
             return cloned;

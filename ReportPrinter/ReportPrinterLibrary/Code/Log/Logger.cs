@@ -8,7 +8,7 @@ namespace ReportPrinterLibrary.Code.Log
     public static class Logger
     {
         private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
-        private static readonly string _missingXmlElement = "XML is incorrect. Unable to locate xml element: {0}.";
+        private static readonly string _missingXmlElement = "XML is incorrect. Unable to locate valid xml element: {0}.";
         private static readonly string _setDefaultValue = "{0} is not provide or incorrectly provided. Initialize {0} to {1}";
 
         public static void Info(string message, string procName)

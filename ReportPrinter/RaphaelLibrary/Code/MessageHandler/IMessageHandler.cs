@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using ReportPrinterLibrary.Code.RabbitMQ.Message;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.MessageHandler
 {
     public interface IMessageHandler
     {
-        Task Handle(IMessage message);
+        Task<bool> Handle(IPrintReport message);
     }
 }

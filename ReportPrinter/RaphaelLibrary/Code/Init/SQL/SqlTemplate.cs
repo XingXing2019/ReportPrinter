@@ -22,8 +22,7 @@ namespace RaphaelLibrary.Code.Init.SQL
             var id = node.Attributes?[XmlElementName.S_ID]?.Value;
             if (string.IsNullOrEmpty(id))
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_ID, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_ID, node, procName);
                 return false;
             }
             Id = id;
@@ -31,8 +30,7 @@ namespace RaphaelLibrary.Code.Init.SQL
             var sqls = node.SelectNodes(XmlElementName.S_SQL);
             if (sqls == null || sqls.Count == 0)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_SQL, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_SQL, node, procName);
                 return false;
             }
 
@@ -54,7 +52,7 @@ namespace RaphaelLibrary.Code.Init.SQL
                 _sqlLists.Add(sql.Id, sql);
             }
 
-            Logger.Debug($"Success to read sql template: {id} with {_sqlLists.Count} sql(s)", procName);
+            Logger.Info($"Success to read sql template: {id} with {_sqlLists.Count} sql(s)", procName);
             return true;
         }
 

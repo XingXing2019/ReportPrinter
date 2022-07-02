@@ -30,6 +30,7 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
+            Logger.Info($"Success to initialize application", procName);
             return true;
         }
 
@@ -40,8 +41,7 @@ namespace RaphaelLibrary.Code.Init
             var sqlTemplateList = node.SelectSingleNode(XmlElementName.S_SQL_TEMPLATE_LIST);
             if (sqlTemplateList == null)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_SQL_TEMPLATE_LIST, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_SQL_TEMPLATE_LIST, node, procName);
                 return false;
             }
 
@@ -53,8 +53,7 @@ namespace RaphaelLibrary.Code.Init
             var pdfTemplateList = node.SelectSingleNode(XmlElementName.S_PDF_TEMPLATE_LIST);
             if (pdfTemplateList == null)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_PDF_TEMPLATE_LIST, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_PDF_TEMPLATE_LIST, node, procName);
                 return false;
             }
 
@@ -63,6 +62,7 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
+            Logger.Info($"Success to read config of RaphaelLibrary", procName);
             return true;
         }
     }

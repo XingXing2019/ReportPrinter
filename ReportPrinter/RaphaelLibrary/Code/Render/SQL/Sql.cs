@@ -25,8 +25,7 @@ namespace RaphaelLibrary.Code.Render.SQL
             var id = node.Attributes?[XmlElementName.S_ID]?.Value;
             if (string.IsNullOrEmpty(id))
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_ID, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_ID, node, procName);
                 return false;
             }
             Id = id;
@@ -34,8 +33,7 @@ namespace RaphaelLibrary.Code.Render.SQL
             var databaseId = node.Attributes?[XmlElementName.S_DATABASE_ID]?.Value;
             if (string.IsNullOrEmpty(databaseId))
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_DATABASE_ID, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_DATABASE_ID, node, procName);
                 return false;
             }
             _databaseId = databaseId;
@@ -43,8 +41,7 @@ namespace RaphaelLibrary.Code.Render.SQL
             var query = node.SelectSingleNode(XmlElementName.S_QUERY)?.InnerText;
             if (string.IsNullOrEmpty(query))
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_QUERY, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_QUERY, node, procName);
                 return false;
             }
             _query = query;
@@ -61,8 +58,7 @@ namespace RaphaelLibrary.Code.Render.SQL
                     var name = variableNode.Attributes?[XmlElementName.S_NAME]?.Value;
                     if (string.IsNullOrEmpty(name))
                     {
-                        var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_NAME, node);
-                        Logger.Error(missingXmlLog, procName);
+                        Logger.LogMissingXmlLog(XmlElementName.S_NAME, node, procName);
                         return false;
                     }
 
@@ -76,7 +72,8 @@ namespace RaphaelLibrary.Code.Render.SQL
                 }
             }
 
-            Logger.Debug($"Success to read sql: {id}, variables: {string.Join(',', _sqlVariables.Select(x => x.Key))}, query: \n{query}", procName);
+            Logger.Debug($"Success to read sql: {id}, database id: {_databaseId}, " +
+                         $"variables: {string.Join(',', _sqlVariables.Select(x => x.Key))}, query: \n{_query}", procName);
             return true;
         }
 

@@ -24,8 +24,9 @@ namespace RaphaelService.Code.Consumer
 
             try
             {
-                await ConsumeMessage(message);
-                await PatchMessageStatus(message, MessageStatus.Complete);
+                var isSuccess = await ConsumeMessage(message);
+                var status = isSuccess ? MessageStatus.Complete : MessageStatus.Error;
+                await PatchMessageStatus(message, status);
             }
             catch (Exception ex)
             {

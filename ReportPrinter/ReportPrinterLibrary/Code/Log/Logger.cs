@@ -41,14 +41,16 @@ namespace ReportPrinterLibrary.Code.Log
             _logger.Debug(message);
         }
 
-        public static string GenerateMissingXmlLog(string missingXml, XmlNode node)
+        public static void LogMissingXmlLog(string missingXml, XmlNode node, string procName)
         {
-            return string.Format(_missingXmlElement, $"{GenerateAncestorPath(node)}->{missingXml}");
+            var missingXmlLog = string.Format(_missingXmlElement, $"{GenerateAncestorPath(node)}->{missingXml}");
+            Error(missingXmlLog, procName);
         }
 
-        public static string GenerateDefaultValue(string name, string value)
+        public static void LogDefaultValue(string name, object value, string procName)
         {
-            return string.Format(_setDefaultValue, name, value);
+            var defaultValueLog = string.Format(_setDefaultValue, name, value);
+            Debug(defaultValueLog, procName);
         }
 
         #region Helper

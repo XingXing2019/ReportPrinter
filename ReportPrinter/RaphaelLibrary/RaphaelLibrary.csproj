@@ -8,7 +8,12 @@
     <Folder Include="Code\Common\" />
     <Folder Include="Code\Init\PDF\" />
     <Folder Include="Code\Print\" />
-    <Folder Include="Code\Render\PDF\" />
+    <Folder Include="Code\Render\PDF\Manager\" />
+    <Folder Include="Code\Render\PDF\Renderer\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PdfSharp" Version="1.50.5147" />
   </ItemGroup>
 
   <ItemGroup>

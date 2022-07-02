@@ -43,8 +43,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             var pdfTemplates = node.SelectNodes(XmlElementName.S_PDF_TEMPLATE);
             if (pdfTemplates == null || pdfTemplates.Count == 0)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_PDF_TEMPLATE, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_PDF_TEMPLATE, node, procName);
                 return false;
             }
 

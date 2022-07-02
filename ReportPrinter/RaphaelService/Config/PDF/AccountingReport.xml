@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<PdfTemplate Id="AccountingReport">
-	
+<PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber">
+	<ReportHeader Height="1*" Rows="3" Columns="3">
+
+	</ReportHeader>
 </PdfTemplate>

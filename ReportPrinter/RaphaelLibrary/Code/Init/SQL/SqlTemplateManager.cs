@@ -45,8 +45,7 @@ namespace RaphaelLibrary.Code.Init.SQL
             var sqlTemplates = node.SelectNodes(XmlElementName.S_SQL_TEMPLATE);
             if (sqlTemplates == null || sqlTemplates.Count == 0)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_SQL_TEMPLATE, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementName.S_SQL_TEMPLATE, node, procName);
                 return false;
             }
 

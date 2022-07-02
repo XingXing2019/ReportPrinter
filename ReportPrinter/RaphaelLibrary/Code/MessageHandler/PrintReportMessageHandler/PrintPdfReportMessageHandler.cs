@@ -1,16 +1,27 @@
 ﻿using System.Threading.Tasks;
-using ReportPrinterLibrary.Code.Log;
-using ReportPrinterLibrary.Code.RabbitMQ.Message;
+using RaphaelLibrary.Code.Init.PDF;
+using RaphaelLibrary.Code.Render.PDF.Manager;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
 {
     public class PrintPdfReportMessageHandler : IMessageHandler
     {
-        public async Task Handle(IMessage message)
+        public async Task<bool> Handle(IPrintReport message)
         {
             var procName = $"{this.GetType().Name}.{nameof(Handle)}";
-            //Thread.Sleep(5000);
-            await Task.Run(() => Logger.Debug($"Process message: {message.MessageId}", procName));
+            
+            var pdfTemplateId = message.TemplateId;
+
+            if (!PdfTemplateManager.Instance.TryGetPdfTemplate(pdfTemplateId, out var pdfTemplate))
+            {
+                return false;
+            }
+
+            var manager = new PdfDocumentManager();
+            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(manager));
+
+            return isSuccess;
         }
     }
 }

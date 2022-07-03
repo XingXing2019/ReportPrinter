@@ -18,21 +18,20 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
         private MarginPaddingModel _margin;
         private MarginPaddingModel _padding;
-
-        private HorizontalAlignment _horizontalAlignment;
-        private VerticalAlignment _verticalAlignment;
         
         private int _row;
         private int _column;
         private int _rowSpan;
         private int _columnSpan;
 
+        protected HorizontalAlignment HorizontalAlignment;
+        protected VerticalAlignment VerticalAlignment;
         protected XFont Font;
         protected XSolidBrush BrushColor;
         protected XColor BackgroundColor;
-        protected BoxModelParameter MarginBox;
-        protected BoxModelParameter PaddingBox;
-        protected BoxModelParameter ContentBox;
+        protected BoxModel MarginBox;
+        protected BoxModel PaddingBox;
+        protected BoxModel ContentBox;
 
         protected PdfRendererBase(PdfStructure position)
         {
@@ -63,7 +62,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 horizontalAlignment = HorizontalAlignment.Center;
                 Logger.LogDefaultValue(node, XmlElementHelper.S_HORIZONTAL_ALIGNMENT, horizontalAlignment, procName);
             }
-            _horizontalAlignment = horizontalAlignment;
+            HorizontalAlignment = horizontalAlignment;
 
             var verticalAlignmentStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_VERTICAL_ALIGNMENT);
             if (!Enum.TryParse(verticalAlignmentStr, out VerticalAlignment verticalAlignment))
@@ -71,7 +70,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 verticalAlignment = VerticalAlignment.Center;
                 Logger.LogDefaultValue(node, XmlElementHelper.S_VERTICAL_ALIGNMENT, verticalAlignment, procName);
             }
-            _verticalAlignment = verticalAlignment;
+            VerticalAlignment = verticalAlignment;
 
             var fontSizeStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_FONT_SIZE);
             if (!double.TryParse(fontSizeStr, out var fontSize))
@@ -166,23 +165,21 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 Row = _row,
                 Column = _column,
                 RowSpan = _rowSpan,
-                ColumnSpan = _columnSpan,
-                HorizontalAlignment = _horizontalAlignment,
-                VerticalAlignment = _verticalAlignment
+                ColumnSpan = _columnSpan
             };
         }
 
-        public void SetMarginBox(BoxModelParameter marginBox)
+        public void SetMarginBox(BoxModel marginBox)
         {
             MarginBox = marginBox;
         }
 
-        public void SetPaddingBox(BoxModelParameter paddingBox)
+        public void SetPaddingBox(BoxModel paddingBox)
         {
             PaddingBox = paddingBox;
         }
 
-        public void SetContentBox(BoxModelParameter contentBox)
+        public void SetContentBox(BoxModel contentBox)
         {
             ContentBox = contentBox;
         }
@@ -192,7 +189,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return this.MemberwiseClone() as PdfRendererBase;
         }
 
-        public abstract void RenderPdf(PdfDocumentManager manager);
+        public abstract bool TryRenderPdf(PdfDocumentManager manager);
     }
 
     public enum HorizontalAlignment

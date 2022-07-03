@@ -13,7 +13,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 {
     public abstract class PdfStructureBase : IXmlReader
     {
-        public double Height { get; set; }
+        public double HeightRatio { get; set; }
 
         protected int Rows;
         protected int Columns;
@@ -41,13 +41,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
                 return false;
             }
 
-            var heightStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_HEIGHT);
-            if (!double.TryParse(heightStr?.Substring(0, heightStr.Length - 1), out var height))
+            var heightRatioStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_HEIGHT);
+            if (!double.TryParse(heightRatioStr?.Substring(0, heightRatioStr.Length - 1), out var heightRatio))
             {
-                height = _position == PdfStructure.PdfPageBody ? 8 : 1;
-                Logger.LogDefaultValue(node, XmlElementHelper.S_HEIGHT, height, procName);
+                heightRatio = _position == PdfStructure.PdfPageBody ? 8 : 1;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_HEIGHT, heightRatio, procName);
             }
-            Height = height;
+            HeightRatio = heightRatio;
 
             var rowsStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ROWS);
             if (!int.TryParse(rowsStr, out var rows))
@@ -94,16 +94,17 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
                 }
             }
 
-            Logger.Info($"Success to read {_position} with {_pdfRendererList.Count} pdf renderer, height: {Height}, rows: {Rows}, columns: {Columns}", procName);
+            Logger.Info($"Success to read {_position} with {_pdfRendererList.Count} pdf renderer, height ratio: {HeightRatio}*, rows: {Rows}, columns: {Columns}", procName);
             return true;
         }
 
-        public bool TryCalcRendererPosition(XSize pageSize, double totalHeight)
+        public bool TryCalcRendererPosition(BoxModel container)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCalcRendererPosition)}";
 
-            var height = Height / totalHeight * pageSize.Height - _margin.Top - _margin.Bottom - _padding.Top - _padding.Bottom;
-            var width = pageSize.Width - _margin.Left - _margin.Right - _padding.Left - _padding.Right;
+            double x = container.X, y = container.Y;
+            var height = container.Height - _margin.Top - _margin.Bottom - _padding.Top - _padding.Bottom;
+            var width = container.Width - _margin.Left - _margin.Right - _padding.Left - _padding.Right;
 
             if (height <= 0)
             {
@@ -119,17 +120,15 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 
             foreach (var renderer in _pdfRendererList)
             {
-                var layoutParam = renderer.GetLayoutParameter();
-
-                if (!LayoutHelper.TryCalcMarginBoxParameter(out var marginBox))
+                if (!LayoutHelper.TryCreateMarginBox(new BoxModel(x, y, width, height), Rows, Columns, renderer, out var marginBox))
                     return false;
                 renderer.SetMarginBox(marginBox);
 
-                if (!LayoutHelper.TryCalcPaddingBoxParameter(out var paddingBox))
+                if (!LayoutHelper.TryCreatePaddingBox(new BoxModel(x, y, width, height), Rows, Columns, renderer, out var paddingBox))
                     return false;
                 renderer.SetPaddingBox(paddingBox);
 
-                if (!LayoutHelper.TryCalcContentBoxParameter(out var contentBox))
+                if (!LayoutHelper.TryCreateContentBox(new BoxModel(x, y, width, height), Rows, Columns, renderer, out var contentBox))
                     return false;
                 renderer.SetContentBox(contentBox);
             }
@@ -144,9 +143,18 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
             return cloned;
         }
 
-        public void RenderPdfStructure(PdfDocumentManager manager)
+        public bool TryRenderPdfStructure(PdfDocumentManager manager)
         {
-            _pdfRendererList.ForEach(x => x.RenderPdf(manager));
+            var procName = $"{this.GetType().Name}.{nameof(TryRenderPdfStructure)}";
+
+            foreach (var renderer in _pdfRendererList)
+            {
+                if (!renderer.TryRenderPdf(manager))
+                    return false;
+            }
+
+            Logger.Info($"Success to render: {_position} for message: {manager.MessageId}", procName);
+            return true;
         }
     }
 

@@ -17,9 +17,10 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
             {
                 return false;
             }
+            
+            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId));
 
-            var manager = new PdfDocumentManager();
-            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(manager));
+
 
             return isSuccess;
         }

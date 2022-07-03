@@ -1,6 +1,4 @@
-﻿using System;
-using RaphaelLibrary.Code.Render.PDF.Renderer;
-using RaphaelLibrary.Code.Render.PDF.Structure;
+﻿using RaphaelLibrary.Code.Render.PDF.Structure;
 
 namespace RaphaelLibrary.Code.Render.PDF.Model
 {
@@ -13,7 +11,5 @@ namespace RaphaelLibrary.Code.Render.PDF.Model
         public int Column { get; set; }
         public int RowSpan { get; set; }
         public int ColumnSpan { get; set; }
-        public HorizontalAlignment HorizontalAlignment { get; set; }
-        public VerticalAlignment VerticalAlignment { get; set; }
     }
 }

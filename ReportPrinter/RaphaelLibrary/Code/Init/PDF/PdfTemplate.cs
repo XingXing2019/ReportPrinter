@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using PdfSharp;
 using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
@@ -81,6 +82,10 @@ namespace RaphaelLibrary.Code.Init.PDF
                 return false;
             }
             _savePath = savePath;
+            if (!FileHelper.DirectoryExists(_savePath))
+            {
+                FileHelper.CreateDirectory(_savePath);
+            }
 
             var fileNameSuffix = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_FILE_NAME_SUFFIX);
             if (string.IsNullOrEmpty(fileNameSuffix))
@@ -124,23 +129,15 @@ namespace RaphaelLibrary.Code.Init.PDF
                 return false;
             }
             _pdfStructureList.Add(PdfStructure.PdfReportFooter, reportFooter);
-
-            var coverPagesTotalHeight = reportHeader.Height + pageBody.Height + reportFooter.Height;
-            var midPagesTotalHeight = pageHeader.Height + pageBody.Height + pageFooter.Height;
+            
             foreach (var structure in _pdfStructureList.Keys)
             {
                 if (structure == PdfStructure.PdfPageBody)
                     continue;
-                if (structure == PdfStructure.PdfReportHeader || structure == PdfStructure.PdfReportFooter)
-                {
-                    if (!_pdfStructureList[structure].TryCalcRendererPosition(_pageSize, coverPagesTotalHeight))
-                        return false;
-                }
-                else
-                {
-                    if (!_pdfStructureList[structure].TryCalcRendererPosition(_pageSize, midPagesTotalHeight))
-                        return false;
-                }
+
+                var container = LayoutHelper.CreateContainer(_pageSize, structure, _pdfStructureList);
+                if (!_pdfStructureList[structure].TryCalcRendererPosition(container))
+                    return false;
             }
 
             Logger.Info($"Success to read pdf template: {Id}, page size: {_pageSize.Width} : {_pageSize.Height}, Orientation: {orientation}, " +
@@ -160,22 +157,32 @@ namespace RaphaelLibrary.Code.Init.PDF
             return cloned;
         }
 
-        public bool TryCreatePdfReport(PdfDocumentManager manager)
+        public bool TryCreatePdfReport(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreatePdfReport)}";
 
+            var pdf = new PdfDocument();
+            var manager = new PdfDocumentManager(messageId, pdf, _pageSize);
+
             try
             {
+                
+
                 foreach (var pdfStructure in _pdfStructureList.Values)
                 {
-                    pdfStructure.RenderPdfStructure(manager);
+                    if (!pdfStructure.TryRenderPdfStructure(manager))
+                        return false;
                 }
 
+                var fileName = $"{_savePath}{_fileName}_{manager.MessageId}.pdf";
+                manager.Pdf.Save(fileName);
+
+                Logger.Info($"Success to render pdf: {Id} for message: {manager.MessageId}", procName);
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during creating pdf report. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during creating pdf report for message: {manager.MessageId}. Ex: {ex.Message}", procName);
                 return false;
             }
         }

@@ -1,13 +1,13 @@
 ﻿namespace RaphaelLibrary.Code.Render.PDF.Model
 {
-    public class BoxModelParameter
+    public class BoxModel
     {
         public double X { get; }
         public double Y { get; }
         public double Width { get; }
         public double Height { get; }
 
-        public BoxModelParameter(double x, double y, double width, double height)
+        public BoxModel(double x, double y, double width, double height)
         {
             X = x;
             Y = y;

@@ -1,8 +1,8 @@
 ﻿<PrintPdfReport>
-	<TemplateId>Template1</TemplateId>
+	<TemplateId>AccountingReport</TemplateId>
 	<PrinterId>Printer1</PrinterId>
-	<NumberOfCopy>3</NumberOfCopy>
-	<HasReprintFlag>true</HasReprintFlag>
+	<NumberOfCopy>1</NumberOfCopy>
+	<HasReprintFlag>false</HasReprintFlag>
 	<SqlVariables>
 		<SqlVariable>
 			<Name>Name1</Name>

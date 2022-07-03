@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml;
+using PdfSharp.Drawing;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
@@ -120,9 +121,40 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return cloned;
         }
 
-        public override void RenderPdf(PdfDocumentManager manager)
+        public override bool TryRenderPdf(PdfDocumentManager manager)
         {
-            throw new System.NotImplementedException();
+            var renderName = this.GetType().Name;
+            var procName = $"{renderName}.{nameof(TryRenderPdf)}";
+
+            try
+            {
+                var pdf = manager.Pdf;
+
+                if (_textRendererType == TextRendererType.Sql)
+                {
+
+                }
+                else if (_textRendererType == TextRendererType.Timestamp)
+                {
+                    _content = $"{_title}: {DateTime.Now.ToString(_mask)}";
+                }
+
+                var page = manager.AddPage();
+                using (var graph = XGraphics.FromPdfPage(page))
+                {
+                    var rect = new XRect(ContentBox.X, ContentBox.Y, ContentBox.Width, ContentBox.Height);
+                    graph.DrawString(_content, Font, BrushColor, rect, XStringFormats.TopLeft);
+                }
+
+
+                Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during rendering pdf: {renderName} for message: {manager.MessageId}. Ex: {ex.Message}", procName);
+                return false;
+            }
         }
     }
 

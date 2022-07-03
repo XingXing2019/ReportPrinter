@@ -37,6 +37,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
 
         #region Attribute
 
+        public const string S_BACKGROUND_COLOR = "BackgroundColor";
         public const string S_BRUSH_COLOR = "BrushColor";
         public const string S_COLUMNS = "Columns";
         public const string S_FILE_NAME_SUFFIX = "FileNameSuffix";

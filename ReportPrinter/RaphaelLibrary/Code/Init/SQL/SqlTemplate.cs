@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
@@ -19,7 +18,7 @@ namespace RaphaelLibrary.Code.Init.SQL
         public override bool ReadXml(XmlNode node)
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
-
+            
             var id = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ID);
             if (string.IsNullOrEmpty(id))
             {

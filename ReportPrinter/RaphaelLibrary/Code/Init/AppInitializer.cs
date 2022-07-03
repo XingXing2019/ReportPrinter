@@ -39,6 +39,12 @@ namespace RaphaelLibrary.Code.Init
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
+            if (node == null)
+            {
+                Logger.LogMissingXmlLog("RaphaelConfig", node, procName);
+                return false;
+            }
+
             var sqlTemplateList = node.SelectSingleNode(XmlElementHelper.S_SQL_TEMPLATE_LIST);
             if (sqlTemplateList == null)
             {

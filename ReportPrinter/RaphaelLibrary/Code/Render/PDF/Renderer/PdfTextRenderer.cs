@@ -3,6 +3,7 @@ using System.Xml;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
+using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
 
@@ -18,6 +19,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
         private string _mask;
         private string _title;
+
+        public PdfTextRenderer(PdfStructure position) : base(position) { }
 
         public override bool ReadXml(XmlNode node)
         {
@@ -45,6 +48,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     return false;
                 }
                 _content = content;
+                
+                Logger.Info($"Success to read Text with type of {_textRendererType}, content: {_content}", procName);
             }
             else if (textRendererType == TextRendererType.Sql)
             {
@@ -78,6 +83,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 var sqlTitle = node.SelectSingleNode(XmlElementHelper.S_TITLE)?.InnerText;
                 _title = sqlTitle;
+
+                Logger.Info($"Success to read Text with type of {_textRendererType}, sql template id: {sqlTemplateId}, sql id: {sqlId}, res column: {_sqlResColumn}", procName);
             }
             else
             {
@@ -85,7 +92,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 if (string.IsNullOrEmpty(mask))
                 {
                     mask = "yyyy-MM-dd HH:mm:ss";
-                    Logger.LogDefaultValue(XmlElementHelper.S_Mask, mask, procName);
+                    Logger.LogDefaultValue(node, XmlElementHelper.S_Mask, mask, procName);
                 }
                 _mask = mask;
 
@@ -93,12 +100,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 if (string.IsNullOrEmpty(timestampTitle))
                 {
                     timestampTitle = "Print Date";
-                    Logger.LogDefaultValue(XmlElementHelper.S_TITLE, timestampTitle, procName);
+                    Logger.LogDefaultValue(node, XmlElementHelper.S_TITLE, timestampTitle, procName);
                 }
                 _title = timestampTitle;
+
+                Logger.Info($"Success to read Text with type of {_textRendererType}", procName);
             }
 
-            Logger.Info($"Success to read Text with type of {_textRendererType}", procName);
             return true;
         }
 

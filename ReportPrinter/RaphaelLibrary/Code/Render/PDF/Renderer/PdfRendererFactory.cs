@@ -1,17 +1,18 @@
 ﻿using System;
 using RaphaelLibrary.Code.Render.PDF.Helper;
+using RaphaelLibrary.Code.Render.PDF.Structure;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {
     public class PdfRendererFactory
     {
-        public static PdfRendererBase CreatePdfRenderer(string name)
+        public static PdfRendererBase CreatePdfRenderer(string name, PdfStructure position)
         {
             var procName = $"PdfRendererFactory.{nameof(CreatePdfRenderer)}";
 
             if (name == XmlElementHelper.S_TEXT)
-                return new PdfTextRenderer();
+                return new PdfTextRenderer(position);
 
             else
             {

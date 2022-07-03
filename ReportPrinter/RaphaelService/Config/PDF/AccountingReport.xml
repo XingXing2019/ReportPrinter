@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber">
-	<ReportHeader Height="1*" Rows="3" Columns="3">
+	<ReportHeader Height="1*" Rows="3" Columns="3" Margin="10 20 10 20" Padding="0 10 0 10">
 		<Text Margin="10 20 10 20" Padding="0 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Italic" BrushColor="Red" Opacity="0.5">
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Italic" BrushColor="Red" BackgroundColor="Green" Opacity="0.5">
 			<Type>Text</Type>
 			<Row>1</Row>
 			<Column>1</Column>
@@ -20,7 +20,14 @@
 			<SqlId>GlAccount</SqlId>
 			<SqlResColumn>Description</SqlResColumn>
 		</Text>
+		
+	</ReportHeader>
+	<PageHeader Height="0.5*" Rows="1" Columns="1"/>
+	<PageBody Height="8*">
 
+	</PageBody>
+	<PageFooter Height="0.5*" Rows="1" Columns="1"/>
+	<ReportFooter Height="1*" Rows="3" Columns="3" Margin="10 20 10 20" Padding="0 10 0 10">
 		<Text Margin="10 20 10 20" Padding="0 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center"
 		      FontSize="9" FontFamily="Times New Roman" FontStyle="Italic" BrushColor="Red">
 			<Type>Timestamp</Type>
@@ -28,5 +35,5 @@
 			<Column>3</Column>
 			<Mask>yyyy-MM-dd</Mask>
 		</Text>
-	</ReportHeader>
+	</ReportFooter>
 </PdfTemplate>

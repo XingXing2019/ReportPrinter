@@ -5,6 +5,6 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
     public class PdfReportHeader : PdfStructureBase
     {
         public PdfReportHeader(HashSet<string> rendererNames) 
-            : base(rendererNames) { }
+            : base(PdfStructure.PdfReportHeader, rendererNames) { }
     }
 }

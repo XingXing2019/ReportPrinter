@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Data.SqlClient;
@@ -14,8 +15,13 @@ namespace ReportPrinterDatabase.Code.Executor
 
         public StoredProcedureExecutor()
         {
-            var databaseName = AppConfig.Instance.TargetDatabase;
-            _connectionString = DatabaseManager.Instance.GetConnectionString(databaseName);
+            var databaseId = AppConfig.Instance.TargetDatabase;
+            if (!DatabaseManager.Instance.TryGetConnectionString(databaseId, out var connectionString))
+            {
+                throw new ApplicationException($"Database connection: {databaseId} does not exist");
+            }
+
+            _connectionString = connectionString;
         }
         
         public async Task<int> ExecuteNonQueryAsync(params StoredProcedureBase[] storedProcedures)

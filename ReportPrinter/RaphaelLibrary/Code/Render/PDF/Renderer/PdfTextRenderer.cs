@@ -132,7 +132,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 if (_textRendererType == TextRendererType.Sql)
                 {
+                    if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))
+                        return false;
 
+                    var title = string.IsNullOrEmpty(_title) ? string.Empty : $"{_title}: ";
+                    _content = $"{title}{res}";
                 }
                 else if (_textRendererType == TextRendererType.Timestamp)
                 {

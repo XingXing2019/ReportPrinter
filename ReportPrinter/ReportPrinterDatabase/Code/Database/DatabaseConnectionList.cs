@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Database
 {
@@ -11,9 +12,18 @@ namespace ReportPrinterDatabase.Code.Database
             _databaseConnections = databaseConnections;
         }
         
-        public DatabaseConnection GetDatabaseConnection(string id)
+        public bool TryGetDatabaseConnection(string id, out DatabaseConnection databaseConnection)
         {
-            return _databaseConnections.GetValueOrDefault(id, null);
+            var procName = $"{this.GetType().Name}.{nameof(TryGetDatabaseConnection)}";
+
+            databaseConnection = null;
+            if (!_databaseConnections.ContainsKey(id))
+            {
+                Logger.Error($"Database connection: {id} does not exist", procName);
+                return false;
+            }
+            databaseConnection = _databaseConnections[id];
+            return true;
         }
     }
 }

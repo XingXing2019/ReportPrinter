@@ -5,12 +5,8 @@
 	<HasReprintFlag>false</HasReprintFlag>
 	<SqlVariables>
 		<SqlVariable>
-			<Name>Name1</Name>
-			<Value>Value1</Value>
-		</SqlVariable>
-		<SqlVariable>
-			<Name>Name2</Name>
-			<Value>Value2</Value>
+			<Name>AccountNumber</Name>
+			<Value>200300</Value>
 		</SqlVariable>
 	</SqlVariables>
 </PrintPdfReport>

@@ -50,9 +50,18 @@ namespace ReportPrinterDatabase.Code.Database
             _databaseConnectionList = new DatabaseConnectionList(databaseConnections);
         }
 
-        public string GetConnectionString(string id)
+        public bool TryGetConnectionString(string id, out string connectionString)
         {
-            return _databaseConnectionList.GetDatabaseConnection(id)?.ConnectionString;
+            var procName = $"{this.GetType().Name}.{nameof(TryGetConnectionString)}";
+
+            connectionString = string.Empty;
+            if (!_databaseConnectionList.TryGetDatabaseConnection(id, out var databaseConnection))
+                return false;
+
+            connectionString = databaseConnection.ConnectionString;
+
+            Logger.Info($"Return connection string for {id}: {connectionString}", procName);
+            return true;
         }
     }
 }

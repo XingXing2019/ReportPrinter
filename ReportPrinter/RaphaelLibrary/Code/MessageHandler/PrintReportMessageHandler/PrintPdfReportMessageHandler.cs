@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Init.PDF;
-using RaphaelLibrary.Code.Render.PDF.Manager;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
@@ -27,6 +24,7 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
 
             var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId));
 
+            SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
             return isSuccess;
         }
     }

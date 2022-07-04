@@ -53,9 +53,12 @@ namespace RaphaelLibrary.Code.Common
             }
         }
 
-        public void ClearSqlVariables(Guid messageId)
+        public void RemoveSqlVariables(Guid messageId)
         {
-            _sqlVariableRepo.Remove(messageId);
+            lock (_lock)
+            {
+                _sqlVariableRepo.Remove(messageId);
+            }
         }
     }
 }

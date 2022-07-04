@@ -193,9 +193,7 @@ namespace RaphaelLibrary.Code.Render.SQL
 
             return query;
         }
-
-
-
+        
         #endregion
     }
 }

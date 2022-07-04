@@ -1,0 +1,158 @@
+﻿using PdfSharp.Drawing;
+
+namespace RaphaelLibrary.Code.Render.PDF.Helper
+{
+    public class ColorHelper
+    {
+		public static bool TryGenerateColor(string colorStr, out XColor color)
+		{
+			switch (colorStr)
+			{
+				case "AliceBlue": color = XColors.AliceBlue; break;
+				case "AntiqueWhite": color = XColors.AntiqueWhite; break;
+				case "Aqua": color = XColors.Aqua; break;
+				case "Aquamarine": color = XColors.Aquamarine; break;
+				case "Azure": color = XColors.Azure; break;
+				case "Beige": color = XColors.Beige; break;
+				case "Bisque": color = XColors.Bisque; break;
+				case "Black": color = XColors.Black; break;
+				case "BlanchedAlmond": color = XColors.BlanchedAlmond; break;
+				case "Blue": color = XColors.Blue; break;
+				case "BlueViolet": color = XColors.BlueViolet; break;
+				case "Brown": color = XColors.Brown; break;
+				case "BurlyWood": color = XColors.BurlyWood; break;
+				case "CadetBlue": color = XColors.CadetBlue; break;
+				case "Chartreuse": color = XColors.Chartreuse; break;
+				case "Chocolate": color = XColors.Chocolate; break;
+				case "Coral": color = XColors.Coral; break;
+				case "CornflowerBlue": color = XColors.CornflowerBlue; break;
+				case "Cornsilk": color = XColors.Cornsilk; break;
+				case "Crimson": color = XColors.Crimson; break;
+				case "Cyan": color = XColors.Cyan; break;
+				case "DarkBlue": color = XColors.DarkBlue; break;
+				case "DarkCyan": color = XColors.DarkCyan; break;
+				case "DarkGoldenrod": color = XColors.DarkGoldenrod; break;
+				case "DarkGray": color = XColors.DarkGray; break;
+				case "DarkGreen": color = XColors.DarkGreen; break;
+				case "DarkKhaki": color = XColors.DarkKhaki; break;
+				case "DarkMagenta": color = XColors.DarkMagenta; break;
+				case "DarkOliveGreen": color = XColors.DarkOliveGreen; break;
+				case "DarkOrange": color = XColors.DarkOrange; break;
+				case "DarkOrchid": color = XColors.DarkOrchid; break;
+				case "DarkRed": color = XColors.DarkRed; break;
+				case "DarkSalmon": color = XColors.DarkSalmon; break;
+				case "DarkSeaGreen": color = XColors.DarkSeaGreen; break;
+				case "DarkSlateBlue": color = XColors.DarkSlateBlue; break;
+				case "DarkSlateGray": color = XColors.DarkSlateGray; break;
+				case "DarkTurquoise": color = XColors.DarkTurquoise; break;
+				case "DarkViolet": color = XColors.DarkViolet; break;
+				case "DeepPink": color = XColors.DeepPink; break;
+				case "DeepSkyBlue": color = XColors.DeepSkyBlue; break;
+				case "DimGray": color = XColors.DimGray; break;
+				case "DodgerBlue": color = XColors.DodgerBlue; break;
+				case "Firebrick": color = XColors.Firebrick; break;
+				case "FloralWhite": color = XColors.FloralWhite; break;
+				case "ForestGreen": color = XColors.ForestGreen; break;
+				case "Fuchsia": color = XColors.Fuchsia; break;
+				case "Gainsboro": color = XColors.Gainsboro; break;
+				case "GhostWhite": color = XColors.GhostWhite; break;
+				case "Gold": color = XColors.Gold; break;
+				case "Goldenrod": color = XColors.Goldenrod; break;
+				case "Gray": color = XColors.Gray; break;
+				case "Green": color = XColors.Green; break;
+				case "GreenYellow": color = XColors.GreenYellow; break;
+				case "Honeydew": color = XColors.Honeydew; break;
+				case "HotPink": color = XColors.HotPink; break;
+				case "IndianRed": color = XColors.IndianRed; break;
+				case "Indigo": color = XColors.Indigo; break;
+				case "Ivory": color = XColors.Ivory; break;
+				case "Khaki": color = XColors.Khaki; break;
+				case "Lavender": color = XColors.Lavender; break;
+				case "LavenderBlush": color = XColors.LavenderBlush; break;
+				case "LawnGreen": color = XColors.LawnGreen; break;
+				case "LemonChiffon": color = XColors.LemonChiffon; break;
+				case "LightBlue": color = XColors.LightBlue; break;
+				case "LightCoral": color = XColors.LightCoral; break;
+				case "LightCyan": color = XColors.LightCyan; break;
+				case "LightGoldenrodYellow": color = XColors.LightGoldenrodYellow; break;
+				case "LightGray": color = XColors.LightGray; break;
+				case "LightGreen": color = XColors.LightGreen; break;
+				case "LightPink": color = XColors.LightPink; break;
+				case "LightSalmon": color = XColors.LightSalmon; break;
+				case "LightSeaGreen": color = XColors.LightSeaGreen; break;
+				case "LightSkyBlue": color = XColors.LightSkyBlue; break;
+				case "LightSlateGray": color = XColors.LightSlateGray; break;
+				case "LightSteelBlue": color = XColors.LightSteelBlue; break;
+				case "LightYellow": color = XColors.LightYellow; break;
+				case "Lime": color = XColors.Lime; break;
+				case "LimeGreen": color = XColors.LimeGreen; break;
+				case "Linen": color = XColors.Linen; break;
+				case "Magenta": color = XColors.Magenta; break;
+				case "Maroon": color = XColors.Maroon; break;
+				case "MediumAquamarine": color = XColors.MediumAquamarine; break;
+				case "MediumBlue": color = XColors.MediumBlue; break;
+				case "MediumOrchid": color = XColors.MediumOrchid; break;
+				case "MediumPurple": color = XColors.MediumPurple; break;
+				case "MediumSeaGreen": color = XColors.MediumSeaGreen; break;
+				case "MediumSlateBlue": color = XColors.MediumSlateBlue; break;
+				case "MediumSpringGreen": color = XColors.MediumSpringGreen; break;
+				case "MediumTurquoise": color = XColors.MediumTurquoise; break;
+				case "MediumVioletRed": color = XColors.MediumVioletRed; break;
+				case "MidnightBlue": color = XColors.MidnightBlue; break;
+				case "MintCream": color = XColors.MintCream; break;
+				case "MistyRose": color = XColors.MistyRose; break;
+				case "Moccasin": color = XColors.Moccasin; break;
+				case "NavajoWhite": color = XColors.NavajoWhite; break;
+				case "Navy": color = XColors.Navy; break;
+				case "OldLace": color = XColors.OldLace; break;
+				case "Olive": color = XColors.Olive; break;
+				case "OliveDrab": color = XColors.OliveDrab; break;
+				case "Orange": color = XColors.Orange; break;
+				case "OrangeRed": color = XColors.OrangeRed; break;
+				case "Orchid": color = XColors.Orchid; break;
+				case "PaleGoldenrod": color = XColors.PaleGoldenrod; break;
+				case "PaleGreen": color = XColors.PaleGreen; break;
+				case "PaleTurquoise": color = XColors.PaleTurquoise; break;
+				case "PaleVioletRed": color = XColors.PaleVioletRed; break;
+				case "PapayaWhip": color = XColors.PapayaWhip; break;
+				case "PeachPuff": color = XColors.PeachPuff; break;
+				case "Peru": color = XColors.Peru; break;
+				case "Pink": color = XColors.Pink; break;
+				case "Plum": color = XColors.Plum; break;
+				case "PowderBlue": color = XColors.PowderBlue; break;
+				case "Purple": color = XColors.Purple; break;
+				case "Red": color = XColors.Red; break;
+				case "RosyBrown": color = XColors.RosyBrown; break;
+				case "RoyalBlue": color = XColors.RoyalBlue; break;
+				case "SaddleBrown": color = XColors.SaddleBrown; break;
+				case "Salmon": color = XColors.Salmon; break;
+				case "SandyBrown": color = XColors.SandyBrown; break;
+				case "SeaGreen": color = XColors.SeaGreen; break;
+				case "SeaShell": color = XColors.SeaShell; break;
+				case "Sienna": color = XColors.Sienna; break;
+				case "Silver": color = XColors.Silver; break;
+				case "SkyBlue": color = XColors.SkyBlue; break;
+				case "SlateBlue": color = XColors.SlateBlue; break;
+				case "SlateGray": color = XColors.SlateGray; break;
+				case "Snow": color = XColors.Snow; break;
+				case "SpringGreen": color = XColors.SpringGreen; break;
+				case "SteelBlue": color = XColors.SteelBlue; break;
+				case "Tan": color = XColors.Tan; break;
+				case "Teal": color = XColors.Teal; break;
+				case "Thistle": color = XColors.Thistle; break;
+				case "Tomato": color = XColors.Tomato; break;
+				case "Transparent": color = XColors.Transparent; break;
+				case "Turquoise": color = XColors.Turquoise; break;
+				case "Violet": color = XColors.Violet; break;
+				case "Wheat": color = XColors.Wheat; break;
+				case "White": color = XColors.White; break;
+				case "WhiteSmoke": color = XColors.WhiteSmoke; break;
+				case "Yellow": color = XColors.Yellow; break;
+				case "YellowGreen": color = XColors.YellowGreen; break;
+				default: color = XColor.Empty; break;
+			}
+
+			return color != XColor.Empty;
+		}
+	}
+}

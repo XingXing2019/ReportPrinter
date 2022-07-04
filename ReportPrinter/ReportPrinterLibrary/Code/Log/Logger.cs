@@ -8,8 +8,8 @@ namespace ReportPrinterLibrary.Code.Log
     public static class Logger
     {
         private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
-        private static readonly string _missingXmlElement = "XML is incorrect. Unable to locate xml element: {0}.";
-        private static readonly string _setDefaultValue = "{0} is not provide or incorrectly provided. Initialize {0} to {1}";
+        private static readonly string _missingXmlElement = "XML is incorrect. Unable to locate valid xml element: {0}.";
+        private static readonly string _setDefaultValue = "{0}: {1} is not provide or incorrectly provided. Initialize {1} to {2}";
 
         public static void Info(string message, string procName)
         {
@@ -41,14 +41,18 @@ namespace ReportPrinterLibrary.Code.Log
             _logger.Debug(message);
         }
 
-        public static string GenerateMissingXmlLog(string missingXml, XmlNode node)
+        public static void LogMissingXmlLog(string missingXml, XmlNode node, string procName)
         {
-            return string.Format(_missingXmlElement, $"{GenerateAncestorPath(node)}->{missingXml}");
+            var ancestorPath = GenerateAncestorPath(node);
+            var path = string.IsNullOrEmpty(ancestorPath) ? missingXml : $"{ancestorPath}->{missingXml}";
+            var missingXmlLog = string.Format(_missingXmlElement, path);
+            Error(missingXmlLog, procName);
         }
 
-        public static string GenerateDefaultValue(string name, string value)
+        public static void LogDefaultValue(XmlNode node, string name, object value, string procName)
         {
-            return string.Format(_setDefaultValue, name, value);
+            var defaultValueLog = string.Format(_setDefaultValue, node.Name, name, value);
+            Debug(defaultValueLog, procName);
         }
 
         #region Helper

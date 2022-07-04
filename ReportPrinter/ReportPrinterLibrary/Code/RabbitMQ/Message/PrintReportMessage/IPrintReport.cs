@@ -19,15 +19,15 @@ namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
         bool IsValid { get; }
     }
 
-    public class SqlVariable : ICloneable
+    public class SqlVariable
     {
         public string Name { get; set; }
         public string Value { get; set; }
 
         public bool IsValid => !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Value);
-        public object Clone()
+        public SqlVariable Clone()
         {
-            return this.MemberwiseClone();
+            return this.MemberwiseClone() as SqlVariable;
         }
     }
 

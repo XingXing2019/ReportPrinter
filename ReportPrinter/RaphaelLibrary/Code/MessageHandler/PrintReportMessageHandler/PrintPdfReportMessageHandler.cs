@@ -1,16 +1,31 @@
-﻿using System.Threading.Tasks;
-using ReportPrinterLibrary.Code.Log;
-using ReportPrinterLibrary.Code.RabbitMQ.Message;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Init.PDF;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
 {
     public class PrintPdfReportMessageHandler : IMessageHandler
     {
-        public async Task Handle(IMessage message)
+        public async Task<bool> Handle(IPrintReport message)
         {
             var procName = $"{this.GetType().Name}.{nameof(Handle)}";
-            //Thread.Sleep(5000);
-            await Task.Run(() => Logger.Debug($"Process message: {message.MessageId}", procName));
+            
+            var pdfTemplateId = message.TemplateId;
+
+            if (!PdfTemplateManager.Instance.TryGetPdfTemplate(pdfTemplateId, out var pdfTemplate))
+            {
+                return false;
+            }
+
+            var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
+            SqlVariableManager.Instance.StoreSqlVariables(message.MessageId, sqlVariables);
+
+            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId));
+
+            SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
+            return isSuccess;
         }
     }
 }

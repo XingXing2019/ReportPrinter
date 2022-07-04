@@ -1,16 +1,12 @@
 ﻿<PrintPdfReport>
-	<TemplateId>Template1</TemplateId>
+	<TemplateId>AccountingReport</TemplateId>
 	<PrinterId>Printer1</PrinterId>
-	<NumberOfCopy>3</NumberOfCopy>
-	<HasReprintFlag>true</HasReprintFlag>
+	<NumberOfCopy>1</NumberOfCopy>
+	<HasReprintFlag>false</HasReprintFlag>
 	<SqlVariables>
 		<SqlVariable>
-			<Name>Name1</Name>
-			<Value>Value1</Value>
-		</SqlVariable>
-		<SqlVariable>
-			<Name>Name2</Name>
-			<Value>Value2</Value>
+			<Name>AccountNumber</Name>
+			<Value>200300</Value>
 		</SqlVariable>
 	</SqlVariables>
 </PrintPdfReport>

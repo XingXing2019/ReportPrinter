@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using ReportPrinterDatabase.Code.Database;
@@ -16,8 +17,13 @@ namespace ReportPrinterDatabase.Code.Context
 
         public ReportPrinterContext()
         {
-            var targetDatabase = AppConfig.Instance.TargetDatabase;
-            _connectionString = DatabaseManager.Instance.GetConnectionString(targetDatabase);
+            var databaseId = AppConfig.Instance.TargetDatabase;
+            if (!DatabaseManager.Instance.TryGetConnectionString(databaseId, out var connectionString))
+            {
+                throw new ApplicationException($"Database connection: {databaseId} does not exist");
+            }
+
+            _connectionString = connectionString;
             _loggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
         }
 

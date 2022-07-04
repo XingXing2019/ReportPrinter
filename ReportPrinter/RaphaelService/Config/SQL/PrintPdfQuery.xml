@@ -39,4 +39,19 @@
 		</Query>
 		<Variable Name="CurrencyCode" />
 	</Sql>
+	<Sql Id="GlAccount" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				AccountNumber,
+				Description,
+				Status,
+				Configuration,
+				Code
+			FROM 
+				GlAccounts
+			WHERE 
+				AccountNumber = '%%%AccountNumber%%%'
+		</Query>
+		<Variable Name="AccountNumber" />
+	</Sql>
 </SqlTemplate>

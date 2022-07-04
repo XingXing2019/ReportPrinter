@@ -3,6 +3,7 @@ using System.Xml;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Init.PDF;
 using RaphaelLibrary.Code.Init.SQL;
+using RaphaelLibrary.Code.Render.PDF.Helper;
 using ReportPrinterLibrary.Code.Config.Helper;
 using ReportPrinterLibrary.Code.Log;
 
@@ -30,6 +31,7 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
+            Logger.Info($"Success to initialize application", procName);
             return true;
         }
 
@@ -37,11 +39,16 @@ namespace RaphaelLibrary.Code.Init
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var sqlTemplateList = node.SelectSingleNode(XmlElementName.S_SQL_TEMPLATE_LIST);
+            if (node == null)
+            {
+                Logger.LogMissingXmlLog("RaphaelConfig", node, procName);
+                return false;
+            }
+
+            var sqlTemplateList = node.SelectSingleNode(XmlElementHelper.S_SQL_TEMPLATE_LIST);
             if (sqlTemplateList == null)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_SQL_TEMPLATE_LIST, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_TEMPLATE_LIST, node, procName);
                 return false;
             }
 
@@ -50,11 +57,10 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
-            var pdfTemplateList = node.SelectSingleNode(XmlElementName.S_PDF_TEMPLATE_LIST);
+            var pdfTemplateList = node.SelectSingleNode(XmlElementHelper.S_PDF_TEMPLATE_LIST);
             if (pdfTemplateList == null)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_PDF_TEMPLATE_LIST, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_PDF_TEMPLATE_LIST, node, procName);
                 return false;
             }
 
@@ -63,6 +69,7 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
+            Logger.Info($"Success to read config of RaphaelLibrary", procName);
             return true;
         }
     }

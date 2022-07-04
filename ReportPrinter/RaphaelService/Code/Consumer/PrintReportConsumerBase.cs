@@ -20,10 +20,10 @@ namespace RaphaelService.Code.Consumer
             await Manager.PatchStatus(message.MessageId, status);
         }
 
-        protected async Task ConsumeMessage(IPrintReport message)
+        protected async Task<bool> ConsumeMessage(IPrintReport message)
         {
             var handler = PrintReportMessageHandlerFactory.CreatePrintReportMessageHandler(message.ReportType);
-            await handler.Handle(message);
+            return await handler.Handle(message);
         }
     }
 }

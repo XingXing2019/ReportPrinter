@@ -5,25 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Code\Common\" />
     <Folder Include="Code\Init\PDF\" />
     <Folder Include="Code\Print\" />
-    <Folder Include="Code\Render\PDF\" />
+    <Folder Include="Code\Render\PDF\Manager\" />
+    <Folder Include="Code\Render\PDF\Renderer\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
     <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="PdfiumViewer">
-      <HintPath>Code\Plugin\PdfiumViewer.dll</HintPath>
-    </Reference>
     <Reference Include="PdfSharp">
       <HintPath>Code\Plugin\PdfSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="zxing">
-      <HintPath>Code\Plugin\zxing.dll</HintPath>
     </Reference>
   </ItemGroup>
 

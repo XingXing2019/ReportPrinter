@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Render.PDF.Helper;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Init.PDF
@@ -40,11 +41,10 @@ namespace RaphaelLibrary.Code.Init.PDF
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";
 
-            var pdfTemplates = node.SelectNodes(XmlElementName.S_PDF_TEMPLATE);
+            var pdfTemplates = node.SelectNodes(XmlElementHelper.S_PDF_TEMPLATE);
             if (pdfTemplates == null || pdfTemplates.Count == 0)
             {
-                var missingXmlLog = Logger.GenerateMissingXmlLog(XmlElementName.S_PDF_TEMPLATE, node);
-                Logger.Error(missingXmlLog, procName);
+                Logger.LogMissingXmlLog(XmlElementHelper.S_PDF_TEMPLATE, node, procName);
                 return false;
             }
 

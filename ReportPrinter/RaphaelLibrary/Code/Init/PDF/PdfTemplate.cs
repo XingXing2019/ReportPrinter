@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using PdfSharp;
 using PdfSharp.Drawing;
@@ -166,13 +167,13 @@ namespace RaphaelLibrary.Code.Init.PDF
 
             try
             {
-                
+                var pageBody = _pdfStructureList[PdfStructure.PdfPageBody];
+                if (!pageBody.TryRenderPdfStructure(manager))
+                    return false;
 
-                foreach (var pdfStructure in _pdfStructureList.Values)
-                {
-                    if (!pdfStructure.TryRenderPdfStructure(manager))
-                        return false;
-                }
+                var headerFooter = _pdfStructureList.Where(x => x.Key != PdfStructure.PdfPageBody).Select(x => x.Value);
+                if (headerFooter.Any(x => !x.TryRenderPdfStructure(manager)))
+                    return false;
 
                 var fileName = $"{_savePath}{_fileName}_{manager.MessageId}.pdf";
                 manager.Pdf.Save(fileName);

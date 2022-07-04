@@ -14,12 +14,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public static bool TryCreateMarginBox(BoxModel container, int totalRows, int totalColumns, PdfRendererBase renderer, out BoxModel marginBox)
         {
             var procName = $"LayoutHelper.{nameof(TryCreateMarginPadding)}";
-            
+
+            marginBox = null;
             var dimension = CalcBoxDimension(container, totalRows, totalColumns);
             var layoutParam = renderer.GetLayoutParameter();
-
-            var x = container.X + dimension[1] * layoutParam.Row;
-            var y = container.Y + dimension[0] * layoutParam.Column;
+            
+            var x = container.X + dimension[0] * layoutParam.Column;
+            var y = container.Y + dimension[1] * layoutParam.Row;
             var width = dimension[0] * layoutParam.ColumnSpan;
             var height = dimension[1] * layoutParam.RowSpan;
 
@@ -37,8 +38,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             var layoutParam = renderer.GetLayoutParameter();
             var margin = layoutParam.Margin;
 
-            var x = container.X + dimension[1] * layoutParam.Row + margin.Left;
-            var y = container.Y + dimension[0] * layoutParam.Column + margin.Top;
+            var x = container.X + dimension[0] * layoutParam.Column + margin.Left;
+            var y = container.Y + dimension[1] * layoutParam.Row + margin.Top;
             var height = dimension[1] * layoutParam.RowSpan - margin.Top - margin.Bottom;
             var width = dimension[0] * layoutParam.ColumnSpan - margin.Left - margin.Right;
 
@@ -68,8 +69,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             var margin = layoutParam.Margin;
             var padding = layoutParam.Padding;
 
-            var x = container.X + dimension[1] * layoutParam.Row + margin.Left + padding.Left;
-            var y = container.Y + dimension[0] * layoutParam.Column + margin.Top + padding.Top;
+            var x = container.X + dimension[0] * layoutParam.Column + margin.Left + padding.Left;
+            var y = container.Y + dimension[1] * layoutParam.Row + margin.Top + padding.Top;
             var height = dimension[1] * layoutParam.RowSpan - margin.Top - margin.Bottom - padding.Top - padding.Bottom;
             var width = dimension[0] * layoutParam.ColumnSpan - margin.Left - margin.Right - padding.Left - padding.Right;
 

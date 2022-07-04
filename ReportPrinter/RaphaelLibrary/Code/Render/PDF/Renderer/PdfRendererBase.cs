@@ -190,6 +190,44 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         }
 
         public abstract bool TryRenderPdf(PdfDocumentManager manager);
+
+
+        #region Helper
+
+        protected void RenderBoxModel(XGraphics graph)
+        {
+            if (BackgroundColor == XColors.Transparent)
+                return;
+
+            var options = new XPdfFontOptions(PdfFontEncoding.Unicode);
+            var font = new XFont("Verdana", 4, XFontStyle.Regular, options);
+            var brush = new XSolidBrush(XColors.White);
+
+            var marginBox = RenderBox(graph, MarginBox, 0.5);
+            var paddingBox = RenderBox(graph, PaddingBox, 0.75);
+            var contentBox = RenderBox(graph, ContentBox, 1);
+
+            RenderSize(graph, font, brush, marginBox, _margin);
+            RenderSize(graph, font, brush, paddingBox, _padding);
+        }
+
+        private XRect RenderBox(XGraphics graph, BoxModel box, double opacity)
+        {
+            var rect = new XRect(box.X, box.Y, box.Width, box.Height);
+            var brush = new XSolidBrush(XColor.FromArgb((int)(opacity * byte.MaxValue), BackgroundColor));
+            graph.DrawRectangle(brush, rect);
+            return rect;
+        }
+
+        private void RenderSize(XGraphics graph, XFont font, XBrush brush, XRect rect, MarginPaddingModel size)
+        {
+            graph.DrawString(size.Left.ToString(), font, brush, rect, XStringFormats.CenterLeft);
+            graph.DrawString(size.Right.ToString(), font, brush, rect, XStringFormats.CenterRight);
+            graph.DrawString(size.Top.ToString(), font, brush, rect, XStringFormats.TopCenter);
+            graph.DrawString(size.Bottom.ToString(), font, brush, rect, XStringFormats.BottomCenter);
+        }
+
+        #endregion
     }
 
     public enum HorizontalAlignment

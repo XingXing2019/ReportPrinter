@@ -9,6 +9,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
     {
         public PdfDocument Pdf { get; }
         public Guid MessageId { get; }
+        public int CurrentPage { get; set; }
 
         private readonly XSize _pageSize;
         
@@ -17,15 +18,15 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
             _pageSize = pageSize;
             MessageId = messageId;
             Pdf = pdf;
+            AddPage();
         }
         
 
-        public PdfPage AddPage()
+        public void AddPage()
         {
             var page = Pdf.AddPage();
             page.Height = _pageSize.Height;
             page.Width = _pageSize.Width;
-            return page;
         }
     }
 }

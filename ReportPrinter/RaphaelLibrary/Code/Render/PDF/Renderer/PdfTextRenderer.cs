@@ -139,11 +139,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     _content = $"{_title}: {DateTime.Now.ToString(_mask)}";
                 }
 
-                var page = manager.AddPage();
+                var page = pdf.Pages[manager.CurrentPage];
                 using (var graph = XGraphics.FromPdfPage(page))
                 {
+                    RenderBoxModel(graph);
+
                     var rect = new XRect(ContentBox.X, ContentBox.Y, ContentBox.Width, ContentBox.Height);
-                    graph.DrawString(_content, Font, BrushColor, rect, XStringFormats.TopLeft);
+                    RenderText(graph, rect, _content.Trim());
                 }
 
 
@@ -156,7 +158,48 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return false;
             }
         }
+
+
+        #region Helper
+
+        private void RenderText(XGraphics graph, XRect rect, string text)
+        {
+            XStringFormat position;
+            if (VerticalAlignment == VerticalAlignment.Top)
+            {
+                if (HorizontalAlignment == HorizontalAlignment.Left)
+                    position = XStringFormats.TopLeft;
+                else if (HorizontalAlignment == HorizontalAlignment.Center)
+                    position = XStringFormats.TopCenter;
+                else
+                    position = XStringFormats.TopRight;
+
+            }
+            else if (VerticalAlignment == VerticalAlignment.Center)
+            {
+                if (HorizontalAlignment == HorizontalAlignment.Left)
+                    position = XStringFormats.CenterLeft;
+                else if (HorizontalAlignment == HorizontalAlignment.Center)
+                    position = XStringFormats.Center;
+                else
+                    position = XStringFormats.CenterRight;
+            }
+            else
+            {
+                if (HorizontalAlignment == HorizontalAlignment.Left)
+                    position = XStringFormats.BottomLeft;
+                else if (HorizontalAlignment == HorizontalAlignment.Center)
+                    position = XStringFormats.BottomCenter;
+                else
+                    position = XStringFormats.BottomRight;
+            }
+
+            graph.DrawString(text, Font, BrushColor, rect, position);
+        }
+
+        #endregion
     }
+
 
     public enum TextRendererType
     {

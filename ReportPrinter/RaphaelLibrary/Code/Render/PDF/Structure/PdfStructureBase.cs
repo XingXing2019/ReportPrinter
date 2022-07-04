@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using PdfSharp.Drawing;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
@@ -17,18 +16,19 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 
         protected int Rows;
         protected int Columns;
+        protected readonly PdfStructure Position;
+        protected List<PdfRendererBase> PdfRendererList;
 
-        private readonly PdfStructure _position;
         private readonly HashSet<string> _rendererNames;
-        private List<PdfRendererBase> _pdfRendererList;
         private MarginPaddingModel _margin;
         private MarginPaddingModel _padding;
 
+
         protected PdfStructureBase(PdfStructure position, HashSet<string> rendererNames)
         {
-            _position = position;
+            Position = position;
             _rendererNames = rendererNames;
-            _pdfRendererList = new List<PdfRendererBase>();
+            PdfRendererList = new List<PdfRendererBase>();
         }
 
         public virtual bool ReadXml(XmlNode node)
@@ -37,14 +37,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 
             if (node == null)
             {
-                Logger.LogMissingXmlLog(_position.ToString(), node, procName);
+                Logger.LogMissingXmlLog(Position.ToString(), node, procName);
                 return false;
             }
 
             var heightRatioStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_HEIGHT);
             if (!double.TryParse(heightRatioStr?.Substring(0, heightRatioStr.Length - 1), out var heightRatio))
             {
-                heightRatio = _position == PdfStructure.PdfPageBody ? 8 : 1;
+                heightRatio = Position == PdfStructure.PdfPageBody ? 8 : 1;
                 Logger.LogDefaultValue(node, XmlElementHelper.S_HEIGHT, heightRatio, procName);
             }
             HeightRatio = heightRatio;
@@ -84,17 +84,17 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
                 var rendererNodes = node.SelectNodes(name);
                 foreach (XmlNode rendererNode in rendererNodes)
                 {
-                    var pdfRenderer = PdfRendererFactory.CreatePdfRenderer(name, _position);
+                    var pdfRenderer = PdfRendererFactory.CreatePdfRenderer(name, Position);
                     if (!pdfRenderer.ReadXml(rendererNode))
                     {
                         return false;
                     }
                     
-                    _pdfRendererList.Add(pdfRenderer);
+                    PdfRendererList.Add(pdfRenderer);
                 }
             }
 
-            Logger.Info($"Success to read {_position} with {_pdfRendererList.Count} pdf renderer, height ratio: {HeightRatio}*, rows: {Rows}, columns: {Columns}", procName);
+            Logger.Info($"Success to read {Position} with {PdfRendererList.Count} pdf renderer, height ratio: {HeightRatio}*, rows: {Rows}, columns: {Columns}", procName);
             return true;
         }
 
@@ -102,24 +102,38 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCalcRendererPosition)}";
 
-            double x = container.X, y = container.Y;
+            var x = container.X + _margin.Left + _padding.Left;
+            var y = container.Y + _margin.Top + _padding.Top;
             var height = container.Height - _margin.Top - _margin.Bottom - _padding.Top - _padding.Bottom;
             var width = container.Width - _margin.Left - _margin.Right - _padding.Left - _padding.Right;
 
             if (height <= 0)
             {
-                Logger.Error($"{_position}: Sum of vertical margin and padding is too large, there is no space for content", procName);
+                Logger.Error($"{Position}: Sum of vertical margin and padding is too large, there is no space for content", procName);
                 return false;
             }
 
             if (width <= 0)
             {
-                Logger.Error($"{_position}: Sum of horizontal margin and padding is too large, there is no space for content", procName);
+                Logger.Error($"{Position}: Sum of horizontal margin and padding is too large, there is no space for content", procName);
                 return false;
             }
 
-            foreach (var renderer in _pdfRendererList)
+            foreach (var renderer in PdfRendererList)
             {
+                var layoutParam = renderer.GetLayoutParameter();
+                if (layoutParam.Row + layoutParam.RowSpan > Rows)
+                {
+                    Logger.Error($"Total rows: {Rows} is not enough for render: {renderer.GetType().Name} located at row: {layoutParam.Row} and {layoutParam.RowSpan} row span", procName);
+                    return false;
+                }
+
+                if (layoutParam.Column + layoutParam.ColumnSpan > Columns)
+                {
+                    Logger.Error($"Total columns: {Columns} is not enough for render: {renderer.GetType().Name} located at row: {layoutParam.Column} and {layoutParam.ColumnSpan} column span", procName);
+                    return false;
+                }
+
                 if (!LayoutHelper.TryCreateMarginBox(new BoxModel(x, y, width, height), Rows, Columns, renderer, out var marginBox))
                     return false;
                 renderer.SetMarginBox(marginBox);
@@ -139,23 +153,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
         public PdfStructureBase Clone()
         {
             var cloned = this.MemberwiseClone() as PdfStructureBase;
-            cloned._pdfRendererList = this._pdfRendererList.Select(x => x.Clone()).ToList();
+            cloned.PdfRendererList = this.PdfRendererList.Select(x => x.Clone()).ToList();
             return cloned;
         }
 
-        public bool TryRenderPdfStructure(PdfDocumentManager manager)
-        {
-            var procName = $"{this.GetType().Name}.{nameof(TryRenderPdfStructure)}";
-
-            foreach (var renderer in _pdfRendererList)
-            {
-                if (!renderer.TryRenderPdf(manager))
-                    return false;
-            }
-
-            Logger.Info($"Success to render: {_position} for message: {manager.MessageId}", procName);
-            return true;
-        }
+        public abstract bool TryRenderPdfStructure(PdfDocumentManager manager);
     }
 
     public enum PdfStructure

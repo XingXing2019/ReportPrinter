@@ -120,53 +120,30 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             return cloned;
         }
-
-        public override bool TryRenderPdf(PdfDocumentManager manager)
+        
+        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph)
         {
-            var renderName = this.GetType().Name;
-            var procName = $"{renderName}.{nameof(TryRenderPdf)}";
-
-            try
+            if (_textRendererType == TextRendererType.Sql)
             {
-                var pdf = manager.Pdf;
+                if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))
+                    return false;
 
-                if (_textRendererType == TextRendererType.Sql)
-                {
-                    if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))
-                        return false;
-
-                    var title = string.IsNullOrEmpty(_title) ? string.Empty : $"{_title}: ";
-                    _content = $"{title}{res}";
-                }
-                else if (_textRendererType == TextRendererType.Timestamp)
-                {
-                    _content = $"{_title}: {DateTime.Now.ToString(_mask)}";
-                }
-
-                var page = pdf.Pages[manager.CurrentPage];
-                using (var graph = XGraphics.FromPdfPage(page))
-                {
-                    RenderBoxModel(graph);
-
-                    var rect = new XRect(ContentBox.X, ContentBox.Y, ContentBox.Width, ContentBox.Height);
-                    RenderText(graph, rect, _content.Trim());
-                }
-
-
-                Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
-                return true;
+                var title = string.IsNullOrEmpty(_title) ? string.Empty : $"{_title}: ";
+                _content = $"{title}{res}";
             }
-            catch (Exception ex)
+            else if (_textRendererType == TextRendererType.Timestamp)
             {
-                Logger.Error($"Exception happened during rendering pdf: {renderName} for message: {manager.MessageId}. Ex: {ex.Message}", procName);
-                return false;
+                _content = $"{_title}: {DateTime.Now.ToString(_mask)}";
             }
+
+            RenderText(graph, _content.Trim());
+            return true;
         }
 
 
         #region Helper
 
-        private void RenderText(XGraphics graph, XRect rect, string text)
+        private void RenderText(XGraphics graph, string text)
         {
             XStringFormat position;
             if (VerticalAlignment == VerticalAlignment.Top)
@@ -198,6 +175,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     position = XStringFormats.BottomRight;
             }
 
+            var rect = new XRect(ContentBox.X, ContentBox.Y, ContentBox.Width, ContentBox.Height);
             graph.DrawString(text, Font, BrushColor, rect, position);
         }
 

@@ -28,6 +28,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         protected VerticalAlignment VerticalAlignment;
         protected XFont Font;
         protected XSolidBrush BrushColor;
+        protected double Opacity;
         protected XColor BackgroundColor;
         protected BoxModel MarginBox;
         protected BoxModel PaddingBox;
@@ -103,6 +104,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 opacity = 1;
                 Logger.LogDefaultValue(node, XmlElementHelper.S_OPACITY, opacity, procName);
             }
+            Opacity = opacity;
 
             var brushColorStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_BRUSH_COLOR);
             if (!ColorHelper.TryGenerateColor(brushColorStr, out var brushColor))
@@ -189,8 +191,32 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return this.MemberwiseClone() as PdfRendererBase;
         }
 
-        public abstract bool TryRenderPdf(PdfDocumentManager manager);
+        public bool TryRenderPdf(PdfDocumentManager manager)
+        {
+            var renderName = this.GetType().Name;
+            var procName = $"{renderName}.{nameof(TryRenderPdf)}";
 
+            try
+            {
+                var pdf = manager.Pdf;
+                var page = pdf.Pages[manager.CurrentPage];
+                using var graph = XGraphics.FromPdfPage(page);
+                RenderBoxModel(graph);
+
+                if (!TryPerformRender(manager, graph))
+                    return false;
+
+                Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during rendering pdf: {renderName} for message: {manager.MessageId}. Ex: {ex.Message}", procName);
+                return false;
+            }
+        }
+
+        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph);
 
         #region Helper
 

@@ -25,6 +25,9 @@
     <Reference Include="PdfSharp">
       <HintPath>Code\Plugin\PdfSharp.dll</HintPath>
     </Reference>
+    <Reference Include="zxing">
+      <HintPath>Code\Plugin\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

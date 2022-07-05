@@ -31,7 +31,8 @@ namespace RaphaelLibrary.Code.Init.PDF
             _pdfStructureList = new Dictionary<PdfStructure, PdfStructureBase>();
             _rendererInHeaderFooter = new HashSet<string>
             {
-                XmlElementHelper.S_TEXT
+                XmlElementHelper.S_TEXT,
+                XmlElementHelper.S_BARCODE
             };
 
             _rendererInBody = new HashSet<string>

@@ -6,6 +6,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
     {
         #region XmlNode
 
+        public const string S_BARCODE = "Barcode";
+        public const string S_BARCODE_FORMAT = "BarcodeFormat";
         public const string S_COLUMN = "Column";
         public const string S_COLUMN_SPAN = "ColumnSpan";
         public const string S_CONTENT = "Content";
@@ -21,6 +23,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_ReportHeader = "ReportHeader";
         public const string S_ROW = "Row";
         public const string S_ROW_SPAN = "RowSpan";
+        public const string S_SHOW_BARCODE_TEXT = "ShowBarcodeText";
         public const string S_SQL = "Sql";
         public const string S_SQL_ID = "SqlId";
         public const string S_SQL_RES_COLUMN = "SqlResColumn";

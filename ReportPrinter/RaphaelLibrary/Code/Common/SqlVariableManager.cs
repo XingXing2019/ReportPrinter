@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Common
@@ -39,25 +40,34 @@ namespace RaphaelLibrary.Code.Common
 
         public void StoreSqlVariables(Guid messageId, Dictionary<string, SqlVariable> sqlVariables)
         {
+            var procName = $"{this.GetType().Name}.{nameof(StoreSqlVariables)}";
+
             lock (_lock)
             {
                 _sqlVariableRepo.Add(messageId, sqlVariables);
+                Logger.Debug($"Store sql variables for message: {messageId}. Current variable repo size: {_sqlVariableRepo.Count}", procName);
             }
         }
 
         public Dictionary<string, SqlVariable> GetSqlVariables(Guid messageId)
         {
+            var procName = $"{this.GetType().Name}.{nameof(GetSqlVariables)}";
+
             lock (_lock)
             {
+                Logger.Debug($"Get sql variables for message: {messageId}", procName);
                 return _sqlVariableRepo[messageId];
             }
         }
 
         public void RemoveSqlVariables(Guid messageId)
         {
+            var procName = $"{this.GetType().Name}.{nameof(RemoveSqlVariables)}";
+
             lock (_lock)
             {
                 _sqlVariableRepo.Remove(messageId);
+                Logger.Debug($"Remove sql variables for message: {messageId}. Current variable repo size: {_sqlVariableRepo.Count}", procName);
             }
         }
     }

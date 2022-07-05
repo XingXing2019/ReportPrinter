@@ -25,6 +25,7 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
             var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId));
 
             SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
+            SqlResultCacheManager.Instance.RemoveSqlResult(message.MessageId);
             return isSuccess;
         }
     }

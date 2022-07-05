@@ -107,7 +107,7 @@ namespace RaphaelLibrary.Code.Render.SQL
             if (!TrySetSqlVariables(messageId, out var sqlVariables))
                 return false;
 
-            if (!TryExecuteQuery(_connectionString, _query, sqlVariables, out var dataTable))
+            if (!TryExecuteQuery(messageId, _connectionString, _query, sqlVariables, out var dataTable))
                 return false;
 
             if (dataTable.Rows.Count != 1)
@@ -149,9 +149,14 @@ namespace RaphaelLibrary.Code.Render.SQL
             return true;
         }
 
-        private bool TryExecuteQuery(string connectionString, string query, Dictionary<string, SqlVariable> sqlVariables, out DataTable dataTable)
+        private bool TryExecuteQuery(Guid messageId, string connectionString, string query, Dictionary<string, SqlVariable> sqlVariables, out DataTable dataTable)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryExecuteQuery)}";
+
+            if (SqlResultCacheManager.Instance.TryGetSqlResult(messageId, Id, out dataTable))
+            {
+                return true;
+            }
 
             dataTable = null;
             try
@@ -175,6 +180,8 @@ namespace RaphaelLibrary.Code.Render.SQL
                 dataTable = new DataTable();
                 dataTable.Load(reader);
                 Logger.Debug($"Success to execute sql: {Id}. {dataTable.Rows.Count} row(s) returned", procName);
+                
+                SqlResultCacheManager.Instance.StoreSqlResult(messageId, Id, dataTable);
                 return true;
             }
             catch (Exception ex)

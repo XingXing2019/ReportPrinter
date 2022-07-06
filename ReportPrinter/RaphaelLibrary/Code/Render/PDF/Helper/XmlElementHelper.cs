@@ -12,6 +12,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_COLUMN_SPAN = "ColumnSpan";
         public const string S_CONTENT = "Content";
         public const string S_DATABASE_ID = "DatabaseId";
+        public const string S_IMAGE = "Image";
+        public const string S_IMAGE_SOURCE = "ImageSource";
         public const string S_Mask = "Mask";
         public const string S_PAGE_BODY = "PageBody";
         public const string S_PAGE_FOOTER = "PageFooter";
@@ -24,6 +26,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_ROW = "Row";
         public const string S_ROW_SPAN = "RowSpan";
         public const string S_SHOW_BARCODE_TEXT = "ShowBarcodeText";
+        public const string S_SOURCE_TYPE = "SourceType";
         public const string S_SQL = "Sql";
         public const string S_SQL_ID = "SqlId";
         public const string S_SQL_RES_COLUMN = "SqlResColumn";

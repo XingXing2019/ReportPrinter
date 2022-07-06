@@ -32,7 +32,8 @@ namespace RaphaelLibrary.Code.Init.PDF
             _rendererInHeaderFooter = new HashSet<string>
             {
                 XmlElementHelper.S_TEXT,
-                XmlElementHelper.S_BARCODE
+                XmlElementHelper.S_BARCODE,
+                XmlElementHelper.S_IMAGE
             };
 
             _rendererInBody = new HashSet<string>

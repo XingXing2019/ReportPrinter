@@ -121,7 +121,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return cloned;
         }
         
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph)
+        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName)
         {
             if (_textRendererType == TextRendererType.Sql)
             {

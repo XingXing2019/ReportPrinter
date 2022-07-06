@@ -15,5 +15,11 @@ namespace RaphaelLibrary.Code.Common
             var dir = path.Substring(0, path.LastIndexOf('\\'));
             Directory.CreateDirectory(dir);
         }
+
+        public static void DeleteDirectory(string path)
+        {
+            var dir = path.Substring(0, path.LastIndexOf('\\'));
+            Directory.Delete(dir);
+        }
     }
 }

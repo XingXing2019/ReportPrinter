@@ -203,7 +203,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 using var graph = XGraphics.FromPdfPage(page);
                 RenderBoxModel(graph);
 
-                if (!TryPerformRender(manager, graph))
+                if (!TryPerformRender(manager, graph, procName))
                     return false;
 
                 Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
@@ -216,7 +216,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
         }
 
-        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph);
+        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName);
+
 
         #region Helper
 
@@ -229,8 +230,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var font = new XFont("Verdana", 4, XFontStyle.Regular, options);
             var brush = new XSolidBrush(XColors.White);
 
-            var marginBox = RenderBox(graph, MarginBox, 0.5);
-            var paddingBox = RenderBox(graph, PaddingBox, 0.75);
+            var marginBox = RenderBox(graph, MarginBox, 0.3);
+            var paddingBox = RenderBox(graph, PaddingBox, 0.4);
             var contentBox = RenderBox(graph, ContentBox, 1);
 
             RenderSize(graph, font, brush, marginBox, _margin);

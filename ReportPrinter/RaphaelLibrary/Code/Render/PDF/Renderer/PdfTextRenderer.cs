@@ -42,50 +42,24 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             if (textRendererType == TextRendererType.Text)
             {
-                var content = node.SelectSingleNode(XmlElementHelper.S_CONTENT)?.InnerText;
-                if (string.IsNullOrEmpty(content))
-                {
-                    Logger.LogMissingXmlLog(XmlElementHelper.S_CONTENT, node, procName);
+                if (!TryReadContent(node, procName, out var content))
                     return false;
-                }
+
                 _content = content;
-                
                 Logger.Info($"Success to read Text with type of {_textRendererType}, content: {_content}", procName);
             }
             else if (textRendererType == TextRendererType.Sql)
             {
-                var sqlTemplateId = node.SelectSingleNode(XmlElementHelper.S_SQL_TEMPLATE_ID)?.InnerText;
-                if (string.IsNullOrEmpty(sqlTemplateId))
-                {
-                    Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_TEMPLATE_ID, node, procName);
+                if (!TryReadSql(node, procName, out var sql, out var sqlResColumn))
                     return false;
-                }
 
-                var sqlId = node.SelectSingleNode(XmlElementHelper.S_SQL_ID)?.InnerText;
-                if (string.IsNullOrEmpty(sqlId))
-                {
-                    Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_ID, node, procName);
-                    return false;
-                }
-
-                if (!SqlTemplateManager.Instance.TryGetSql(sqlTemplateId, sqlId, out var sql))
-                {
-                    return false;
-                }
                 _sql = sql;
-
-                var sqlResColumn = node.SelectSingleNode(XmlElementHelper.S_SQL_RES_COLUMN)?.InnerText;
-                if (string.IsNullOrEmpty(sqlResColumn))
-                {
-                    Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_RES_COLUMN, node, procName);
-                    return false;
-                }
                 _sqlResColumn = sqlResColumn;
 
                 var sqlTitle = node.SelectSingleNode(XmlElementHelper.S_TITLE)?.InnerText;
                 _title = sqlTitle;
 
-                Logger.Info($"Success to read Text with type of {_textRendererType}, sql template id: {sqlTemplateId}, sql id: {sqlId}, res column: {_sqlResColumn}", procName);
+                Logger.Info($"Success to read Text with type of {_textRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
             }
             else
             {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Xml;
 using PdfSharp.Drawing;
-using RaphaelLibrary.Code.Init.SQL;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.Annotations;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Structure;
@@ -18,9 +19,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private Sql _sql;
         private string _sqlResColumn;
 
-        public PdfAnnotationRenderer(PdfStructure position) : base(position)
-        {
-        }
+        private string _title;
+        private PdfTextAnnotationIcon _icon;
+
+        public PdfAnnotationRenderer(PdfStructure position) : base(position) { }
 
         public override bool ReadXml(XmlNode node)
         {
@@ -38,6 +40,17 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return false;
             }
             _annotationRendererType = annotationRendererType;
+
+            var title = node.SelectSingleNode(XmlElementHelper.S_TITLE)?.InnerText;
+            _title = title;
+
+            var iconStr = node.SelectSingleNode(XmlElementHelper.S_ICON)?.InnerText;
+            if (!Enum.TryParse(iconStr, out PdfTextAnnotationIcon icon))
+            {
+                icon = PdfTextAnnotationIcon.NoIcon;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_ICON, icon, procName);
+            }
+            _icon = icon;
 
             if (_annotationRendererType == AnnotationRendererType.Text)
             {
@@ -70,11 +83,41 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return cloned;
         }
 
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName)
+        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
         {
-            throw new System.NotImplementedException();
+            if (_annotationRendererType == AnnotationRendererType.Sql)
+            {
+                if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))
+                    return false;
 
+                _content = res;
+            }
+
+            RenderAnnotation(graph, page);
+            return true;
         }
+
+
+        #region Helper
+
+        private void RenderAnnotation(XGraphics graph, PdfPage page)
+        {
+            var annotation = new PdfTextAnnotation
+            {
+                Title = _title,
+                Contents = _content,
+                Icon = _icon,
+                Color = BrushColor.Color,
+                Opacity = Opacity
+            };
+
+            var rect = new XRect(ContentBox.X, ContentBox.Y, ContentBox.Width, ContentBox.Height);
+            rect = graph.Transformer.WorldToDefaultPage(rect);
+            annotation.Rectangle = new PdfRectangle(rect);
+            page.Annotations.Add(annotation);
+        }
+
+        #endregion
     }
 
     public enum AnnotationRendererType

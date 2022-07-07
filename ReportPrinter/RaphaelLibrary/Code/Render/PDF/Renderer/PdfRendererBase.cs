@@ -205,7 +205,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 using var graph = XGraphics.FromPdfPage(page);
                 RenderBoxModel(graph);
 
-                if (!TryPerformRender(manager, graph, procName))
+                if (!TryPerformRender(manager, graph, page, procName))
                     return false;
 
                 Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
@@ -218,7 +218,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
         }
 
-        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName);
+        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName);
 
         protected bool TryReadContent(XmlNode node, string procName, out string content)
         {

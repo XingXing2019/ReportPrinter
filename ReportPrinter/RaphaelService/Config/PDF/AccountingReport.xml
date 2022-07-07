@@ -32,18 +32,14 @@
 			<Column>1</Column>
 			<RowSpan>2</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
-			<SourceType>Online</SourceType>
-			<ImageSource>
-				<![CDATA[
-					https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Breathe-face-smile.svg/1200px-Breathe-face-smile.svg.png
-				]]>
-			</ImageSource>
+			<SourceType>Local</SourceType>
+			<ImageSource>.\Image\Logo.png</ImageSource>
 		</Image>
 
-		<Annotation Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
-		            BrushColor="Black" BackgroundColor="Red" Opacity="1">
+		<Annotation HorizontalAlignment="Center" VerticalAlignment="Center"
+		            BrushColor="Yellow" BackgroundColor="Red" Opacity="0.5">
 			<Type>Sql</Type>
-			<Row>1</Row>
+			<Row>0</Row>
 			<Column>2</Column>
 			<RowSpan>1</RowSpan>
 			<ColumnSpan>1</ColumnSpan>

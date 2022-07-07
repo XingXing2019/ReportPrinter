@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Xml;
 using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
@@ -67,7 +68,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return cloned;
         }
 
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName)
+        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
         {
             if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))
                 return false;

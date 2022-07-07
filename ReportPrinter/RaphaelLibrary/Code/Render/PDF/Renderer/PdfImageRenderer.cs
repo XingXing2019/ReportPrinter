@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Structure;
@@ -73,23 +74,22 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return true;
         }
 
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName)
+        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
         {
             if (_image == null)
             {
                 Logger.Error($"Unable to generate image from source: {_imageSource}", procName);
                 return false;
             }
-
-            var rect = CreateRect();
-            graph.DrawImage(_image, rect);
+            
+            RenderImage(graph);
             return true;
         }
 
 
         #region Helper
 
-        private XRect CreateRect()
+        private void RenderImage(XGraphics graph)
         {
             var ratio = _image.PointWidth / _image.PointHeight;
             double x = ContentBox.X, y = ContentBox.Y;
@@ -110,7 +110,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             else if (VerticalAlignment == VerticalAlignment.Bottom)
                 y += ContentBox.Height - height;
 
-            return new XRect(x, y, width, height);
+            var rect = new XRect(x, y, width, height);
+            graph.DrawImage(_image, rect);
         }
 
         #endregion

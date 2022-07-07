@@ -17,7 +17,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return new PdfBarcodeRenderer(position);
             else if (name == XmlElementHelper.S_IMAGE)
                 return new PdfImageRenderer(position);
-                else
+            else if (name == XmlElementHelper.S_ANNOTATION)
+                return new PdfAnnotationRenderer(position);
+            else
             {
                 var error = $"Invalid name: {name} for pdf renderer";
                 Logger.Error(error, procName);

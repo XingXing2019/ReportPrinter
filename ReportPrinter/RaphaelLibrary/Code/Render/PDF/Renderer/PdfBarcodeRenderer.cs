@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Xml;
 using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
@@ -50,35 +51,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _showBarcodeText = showBarcodeText;
 
-            var sqlTemplateId = node.SelectSingleNode(XmlElementHelper.S_SQL_TEMPLATE_ID)?.InnerText;
-            if (string.IsNullOrEmpty(sqlTemplateId))
-            {
-                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_TEMPLATE_ID, node, procName);
+            if (!TryReadSql(node, procName, out var sql, out var sqlResColumn))
                 return false;
-            }
 
-            var sqlId = node.SelectSingleNode(XmlElementHelper.S_SQL_ID)?.InnerText;
-            if (string.IsNullOrEmpty(sqlId))
-            {
-                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_ID, node, procName);
-                return false;
-            }
-
-            if (!SqlTemplateManager.Instance.TryGetSql(sqlTemplateId, sqlId, out var sql))
-            {
-                return false;
-            }
             _sql = sql;
-
-            var sqlResColumn = node.SelectSingleNode(XmlElementHelper.S_SQL_RES_COLUMN)?.InnerText;
-            if (string.IsNullOrEmpty(sqlResColumn))
-            {
-                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_RES_COLUMN, node, procName);
-                return false;
-            }
             _sqlResColumn = sqlResColumn;
-
-            Logger.Info($"Success to read Barcode with format: {_barcodeFormat}, sql template id: {sqlTemplateId}, sql id: {sqlId}, res column: {_sqlResColumn}", procName);
+            Logger.Info($"Success to read Barcode with format: {_barcodeFormat}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
+            
             return true;
         }
 
@@ -89,7 +68,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return cloned;
         }
 
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName)
+        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
         {
             if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))
                 return false;

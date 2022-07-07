@@ -6,12 +6,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
     {
         #region XmlNode
 
+        public const string S_ANNOTATION = "Annotation";
         public const string S_BARCODE = "Barcode";
         public const string S_BARCODE_FORMAT = "BarcodeFormat";
         public const string S_COLUMN = "Column";
         public const string S_COLUMN_SPAN = "ColumnSpan";
         public const string S_CONTENT = "Content";
         public const string S_DATABASE_ID = "DatabaseId";
+        public const string S_ICON = "Icon";
         public const string S_IMAGE = "Image";
         public const string S_IMAGE_SOURCE = "ImageSource";
         public const string S_Mask = "Mask";
@@ -34,7 +36,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_SQL_TEMPLATE_ID = "SqlTemplateId";
         public const string S_SQL_TEMPLATE_LIST = "SqlTemplateList";
         public const string S_TEXT = "Text";
-        public static string S_TITLE = "Title";
+        public const string S_TITLE = "Title";
         public const string S_TYPE = "Type";
         public const string S_VARIABLE = "Variable";
 

@@ -4,17 +4,19 @@ using System.Xml;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
+using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {
     public abstract class PdfRendererBase : IXmlReader
     {
-        private PdfStructure _position;
+        private readonly PdfStructure _position;
 
         private MarginPaddingModel _margin;
         private MarginPaddingModel _padding;
@@ -203,7 +205,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 using var graph = XGraphics.FromPdfPage(page);
                 RenderBoxModel(graph);
 
-                if (!TryPerformRender(manager, graph, procName))
+                if (!TryPerformRender(manager, graph, page, procName))
                     return false;
 
                 Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
@@ -216,12 +218,57 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
         }
 
-        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, string procName);
+        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName);
 
+        protected bool TryReadContent(XmlNode node, string procName, out string content)
+        {
+            content = node.SelectSingleNode(XmlElementHelper.S_CONTENT)?.InnerText;
+            if (string.IsNullOrEmpty(content))
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_CONTENT, node, procName);
+                return false;
+            }
+
+            return true;
+        }
+
+        protected bool TryReadSql(XmlNode node, string procName, out Sql sql, out string sqlResColumn)
+        {
+            sql = null;
+            sqlResColumn = string.Empty;
+
+            var sqlTemplateId = node.SelectSingleNode(XmlElementHelper.S_SQL_TEMPLATE_ID)?.InnerText;
+            if (string.IsNullOrEmpty(sqlTemplateId))
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_TEMPLATE_ID, node, procName);
+                return false;
+            }
+
+            var sqlId = node.SelectSingleNode(XmlElementHelper.S_SQL_ID)?.InnerText;
+            if (string.IsNullOrEmpty(sqlId))
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_ID, node, procName);
+                return false;
+            }
+
+            if (!SqlTemplateManager.Instance.TryGetSql(sqlTemplateId, sqlId, out sql))
+            {
+                return false;
+            }
+
+            sqlResColumn = node.SelectSingleNode(XmlElementHelper.S_SQL_RES_COLUMN)?.InnerText;
+            if (string.IsNullOrEmpty(sqlResColumn))
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_RES_COLUMN, node, procName);
+                return false;
+            }
+
+            return true;
+        }
 
         #region Helper
 
-        protected void RenderBoxModel(XGraphics graph)
+        private void RenderBoxModel(XGraphics graph)
         {
             if (BackgroundColor == XColors.Transparent)
                 return;

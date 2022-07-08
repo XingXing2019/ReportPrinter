@@ -56,30 +56,24 @@ namespace RaphaelLibrary.Code.Common
         {
             var procName = $"{this.GetType().Name}.{nameof(TryGetSqlResult)}";
             sqlResult = null;
-
-            lock (_lock)
+            
+            if (!_cache.ContainsKey(messageId) || !_cache[messageId].ContainsKey(sqlId))
             {
-                if (!_cache.ContainsKey(messageId) || !_cache[messageId].ContainsKey(sqlId))
-                {
-                    Logger.Debug($"Unable to Retrieve sql result from cache for message: {messageId}, execute query for sql: {sqlId}", procName);
-                    return false;
-                }
-
-                Logger.Debug($"Retrieve sql result from cache for message: {messageId}, skip executing query for sql: {sqlId}", procName);
-                sqlResult = _cache[messageId][sqlId];
-                return true;
+                Logger.Debug($"Unable to retrieve sql result from cache for message: {messageId}, execute query for sql: {sqlId}", procName);
+                return false;
             }
+
+            Logger.Debug($"Retrieve sql result from cache for message: {messageId}, skip executing query for sql: {sqlId}", procName);
+            sqlResult = _cache[messageId][sqlId];
+            return true;
         }
 
         public void RemoveSqlResult(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(RemoveSqlResult)}";
-
-            lock (_lock)
-            {
-                _cache.Remove(messageId);
-                Logger.Debug($"Remove all sql result for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
-            }
+            
+            _cache.Remove(messageId);
+            Logger.Debug($"Remove all sql result for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
         }
     }
 }

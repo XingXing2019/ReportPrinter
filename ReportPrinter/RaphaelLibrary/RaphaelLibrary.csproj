@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Code\Print\**" />
+    <EmbeddedResource Remove="Code\Print\**" />
+    <None Remove="Code\Print\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Code\Init\PDF\" />
-    <Folder Include="Code\Print\" />
     <Folder Include="Code\Render\PDF\Manager\" />
     <Folder Include="Code\Render\PDF\Renderer\" />
   </ItemGroup>

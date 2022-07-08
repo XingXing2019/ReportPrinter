@@ -53,22 +53,17 @@ namespace RaphaelLibrary.Code.Common
         {
             var procName = $"{this.GetType().Name}.{nameof(GetSqlVariables)}";
 
-            lock (_lock)
-            {
-                Logger.Debug($"Get sql variables for message: {messageId}", procName);
-                return _sqlVariableRepo[messageId];
-            }
+
+            Logger.Debug($"Get sql variables for message: {messageId}", procName);
+            return _sqlVariableRepo[messageId];
         }
 
         public void RemoveSqlVariables(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(RemoveSqlVariables)}";
 
-            lock (_lock)
-            {
-                _sqlVariableRepo.Remove(messageId);
-                Logger.Debug($"Remove sql variables for message: {messageId}. Current variable repo size: {_sqlVariableRepo.Count}", procName);
-            }
+            _sqlVariableRepo.Remove(messageId);
+            Logger.Debug($"Remove sql variables for message: {messageId}. Current variable repo size: {_sqlVariableRepo.Count}", procName);
         }
     }
 }

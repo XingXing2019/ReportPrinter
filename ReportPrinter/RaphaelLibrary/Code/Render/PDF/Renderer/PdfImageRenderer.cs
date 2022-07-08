@@ -4,6 +4,7 @@ using System.Net;
 using System.Xml;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Structure;
@@ -14,7 +15,6 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     public class PdfImageRenderer : PdfRendererBase
     {
         private SourceType _sourceType;
-        private XImage _image;
         private string _imageSource;
         
         public PdfImageRenderer(PdfStructure position) : base(position) { }
@@ -42,33 +42,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 Logger.LogMissingXmlLog(XmlElementHelper.S_IMAGE_SOURCE, node, procName);
                 return false;
             }
-
-            if (_sourceType == SourceType.Local)
-            {
-                if (!XImage.ExistsFile(imageSource))
-                {
-                    Logger.Error($"Local image source: {imageSource} does not exist or in invalid format", procName);
-                    return false;
-                }
-
-                _image = XImage.FromFile(imageSource);
-            }
-            else if (_sourceType == SourceType.Online)
-            {
-                try
-                {
-                    using var client = new WebClient();
-                    var data = client.DownloadData(new Uri(imageSource));
-                    using var stream = new MemoryStream(data);
-                    _image = XImage.FromStream(stream);
-                }
-                catch (Exception)
-                {
-                    Logger.Error($"Inline image source: {imageSource} does not exist", procName);
-                    return false;
-                }
-            }
-            _imageSource = imageSource;
+            _imageSource = imageSource.Trim().Replace("\r\n", "");
 
             Logger.Info($"Success to read Image with source type: {_sourceType}, image source: {_imageSource}", procName);
             return true;
@@ -76,22 +50,48 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
         protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
         {
-            if (_image == null)
+            XImage image;
+            if (!ImageCacheManager.Instance.TryGetImage(manager.MessageId, _imageSource, out image))
             {
-                Logger.Error($"Unable to generate image from source: {_imageSource}", procName);
-                return false;
+                if (_sourceType == SourceType.Local)
+                {
+                    if (!XImage.ExistsFile(_imageSource))
+                    {
+                        Logger.Error($"Local image source: {_imageSource} does not exist or in invalid format", procName);
+                        return false;
+                    }
+
+                    image = XImage.FromFile(_imageSource);
+                }
+                else if (_sourceType == SourceType.Online)
+                {
+                    try
+                    {
+                        using var client = new WebClient();
+                        var data = client.DownloadData(new Uri(_imageSource));
+                        using var stream = new MemoryStream(data);
+                        image = XImage.FromStream(stream);
+                    }
+                    catch (Exception)
+                    {
+                        Logger.Error($"Online image source: {_imageSource} does not exist", procName);
+                        return false;
+                    }
+                }
+
+                ImageCacheManager.Instance.StoreImage(manager.MessageId, _imageSource, image);
             }
-            
-            RenderImage(graph);
+
+            RenderImage(graph, image);
             return true;
         }
 
 
         #region Helper
 
-        private void RenderImage(XGraphics graph)
+        private void RenderImage(XGraphics graph, XImage image)
         {
-            var ratio = _image.PointWidth / _image.PointHeight;
+            var ratio = image.PointWidth / image.PointHeight;
             double x = ContentBox.X, y = ContentBox.Y;
             double width = ContentBox.Width, height = ContentBox.Height;
 
@@ -111,7 +111,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 y += ContentBox.Height - height;
 
             var rect = new XRect(x, y, width, height);
-            graph.DrawImage(_image, rect);
+            graph.DrawImage(image, rect);
         }
 
         #endregion

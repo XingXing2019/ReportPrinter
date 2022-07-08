@@ -61,7 +61,7 @@ namespace RaphaelLibrary.Code.Common
             {
                 if (!_cache.ContainsKey(messageId) || !_cache[messageId].ContainsKey(sqlId))
                 {
-                    Logger.Debug($"Unable to Retrieve sql result from cache for message: {messageId}, execute query for sql: {sqlId}", procName);
+                    Logger.Debug($"Unable to retrieve sql result from cache for message: {messageId}, execute query for sql: {sqlId}", procName);
                     return false;
                 }
 

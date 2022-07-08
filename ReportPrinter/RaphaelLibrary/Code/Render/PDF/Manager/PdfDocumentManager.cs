@@ -19,6 +19,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
             MessageId = messageId;
             Pdf = pdf;
             AddPage();
+            AddPage();
+            AddPage();
+            AddPage();
+            AddPage();
         }
         
 

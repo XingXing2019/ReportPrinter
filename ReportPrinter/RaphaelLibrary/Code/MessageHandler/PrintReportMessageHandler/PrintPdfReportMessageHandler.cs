@@ -20,12 +20,8 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
             }
 
             var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
-            SqlVariableManager.Instance.StoreSqlVariables(message.MessageId, sqlVariables);
-
-            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId));
-
-            SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
-            SqlResultCacheManager.Instance.RemoveSqlResult(message.MessageId);
+            
+            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId, sqlVariables));
             return isSuccess;
         }
     }

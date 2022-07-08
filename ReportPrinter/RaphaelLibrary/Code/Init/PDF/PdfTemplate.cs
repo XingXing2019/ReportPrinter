@@ -10,6 +10,7 @@ using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Init.PDF
 {
@@ -161,7 +162,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             return cloned;
         }
 
-        public bool TryCreatePdfReport(Guid messageId)
+        public bool TryCreatePdfReport(Guid messageId, Dictionary<string, SqlVariable> sqlVariables)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreatePdfReport)}";
 
@@ -170,6 +171,8 @@ namespace RaphaelLibrary.Code.Init.PDF
 
             try
             {
+                SqlVariableManager.Instance.StoreSqlVariables(messageId, sqlVariables);
+
                 var pageBody = _pdfStructureList[PdfStructure.PdfPageBody];
                 if (!pageBody.TryRenderPdfStructure(manager))
                     return false;
@@ -188,6 +191,12 @@ namespace RaphaelLibrary.Code.Init.PDF
             {
                 Logger.Error($"Exception happened during creating pdf report for message: {manager.MessageId}. Ex: {ex.Message}", procName);
                 return false;
+            }
+            finally
+            {
+                SqlVariableManager.Instance.RemoveSqlVariables(messageId);
+                SqlResultCacheManager.Instance.RemoveSqlResult(messageId);
+                ImageCacheManager.Instance.RemoveImage(messageId);
             }
         }
     }

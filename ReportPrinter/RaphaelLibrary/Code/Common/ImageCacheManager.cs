@@ -57,29 +57,23 @@ namespace RaphaelLibrary.Code.Common
             var procName = $"{this.GetType().Name}.{nameof(TryGetImage)}";
             image = null;
 
-            lock (_lock)
+            if (!_cache.ContainsKey(messageId) || !_cache[messageId].ContainsKey(imageSource))
             {
-                if (!_cache.ContainsKey(messageId) || !_cache[messageId].ContainsKey(imageSource))
-                {
-                    Logger.Debug($"Unable to retrieve image from cache for message: {messageId}, image source: {imageSource}", procName);
-                    return false;
-                }
-
-                Logger.Debug($"Retrieve image from cache for message: {messageId}", procName);
-                image = _cache[messageId][imageSource];
-                return true;
+                Logger.Debug($"Unable to retrieve image from cache for message: {messageId}, image source: {imageSource}", procName);
+                return false;
             }
+
+            Logger.Debug($"Retrieve image from cache for message: {messageId}, image source: {imageSource}", procName);
+            image = _cache[messageId][imageSource];
+            return true;
         }
 
         public void RemoveImage(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(RemoveImage)}";
 
-            lock (_lock)
-            {
-                _cache.Remove(messageId);
-                Logger.Debug($"Remove all images for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
-            }
+            _cache.Remove(messageId);
+            Logger.Debug($"Remove all images for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
         }
     }
 }

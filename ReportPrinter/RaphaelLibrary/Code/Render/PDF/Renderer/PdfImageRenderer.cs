@@ -42,7 +42,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 Logger.LogMissingXmlLog(XmlElementHelper.S_IMAGE_SOURCE, node, procName);
                 return false;
             }
-            _imageSource = imageSource;
+            _imageSource = imageSource.Trim().Replace("\r\n", "");
 
             Logger.Info($"Success to read Image with source type: {_sourceType}, image source: {_imageSource}", procName);
             return true;

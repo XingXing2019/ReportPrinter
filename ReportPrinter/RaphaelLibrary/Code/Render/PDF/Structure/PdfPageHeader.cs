@@ -19,7 +19,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
             for (int i = startPage; i <= endPage; i++)
             {
                 manager.CurrentPage = i;
-                if (PdfRendererList.Any(renderer => !renderer.TryRenderPdf(manager)))
+                if (PdfRendererList.Any(x => !x.TryRenderPdf(manager)))
                     return false;
             }
 

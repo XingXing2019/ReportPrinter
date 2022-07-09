@@ -8,6 +8,7 @@ using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
+using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
@@ -19,17 +20,20 @@ namespace RaphaelLibrary.Code.Init.PDF
         public string Id { get; private set; }
 
         private Dictionary<PdfStructure, PdfStructureBase> _pdfStructureList;
+        private ContainerModel _pageBodyContainer;
+
         private XSize _pageSize;
         private string _fileName;
         private string _fileNameSuffix;
         private string _savePath;
 
-        private HashSet<string> _rendererInHeaderFooter;
-        private HashSet<string> _rendererInBody;
+        private readonly HashSet<string> _rendererInHeaderFooter;
+        private readonly HashSet<string> _rendererInBody;
 
         public PdfTemplate()
         {
             _pdfStructureList = new Dictionary<PdfStructure, PdfStructureBase>();
+
             _rendererInHeaderFooter = new HashSet<string>
             {
                 XmlElementHelper.S_TEXT,
@@ -40,7 +44,7 @@ namespace RaphaelLibrary.Code.Init.PDF
 
             _rendererInBody = new HashSet<string>
             {
-
+                XmlElementHelper.S_TABLE
             };
         }
 
@@ -106,14 +110,14 @@ namespace RaphaelLibrary.Code.Init.PDF
                 return false;
             }
             _pdfStructureList.Add(PdfStructure.PdfReportHeader, reportHeader);
-            
+
             var pageHeader = new PdfPageHeader(_rendererInHeaderFooter);
             if (!pageHeader.ReadXml(node.SelectSingleNode(XmlElementHelper.S_PAGE_HEADER)))
             {
                 return false;
             }
             _pdfStructureList.Add(PdfStructure.PdfPageHeader, pageHeader);
-            
+
             var pageBody = new PdfPageBody(_rendererInBody);
             if (!pageBody.ReadXml(node.SelectSingleNode(XmlElementHelper.S_PAGE_BODY)))
             {
@@ -127,13 +131,18 @@ namespace RaphaelLibrary.Code.Init.PDF
                 return false;
             }
             _pdfStructureList.Add(PdfStructure.PdfPageFooter, pageFooter);
-            
+
             var reportFooter = new PdfReportFooter(_rendererInHeaderFooter);
             if (!reportFooter.ReadXml(node.SelectSingleNode(XmlElementHelper.S_ReportFooter)))
             {
                 return false;
             }
             _pdfStructureList.Add(PdfStructure.PdfReportFooter, reportFooter);
+
+            foreach (var structure in _pdfStructureList.Keys)
+            {
+                _pdfStructureList[structure].Height = LayoutHelper.CalcPdfStructureHeight(_pageSize, structure, _pdfStructureList);
+            }
             
             foreach (var structure in _pdfStructureList.Keys)
             {
@@ -144,6 +153,15 @@ namespace RaphaelLibrary.Code.Init.PDF
                 if (!_pdfStructureList[structure].TryCalcRendererPosition(container))
                     return false;
             }
+            
+            _pageBodyContainer = new ContainerModel
+            {
+                LeftBoundary = pageBody.Margin.Left + pageBody.Padding.Left,
+                RightBoundary = _pageSize.Width - pageBody.Margin.Right - pageBody.Padding.Right,
+                FirstPageTopBoundary = reportHeader.Height + pageBody.Margin.Top + pageBody.Padding.Top,
+                NonFirstPageTopBoundary = pageHeader.Height + pageBody.Margin.Top + pageBody.Padding.Top,
+                BottomBoundary = _pageSize.Height - pageFooter.Height - pageBody.Margin.Bottom - pageBody.Padding.Bottom
+            };
 
             Logger.Info($"Success to read pdf template: {Id}, page size: {_pageSize.Width} : {_pageSize.Height}, Orientation: {orientation}, " +
                         $"file name suffix: {_fileNameSuffix}, save path: {_savePath}", procName);
@@ -167,7 +185,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             var procName = $"{this.GetType().Name}.{nameof(TryCreatePdfReport)}";
 
             var pdf = new PdfDocument();
-            var manager = new PdfDocumentManager(messageId, pdf, _pageSize);
+            var manager = new PdfDocumentManager(messageId, pdf, _pageSize, _pageBodyContainer);
 
             try
             {

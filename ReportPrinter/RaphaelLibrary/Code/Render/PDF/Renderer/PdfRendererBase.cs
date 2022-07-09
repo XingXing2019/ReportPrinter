@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using MassTransit;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
@@ -125,7 +127,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             BackgroundColor = backgroundColor;
 
             var rowStr = node.SelectSingleNode(XmlElementHelper.S_ROW)?.InnerText;
-            if (!int.TryParse(rowStr, out var row))
+            if (!int.TryParse(rowStr, out var row) && _position != PdfStructure.PdfPageBody)
             {
                 Logger.LogMissingXmlLog(XmlElementHelper.S_ROW, node, procName);
                 return false;
@@ -133,7 +135,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             _row = row;
 
             var columnStr = node.SelectSingleNode(XmlElementHelper.S_COLUMN)?.InnerText;
-            if (!int.TryParse(columnStr, out var column))
+            if (!int.TryParse(columnStr, out var column) && _position != PdfStructure.PdfPageBody)
             {
                 Logger.LogMissingXmlLog(XmlElementHelper.S_COLUMN, node, procName);
                 return false;
@@ -193,7 +195,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return this.MemberwiseClone() as PdfRendererBase;
         }
 
-        public bool TryRenderPdf(PdfDocumentManager manager)
+        public virtual bool TryRenderPdf(PdfDocumentManager manager)
         {
             var renderName = this.GetType().Name;
             var procName = $"{renderName}.{nameof(TryRenderPdf)}";
@@ -232,10 +234,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return true;
         }
 
-        protected bool TryReadSql(XmlNode node, string procName, out Sql sql, out string sqlResColumn)
+        protected bool TryReadSql(XmlNode node, string procName, out Sql sql, out List<SqlResColumn> sqlResColumnList)
         {
             sql = null;
-            sqlResColumn = string.Empty;
+            sqlResColumnList = new List<SqlResColumn>();
 
             var sqlTemplateId = node.SelectSingleNode(XmlElementHelper.S_SQL_TEMPLATE_ID)?.InnerText;
             if (string.IsNullOrEmpty(sqlTemplateId))
@@ -256,10 +258,19 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return false;
             }
 
-            sqlResColumn = node.SelectSingleNode(XmlElementHelper.S_SQL_RES_COLUMN)?.InnerText;
-            if (string.IsNullOrEmpty(sqlResColumn))
+            var sqlResColumns = node.SelectNodes(XmlElementHelper.S_SQL_RES_COLUMN);
+            foreach (XmlNode sqlResColumnNode in sqlResColumns)
             {
-                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_RES_COLUMN, node, procName);
+                var sqlResColumn = new SqlResColumn();
+                if (!sqlResColumn.ReadXml(sqlResColumnNode))
+                    return false;
+
+                sqlResColumnList.Add(sqlResColumn);
+            }
+
+            if (sqlResColumnList.Count == 0)
+            {
+                Logger.Error($"Unable to read any valid sql result column", procName);
                 return false;
             }
 

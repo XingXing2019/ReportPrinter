@@ -8,6 +8,7 @@ using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
+using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
@@ -20,7 +21,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     public class PdfBarcodeRenderer : PdfRendererBase
     {
         private Sql _sql;
-        private string _sqlResColumn;
+        private SqlResColumn _sqlResColumn;
         private BarcodeFormat _barcodeFormat;
         private bool _showBarcodeText;
 
@@ -51,11 +52,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _showBarcodeText = showBarcodeText;
 
-            if (!TryReadSql(node, procName, out var sql, out var sqlResColumn))
+            if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
                 return false;
 
             _sql = sql;
-            _sqlResColumn = sqlResColumn;
+            _sqlResColumn = sqlResColumnList[0];
             Logger.Info($"Success to read Barcode with format: {_barcodeFormat}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
             
             return true;
@@ -65,6 +66,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         {
             var cloned = base.Clone() as PdfBarcodeRenderer;
             cloned._sql = this._sql.Clone() as Sql;
+            cloned._sqlResColumn = this._sqlResColumn.Clone();
             return cloned;
         }
 

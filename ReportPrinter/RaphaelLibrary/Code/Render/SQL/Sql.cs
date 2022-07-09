@@ -6,6 +6,7 @@ using System.Xml;
 using Microsoft.Data.SqlClient;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
+using RaphaelLibrary.Code.Render.PDF.Model;
 using ReportPrinterDatabase.Code.Database;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
@@ -99,7 +100,7 @@ namespace RaphaelLibrary.Code.Render.SQL
             return cloned;
         }
         
-        public bool TryExecute(Guid messageId, string sqlResColumn, out string res)
+        public bool TryExecute(Guid messageId, SqlResColumn sqlResColumn, out string res)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryExecute)}";
             res = string.Empty;
@@ -115,12 +116,52 @@ namespace RaphaelLibrary.Code.Render.SQL
                 Logger.Error($"More than 1 row returned from sql: {Id}", procName);
             }
 
-            var index = dataTable.Columns.IndexOf(sqlResColumn);
+            var index = dataTable.Columns.IndexOf(sqlResColumn.Id);
             if (index == -1)
             {
                 Logger.Error($"Sql res column: {sqlResColumn} is not returned from sql: {Id}", procName);
             }
             res = dataTable.Rows[0][index].ToString()?.Trim();
+
+            return true;
+        }
+
+        public bool TryExecute(Guid messageId, List<SqlResColumn> sqlResColumnList, out List<Dictionary<string, string>> res)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(TryExecute)}";
+            res = new List<Dictionary<string, string>>();
+
+            if (!TrySetSqlVariables(messageId, out var sqlVariables))
+                return false;
+
+            if (!TryExecuteQuery(messageId, _connectionString, _query, sqlVariables, out var dataTable))
+                return false;
+
+            var indexDict = new Dictionary<int, string>();
+            foreach (var sqlResColumn in sqlResColumnList)
+            {
+                var index = dataTable.Columns.IndexOf(sqlResColumn.Id);
+                if (index == -1)
+                {
+                    Logger.Error($"Unable to locate sql result column: {sqlResColumn.Id} in the result", procName);
+                    return false;
+                }
+
+                indexDict.Add(index, sqlResColumn.Id);
+            }
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                var resRow = new Dictionary<string, string>();
+                for (int i = 0; i < row.ItemArray.Length; i++)
+                {
+                    if (!indexDict.ContainsKey(i))
+                        continue;
+                    resRow.Add(indexDict[i], row.ItemArray[i].ToString());
+                }
+
+                res.Add(resRow);
+            }
 
             return true;
         }

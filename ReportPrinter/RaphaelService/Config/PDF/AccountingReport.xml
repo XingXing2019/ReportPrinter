@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber">
-	<ReportHeader Height="1*" Rows="2" Columns="4" Margin="10 20 10 20" Padding="0 10 0 10">
+	<ReportHeader Height="1*" Rows="1" Columns="4" Margin="10 20 10 20" Padding="0 10 0 10">
+
 		
 		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Green" Opacity="1">
 			<Type>Sql</Type>
 			<Row>0</Row>
 			<Column>0</Column>
@@ -11,15 +12,13 @@
 			<ColumnSpan>1</ColumnSpan>
 			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
 			<SqlId>GlAccount</SqlId>
-			<SqlResColumn>Description</SqlResColumn>
+			<SqlResColumn Id="Description" />
 		</Text>
-
-		
 
 		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" BackgroundColor="">
 			<Row>0</Row>
 			<Column>1</Column>
-			<RowSpan>2</RowSpan>
+			<RowSpan>1</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
 			<SourceType>Local</SourceType>
 			<ImageSource>.\Image\Logo.png</ImageSource>
@@ -37,7 +36,7 @@
 			<Icon>Note</Icon>
 			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
 			<SqlId>GlAccount</SqlId>
-			<SqlResColumn>Description</SqlResColumn>
+			<SqlResColumn Id="Description" />
 		</Annotation>
 
 		<Text Margin="10 20 10 20" Padding="0 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -47,28 +46,40 @@
 			<Column>2</Column>
 			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
 			<SqlId>GlAccount</SqlId>
-			<SqlResColumn>Description</SqlResColumn>
+			<SqlResColumn Id="Description" />
 		</Text>
 		-->
 	</ReportHeader>
 	<PageHeader Height="0.5*" Rows="1" Columns="4">
+		
 		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" BackgroundColor="Red">
 			<Row>0</Row>
 			<Column>0</Column>
 			<RowSpan>1</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
-			<SourceType>Online</SourceType>
-			<ImageSource>
-				<![CDATA[
-					https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Breathe-face-smile.svg/1200px-Breathe-face-smile.svg.png
-				]]>
-			</ImageSource>
+			<SourceType>Local</SourceType>
+			<ImageSource>.\Image\Logo.png</ImageSource>
 		</Image>
 	</PageHeader>
-	<PageBody Height="8*">
 
+	<PageBody Height="8*" Margin="0 20 0 20" Padding="0 10 0 10">
+		<Table FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black"
+		       HorizontalAlignment="Center" VerticalAlignment="Center">
+			<BoardThickness>1</BoardThickness>
+			<LineSpace>0.5</LineSpace>
+			<TitleHorizontalAlignment>Left</TitleHorizontalAlignment>
+			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+			<SqlId>VendorInfo</SqlId>
+			<SqlResColumn Id="VendorID" Title="VendorID" Width="1*" />
+			<SqlResColumn Id="VendorName" Title="VendorName" Width="2*" />
+			<SqlResColumn Id="ShortName" Title="ShortName" Width="1*" />
+			<SqlResColumn Id="GroupID" Title="GroupID" Width="1*" />
+			<SqlResColumn Id="CurrencyCode" Title="CurrencyCode" Width="1*" />
+		</Table>
 	</PageBody>
+
 	<PageFooter Height="0.5*" Rows="1" Columns="4">
+		
 		<Barcode Padding="0 20 0 20" FontSize="9" FontFamily="Calibri"
 		         FontStyle="Regular" BrushColor="Navy" Opacity="1">
 			<Row>0</Row>
@@ -79,10 +90,11 @@
 			<ShowBarcodeText>true</ShowBarcodeText>
 			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
 			<SqlId>GlAccount</SqlId>
-			<SqlResColumn>AccountNumber</SqlResColumn>
+			<SqlResColumn Id="AccountNumber" />
 		</Barcode>
 	</PageFooter>
 	<ReportFooter Height="1*" Rows="2" Columns="2" Margin="10 20 10 20" Padding="0 10 0 10">
+		
 		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
 		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
 			<Type>Text</Type>

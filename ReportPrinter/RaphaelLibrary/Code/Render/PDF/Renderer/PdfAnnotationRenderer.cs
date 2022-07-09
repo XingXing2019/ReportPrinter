@@ -5,6 +5,7 @@ using PdfSharp.Pdf;
 using PdfSharp.Pdf.Annotations;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
+using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
@@ -17,7 +18,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private string _content;
 
         private Sql _sql;
-        private string _sqlResColumn;
+        private SqlResColumn _sqlResColumn;
 
         private string _title;
         private PdfTextAnnotationIcon _icon;
@@ -62,11 +63,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             else if (_annotationRendererType == AnnotationRendererType.Sql)
             {
-                if (!TryReadSql(node, procName, out var sql, out var sqlResColumn))
+                if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
                     return false;
 
                 _sql = sql;
-                _sqlResColumn = sqlResColumn;
+                _sqlResColumn = sqlResColumnList[0];
                 Logger.Info($"Success to read Annotation with type of {_annotationRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
             }
 
@@ -79,12 +80,18 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             if (_annotationRendererType == AnnotationRendererType.Sql)
             {
                 cloned._sql = this._sql.Clone() as Sql;
+                cloned._sqlResColumn = this._sqlResColumn.Clone();
             }
             return cloned;
         }
 
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
+        protected override bool TryPerformRender(PdfDocumentManager manager, string procName)
         {
+            var pdf = manager.Pdf;
+            var page = pdf.Pages[manager.CurrentPage];
+            using var graph = XGraphics.FromPdfPage(page);
+            RenderBoxModel(graph);
+
             if (_annotationRendererType == AnnotationRendererType.Sql)
             {
                 if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))

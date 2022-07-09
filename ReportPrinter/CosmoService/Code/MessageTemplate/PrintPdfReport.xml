@@ -8,5 +8,9 @@
 			<Name>AccountNumber</Name>
 			<Value>200300-DSAL-PADL</Value>
 		</SqlVariable>
+		<SqlVariable>
+			<Name>CurrencyCode</Name>
+			<Value>USD</Value>
+		</SqlVariable>
 	</SqlVariables>
 </PrintPdfReport>

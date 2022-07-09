@@ -9,13 +9,16 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_ANNOTATION = "Annotation";
         public const string S_BARCODE = "Barcode";
         public const string S_BARCODE_FORMAT = "BarcodeFormat";
+        public const string S_BOARD_THICKNESS = "BoardThickness";
         public const string S_COLUMN = "Column";
         public const string S_COLUMN_SPAN = "ColumnSpan";
         public const string S_CONTENT = "Content";
         public const string S_DATABASE_ID = "DatabaseId";
+        public const string S_HIDE_TITLE = "HideTitle";
         public const string S_ICON = "Icon";
         public const string S_IMAGE = "Image";
         public const string S_IMAGE_SOURCE = "ImageSource";
+        public const string S_LINE_SPACE = "LineSpace";
         public const string S_Mask = "Mask";
         public const string S_PAGE_BODY = "PageBody";
         public const string S_PAGE_FOOTER = "PageFooter";
@@ -35,10 +38,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_SQL_TEMPLATE = "SqlTemplate";
         public const string S_SQL_TEMPLATE_ID = "SqlTemplateId";
         public const string S_SQL_TEMPLATE_LIST = "SqlTemplateList";
+        public const string S_TABLE = "Table";
         public const string S_TEXT = "Text";
         public const string S_TITLE = "Title";
+        public const string S_TITLE_HORIZONTAL_ALIGNMENT = "TitleHorizontalAlignment";
         public const string S_TYPE = "Type";
         public const string S_VARIABLE = "Variable";
+        public const string S_WIDTH = "Width";
 
         #endregion
 

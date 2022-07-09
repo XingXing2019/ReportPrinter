@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using PdfSharp.Drawing;
@@ -17,14 +18,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     public abstract class PdfRendererBase : IXmlReader
     {
         private readonly PdfStructure _position;
-
-        private MarginPaddingModel _margin;
-        private MarginPaddingModel _padding;
         
         private int _row;
         private int _column;
         private int _rowSpan;
         private int _columnSpan;
+
+        protected MarginPaddingModel Margin;
+        protected MarginPaddingModel Padding;
 
         protected HorizontalAlignment HorizontalAlignment;
         protected VerticalAlignment VerticalAlignment;
@@ -50,14 +51,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             {
                 Logger.LogDefaultValue(node, XmlElementHelper.S_MARGIN, "0", procName);
             }
-            _margin = margin;
+            Margin = margin;
 
             var paddingStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_PADDING);
             if (!LayoutHelper.TryCreateMarginPadding(paddingStr, out var padding))
             {
                 Logger.LogDefaultValue(node, XmlElementHelper.S_PADDING, "0", procName);
             }
-            _padding = padding;
+            Padding = padding;
 
             var horizontalAlignmentStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_HORIZONTAL_ALIGNMENT);
             if (!Enum.TryParse(horizontalAlignmentStr, out HorizontalAlignment horizontalAlignment))
@@ -125,7 +126,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             BackgroundColor = backgroundColor;
 
             var rowStr = node.SelectSingleNode(XmlElementHelper.S_ROW)?.InnerText;
-            if (!int.TryParse(rowStr, out var row))
+            if (!int.TryParse(rowStr, out var row) && _position != PdfStructure.PdfPageBody)
             {
                 Logger.LogMissingXmlLog(XmlElementHelper.S_ROW, node, procName);
                 return false;
@@ -133,7 +134,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             _row = row;
 
             var columnStr = node.SelectSingleNode(XmlElementHelper.S_COLUMN)?.InnerText;
-            if (!int.TryParse(columnStr, out var column))
+            if (!int.TryParse(columnStr, out var column) && _position != PdfStructure.PdfPageBody)
             {
                 Logger.LogMissingXmlLog(XmlElementHelper.S_COLUMN, node, procName);
                 return false;
@@ -163,8 +164,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         {
             return new LayoutParameter
             {
-                Margin = _margin,
-                Padding = _padding,
+                Margin = Margin,
+                Padding = Padding,
                 Position = _position,
                 Row = _row,
                 Column = _column,
@@ -193,19 +194,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return this.MemberwiseClone() as PdfRendererBase;
         }
 
-        public bool TryRenderPdf(PdfDocumentManager manager)
+        public virtual bool TryRenderPdf(PdfDocumentManager manager)
         {
             var renderName = this.GetType().Name;
             var procName = $"{renderName}.{nameof(TryRenderPdf)}";
 
             try
             {
-                var pdf = manager.Pdf;
-                var page = pdf.Pages[manager.CurrentPage];
-                using var graph = XGraphics.FromPdfPage(page);
-                RenderBoxModel(graph);
-
-                if (!TryPerformRender(manager, graph, page, procName))
+                if (!TryPerformRender(manager, procName))
                     return false;
 
                 Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
@@ -218,7 +214,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
         }
 
-        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName);
+        protected abstract bool TryPerformRender(PdfDocumentManager manager, string procName);
 
         protected bool TryReadContent(XmlNode node, string procName, out string content)
         {
@@ -232,10 +228,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return true;
         }
 
-        protected bool TryReadSql(XmlNode node, string procName, out Sql sql, out string sqlResColumn)
+        protected bool TryReadSql(XmlNode node, string procName, out Sql sql, out List<SqlResColumn> sqlResColumnList)
         {
             sql = null;
-            sqlResColumn = string.Empty;
+            sqlResColumnList = new List<SqlResColumn>();
 
             var sqlTemplateId = node.SelectSingleNode(XmlElementHelper.S_SQL_TEMPLATE_ID)?.InnerText;
             if (string.IsNullOrEmpty(sqlTemplateId))
@@ -256,19 +252,26 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return false;
             }
 
-            sqlResColumn = node.SelectSingleNode(XmlElementHelper.S_SQL_RES_COLUMN)?.InnerText;
-            if (string.IsNullOrEmpty(sqlResColumn))
+            var sqlResColumns = node.SelectNodes(XmlElementHelper.S_SQL_RES_COLUMN);
+            foreach (XmlNode sqlResColumnNode in sqlResColumns)
             {
-                Logger.LogMissingXmlLog(XmlElementHelper.S_SQL_RES_COLUMN, node, procName);
+                var sqlResColumn = new SqlResColumn();
+                if (!sqlResColumn.ReadXml(sqlResColumnNode))
+                    return false;
+
+                sqlResColumnList.Add(sqlResColumn);
+            }
+
+            if (sqlResColumnList.Count == 0)
+            {
+                Logger.Error($"Unable to read any valid sql result column", procName);
                 return false;
             }
 
             return true;
         }
-
-        #region Helper
-
-        private void RenderBoxModel(XGraphics graph)
+        
+        protected void RenderBoxModel(XGraphics graph)
         {
             if (BackgroundColor == XColors.Transparent)
                 return;
@@ -281,9 +284,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var paddingBox = RenderBox(graph, PaddingBox, 0.4);
             var contentBox = RenderBox(graph, ContentBox, 1);
 
-            RenderSize(graph, font, brush, marginBox, _margin);
-            RenderSize(graph, font, brush, paddingBox, _padding);
+            RenderSize(graph, font, brush, marginBox, Margin);
+            RenderSize(graph, font, brush, paddingBox, Padding);
         }
+
+
+        #region Helper
 
         private XRect RenderBox(XGraphics graph, BoxModel box, double opacity)
         {

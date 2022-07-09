@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using PdfSharp.Drawing;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Renderer;
@@ -123,7 +124,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
 
         public static BoxModel CreateContainer(XSize pageSize, PdfStructure position, Dictionary<PdfStructure, PdfStructureBase> pdfStructureList)
         {
-            double x = 0, y = 0;
+            var structure = pdfStructureList[position];
+            MarginPaddingModel margin = structure.Margin, padding = structure.Padding;
+
+            double x = margin.Left + padding.Left, y = margin.Top + padding.Top;
             double width = pageSize.Width, height = 0;
             if (position == PdfStructure.PdfReportHeader || position == PdfStructure.PdfReportFooter)
             {
@@ -158,9 +162,83 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
                 }
             }
 
+            width = width - margin.Left - margin.Right - padding.Left - padding.Right;
+            height = height - margin.Top - margin.Bottom - padding.Top - padding.Bottom;
             return new BoxModel(x, y, width, height);
         }
 
+        public static double CalcPdfStructureHeight(XSize pageSize, PdfStructure position, Dictionary<PdfStructure, PdfStructureBase> pdfStructureList)
+        {
+            double height = 0;
+
+            if (position == PdfStructure.PdfReportHeader || position == PdfStructure.PdfReportFooter)
+            {
+                var totalHeightRatio = pdfStructureList[PdfStructure.PdfReportHeader].HeightRatio +
+                                       pdfStructureList[PdfStructure.PdfPageBody].HeightRatio +
+                                       pdfStructureList[PdfStructure.PdfReportFooter].HeightRatio;
+
+                if (position == PdfStructure.PdfReportHeader)
+                {
+                    height = pageSize.Height * pdfStructureList[PdfStructure.PdfReportHeader].HeightRatio / totalHeightRatio;
+                }
+                else
+                {
+                    height = pageSize.Height * pdfStructureList[PdfStructure.PdfReportFooter].HeightRatio / totalHeightRatio;
+                }
+            }
+            else if (position == PdfStructure.PdfPageHeader || position == PdfStructure.PdfPageFooter)
+            {
+                var totalHeightRatio = pdfStructureList[PdfStructure.PdfPageHeader].HeightRatio +
+                                       pdfStructureList[PdfStructure.PdfPageBody].HeightRatio +
+                                       pdfStructureList[PdfStructure.PdfPageFooter].HeightRatio;
+
+                if (position == PdfStructure.PdfPageHeader)
+                {
+                    height = pageSize.Height * pdfStructureList[PdfStructure.PdfPageHeader].HeightRatio / totalHeightRatio;
+                }
+                else
+                {
+                    height = pageSize.Height * pdfStructureList[PdfStructure.PdfPageFooter].HeightRatio / totalHeightRatio;
+                }
+            }
+
+            return height;
+        }
+
+        public static List<string> AllocateWords(string text, double widthPerLetter, double containerWidth)
+        {
+            var words = text.Split(' ');
+            var res = new List<string>();
+
+            if (words.Any(x => x.Length * widthPerLetter > containerWidth))
+            {
+                var lettersPerLine = (int)(containerWidth / widthPerLetter);
+                var lines = Math.Ceiling((double)text.Length / lettersPerLine);
+                var index = 0;
+                for (int i = 0; i < lines; i++)
+                {
+                    res.Add(text.Substring(index, Math.Min(lettersPerLine, text.Length - index)));
+                    index += lettersPerLine;
+                }
+            }
+            else
+            {
+                var textPerLine = new StringBuilder();
+                foreach (var word in words)
+                {
+                    if ((textPerLine.Length + word.Length) * widthPerLetter <= containerWidth)
+                        textPerLine.Append($"{word} ");
+                    else
+                    {
+                        res.Add(textPerLine.ToString().Trim());
+                        textPerLine = new StringBuilder($"{word} ");
+                    }
+                }
+                res.Add(textPerLine.ToString().Trim());
+            }
+
+            return res;
+        }
 
         #region Helper
 

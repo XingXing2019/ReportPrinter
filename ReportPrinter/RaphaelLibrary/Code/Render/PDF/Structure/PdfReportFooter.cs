@@ -15,7 +15,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
             var procName = $"{this.GetType().Name}.{nameof(TryRenderPdfStructure)}";
 
             manager.CurrentPage = manager.Pdf.PageCount - 1;
-            if (PdfRendererList.Any(renderer => !renderer.TryRenderPdf(manager)))
+            if (PdfRendererList.Any(x => !x.TryRenderPdf(manager)))
                 return false;
 
             Logger.Info($"Success to render: {Position} for message: {manager.MessageId}", procName);

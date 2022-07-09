@@ -5,6 +5,7 @@ using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
+using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
@@ -17,7 +18,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private string _content;
 
         private Sql _sql;
-        private string _sqlResColumn;
+        private SqlResColumn _sqlResColumn;
 
         private string _mask;
         private string _title;
@@ -41,7 +42,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _textRendererType = textRendererType;
 
-            if (textRendererType == TextRendererType.Text)
+            if (_textRendererType == TextRendererType.Text)
             {
                 if (!TryReadContent(node, procName, out var content))
                     return false;
@@ -49,20 +50,20 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 _content = content;
                 Logger.Info($"Success to read Text with type of {_textRendererType}, content: {_content}", procName);
             }
-            else if (textRendererType == TextRendererType.Sql)
+            else if (_textRendererType == TextRendererType.Sql)
             {
-                if (!TryReadSql(node, procName, out var sql, out var sqlResColumn))
+                if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
                     return false;
 
                 _sql = sql;
-                _sqlResColumn = sqlResColumn;
+                _sqlResColumn = sqlResColumnList[0];
 
                 var sqlTitle = node.SelectSingleNode(XmlElementHelper.S_TITLE)?.InnerText;
                 _title = sqlTitle;
 
                 Logger.Info($"Success to read Text with type of {_textRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
             }
-            else
+            else if (_textRendererType == TextRendererType.Timestamp)
             {
                 var mask = node.SelectSingleNode(XmlElementHelper.S_Mask)?.InnerText;
                 if (string.IsNullOrEmpty(mask))
@@ -92,12 +93,18 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             if (_textRendererType == TextRendererType.Sql)
             {
                 cloned._sql = this._sql.Clone() as Sql;
+                cloned._sqlResColumn = this._sqlResColumn.Clone();
             }
             return cloned;
         }
         
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
+        protected override bool TryPerformRender(PdfDocumentManager manager, string procName)
         {
+            var pdf = manager.Pdf;
+            var page = pdf.Pages[manager.CurrentPage];
+            using var graph = XGraphics.FromPdfPage(page);
+            RenderBoxModel(graph);
+
             if (_textRendererType == TextRendererType.Sql)
             {
                 if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var res))

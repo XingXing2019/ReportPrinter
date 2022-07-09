@@ -48,8 +48,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return true;
         }
 
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
+        protected override bool TryPerformRender(PdfDocumentManager manager, string procName)
         {
+            var pdf = manager.Pdf;
+            var page = pdf.Pages[manager.CurrentPage];
+            using var graph = XGraphics.FromPdfPage(page);
+            RenderBoxModel(graph);
+
             XImage image;
             if (!ImageCacheManager.Instance.TryGetImage(manager.MessageId, _imageSource, out image))
             {

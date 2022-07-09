@@ -13,6 +13,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
     public abstract class PdfStructureBase : IXmlReader
     {
         public double HeightRatio { get; set; }
+        public double Height { get; set; }
+        public MarginPaddingModel Margin { get; set; }
+        public MarginPaddingModel Padding { get; set; }
 
         protected int Rows;
         protected int Columns;
@@ -20,8 +23,6 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
         protected List<PdfRendererBase> PdfRendererList;
 
         private readonly HashSet<string> _rendererNames;
-        private MarginPaddingModel _margin;
-        private MarginPaddingModel _padding;
 
 
         protected PdfStructureBase(PdfStructure position, HashSet<string> rendererNames)
@@ -70,14 +71,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
             {
                 Logger.LogDefaultValue(node, XmlElementHelper.S_MARGIN, "0", procName);
             }
-            _margin = margin;
+            Margin = margin;
 
             var paddingStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_PADDING);
             if (!LayoutHelper.TryCreateMarginPadding(paddingStr, out var padding))
             {
                 Logger.LogDefaultValue(node, XmlElementHelper.S_PADDING, padding, procName);
             }
-            _padding = padding;
+            Padding = padding;
 
             foreach (var name in _rendererNames)
             {
@@ -102,10 +103,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCalcRendererPosition)}";
 
-            var x = container.X + _margin.Left + _padding.Left;
-            var y = container.Y + _margin.Top + _padding.Top;
-            var height = container.Height - _margin.Top - _margin.Bottom - _padding.Top - _padding.Bottom;
-            var width = container.Width - _margin.Left - _margin.Right - _padding.Left - _padding.Right;
+            var x = container.X;
+            var y = container.Y;
+            var height = container.Height;
+            var width = container.Width;
 
             if (height <= 0)
             {

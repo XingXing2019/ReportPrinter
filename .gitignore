@@ -18,3 +18,4 @@
 *.user
 /ReportPrinter/RaphaelLibrary/obj
 /ReportPrinter/RaphaelLibrary/bin/Debug/netcoreapp3.1
+/.vs

@@ -6,6 +6,7 @@
         public double RightBoundary { get; set; }
         public double FirstPageTopBoundary { get; set; }
         public double NonFirstPageTopBoundary { get; set; }
-        public double BottomBoundary { get; set; }
+        public double LastPageBottomBoundary { get; set; }
+        public double NonLastPageBottomBoundary { get; set; }
     }
 }

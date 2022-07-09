@@ -157,7 +157,7 @@ namespace RaphaelLibrary.Code.Render.SQL
                 {
                     if (!indexDict.ContainsKey(i))
                         continue;
-                    resRow.Add(indexDict[i], row.ItemArray[i].ToString());
+                    resRow.Add(indexDict[i], row.ItemArray[i].ToString()?.Trim());
                 }
 
                 res.Add(resRow);

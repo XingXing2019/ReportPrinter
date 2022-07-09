@@ -160,7 +160,8 @@ namespace RaphaelLibrary.Code.Init.PDF
                 RightBoundary = _pageSize.Width - pageBody.Margin.Right - pageBody.Padding.Right,
                 FirstPageTopBoundary = reportHeader.Height + pageBody.Margin.Top + pageBody.Padding.Top,
                 NonFirstPageTopBoundary = pageHeader.Height + pageBody.Margin.Top + pageBody.Padding.Top,
-                BottomBoundary = _pageSize.Height - pageFooter.Height - pageBody.Margin.Bottom - pageBody.Padding.Bottom
+                LastPageBottomBoundary = _pageSize.Height - reportFooter.Height - pageBody.Margin.Bottom - pageBody.Padding.Bottom,
+                NonLastPageBottomBoundary = _pageSize.Height - pageFooter.Height - pageBody.Margin.Bottom - pageBody.Padding.Bottom
             };
 
             Logger.Info($"Success to read pdf template: {Id}, page size: {_pageSize.Width} : {_pageSize.Height}, Orientation: {orientation}, " +

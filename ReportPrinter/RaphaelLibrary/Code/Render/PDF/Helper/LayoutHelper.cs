@@ -210,7 +210,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             var words = text.Split(' ');
             var res = new List<string>();
 
-            if (words.Max(x => x.Length * widthPerLetter) > containerWidth)
+            if (words.Any(x => x.Length * widthPerLetter > containerWidth))
             {
                 var lettersPerLine = (int)(containerWidth / widthPerLetter);
                 var lines = Math.Ceiling((double)text.Length / lettersPerLine);

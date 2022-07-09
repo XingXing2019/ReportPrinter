@@ -14,6 +14,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_COLUMN_SPAN = "ColumnSpan";
         public const string S_CONTENT = "Content";
         public const string S_DATABASE_ID = "DatabaseId";
+        public const string S_HIDE_TITLE = "HideTitle";
         public const string S_ICON = "Icon";
         public const string S_IMAGE = "Image";
         public const string S_IMAGE_SOURCE = "ImageSource";

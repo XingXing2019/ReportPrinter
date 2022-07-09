@@ -13,7 +13,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
         public ContainerModel PageBodyContainer { get; }
 
         public double TopBoundary => Pdf.PageCount > 1 ? PageBodyContainer.NonFirstPageTopBoundary : PageBodyContainer.FirstPageTopBoundary;
-        public double BottomBoundary => PageBodyContainer.BottomBoundary;
+        public double BottomBoundary => PageBodyContainer.NonLastPageBottomBoundary;
 
         public double YCursor { get; set; }
         public int CurrentPage { get; set; }
@@ -29,12 +29,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
         }
         
 
-        public void AddPage()
+        public void AddPage(Action<PdfDocumentManager> action = null)
         {
             var page = Pdf.AddPage();
             page.Height = _pageSize.Height;
             page.Width = _pageSize.Width;
             YCursor = TopBoundary;
+            action?.Invoke(this);
         }
     }
 }

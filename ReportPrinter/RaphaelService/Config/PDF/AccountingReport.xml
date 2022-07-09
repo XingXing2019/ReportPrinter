@@ -64,15 +64,16 @@
 
 	<PageBody Height="8*" Margin="0 20 0 20" Padding="0 10 0 10">
 		
-		<Table FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black"
-		       HorizontalAlignment="Center" VerticalAlignment="Center">
+		<Table Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" 
+		       FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black">
 			<BoardThickness>1</BoardThickness>
-			<LineSpace>0.5</LineSpace>
-			<TitleHorizontalAlignment>Center</TitleHorizontalAlignment>
+			<LineSpace>1</LineSpace>
+			<TitleHorizontalAlignment>Left</TitleHorizontalAlignment>
+			<HideTitle>false</HideTitle>
 			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
 			<SqlId>VendorInfo</SqlId>
 			<SqlResColumn Id="VendorID" Title="Vendor ID" Width="1*" />
-			<SqlResColumn Id="VendorName" Title="VendorName VendorName VendorName VendorName VendorName VendorName VendorName VendorName" Width="2*" />
+			<SqlResColumn Id="VendorName" Title="Vendor Name" Width="2*" />
 			<SqlResColumn Id="ShortName" Title="Short Name" Width="1*" />
 			<SqlResColumn Id="GroupID" Title="Group ID" Width="1*" />
 			<SqlResColumn Id="CurrencyCode" Title="Currency Code" Width="1*" />

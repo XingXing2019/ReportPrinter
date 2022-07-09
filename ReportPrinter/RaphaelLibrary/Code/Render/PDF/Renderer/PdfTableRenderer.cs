@@ -19,9 +19,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private double _boardThickness;
         private double _lineSpace;
         private HorizontalAlignment _titleHorizontalAlignment;
+        private bool _hideTitle;
 
         private Sql _sql;
         private List<SqlResColumn> _sqlResColumnList;
+
+        private Dictionary<SqlResColumn, BoxModel> _columnPositions;
 
         public PdfTableRenderer(PdfStructure position) : base(position) { }
 
@@ -58,6 +61,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _titleHorizontalAlignment = titleHorizontalAlignment;
 
+            var hideTitleStr = node.SelectSingleNode(XmlElementHelper.S_HIDE_TITLE)?.InnerText;
+            if (!bool.TryParse(hideTitleStr, out var hideTitle))
+            {
+                hideTitle = false;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_HIDE_TITLE, hideTitle, procName);
+            }
+            _hideTitle = hideTitle;
+
             if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
             {
                 return false;
@@ -92,57 +103,26 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return cloned;
         }
 
-        public override bool TryRenderPdf(PdfDocumentManager manager)
+        protected override bool TryPerformRender(PdfDocumentManager manager, string procName)
         {
-            var renderName = this.GetType().Name;
-            var procName = $"{renderName}.{nameof(TryRenderPdf)}";
-
-            try
-            {
-                if (!_sql.TryExecute(manager.MessageId, _sqlResColumnList, out var res))
-                    return false;
-
-                var columnPositions = CalcPosition(manager);
-                RenderTableTitle(manager, columnPositions);
-
-
-                Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Exception happened during rendering pdf: {renderName} for message: {manager.MessageId}. Ex: {ex.Message}", procName);
+            if (!_sql.TryExecute(manager.MessageId, _sqlResColumnList, out var res))
                 return false;
-            }
-        }
 
-        protected override bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName)
-        {
+            _columnPositions = CalcPosition(manager);
+            
+            RenderTableTitle(manager);
+            RenderTableContent(manager, res);
+
             return true;
         }
 
 
         #region Helper
-
-        private Dictionary<string, BoxModel> CalcPosition(PdfDocumentManager manager)
+        
+        private void RenderTableTitle(PdfDocumentManager manager)
         {
-            var container = manager.PageBodyContainer;
-            var totalWidth = container.RightBoundary - container.LeftBoundary;
+            if (_hideTitle) return;
 
-            var res = new Dictionary<string, BoxModel>();
-            var x = container.LeftBoundary;
-            foreach (var sqlResColumn in _sqlResColumnList)
-            {
-                var width = totalWidth * sqlResColumn.WidthRatio;
-                res.Add(sqlResColumn.Title, new BoxModel(x, -1, width, -1));
-                x += width;
-            }
-
-            return res;
-        }
-
-        private void RenderTableTitle(PdfDocumentManager manager, Dictionary<string, BoxModel> columnPositions)
-        {
             var pdf = manager.Pdf;
             var page = pdf.Pages[^1];
             var container = manager.PageBodyContainer;
@@ -151,26 +131,18 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var pen = new XPen(BrushColor.Color, _boardThickness);
             graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
 
-            var text = "dummy";
-            var textSize = graph.MeasureString(text, Font);
-            
+            var textSize = CalcTextSize(graph);
             var lineSpace = textSize.Height * _lineSpace;
+
             manager.YCursor += lineSpace;
 
             var maxLineCount = 0;
-            foreach (var column in columnPositions.Keys)
+            foreach (var column in _columnPositions.Keys)
             {
-                var position = columnPositions[column];
+                var position = _columnPositions[column];
+                var textPosition = CalcTextPosition(_titleHorizontalAlignment);
 
-                XStringFormat textPosition;
-                if (_titleHorizontalAlignment == HorizontalAlignment.Left)
-                    textPosition = XStringFormats.TopLeft;
-                else if (_titleHorizontalAlignment == HorizontalAlignment.Center)
-                    textPosition = XStringFormats.TopCenter;
-                else
-                    textPosition = XStringFormats.TopRight;
-
-                var lines = LayoutHelper.AllocateWords(column, textSize.Width / text.Length, position.Width);
+                var lines = LayoutHelper.AllocateWords(column.Title, textSize.WidthPerLetter, position.Width);
                 var y = manager.YCursor;
                 maxLineCount = Math.Max(maxLineCount, lines.Count);
 
@@ -189,6 +161,95 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             manager.YCursor += lineSpace;
         }
 
+        private void RenderTableContent(PdfDocumentManager manager, List<Dictionary<string, string>> sqlRes)
+        {
+            var pdf = manager.Pdf;
+            var graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
+
+            var pen = new XPen(BrushColor.Color, _boardThickness);
+            var container = manager.PageBodyContainer;
+
+            var textSize = CalcTextSize(graph);
+            var lineSpace = _lineSpace * textSize.Height;
+
+            foreach (var row in sqlRes)
+            {
+                var maxLineCount = 0;
+                foreach (var column in _columnPositions.Keys)
+                {
+                    var position = _columnPositions[column];
+                    var lines = LayoutHelper.AllocateWords(row[column.Id], textSize.WidthPerLetter, position.Width);
+                    maxLineCount = Math.Max(maxLineCount, lines.Count);
+                }
+
+                if (manager.YCursor + textSize.Height * maxLineCount + lineSpace > manager.BottomBoundary)
+                {
+                    graph.DrawLine(pen, container.LeftBoundary, manager.BottomBoundary, container.RightBoundary, manager.BottomBoundary);
+                    graph.Dispose();
+                    manager.AddPage(RenderTableTitle);
+                    graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
+                }
+
+                foreach (var column in _columnPositions.Keys)
+                {
+                    var position = _columnPositions[column];
+                    var textPosition = CalcTextPosition(HorizontalAlignment);
+                    
+                    var lines = LayoutHelper.AllocateWords(row[column.Id], textSize.WidthPerLetter, position.Width);
+                    var y = manager.YCursor;
+
+                    foreach (var line in lines)
+                    {
+                        var rect = new XRect(position.X, manager.YCursor, position.Width, textSize.Height);
+                        graph.DrawString(line, Font, BrushColor, rect, textPosition);
+                        manager.YCursor += textSize.Height;
+                    }
+
+                    manager.YCursor = y;
+                }
+
+                manager.YCursor += textSize.Height * maxLineCount + lineSpace;
+            }
+
+            graph.DrawLine(pen, container.LeftBoundary, container.LastPageBottomBoundary, container.RightBoundary, container.LastPageBottomBoundary);
+            graph.Dispose();
+        }
+
+        private Dictionary<SqlResColumn, BoxModel> CalcPosition(PdfDocumentManager manager)
+        {
+            var container = manager.PageBodyContainer;
+            var totalWidth = container.RightBoundary - container.LeftBoundary;
+
+            var res = new Dictionary<SqlResColumn, BoxModel>();
+            var x = container.LeftBoundary;
+            foreach (var sqlResColumn in _sqlResColumnList)
+            {
+                var width = totalWidth * sqlResColumn.WidthRatio;
+                res.Add(sqlResColumn, new BoxModel(x, -1, width, -1));
+                x += width;
+            }
+
+            return res;
+        }
+
+        private XStringFormat CalcTextPosition(HorizontalAlignment horizontalAlignment)
+        {
+            if (horizontalAlignment == HorizontalAlignment.Left)
+                return XStringFormats.TopLeft;
+            else if (horizontalAlignment == HorizontalAlignment.Center)
+                return XStringFormats.TopCenter;
+            else
+                return XStringFormats.TopRight;
+        }
+
+        private TextSize CalcTextSize(XGraphics graph)
+        {
+            var text = "dummy";
+            var textSize = graph.MeasureString(text, Font);
+            var widthPerLetter = textSize.Width / text.Length;
+            return new TextSize(textSize.Width, textSize.Height, widthPerLetter);
+        }
+        
         #endregion
     }
 }

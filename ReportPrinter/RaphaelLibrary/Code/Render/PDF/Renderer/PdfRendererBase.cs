@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using MassTransit;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
@@ -202,12 +201,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             try
             {
-                var pdf = manager.Pdf;
-                var page = pdf.Pages[manager.CurrentPage];
-                using var graph = XGraphics.FromPdfPage(page);
-                RenderBoxModel(graph);
-
-                if (!TryPerformRender(manager, graph, page, procName))
+                if (!TryPerformRender(manager, procName))
                     return false;
 
                 Logger.Info($"Success to render pdf: {renderName} for message: {manager.MessageId}", procName);
@@ -220,7 +214,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
         }
 
-        protected abstract bool TryPerformRender(PdfDocumentManager manager, XGraphics graph, PdfPage page, string procName);
+        protected abstract bool TryPerformRender(PdfDocumentManager manager, string procName);
 
         protected bool TryReadContent(XmlNode node, string procName, out string content)
         {
@@ -276,10 +270,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             return true;
         }
-
-        #region Helper
-
-        private void RenderBoxModel(XGraphics graph)
+        
+        protected void RenderBoxModel(XGraphics graph)
         {
             if (BackgroundColor == XColors.Transparent)
                 return;
@@ -295,6 +287,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             RenderSize(graph, font, brush, marginBox, Margin);
             RenderSize(graph, font, brush, paddingBox, Padding);
         }
+
+
+        #region Helper
 
         private XRect RenderBox(XGraphics graph, BoxModel box, double opacity)
         {

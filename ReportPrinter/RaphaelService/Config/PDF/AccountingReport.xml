@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber">
-	<ReportHeader Height="1*" Rows="1" Columns="4" Margin="10 20 10 20" Padding="0 10 0 10">
+	<ReportHeader Height="1*" Rows="1" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
 
 		
 		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -63,6 +63,7 @@
 	</PageHeader>
 
 	<PageBody Height="8*" Margin="0 20 0 20" Padding="0 10 0 10">
+		
 		<Table FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black"
 		       HorizontalAlignment="Center" VerticalAlignment="Center">
 			<BoardThickness>1</BoardThickness>
@@ -76,6 +77,7 @@
 			<SqlResColumn Id="GroupID" Title="GroupID" Width="1*" />
 			<SqlResColumn Id="CurrencyCode" Title="CurrencyCode" Width="1*" />
 		</Table>
+
 	</PageBody>
 
 	<PageFooter Height="0.5*" Rows="1" Columns="4">
@@ -93,10 +95,10 @@
 			<SqlResColumn Id="AccountNumber" />
 		</Barcode>
 	</PageFooter>
-	<ReportFooter Height="1*" Rows="2" Columns="2" Margin="10 20 10 20" Padding="0 10 0 10">
+	<ReportFooter Height="1*" Rows="1" Columns="2" Margin="0 20 0 20" Padding="0 10 0 10">
 		
 		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Green" Opacity="1">
 			<Type>Text</Type>
 			<Row>0</Row>
 			<Column>0</Column>

@@ -103,10 +103,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCalcRendererPosition)}";
 
-            var x = container.X + Margin.Left + Padding.Left;
-            var y = container.Y + Margin.Top + Padding.Top;
-            var height = container.Height - Margin.Top - Margin.Bottom - Padding.Top - Padding.Bottom;
-            var width = container.Width - Margin.Left - Margin.Right - Padding.Left - Padding.Right;
+            var x = container.X;
+            var y = container.Y;
+            var height = container.Height;
+            var width = container.Width;
 
             if (height <= 0)
             {

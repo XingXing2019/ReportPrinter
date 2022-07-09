@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using PdfSharp.Drawing;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Renderer;
@@ -202,6 +203,41 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             }
 
             return height;
+        }
+
+        public static List<string> AllocateWords(string text, double widthPerLetter, double containerWidth)
+        {
+            var words = text.Split(' ');
+            var res = new List<string>();
+
+            if (words.Max(x => x.Length * widthPerLetter) > containerWidth)
+            {
+                var lettersPerLine = (int)(containerWidth / widthPerLetter);
+                var lines = Math.Ceiling((double)text.Length / lettersPerLine);
+                var index = 0;
+                for (int i = 0; i < lines; i++)
+                {
+                    res.Add(text.Substring(index, Math.Min(lettersPerLine, text.Length - index)));
+                    index += lettersPerLine;
+                }
+            }
+            else
+            {
+                var textPerLine = new StringBuilder();
+                foreach (var word in words)
+                {
+                    if ((textPerLine.Length + word.Length) * widthPerLetter <= containerWidth)
+                        textPerLine.Append($"{word} ");
+                    else
+                    {
+                        res.Add(textPerLine.ToString().Trim());
+                        textPerLine = new StringBuilder($"{word} ");
+                    }
+                }
+                res.Add(textPerLine.ToString().Trim());
+            }
+
+            return res;
         }
 
         #region Helper

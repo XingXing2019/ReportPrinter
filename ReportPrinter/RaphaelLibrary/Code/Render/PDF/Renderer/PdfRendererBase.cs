@@ -19,14 +19,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     public abstract class PdfRendererBase : IXmlReader
     {
         private readonly PdfStructure _position;
-
-        private MarginPaddingModel _margin;
-        private MarginPaddingModel _padding;
         
         private int _row;
         private int _column;
         private int _rowSpan;
         private int _columnSpan;
+
+        protected MarginPaddingModel Margin;
+        protected MarginPaddingModel Padding;
 
         protected HorizontalAlignment HorizontalAlignment;
         protected VerticalAlignment VerticalAlignment;
@@ -52,14 +52,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             {
                 Logger.LogDefaultValue(node, XmlElementHelper.S_MARGIN, "0", procName);
             }
-            _margin = margin;
+            Margin = margin;
 
             var paddingStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_PADDING);
             if (!LayoutHelper.TryCreateMarginPadding(paddingStr, out var padding))
             {
                 Logger.LogDefaultValue(node, XmlElementHelper.S_PADDING, "0", procName);
             }
-            _padding = padding;
+            Padding = padding;
 
             var horizontalAlignmentStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_HORIZONTAL_ALIGNMENT);
             if (!Enum.TryParse(horizontalAlignmentStr, out HorizontalAlignment horizontalAlignment))
@@ -165,8 +165,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         {
             return new LayoutParameter
             {
-                Margin = _margin,
-                Padding = _padding,
+                Margin = Margin,
+                Padding = Padding,
                 Position = _position,
                 Row = _row,
                 Column = _column,
@@ -292,8 +292,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var paddingBox = RenderBox(graph, PaddingBox, 0.4);
             var contentBox = RenderBox(graph, ContentBox, 1);
 
-            RenderSize(graph, font, brush, marginBox, _margin);
-            RenderSize(graph, font, brush, paddingBox, _padding);
+            RenderSize(graph, font, brush, marginBox, Margin);
+            RenderSize(graph, font, brush, paddingBox, Padding);
         }
 
         private XRect RenderBox(XGraphics graph, BoxModel box, double opacity)

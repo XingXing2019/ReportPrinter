@@ -68,14 +68,14 @@
 		       HorizontalAlignment="Center" VerticalAlignment="Center">
 			<BoardThickness>1</BoardThickness>
 			<LineSpace>0.5</LineSpace>
-			<TitleHorizontalAlignment>Left</TitleHorizontalAlignment>
+			<TitleHorizontalAlignment>Center</TitleHorizontalAlignment>
 			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
 			<SqlId>VendorInfo</SqlId>
-			<SqlResColumn Id="VendorID" Title="VendorID" Width="1*" />
-			<SqlResColumn Id="VendorName" Title="VendorName" Width="2*" />
-			<SqlResColumn Id="ShortName" Title="ShortName" Width="1*" />
-			<SqlResColumn Id="GroupID" Title="GroupID" Width="1*" />
-			<SqlResColumn Id="CurrencyCode" Title="CurrencyCode" Width="1*" />
+			<SqlResColumn Id="VendorID" Title="Vendor ID" Width="1*" />
+			<SqlResColumn Id="VendorName" Title="VendorName VendorName VendorName VendorName VendorName VendorName VendorName VendorName" Width="2*" />
+			<SqlResColumn Id="ShortName" Title="Short Name" Width="1*" />
+			<SqlResColumn Id="GroupID" Title="Group ID" Width="1*" />
+			<SqlResColumn Id="CurrencyCode" Title="Currency Code" Width="1*" />
 		</Table>
 
 	</PageBody>

@@ -127,14 +127,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private Dictionary<string, BoxModel> CalcPosition(PdfDocumentManager manager)
         {
             var container = manager.PageBodyContainer;
-            var containerWidth = container.RightBoundary - container.LeftBoundary;
+            var totalWidth = container.RightBoundary - container.LeftBoundary;
 
             var res = new Dictionary<string, BoxModel>();
             var x = container.LeftBoundary;
             foreach (var sqlResColumn in _sqlResColumnList)
             {
-                var width = containerWidth * sqlResColumn.WidthRatio;
-                res.Add(sqlResColumn.Id, new BoxModel(x, -1, width, -1));
+                var width = totalWidth * sqlResColumn.WidthRatio;
+                res.Add(sqlResColumn.Title, new BoxModel(x, -1, width, -1));
                 x += width;
             }
 
@@ -147,35 +147,46 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var page = pdf.Pages[^1];
             var container = manager.PageBodyContainer;
 
-            using (var graph = XGraphics.FromPdfPage(page))
+            using var graph = XGraphics.FromPdfPage(page);
+            var pen = new XPen(BrushColor.Color, _boardThickness);
+            graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
+
+            var text = "dummy";
+            var textSize = graph.MeasureString(text, Font);
+            
+            var lineSpace = textSize.Height * _lineSpace;
+            manager.YCursor += lineSpace;
+
+            var maxLineCount = 0;
+            foreach (var column in columnPositions.Keys)
             {
-                var pen = new XPen(BrushColor.Color, _boardThickness);
-                graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
-                var textHeight = graph.MeasureString("dummy", Font).Height;
-                var lineSpace = textHeight * _lineSpace;
-                manager.YCursor += lineSpace;
+                var position = columnPositions[column];
 
-                foreach (var column in columnPositions.Keys)
+                XStringFormat textPosition;
+                if (_titleHorizontalAlignment == HorizontalAlignment.Left)
+                    textPosition = XStringFormats.TopLeft;
+                else if (_titleHorizontalAlignment == HorizontalAlignment.Center)
+                    textPosition = XStringFormats.TopCenter;
+                else
+                    textPosition = XStringFormats.TopRight;
+
+                var lines = LayoutHelper.AllocateWords(column, textSize.Width / text.Length, position.Width);
+                var y = manager.YCursor;
+                maxLineCount = Math.Max(maxLineCount, lines.Count);
+
+                foreach (var line in lines)
                 {
-                    var position = columnPositions[column];
-
-                    var rect = new XRect(position.X, manager.YCursor, position.Width, textHeight);
-
-                    XStringFormat textPosition;
-                    if (_titleHorizontalAlignment == HorizontalAlignment.Left)
-                        textPosition = XStringFormats.TopLeft;
-                    else if (_titleHorizontalAlignment == HorizontalAlignment.Center)
-                        textPosition = XStringFormats.TopCenter;
-                    else
-                        textPosition = XStringFormats.TopRight;
-
-                    graph.DrawString(column, Font, BrushColor, rect, textPosition);
+                    var rect = new XRect(position.X, manager.YCursor, position.Width, textSize.Height);
+                    graph.DrawString(line, Font, BrushColor, rect, textPosition);
+                    manager.YCursor += textSize.Height;
                 }
 
-                manager.YCursor += textHeight + lineSpace;
-                graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
-                manager.YCursor += lineSpace;
+                manager.YCursor = y;
             }
+
+            manager.YCursor += textSize.Height * maxLineCount + lineSpace;
+            graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
+            manager.YCursor += lineSpace;
         }
 
         #endregion

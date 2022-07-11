@@ -44,7 +44,8 @@ namespace RaphaelLibrary.Code.Init.PDF
 
             _rendererInBody = new HashSet<string>
             {
-                XmlElementHelper.S_TABLE
+                XmlElementHelper.S_TABLE,
+                XmlElementHelper.S_WATER_MARK
             };
         }
 

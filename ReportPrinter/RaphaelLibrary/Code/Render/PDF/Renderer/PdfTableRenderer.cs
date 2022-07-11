@@ -125,11 +125,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             var pdf = manager.Pdf;
             var page = pdf.Pages[^1];
-            var container = manager.PageBodyContainer;
 
             using var graph = XGraphics.FromPdfPage(page);
             var pen = new XPen(BrushColor.Color, _boardThickness);
-            graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
+            graph.DrawLine(pen, manager.LeftBoundary, manager.YCursor, manager.RightBoundary, manager.YCursor);
 
             var textSize = CalcTextSize(graph);
             var lineSpace = textSize.Height * _lineSpace;
@@ -157,7 +156,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
 
             manager.YCursor += textSize.Height * maxLineCount + lineSpace;
-            graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
+            graph.DrawLine(pen, manager.LeftBoundary, manager.YCursor, manager.RightBoundary, manager.YCursor);
             manager.YCursor += lineSpace;
         }
 
@@ -167,7 +166,6 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
 
             var pen = new XPen(BrushColor.Color, _boardThickness);
-            var container = manager.PageBodyContainer;
 
             var textSize = CalcTextSize(graph);
             var lineSpace = _lineSpace * textSize.Height;
@@ -184,7 +182,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 if (manager.YCursor + textSize.Height * maxLineCount + lineSpace > manager.BottomBoundary)
                 {
-                    graph.DrawLine(pen, container.LeftBoundary, manager.BottomBoundary, container.RightBoundary, manager.BottomBoundary);
+                    graph.DrawLine(pen, manager.LeftBoundary, manager.BottomBoundary, manager.RightBoundary, manager.BottomBoundary);
                     graph.Dispose();
                     manager.AddPage(RenderTableTitle);
                     graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
@@ -211,17 +209,16 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 manager.YCursor += textSize.Height * maxLineCount + lineSpace;
             }
 
-            graph.DrawLine(pen, container.LeftBoundary, container.LastPageBottomBoundary, container.RightBoundary, container.LastPageBottomBoundary);
+            graph.DrawLine(pen, manager.LeftBoundary, manager.LastPageBottomBoundary, manager.RightBoundary, manager.LastPageBottomBoundary);
             graph.Dispose();
         }
 
         private Dictionary<SqlResColumn, BoxModel> CalcPosition(PdfDocumentManager manager)
         {
-            var container = manager.PageBodyContainer;
-            var totalWidth = container.RightBoundary - container.LeftBoundary;
+            var totalWidth = manager.RightBoundary - manager.LeftBoundary;
 
             var res = new Dictionary<SqlResColumn, BoxModel>();
-            var x = container.LeftBoundary;
+            var x = manager.LeftBoundary;
             foreach (var sqlResColumn in _sqlResColumnList)
             {
                 var width = totalWidth * sqlResColumn.WidthRatio;

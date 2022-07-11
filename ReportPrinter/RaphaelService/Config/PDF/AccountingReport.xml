@@ -78,7 +78,16 @@
 			<SqlResColumn Id="GroupID" Title="Group ID" Width="1*" />
 			<SqlResColumn Id="CurrencyCode" Title="Currency Code" Width="1*" />
 		</Table>
-
+		<WaterMark Margin="5 5 5 5" Padding="5 5 5 5" FontSize="40" FontFamily="Times New Roman" BackgroundColor=""
+				   FontStyle="Regular" BrushColor="Red" Opacity="0.5">
+			<Type>Sql</Type>
+			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+			<SqlId>GlAccount</SqlId>
+			<SqlResColumn Id="AccountNumber" />
+			<StartPage>1</StartPage>
+			<EndPage>-2</EndPage>
+			<Rotate>315</Rotate>
+		</WaterMark>
 	</PageBody>
 
 	<PageFooter Height="0.5*" Rows="1" Columns="4">

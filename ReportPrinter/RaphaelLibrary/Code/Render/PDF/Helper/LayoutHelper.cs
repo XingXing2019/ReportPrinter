@@ -15,8 +15,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public static bool TryCreateMarginBox(BoxModel container, int totalRows, int totalColumns, PdfRendererBase renderer, out BoxModel marginBox)
         {
             var procName = $"LayoutHelper.{nameof(TryCreateMarginPadding)}";
-
             marginBox = null;
+
             var dimension = CalcBoxDimension(container, totalRows, totalColumns);
             var layoutParam = renderer.GetLayoutParameter();
             
@@ -30,11 +30,41 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             return true;
         }
 
+        public static bool TryCreateMarginBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel marginBox)
+        {
+            var procName = $"LayoutHelper.{nameof(TryCreateMarginPadding)}";
+            marginBox = null;
+
+            var layoutParam = renderer.GetLayoutParameter();
+            MarginPaddingModel margin = layoutParam.Margin, padding = layoutParam.Padding;
+            double x = container.X, y = container.Y;
+            var width = textSize.Width + margin.Left + margin.Right + padding.Left + padding.Right;
+            var height = textSize.Height + margin.Top + margin.Bottom + padding.Top + padding.Bottom;
+
+            if (width > container.Width)
+            {
+                Logger.Error($"{renderer.GetType().Name}: Sum of horizontal margin and padding is too large, there is no space for content", procName);
+                return false;
+            }
+
+            if (height > container.Height)
+            {
+                Logger.Error($"{renderer.GetType().Name}: Sum of vertical margin and padding is too large, there is no space for content", procName);
+                return false;
+            }
+
+            x += container.Width / 2 - width / 2;
+            y += container.Height / 2 - height / 2;
+            
+            marginBox = new BoxModel(x, y, width, height);
+            return true;
+        }
+
         public static bool TryCreatePaddingBox(BoxModel container, int totalRows, int totalColumns, PdfRendererBase renderer, out BoxModel paddingBox)
         {
             var procName = $"LayoutHelper.{nameof(TryCreatePaddingBox)}";
-
             paddingBox = null;
+
             var dimension = CalcBoxDimension(container, totalRows, totalColumns);
             var layoutParam = renderer.GetLayoutParameter();
             var margin = layoutParam.Margin;
@@ -60,11 +90,43 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             return true;
         }
 
+        public static bool TryCreatePaddingBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel paddingBox)
+        {
+            var procName = $"LayoutHelper.{nameof(TryCreatePaddingBox)}";
+            paddingBox = null;
+            
+            var layoutParam = renderer.GetLayoutParameter();
+            MarginPaddingModel margin = layoutParam.Margin, padding = layoutParam.Padding;
+            double x = container.X, y = container.Y;
+            var width = textSize.Width + margin.Left + margin.Right + padding.Left + padding.Right;
+            var height = textSize.Height + margin.Top + margin.Bottom + padding.Top + padding.Bottom;
+
+            if (width > container.Width)
+            {
+                Logger.Error($"{renderer.GetType().Name}: Sum of horizontal margin and padding is too large, there is no space for content", procName);
+                return false;
+            }
+
+            if (height > container.Height)
+            {
+                Logger.Error($"{renderer.GetType().Name}: Sum of vertical margin and padding is too large, there is no space for content", procName);
+                return false;
+            }
+
+            x += container.Width / 2 - width / 2 + margin.Left;
+            y += container.Height / 2 - height / 2 + margin.Top;
+            width = width - margin.Left - margin.Right;
+            height = height - margin.Top - margin.Bottom;
+
+            paddingBox = new BoxModel(x, y, width, height);
+            return true;
+        }
+        
         public static bool TryCreateContentBox(BoxModel container, int totalRows, int totalColumns, PdfRendererBase renderer, out BoxModel contentBox)
         {
             var procName = $"LayoutHelper.{nameof(TryCreateContentBox)}";
-
             contentBox = null;
+
             var dimension = CalcBoxDimension(container, totalRows, totalColumns);
             var layoutParam = renderer.GetLayoutParameter();
             var margin = layoutParam.Margin;
@@ -90,7 +152,39 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             contentBox = new BoxModel(x, y, width, height);
             return true;
         }
-        
+
+        public static bool TryCreateContentBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel contentBox)
+        {
+            var procName = $"LayoutHelper.{nameof(TryCreateContentBox)}";
+            contentBox = null;
+            
+            var layoutParam = renderer.GetLayoutParameter();
+            MarginPaddingModel margin = layoutParam.Margin, padding = layoutParam.Padding;
+            double x = container.X, y = container.Y;
+            var width = textSize.Width + margin.Left + margin.Right + padding.Left + padding.Right;
+            var height = textSize.Height + margin.Top + margin.Bottom + padding.Top + padding.Bottom;
+
+            if (width > container.Width)
+            {
+                Logger.Error($"{renderer.GetType().Name}: Sum of horizontal margin and padding is too large, there is no space for content", procName);
+                return false;
+            }
+
+            if (height > container.Height)
+            {
+                Logger.Error($"{renderer.GetType().Name}: Sum of vertical margin and padding is too large, there is no space for content", procName);
+                return false;
+            }
+
+            x += container.Width / 2 - width / 2 + margin.Left + padding.Left;
+            y += container.Height / 2 - height / 2 + margin.Top + padding.Top;
+            width = width - margin.Left - margin.Right - padding.Left - padding.Right;
+            height = height - margin.Top - margin.Bottom - padding.Top - padding.Bottom;
+
+            contentBox = new BoxModel(x, y, width, height);
+            return true;
+        }
+
         public static bool TryCreateMarginPadding(string input, out MarginPaddingModel model)
         {
             try

@@ -66,6 +66,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
                     return false;
 
+                if (sqlResColumnList.Count != 1)
+                {
+                    Logger.Error($"{this.GetType().Name} cna only have one sql resutle column", procName);
+                    return false;
+                }
+
                 _sql = sql;
                 _sqlResColumn = sqlResColumnList[0];
                 Logger.Info($"Success to read Annotation with type of {_annotationRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);

@@ -4,8 +4,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Xml;
 using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
@@ -54,6 +52,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
                 return false;
+
+            if (sqlResColumnList.Count != 1)
+            {
+                Logger.Error($"{this.GetType().Name} cna only have one sql resutle column", procName);
+                return false;
+            }
 
             _sql = sql;
             _sqlResColumn = sqlResColumnList[0];

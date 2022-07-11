@@ -14,6 +14,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_COLUMN_SPAN = "ColumnSpan";
         public const string S_CONTENT = "Content";
         public const string S_DATABASE_ID = "DatabaseId";
+        public const string S_END_PAGE = "EndPage";
         public const string S_HIDE_TITLE = "HideTitle";
         public const string S_ICON = "Icon";
         public const string S_IMAGE = "Image";
@@ -28,6 +29,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_QUERY = "Query";
         public const string S_ReportFooter = "ReportFooter";
         public const string S_ReportHeader = "ReportHeader";
+        public const string S_ROTATE = "Rotate";
         public const string S_ROW = "Row";
         public const string S_ROW_SPAN = "RowSpan";
         public const string S_SHOW_BARCODE_TEXT = "ShowBarcodeText";
@@ -38,12 +40,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_SQL_TEMPLATE = "SqlTemplate";
         public const string S_SQL_TEMPLATE_ID = "SqlTemplateId";
         public const string S_SQL_TEMPLATE_LIST = "SqlTemplateList";
+        public const string S_START_PAGE = "StartPage";
         public const string S_TABLE = "Table";
         public const string S_TEXT = "Text";
         public const string S_TITLE = "Title";
         public const string S_TITLE_HORIZONTAL_ALIGNMENT = "TitleHorizontalAlignment";
         public const string S_TYPE = "Type";
         public const string S_VARIABLE = "Variable";
+        public const string S_WATER_MARK = "WaterMark";
         public const string S_WIDTH = "Width";
 
         #endregion

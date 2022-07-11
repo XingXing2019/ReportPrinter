@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Code\Init\PDF\" />
     <Folder Include="Code\Render\PDF\Manager\" />
-    <Folder Include="Code\Render\PDF\Renderer\" />
   </ItemGroup>
 
   <ItemGroup>

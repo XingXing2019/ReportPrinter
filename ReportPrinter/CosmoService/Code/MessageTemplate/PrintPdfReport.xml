@@ -10,7 +10,7 @@
 		</SqlVariable>
 		<SqlVariable>
 			<Name>CurrencyCode</Name>
-			<Value>USD</Value>
+			<Value>AUD</Value>
 		</SqlVariable>
 	</SqlVariables>
 </PrintPdfReport>

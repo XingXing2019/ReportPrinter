@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Render.PDF.Model;
+using RaphaelLibrary.Code.Render.PDF.Structure;
 
 namespace RaphaelLibrary.Code.Render.PDF.Manager
 {
@@ -11,23 +13,30 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
         public PdfDocument Pdf { get; }
         public Guid MessageId { get; }
 
-        public double TopBoundary => Pdf.PageCount > 1 ? _pageBodyContainer.NonFirstPageTopBoundary : _pageBodyContainer.FirstPageTopBoundary;
-        public double BottomBoundary => _pageBodyContainer.NonLastPageBottomBoundary;
-        public double LastPageBottomBoundary => _pageBodyContainer.LastPageBottomBoundary;
-        public double LeftBoundary => _pageBodyContainer.LeftBoundary;
-        public double RightBoundary => _pageBodyContainer.RightBoundary;
+        public ContainerModel ReportHeaderContainer { get; }
+        public ContainerModel PageHeaderContainer { get; }
+        public ContainerModel PageBodyContainer { get; }
+        public ContainerModel PageFooterContainer { get; }
+        public ContainerModel ReportFooterContainer { get; }
+
 
         public double YCursor { get; set; }
         public int CurrentPage { get; set; }
 
         private readonly XSize _pageSize;
-        private ContainerModel _pageBodyContainer;
 
-        public PdfDocumentManager(Guid messageId, PdfDocument pdf, XSize pageSize, ContainerModel pageBodyContainer)
+        public PdfDocumentManager(Guid messageId, PdfDocument pdf, XSize pageSize, Dictionary<PdfStructure, ContainerModel> pdfStructureSizeList)
         {
             MessageId = messageId;
-            Pdf = pdf; _pageSize = pageSize;
-            _pageBodyContainer = pageBodyContainer;
+            Pdf = pdf; 
+            _pageSize = pageSize;
+
+            ReportHeaderContainer = pdfStructureSizeList[PdfStructure.PdfReportHeader];
+            PageHeaderContainer = pdfStructureSizeList[PdfStructure.PdfPageHeader];
+            PageBodyContainer = pdfStructureSizeList[PdfStructure.PdfPageBody];
+            PageFooterContainer = pdfStructureSizeList[PdfStructure.PdfPageFooter];
+            ReportFooterContainer = pdfStructureSizeList[PdfStructure.PdfReportFooter];
+
             AddPage();
         }
         
@@ -37,7 +46,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
             var page = Pdf.AddPage();
             page.Height = _pageSize.Height;
             page.Width = _pageSize.Width;
-            YCursor = TopBoundary;
+            YCursor = Pdf.PageCount > 1 ? PageBodyContainer.NonFirstPageTopBoundary : PageBodyContainer.FirstPageTopBoundary;
             action?.Invoke(this);
         }
     }

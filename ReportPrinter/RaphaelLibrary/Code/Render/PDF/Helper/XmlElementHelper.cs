@@ -24,8 +24,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_PAGE_BODY = "PageBody";
         public const string S_PAGE_FOOTER = "PageFooter";
         public const string S_PAGE_HEADER = "PageHeader";
+        public const string S_PAGE_NUMBER = "PageNumber";
         public const string S_PDF_TEMPLATE = "PdfTemplate";
         public const string S_PDF_TEMPLATE_LIST = "PdfTemplateList";
+        public const string S_POSITION = "Position";
         public const string S_QUERY = "Query";
         public const string S_ReportFooter = "ReportFooter";
         public const string S_ReportHeader = "ReportHeader";

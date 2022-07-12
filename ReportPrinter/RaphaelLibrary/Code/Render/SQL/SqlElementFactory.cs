@@ -1,5 +1,4 @@
 ﻿using System;
-using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using ReportPrinterLibrary.Code.Log;

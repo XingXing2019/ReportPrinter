@@ -288,6 +288,42 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             RenderSize(graph, font, brush, paddingBox, Padding);
         }
 
+        protected void RenderText(XGraphics graph, string text)
+        {
+            XStringFormat position;
+            if (VerticalAlignment == VerticalAlignment.Top)
+            {
+                if (HorizontalAlignment == HorizontalAlignment.Left)
+                    position = XStringFormats.TopLeft;
+                else if (HorizontalAlignment == HorizontalAlignment.Center)
+                    position = XStringFormats.TopCenter;
+                else
+                    position = XStringFormats.TopRight;
+
+            }
+            else if (VerticalAlignment == VerticalAlignment.Center)
+            {
+                if (HorizontalAlignment == HorizontalAlignment.Left)
+                    position = XStringFormats.CenterLeft;
+                else if (HorizontalAlignment == HorizontalAlignment.Center)
+                    position = XStringFormats.Center;
+                else
+                    position = XStringFormats.CenterRight;
+            }
+            else
+            {
+                if (HorizontalAlignment == HorizontalAlignment.Left)
+                    position = XStringFormats.BottomLeft;
+                else if (HorizontalAlignment == HorizontalAlignment.Center)
+                    position = XStringFormats.BottomCenter;
+                else
+                    position = XStringFormats.BottomRight;
+            }
+
+            var rect = new XRect(ContentBox.X, ContentBox.Y, ContentBox.Width, ContentBox.Height);
+            graph.DrawString(text, Font, BrushColor, rect, position);
+        }
+        
 
         #region Helper
 

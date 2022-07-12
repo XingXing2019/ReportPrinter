@@ -90,7 +90,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 _sql = sql;
                 _sqlResColumn = sqlResColumnList[0];
-                Logger.Info($"Success to read Annotation with type of {_waterMarkType}, sql id: {_sql.Id}, res column: {_sqlResColumn}, rotate: {_rotate}, start page: {_startPage}, end page: {_endPage}", procName);
+                Logger.Info($"Success to read WaterMark with type of {_waterMarkType}, sql id: {_sql.Id}, res column: {_sqlResColumn}, rotate: {_rotate}, start page: {_startPage}, end page: {_endPage}", procName);
             }
 
             return true;
@@ -102,6 +102,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             if (_waterMarkType == WaterMarkRendererType.Sql)
             {
                 cloned._sql = this._sql.Clone() as Sql;
+                cloned._sqlResColumn = this._sqlResColumn.Clone();
             }
             return cloned;
         }
@@ -123,10 +124,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 textSize = graph.MeasureString(_content, Font);
             }
 
-            var x = manager.LeftBoundary;
-            var y = manager.TopBoundary;
-            var width = manager.RightBoundary - manager.LeftBoundary;
-            var height = manager.BottomBoundary - manager.TopBoundary;
+            var x = manager.PageBodyContainer.LeftBoundary;
+            var y = manager.PageBodyContainer.FirstPageTopBoundary;
+            var width = manager.PageBodyContainer.RightBoundary - manager.PageBodyContainer.LeftBoundary;
+            var height = manager.PageBodyContainer.NonLastPageBottomBoundary - manager.PageBodyContainer.FirstPageTopBoundary;
 
             var container = new BoxModel(x, y, width, height);
             if (!LayoutHelper.TryCreateMarginBox(container, textSize, this, out var marginBox))

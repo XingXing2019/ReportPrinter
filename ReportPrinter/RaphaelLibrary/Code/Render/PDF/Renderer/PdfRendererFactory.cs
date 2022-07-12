@@ -23,6 +23,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return new PdfTableRenderer(position);
             else if (name == XmlElementHelper.S_WATER_MARK)
                 return new PdfWaterMarkRenderer(position);
+            else if (name == XmlElementHelper.S_PAGE_NUMBER)
+                return new PdfPageNumberRenderer(position);
             else
             {
                 var error = $"Invalid name: {name} for pdf renderer";

@@ -20,7 +20,7 @@ namespace RaphaelLibrary.Code.Init.PDF
         public string Id { get; private set; }
 
         private Dictionary<PdfStructure, PdfStructureBase> _pdfStructureList;
-        private ContainerModel _pageBodyContainer;
+        private Dictionary<PdfStructure, ContainerModel> _pdfStructureSizeList;
 
         private XSize _pageSize;
         private string _fileName;
@@ -33,19 +33,21 @@ namespace RaphaelLibrary.Code.Init.PDF
         public PdfTemplate()
         {
             _pdfStructureList = new Dictionary<PdfStructure, PdfStructureBase>();
+            _pdfStructureSizeList = new Dictionary<PdfStructure, ContainerModel>();
 
             _rendererInHeaderFooter = new HashSet<string>
             {
                 XmlElementHelper.S_TEXT,
                 XmlElementHelper.S_BARCODE,
                 XmlElementHelper.S_IMAGE,
-                XmlElementHelper.S_ANNOTATION
+                XmlElementHelper.S_ANNOTATION,
             };
 
             _rendererInBody = new HashSet<string>
             {
                 XmlElementHelper.S_TABLE,
-                XmlElementHelper.S_WATER_MARK
+                XmlElementHelper.S_WATER_MARK,
+                XmlElementHelper.S_PAGE_NUMBER
             };
         }
 
@@ -153,9 +155,19 @@ namespace RaphaelLibrary.Code.Init.PDF
                 var container = LayoutHelper.CreateContainer(_pageSize, structure, _pdfStructureList);
                 if (!_pdfStructureList[structure].TryCalcRendererPosition(container))
                     return false;
+
+                _pdfStructureSizeList[structure] = new ContainerModel
+                {
+                    LeftBoundary = _pdfStructureList[structure].Margin.Left + _pdfStructureList[structure].Padding.Left,
+                    RightBoundary = _pageSize.Width - _pdfStructureList[structure].Margin.Right - _pdfStructureList[structure].Padding.Right,
+                    FirstPageTopBoundary = container.Y,
+                    NonFirstPageTopBoundary = container.Y,
+                    LastPageBottomBoundary = container.Y + container.Height,
+                    NonLastPageBottomBoundary = container.Y + container.Height
+                };
             }
-            
-            _pageBodyContainer = new ContainerModel
+
+            _pdfStructureSizeList[PdfStructure.PdfPageBody] = new ContainerModel
             {
                 LeftBoundary = pageBody.Margin.Left + pageBody.Padding.Left,
                 RightBoundary = _pageSize.Width - pageBody.Margin.Right - pageBody.Padding.Right,
@@ -164,6 +176,7 @@ namespace RaphaelLibrary.Code.Init.PDF
                 LastPageBottomBoundary = _pageSize.Height - reportFooter.Height - pageBody.Margin.Bottom - pageBody.Padding.Bottom,
                 NonLastPageBottomBoundary = _pageSize.Height - pageFooter.Height - pageBody.Margin.Bottom - pageBody.Padding.Bottom
             };
+
 
             Logger.Info($"Success to read pdf template: {Id}, page size: {_pageSize.Width} : {_pageSize.Height}, Orientation: {orientation}, " +
                         $"file name suffix: {_fileNameSuffix}, save path: {_savePath}", procName);
@@ -187,7 +200,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             var procName = $"{this.GetType().Name}.{nameof(TryCreatePdfReport)}";
 
             var pdf = new PdfDocument();
-            var manager = new PdfDocumentManager(messageId, pdf, _pageSize, _pageBodyContainer);
+            var manager = new PdfDocumentManager(messageId, pdf, _pageSize, _pdfStructureSizeList);
 
             try
             {

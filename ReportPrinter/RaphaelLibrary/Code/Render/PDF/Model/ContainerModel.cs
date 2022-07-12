@@ -8,5 +8,10 @@
         public double NonFirstPageTopBoundary { get; set; }
         public double LastPageBottomBoundary { get; set; }
         public double NonLastPageBottomBoundary { get; set; }
+
+        public double X => LeftBoundary;
+        public double Y => NonFirstPageTopBoundary;
+        public double Width => RightBoundary - LeftBoundary;
+        public double Height => NonLastPageBottomBoundary - NonFirstPageTopBoundary;
     }
 }

@@ -30,7 +30,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             return true;
         }
 
-        public static bool TryCreateMarginBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel marginBox)
+        public static bool TryCreateMarginBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel marginBox, HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center)
         {
             var procName = $"LayoutHelper.{nameof(TryCreateMarginPadding)}";
             marginBox = null;
@@ -53,7 +53,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
                 return false;
             }
 
-            x += container.Width / 2 - width / 2;
+            if (horizontalAlignment == HorizontalAlignment.Center)
+                x += container.Width / 2 - width / 2;
+            else if (horizontalAlignment == HorizontalAlignment.Right)
+                x += container.Width - width;
+            
             y += container.Height / 2 - height / 2;
             
             marginBox = new BoxModel(x, y, width, height);
@@ -90,14 +94,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             return true;
         }
 
-        public static bool TryCreatePaddingBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel paddingBox)
+        public static bool TryCreatePaddingBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel paddingBox, HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center)
         {
             var procName = $"LayoutHelper.{nameof(TryCreatePaddingBox)}";
             paddingBox = null;
             
             var layoutParam = renderer.GetLayoutParameter();
             MarginPaddingModel margin = layoutParam.Margin, padding = layoutParam.Padding;
-            double x = container.X, y = container.Y;
+            double x = container.X + margin.Left, y = container.Y + margin.Top;
             var width = textSize.Width + margin.Left + margin.Right + padding.Left + padding.Right;
             var height = textSize.Height + margin.Top + margin.Bottom + padding.Top + padding.Bottom;
 
@@ -113,8 +117,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
                 return false;
             }
 
-            x += container.Width / 2 - width / 2 + margin.Left;
-            y += container.Height / 2 - height / 2 + margin.Top;
+            if (horizontalAlignment == HorizontalAlignment.Center)
+                x += container.Width / 2 - width / 2;
+            else if (horizontalAlignment == HorizontalAlignment.Right)
+                x += container.Width - width;
+            
+            y += container.Height / 2 - height / 2;
             width = width - margin.Left - margin.Right;
             height = height - margin.Top - margin.Bottom;
 
@@ -153,14 +161,15 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             return true;
         }
 
-        public static bool TryCreateContentBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel contentBox)
+        public static bool TryCreateContentBox(BoxModel container, XSize textSize, PdfRendererBase renderer, out BoxModel contentBox, HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center)
         {
             var procName = $"LayoutHelper.{nameof(TryCreateContentBox)}";
             contentBox = null;
             
             var layoutParam = renderer.GetLayoutParameter();
             MarginPaddingModel margin = layoutParam.Margin, padding = layoutParam.Padding;
-            double x = container.X, y = container.Y;
+            var x = container.X + margin.Left + padding.Left;
+            var y = container.Y + margin.Top + padding.Top;
             var width = textSize.Width + margin.Left + margin.Right + padding.Left + padding.Right;
             var height = textSize.Height + margin.Top + margin.Bottom + padding.Top + padding.Bottom;
 
@@ -176,8 +185,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
                 return false;
             }
 
-            x += container.Width / 2 - width / 2 + margin.Left + padding.Left;
-            y += container.Height / 2 - height / 2 + margin.Top + padding.Top;
+            if (horizontalAlignment == HorizontalAlignment.Center)
+                x += container.Width / 2 - width / 2;
+            else if (horizontalAlignment == HorizontalAlignment.Right)
+                x += container.Width - width;
+            
+            y += container.Height / 2 - height / 2;
             width = width - margin.Left - margin.Right - padding.Left - padding.Right;
             height = height - margin.Top - margin.Bottom - padding.Top - padding.Bottom;
 

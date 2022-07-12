@@ -4,7 +4,7 @@
 
 		
 		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Green" Opacity="1">
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
 			<Type>Sql</Type>
 			<Row>0</Row>
 			<Column>0</Column>
@@ -50,9 +50,9 @@
 		</Text>
 		-->
 	</ReportHeader>
-	<PageHeader Height="0.5*" Rows="1" Columns="4">
+	<PageHeader Height="0.5*" Rows="1" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
 		
-		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" BackgroundColor="Red">
+		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" BackgroundColor="">
 			<Row>0</Row>
 			<Column>0</Column>
 			<RowSpan>1</RowSpan>
@@ -60,6 +60,7 @@
 			<SourceType>Local</SourceType>
 			<ImageSource>.\Image\Logo.png</ImageSource>
 		</Image>
+		
 	</PageHeader>
 
 	<PageBody Height="8*" Margin="0 20 0 20" Padding="0 10 0 10">
@@ -88,9 +89,15 @@
 			<EndPage>-2</EndPage>
 			<Rotate>315</Rotate>
 		</WaterMark>
+		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" VerticalAlignment="Center"
+		            FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Position>Footer</Position>
+			<StartPage>1</StartPage>
+			<EndPage>-1</EndPage>
+		</PageNumber>
 	</PageBody>
 
-	<PageFooter Height="0.5*" Rows="1" Columns="4">
+	<PageFooter Height="0.5*" Rows="1" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
 		
 		<Barcode Padding="0 20 0 20" FontSize="9" FontFamily="Calibri"
 		         FontStyle="Regular" BrushColor="Navy" Opacity="1">
@@ -108,7 +115,7 @@
 	<ReportFooter Height="1*" Rows="1" Columns="2" Margin="0 20 0 20" Padding="0 10 0 10">
 		
 		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Green" Opacity="1">
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
 			<Type>Text</Type>
 			<Row>0</Row>
 			<Column>0</Column>

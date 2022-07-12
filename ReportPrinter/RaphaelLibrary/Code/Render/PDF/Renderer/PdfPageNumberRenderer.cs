@@ -60,6 +60,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return false;
 
             var pdf = manager.Pdf;
+            var outline = pdf.Outlines;
             for (int i = 0; i < pdf.PageCount; i++)
             {
                 if (i < _startPage || i > pdf.PageCount + _endPage)
@@ -69,6 +70,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 using var graph = XGraphics.FromPdfPage(pdf.Pages[i]);
                 RenderBoxModel(graph);
                 RenderText(graph, text);
+                outline.Add(text, pdf.Pages[i], true);
             }
 
             return true;

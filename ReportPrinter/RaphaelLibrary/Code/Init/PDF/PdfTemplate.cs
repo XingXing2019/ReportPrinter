@@ -47,7 +47,8 @@ namespace RaphaelLibrary.Code.Init.PDF
             {
                 XmlElementHelper.S_TABLE,
                 XmlElementHelper.S_WATER_MARK,
-                XmlElementHelper.S_PAGE_NUMBER
+                XmlElementHelper.S_PAGE_NUMBER,
+                XmlElementHelper.S_REPRINT_MARK
             };
         }
 
@@ -108,7 +109,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             _fileNameSuffix = fileNameSuffix;
 
             var reportHeader = new PdfReportHeader(_rendererInHeaderFooter);
-            if (!reportHeader.ReadXml(node.SelectSingleNode(XmlElementHelper.S_ReportHeader)))
+            if (!reportHeader.ReadXml(node.SelectSingleNode(XmlElementHelper.S_REPORT_HEADER)))
             {
                 return false;
             }
@@ -136,7 +137,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             _pdfStructureList.Add(PdfStructure.PdfPageFooter, pageFooter);
 
             var reportFooter = new PdfReportFooter(_rendererInHeaderFooter);
-            if (!reportFooter.ReadXml(node.SelectSingleNode(XmlElementHelper.S_ReportFooter)))
+            if (!reportFooter.ReadXml(node.SelectSingleNode(XmlElementHelper.S_REPORT_FOOTER)))
             {
                 return false;
             }

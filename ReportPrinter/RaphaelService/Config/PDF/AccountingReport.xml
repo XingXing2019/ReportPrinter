@@ -89,12 +89,19 @@
 			<EndPage>-2</EndPage>
 			<Rotate>315</Rotate>
 		</WaterMark>
-		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" VerticalAlignment="Center"
+		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right"
 		            FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
 			<Position>Footer</Position>
 			<StartPage>1</StartPage>
 			<EndPage>-1</EndPage>
 		</PageNumber>
+
+		<ReprintMark Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right"
+		             FontSize="12" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Red" BackgroundColor="" Opacity="1">
+			<Text>REPRINT</Text>
+			<BoardThickness>3</BoardThickness>
+			<Position>Footer</Position>
+		</ReprintMark>
 	</PageBody>
 
 	<PageFooter Height="0.5*" Rows="1" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">

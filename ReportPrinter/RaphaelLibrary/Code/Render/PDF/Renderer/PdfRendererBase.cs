@@ -270,7 +270,43 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             return true;
         }
-        
+
+        protected bool TryCalcRendererPosition(PdfDocumentManager manager, XSize textSize, Position position)
+        {
+            BoxModel container;
+            if (position == Position.Header)
+            {
+                var pageHeader = manager.PageHeaderContainer;
+                var reportHeader = manager.ReportHeaderContainer;
+                container = pageHeader.Height < reportHeader.Height
+                    ? new BoxModel(pageHeader.X, pageHeader.Y, pageHeader.Width, pageHeader.Height)
+                    : new BoxModel(reportHeader.X, reportHeader.Y, reportHeader.Width, reportHeader.Height);
+
+            }
+            else
+            {
+                var pageFooter = manager.PageFooterContainer;
+                var reportFooter = manager.ReportFooterContainer;
+                container = pageFooter.Height < reportFooter.Height
+                    ? new BoxModel(pageFooter.X, pageFooter.Y, pageFooter.Width, pageFooter.Height)
+                    : new BoxModel(reportFooter.X, reportFooter.Y, reportFooter.Width, reportFooter.Height);
+            }
+
+            if (!LayoutHelper.TryCreateMarginBox(container, textSize, this, out var marginBox, HorizontalAlignment))
+                return false;
+            MarginBox = marginBox;
+
+            if (!LayoutHelper.TryCreatePaddingBox(container, textSize, this, out var paddingBox, HorizontalAlignment))
+                return false;
+            PaddingBox = paddingBox;
+
+            if (!LayoutHelper.TryCreateContentBox(container, textSize, this, out var contentBox, HorizontalAlignment))
+                return false;
+            ContentBox = contentBox;
+
+            return true;
+        }
+
         protected void RenderBoxModel(XGraphics graph)
         {
             if (BackgroundColor == XColors.Transparent)

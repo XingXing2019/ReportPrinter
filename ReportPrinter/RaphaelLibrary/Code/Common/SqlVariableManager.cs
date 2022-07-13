@@ -52,8 +52,7 @@ namespace RaphaelLibrary.Code.Common
         public Dictionary<string, SqlVariable> GetSqlVariables(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(GetSqlVariables)}";
-
-
+            
             Logger.Debug($"Get sql variables for message: {messageId}", procName);
             return _sqlVariableRepo[messageId];
         }

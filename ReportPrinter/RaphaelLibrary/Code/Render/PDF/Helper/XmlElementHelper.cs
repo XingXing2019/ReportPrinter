@@ -37,7 +37,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_ROW_SPAN = "RowSpan";
         public const string S_SHOW_BARCODE_TEXT = "ShowBarcodeText";
         public const string S_SOURCE_TYPE = "SourceType";
+        public const string S_SPACE = "Space";
         public const string S_SQL = "Sql";
+        public const string S_SQL_VARIABLE = "SqlVariable";
         public const string S_SQL_ID = "SqlId";
         public const string S_SQL_RES_COLUMN = "SqlResColumn";
         public const string S_SQL_TEMPLATE = "SqlTemplate";

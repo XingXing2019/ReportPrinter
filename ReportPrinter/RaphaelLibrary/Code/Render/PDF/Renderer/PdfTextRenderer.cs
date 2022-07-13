@@ -125,13 +125,6 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             RenderText(graph, _content.Trim());
             return true;
         }
-
-
-        #region Helper
-
-        
-
-        #endregion
     }
 
 

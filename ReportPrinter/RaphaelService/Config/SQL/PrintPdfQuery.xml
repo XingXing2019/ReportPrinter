@@ -54,4 +54,19 @@
 		</Query>
 		<Variable Name="AccountNumber" />
 	</Sql>
+	<Sql Id="VendorTransaction" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				TransactionID,
+				GLAccount,
+				Debit,
+				Credit,
+				InvoiceNo
+			FROM
+				Transactions
+			WHERE
+				VendorCode = '%%%VendorID%%%'
+		</Query>
+		<Variable Name="VendorID" />
+	</Sql>
 </SqlTemplate>

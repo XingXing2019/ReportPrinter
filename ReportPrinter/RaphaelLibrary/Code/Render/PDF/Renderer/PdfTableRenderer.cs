@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using PdfSharp.Drawing;
-using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {
@@ -20,9 +20,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private double _lineSpace;
         private HorizontalAlignment _titleHorizontalAlignment;
         private bool _hideTitle;
+        private string _sqlVariable;
+        private bool _isSubTable;
+        private double _space;
 
         private Sql _sql;
         private List<SqlResColumn> _sqlResColumnList;
+        private PdfTableRenderer _subTableRender;
 
         private Dictionary<SqlResColumn, BoxModel> _columnPositions;
 
@@ -69,6 +73,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _hideTitle = hideTitle;
 
+            var spaceStr = node.SelectSingleNode(XmlElementHelper.S_SPACE)?.InnerText;
+            if (!double.TryParse(spaceStr, out var space))
+            {
+                space = 1;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_SPACE, space, procName);
+            }
+            _space = space;
+
             if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
             {
                 return false;
@@ -89,7 +101,20 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             _sql = sql;
             _sqlResColumnList = sqlResColumnList;
-            
+
+            var sqlVariable = node.SelectSingleNode(XmlElementHelper.S_SQL_VARIABLE)?.InnerText;
+            if (!string.IsNullOrEmpty(sqlVariable))
+                _sqlVariable = sqlVariable;
+
+            var subTableNode = node.SelectSingleNode(XmlElementHelper.S_TABLE);
+            if (subTableNode != null)
+            {
+                var subTableRenderer = new PdfTableRenderer(PdfStructure.PdfPageBody) { _isSubTable = true };
+                if (!subTableRenderer.ReadXml(subTableNode))
+                    return false;
+                _subTableRender = subTableRenderer;
+            }
+
             Logger.Info($"Success to read Table, sql id: {_sql.Id}, result columns: {string.Join(',', _sqlResColumnList.Select(x => x.Id))}", procName);
             return true;
         }
@@ -100,20 +125,22 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             cloned._sql = this._sql.Clone() as Sql;
             cloned._sqlResColumnList = this._sqlResColumnList.Select(x => x.Clone()).ToList();
 
+            if (_subTableRender != null)
+            {
+                cloned._subTableRender = this._subTableRender.Clone() as PdfTableRenderer;
+            }
+
             return cloned;
         }
 
         protected override bool TryPerformRender(PdfDocumentManager manager, string procName)
         {
-            if (!_sql.TryExecute(manager.MessageId, _sqlResColumnList, out var res))
+            if (!_sql.TryExecute(manager.MessageId, _sqlResColumnList, out var res, false, manager.ExtraSqlVariable))
                 return false;
 
             _columnPositions = CalcPosition(manager);
-            
             RenderTableTitle(manager);
-            RenderTableContent(manager, res);
-
-            return true;
+            return TryRenderTableContent(manager, res, procName);
         }
 
 
@@ -126,11 +153,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var pdf = manager.Pdf;
             var page = pdf.Pages[^1];
             var container = manager.PageBodyContainer;
-
-            using var graph = XGraphics.FromPdfPage(page);
+            var width = container.RightBoundary - container.LeftBoundary;
+            var left = container.LeftBoundary + width * (1 - _space);
+            
+            var graph = XGraphics.FromPdfPage(page);
             var pen = new XPen(BrushColor.Color, _boardThickness);
-            graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
-
+            graph.DrawLine(pen, left, manager.YCursor, container.RightBoundary, manager.YCursor);
             var textSize = CalcTextSize(graph);
             var lineSpace = textSize.Height * _lineSpace;
 
@@ -140,11 +168,24 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             foreach (var column in _columnPositions.Keys)
             {
                 var position = _columnPositions[column];
+                var lines = LayoutHelper.AllocateWords(column.Title, textSize.WidthPerLetter, position.Width);
+                maxLineCount = Math.Max(maxLineCount, lines.Count);
+            }
+
+            if (manager.YCursor + textSize.Height * maxLineCount + lineSpace > container.NonLastPageBottomBoundary)
+            {
+                graph.Dispose();
+                manager.AddPage();
+                graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
+            }
+
+            foreach (var column in _columnPositions.Keys)
+            {
+                var position = _columnPositions[column];
                 var textPosition = CalcTextPosition(_titleHorizontalAlignment);
 
                 var lines = LayoutHelper.AllocateWords(column.Title, textSize.WidthPerLetter, position.Width);
                 var y = manager.YCursor;
-                maxLineCount = Math.Max(maxLineCount, lines.Count);
 
                 foreach (var line in lines)
                 {
@@ -157,11 +198,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
 
             manager.YCursor += textSize.Height * maxLineCount + lineSpace;
-            graph.DrawLine(pen, container.LeftBoundary, manager.YCursor, container.RightBoundary, manager.YCursor);
+            graph.DrawLine(pen, left, manager.YCursor, container.RightBoundary, manager.YCursor);
             manager.YCursor += lineSpace;
+            graph.Dispose();
         }
 
-        private void RenderTableContent(PdfDocumentManager manager, List<Dictionary<string, string>> sqlRes)
+        private bool TryRenderTableContent(PdfDocumentManager manager, List<Dictionary<string, string>> sqlRes, string procName)
         {
             var pdf = manager.Pdf;
             var graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
@@ -208,19 +250,41 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 }
 
                 manager.YCursor += textSize.Height * maxLineCount + lineSpace;
+
+                if (_subTableRender != null)
+                {
+                    var variableName = _subTableRender._sqlVariable;
+                    if (string.IsNullOrEmpty(variableName) || !row.ContainsKey(variableName))
+                    {
+                        Logger.Error($"Unable to find {variableName} from parent table", procName);
+                        return false;
+                    }
+
+                    var sqlVariable = new SqlVariable { Name = variableName, Value = row[variableName] };
+                    manager.ExtraSqlVariable = new KeyValuePair<string, SqlVariable>(variableName, sqlVariable);
+
+                    graph.Dispose();
+                    if (!_subTableRender.TryRenderPdf(manager))
+                        return false;
+                    graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
+                    manager.YCursor += lineSpace;
+                }
             }
 
-            graph.DrawLine(pen, container.LeftBoundary, container.LastPageBottomBoundary, container.RightBoundary, container.LastPageBottomBoundary);
+            if (!_isSubTable)
+                graph.DrawLine(pen, container.LeftBoundary, container.LastPageBottomBoundary, container.RightBoundary, container.LastPageBottomBoundary);
             graph.Dispose();
+
+            return true;
         }
 
         private Dictionary<SqlResColumn, BoxModel> CalcPosition(PdfDocumentManager manager)
         {
             var container = manager.PageBodyContainer;
-            var totalWidth = container.RightBoundary - container.LeftBoundary;
+            var totalWidth = (container.RightBoundary - container.LeftBoundary) * _space;
 
             var res = new Dictionary<SqlResColumn, BoxModel>();
-            var x = container.LeftBoundary;
+            var x = container.LeftBoundary + (container.RightBoundary - container.LeftBoundary) * (1 - _space);
             foreach (var sqlResColumn in _sqlResColumnList)
             {
                 var width = totalWidth * sqlResColumn.WidthRatio;

@@ -78,6 +78,24 @@
 			<SqlResColumn Id="ShortName" Title="Short Name" Width="1*" />
 			<SqlResColumn Id="GroupID" Title="Group ID" Width="1*" />
 			<SqlResColumn Id="CurrencyCode" Title="Currency Code" Width="1*" />
+
+			<Table Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
+			       FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black">
+				<Space>0.7</Space>
+				<BoardThickness>1</BoardThickness>
+				<LineSpace>0.5</LineSpace>
+				<TitleHorizontalAlignment>Left</TitleHorizontalAlignment>
+				<HideTitle>false</HideTitle>
+				<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+				<SqlId>VendorTransaction</SqlId>
+				<SqlVariable>VendorID</SqlVariable>
+				<SqlResColumn Id="TransactionID" Title="Transaction ID" Width="1.5*" />
+				<SqlResColumn Id="GLAccount" Title="GL Account" Width="2*" />
+				<SqlResColumn Id="Debit" Title="Debit" Width="1*" />
+				<SqlResColumn Id="Credit" Title="Credit" Width="1*" />
+				<SqlResColumn Id="InvoiceNo" Title="Invoice No" Width="1*" />
+			</Table>
+	
 		</Table>
 		<WaterMark Margin="5 5 5 5" Padding="5 5 5 5" FontSize="40" FontFamily="Times New Roman" BackgroundColor=""
 				   FontStyle="Regular" BrushColor="Red" Opacity="0.5">

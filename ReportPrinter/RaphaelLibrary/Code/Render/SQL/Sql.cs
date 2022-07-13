@@ -100,15 +100,15 @@ namespace RaphaelLibrary.Code.Render.SQL
             return cloned;
         }
         
-        public bool TryExecute(Guid messageId, SqlResColumn sqlResColumn, out string res)
+        public bool TryExecute(Guid messageId, SqlResColumn sqlResColumn, out string res, bool useCache = true, KeyValuePair<string, SqlVariable> extraSqlVariable = default)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryExecute)}";
             res = string.Empty;
 
-            if (!TrySetSqlVariables(messageId, out var sqlVariables))
+            if (!TrySetSqlVariables(messageId, out var sqlVariables, extraSqlVariable))
                 return false;
 
-            if (!TryExecuteQuery(messageId, _connectionString, _query, sqlVariables, out var dataTable))
+            if (!TryExecuteQuery(messageId, _connectionString, _query, sqlVariables, out var dataTable, useCache))
                 return false;
 
             if (dataTable.Rows.Count != 1)
@@ -126,15 +126,15 @@ namespace RaphaelLibrary.Code.Render.SQL
             return true;
         }
 
-        public bool TryExecute(Guid messageId, List<SqlResColumn> sqlResColumnList, out List<Dictionary<string, string>> res)
+        public bool TryExecute(Guid messageId, List<SqlResColumn> sqlResColumnList, out List<Dictionary<string, string>> res, bool useCache = true, KeyValuePair<string, SqlVariable> extraSqlVariable = default)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryExecute)}";
             res = new List<Dictionary<string, string>>();
 
-            if (!TrySetSqlVariables(messageId, out var sqlVariables))
+            if (!TrySetSqlVariables(messageId, out var sqlVariables, extraSqlVariable))
                 return false;
 
-            if (!TryExecuteQuery(messageId, _connectionString, _query, sqlVariables, out var dataTable))
+            if (!TryExecuteQuery(messageId, _connectionString, _query, sqlVariables, out var dataTable, useCache))
                 return false;
 
             var indexDict = new Dictionary<int, string>();
@@ -169,32 +169,42 @@ namespace RaphaelLibrary.Code.Render.SQL
 
         #region Helper
 
-        private bool TrySetSqlVariables(Guid messageId, out Dictionary<string, SqlVariable> sqlVariables)
+        private bool TrySetSqlVariables(Guid messageId, out Dictionary<string, SqlVariable> sqlVariables, KeyValuePair<string, SqlVariable> extraSqlVariable = default)
         {
             var procName = $"{this.GetType().Name}.{nameof(TrySetSqlVariables)}";
             sqlVariables = null;
 
             var values = SqlVariableManager.Instance.GetSqlVariables(messageId);
-            if (_sqlVariables.Any(x => !values.ContainsKey(x.Key)))
+            foreach (var variable in _sqlVariables)
             {
-                Logger.Error($"Sql variables provided in message: {messageId} does not fulfill requirement of sql: {Id}", procName);
-                return false;
+                if (!values.ContainsKey(variable.Key) && variable.Key != extraSqlVariable.Key)
+                {
+                    Logger.Error($"Sql variables provided in message: {messageId} does not fulfill requirement of sql: {Id}", procName);
+                    return false;
+                }
             }
-
+            
             sqlVariables = new Dictionary<string, SqlVariable>();
             foreach (var variable in _sqlVariables.Keys)
             {
+                if (!values.ContainsKey(variable)) 
+                    continue;
                 sqlVariables.Add(variable, values[variable]);
+            }
+
+            if (!string.IsNullOrEmpty(extraSqlVariable.Key) && extraSqlVariable.Value != null)
+            {
+                sqlVariables.Add(extraSqlVariable.Key, extraSqlVariable.Value);
             }
 
             return true;
         }
 
-        private bool TryExecuteQuery(Guid messageId, string connectionString, string query, Dictionary<string, SqlVariable> sqlVariables, out DataTable dataTable)
+        private bool TryExecuteQuery(Guid messageId, string connectionString, string query, Dictionary<string, SqlVariable> sqlVariables, out DataTable dataTable, bool userCache)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryExecuteQuery)}";
 
-            if (SqlResultCacheManager.Instance.TryGetSqlResult(messageId, Id, out dataTable))
+            if (userCache && SqlResultCacheManager.Instance.TryGetSqlResult(messageId, Id, out dataTable))
             {
                 return true;
             }
@@ -211,18 +221,16 @@ namespace RaphaelLibrary.Code.Render.SQL
                 var cmd = sqlConnection.CreateCommand();
                 cmd.CommandText = query;
                 var reader = cmd.ExecuteReader();
-
-                if (!reader.HasRows)
-                {
-                    Logger.Error($"0 row return from sql: {Id}", procName);
-                    return false;
-                }
-
+                
                 dataTable = new DataTable();
                 dataTable.Load(reader);
                 Logger.Debug($"Success to execute sql: {Id}. {dataTable.Rows.Count} row(s) returned", procName);
-                
-                SqlResultCacheManager.Instance.StoreSqlResult(messageId, Id, dataTable);
+
+                if (userCache)
+                {
+                    SqlResultCacheManager.Instance.StoreSqlResult(messageId, Id, dataTable);
+                }
+
                 return true;
             }
             catch (Exception ex)

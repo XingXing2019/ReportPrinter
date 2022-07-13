@@ -5,6 +5,7 @@ using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Render.PDF.Manager
 {
@@ -22,6 +23,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
 
         public double YCursor { get; set; }
         public int CurrentPage { get; set; }
+        public KeyValuePair<string, SqlVariable> ExtraSqlVariable { get; set; }
 
         private readonly XSize _pageSize;
 

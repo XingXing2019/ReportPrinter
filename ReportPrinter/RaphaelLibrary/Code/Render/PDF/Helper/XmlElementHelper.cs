@@ -20,7 +20,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_IMAGE = "Image";
         public const string S_IMAGE_SOURCE = "ImageSource";
         public const string S_LINE_SPACE = "LineSpace";
-        public const string S_Mask = "Mask";
+        public const string S_MASK = "Mask";
         public const string S_PAGE_BODY = "PageBody";
         public const string S_PAGE_FOOTER = "PageFooter";
         public const string S_PAGE_HEADER = "PageHeader";
@@ -29,8 +29,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_PDF_TEMPLATE_LIST = "PdfTemplateList";
         public const string S_POSITION = "Position";
         public const string S_QUERY = "Query";
-        public const string S_ReportFooter = "ReportFooter";
-        public const string S_ReportHeader = "ReportHeader";
+        public const string S_REPORT_FOOTER = "ReportFooter";
+        public const string S_REPORT_HEADER = "ReportHeader";
+        public const string S_REPRINT_MARK = "ReprintMark";
         public const string S_ROTATE = "Rotate";
         public const string S_ROW = "Row";
         public const string S_ROW_SPAN = "RowSpan";

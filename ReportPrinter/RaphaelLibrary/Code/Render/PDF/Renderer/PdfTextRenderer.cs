@@ -55,7 +55,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 if (sqlResColumnList.Count != 1)
                 {
-                    Logger.Error($"{this.GetType().Name} cna only have one sql resutle column", procName);
+                    Logger.Error($"{this.GetType().Name} can only have one sql result column", procName);
                     return false;
                 }
 
@@ -69,11 +69,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             else if (_textRendererType == TextRendererType.Timestamp)
             {
-                var mask = node.SelectSingleNode(XmlElementHelper.S_Mask)?.InnerText;
+                var mask = node.SelectSingleNode(XmlElementHelper.S_MASK)?.InnerText;
                 if (string.IsNullOrEmpty(mask))
                 {
                     mask = "yyyy-MM-dd HH:mm:ss";
-                    Logger.LogDefaultValue(node, XmlElementHelper.S_Mask, mask, procName);
+                    Logger.LogDefaultValue(node, XmlElementHelper.S_MASK, mask, procName);
                 }
                 _mask = mask;
 

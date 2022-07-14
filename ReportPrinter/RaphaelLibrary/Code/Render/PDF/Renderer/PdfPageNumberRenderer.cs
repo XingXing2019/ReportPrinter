@@ -12,9 +12,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     {
         private int _startPage;
         private int _endPage;
-        private Position _pageNumberPosition;
+        private Location _pageNumberLocation;
 
-        public PdfPageNumberRenderer(PdfStructure position) : base(position) { }
+        public PdfPageNumberRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {
@@ -25,13 +25,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 return false;
             }
 
-            var pageNumberPositionStr = node.SelectSingleNode(XmlElementHelper.S_POSITION)?.InnerText;
-            if (!Enum.TryParse(pageNumberPositionStr, out Position pageNumberPosition))
+            var pageNumberLocationStr = node.SelectSingleNode(XmlElementHelper.S_LOCATION)?.InnerText;
+            if (!Enum.TryParse(pageNumberLocationStr, out Location pageNumberLocation))
             {
-                pageNumberPosition = Position.Footer;
-                Logger.LogDefaultValue(node, XmlElementHelper.S_POSITION, pageNumberPosition, procName);
+                pageNumberLocation = Location.Footer;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_LOCATION, pageNumberLocation, procName);
             }
-            _pageNumberPosition = pageNumberPosition;
+            _pageNumberLocation = pageNumberLocation;
 
             var startPageStr = node.SelectSingleNode(XmlElementHelper.S_START_PAGE)?.InnerText;
             if (!int.TryParse(startPageStr, out var startPage))
@@ -60,7 +60,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             using (var graph = XGraphics.FromPdfPage(pdf.Pages[^1]))
             {
                 var textSize = graph.MeasureString(longestText, Font);
-                if (!TryCalcRendererPosition(manager, textSize, _pageNumberPosition))
+                if (!TryCalcRendererPosition(manager, textSize, _pageNumberLocation))
                     return false;
             }
             
@@ -88,9 +88,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         #endregion
     }
 
-    public enum Position
+    public enum Location
     {
         Header,
+        Body,
         Footer
     }
 }

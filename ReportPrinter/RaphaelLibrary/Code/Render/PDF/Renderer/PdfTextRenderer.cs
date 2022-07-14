@@ -21,7 +21,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private string _mask;
         private string _title;
 
-        public PdfTextRenderer(PdfStructure position) : base(position) { }
+        public PdfTextRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {

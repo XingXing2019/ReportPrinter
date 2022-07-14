@@ -18,7 +18,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
             if (PdfRendererList.Any(x => !x.TryRenderPdf(manager)))
                 return false;
 
-            Logger.Info($"Success to render: {Position} for message: {manager.MessageId}", procName);
+            Logger.Info($"Success to render: {Location} for message: {manager.MessageId}", procName);
             return true;
         }
     }

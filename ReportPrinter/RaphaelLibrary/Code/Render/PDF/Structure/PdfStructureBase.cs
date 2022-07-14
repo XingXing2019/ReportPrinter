@@ -19,15 +19,15 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 
         protected int Rows;
         protected int Columns;
-        protected readonly PdfStructure Position;
+        protected readonly PdfStructure Location;
         protected List<PdfRendererBase> PdfRendererList;
 
         private readonly HashSet<string> _rendererNames;
 
 
-        protected PdfStructureBase(PdfStructure position, HashSet<string> rendererNames)
+        protected PdfStructureBase(PdfStructure location, HashSet<string> rendererNames)
         {
-            Position = position;
+            Location = location;
             _rendererNames = rendererNames;
             PdfRendererList = new List<PdfRendererBase>();
         }
@@ -38,14 +38,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 
             if (node == null)
             {
-                Logger.LogMissingXmlLog(Position.ToString(), node, procName);
+                Logger.LogMissingXmlLog(Location.ToString(), node, procName);
                 return false;
             }
 
             var heightRatioStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_HEIGHT);
             if (!double.TryParse(heightRatioStr?.Substring(0, heightRatioStr.Length - 1), out var heightRatio))
             {
-                heightRatio = Position == PdfStructure.PdfPageBody ? 8 : 1;
+                heightRatio = Location == PdfStructure.PdfPageBody ? 8 : 1;
                 Logger.LogDefaultValue(node, XmlElementHelper.S_HEIGHT, heightRatio, procName);
             }
             HeightRatio = heightRatio;
@@ -85,7 +85,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
                 var rendererNodes = node.SelectNodes(name);
                 foreach (XmlNode rendererNode in rendererNodes)
                 {
-                    var pdfRenderer = PdfRendererFactory.CreatePdfRenderer(name, Position);
+                    var pdfRenderer = PdfRendererFactory.CreatePdfRenderer(name, Location);
                     if (!pdfRenderer.ReadXml(rendererNode))
                     {
                         return false;
@@ -95,7 +95,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
                 }
             }
 
-            Logger.Info($"Success to read {Position} with {PdfRendererList.Count} pdf renderer, height ratio: {HeightRatio}*, rows: {Rows}, columns: {Columns}", procName);
+            Logger.Info($"Success to read {Location} with {PdfRendererList.Count} pdf renderer, height ratio: {HeightRatio}*, rows: {Rows}, columns: {Columns}", procName);
             return true;
         }
 
@@ -110,13 +110,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 
             if (height <= 0)
             {
-                Logger.Error($"{Position}: Sum of vertical margin and padding is too large, there is no space for content", procName);
+                Logger.Error($"{Location}: Sum of vertical margin and padding is too large, there is no space for content", procName);
                 return false;
             }
 
             if (width <= 0)
             {
-                Logger.Error($"{Position}: Sum of horizontal margin and padding is too large, there is no space for content", procName);
+                Logger.Error($"{Location}: Sum of horizontal margin and padding is too large, there is no space for content", procName);
                 return false;
             }
 
@@ -137,14 +137,17 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 
                 if (!LayoutHelper.TryCreateMarginBox(new BoxModel(x, y, width, height), Rows, Columns, renderer, out var marginBox))
                     return false;
+                marginBox = LayoutHelper.AdjustBoxLocation(marginBox, layoutParam);
                 renderer.SetMarginBox(marginBox);
 
                 if (!LayoutHelper.TryCreatePaddingBox(new BoxModel(x, y, width, height), Rows, Columns, renderer, out var paddingBox))
                     return false;
+                paddingBox = LayoutHelper.AdjustBoxLocation(paddingBox, layoutParam);
                 renderer.SetPaddingBox(paddingBox);
 
                 if (!LayoutHelper.TryCreateContentBox(new BoxModel(x, y, width, height), Rows, Columns, renderer, out var contentBox))
                     return false;
+                contentBox = LayoutHelper.AdjustBoxLocation(contentBox, layoutParam);
                 renderer.SetContentBox(contentBox);
             }
 

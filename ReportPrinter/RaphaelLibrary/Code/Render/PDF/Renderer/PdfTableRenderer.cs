@@ -30,7 +30,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
         private Dictionary<SqlResColumn, BoxModel> _columnPositions;
 
-        public PdfTableRenderer(PdfStructure position) : base(position) { }
+        public PdfTableRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {
@@ -153,8 +153,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             var pdf = manager.Pdf;
             var page = pdf.Pages[^1];
             var container = manager.PageBodyContainer;
-            var width = container.RightBoundary - container.LeftBoundary;
-            var left = container.LeftBoundary + width * (1 - _space);
+            var left = _columnPositions.Min(x => x.Value.X);
             
             var graph = XGraphics.FromPdfPage(page);
             var pen = new XPen(BrushColor.Color, _boardThickness);
@@ -288,7 +287,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             foreach (var sqlResColumn in _sqlResColumnList)
             {
                 var width = totalWidth * sqlResColumn.WidthRatio;
-                res.Add(sqlResColumn, new BoxModel(x, -1, width, -1));
+                var box = new BoxModel(x, -1, width, -1);
+                box = LayoutHelper.AdjustBoxLocation(box, sqlResColumn.Position, sqlResColumn.Left, sqlResColumn.Right);
+                res.Add(sqlResColumn, box);
                 x += width;
             }
 

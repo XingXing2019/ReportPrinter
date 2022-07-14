@@ -17,7 +17,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {
     public abstract class PdfRendererBase : IXmlReader
     {
-        private readonly PdfStructure _position;
+        private readonly PdfStructure _location;
         
         private int _row;
         private int _column;
@@ -27,19 +27,27 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         protected MarginPaddingModel Margin;
         protected MarginPaddingModel Padding;
 
+        protected Position Position;
+        private double _left;
+        private double _right;
+        private double _top;
+        private double _bottom;
+
         protected HorizontalAlignment HorizontalAlignment;
         protected VerticalAlignment VerticalAlignment;
+
         protected XFont Font;
         protected XSolidBrush BrushColor;
         protected double Opacity;
         protected XColor BackgroundColor;
+
         protected BoxModel MarginBox;
         protected BoxModel PaddingBox;
         protected BoxModel ContentBox;
 
-        protected PdfRendererBase(PdfStructure position)
+        protected PdfRendererBase(PdfStructure location)
         {
-            _position = position;
+            _location = location;
         }
 
         public virtual bool ReadXml(XmlNode node)
@@ -75,6 +83,58 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 Logger.LogDefaultValue(node, XmlElementHelper.S_VERTICAL_ALIGNMENT, verticalAlignment, procName);
             }
             VerticalAlignment = verticalAlignment;
+
+            var positionStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_POSITION);
+            if (!Enum.TryParse(positionStr, out Position position))
+            {
+                position = Position.Static;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_POSITION, position, procName);
+            }
+            Position = position;
+
+            var leftStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_LEFT);
+            if (!double.TryParse(leftStr, out var left))
+            {
+                left = 0;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_LEFT, left, procName);
+            }
+            _left = left;
+
+            var rightStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_RIGHT);
+            if (!double.TryParse(rightStr, out var right))
+            {
+                right = 0;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_RIGHT, right, procName);
+            }
+            _right = right;
+
+            if (!string.IsNullOrEmpty(leftStr) && !string.IsNullOrEmpty(rightStr))
+            {
+                Logger.Error($"Cannot have left and right at same time", procName);
+                return false;
+            }
+
+            var topStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_TOP);
+            if (!double.TryParse(topStr, out var top))
+            {
+                top = 0;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_TOP, top, procName);
+            }
+            _top = top;
+
+            var bottomStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_BOTTOM);
+            if (!double.TryParse(bottomStr, out var bottom))
+            {
+                bottom = 0;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_BOTTOM, bottom, procName);
+            }
+            _bottom = bottom;
+
+            if (!string.IsNullOrEmpty(topStr) && !string.IsNullOrEmpty(bottomStr))
+            {
+                Logger.Error($"Cannot have top and bottom at same time", procName);
+                return false;
+            }
 
             var fontSizeStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_FONT_SIZE);
             if (!double.TryParse(fontSizeStr, out var fontSize))
@@ -126,7 +186,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             BackgroundColor = backgroundColor;
 
             var rowStr = node.SelectSingleNode(XmlElementHelper.S_ROW)?.InnerText;
-            if (!int.TryParse(rowStr, out var row) && _position != PdfStructure.PdfPageBody)
+            if (!int.TryParse(rowStr, out var row) && _location != PdfStructure.PdfPageBody)
             {
                 Logger.LogMissingXmlLog(XmlElementHelper.S_ROW, node, procName);
                 return false;
@@ -134,7 +194,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             _row = row;
 
             var columnStr = node.SelectSingleNode(XmlElementHelper.S_COLUMN)?.InnerText;
-            if (!int.TryParse(columnStr, out var column) && _position != PdfStructure.PdfPageBody)
+            if (!int.TryParse(columnStr, out var column) && _location != PdfStructure.PdfPageBody)
             {
                 Logger.LogMissingXmlLog(XmlElementHelper.S_COLUMN, node, procName);
                 return false;
@@ -166,11 +226,15 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             {
                 Margin = Margin,
                 Padding = Padding,
-                Position = _position,
                 Row = _row,
                 Column = _column,
                 RowSpan = _rowSpan,
-                ColumnSpan = _columnSpan
+                ColumnSpan = _columnSpan,
+                Position = Position,
+                Left = _left,
+                Right = _right,
+                Top = _top,
+                Bottom = _bottom,
             };
         }
 
@@ -271,10 +335,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return true;
         }
 
-        protected bool TryCalcRendererPosition(PdfDocumentManager manager, XSize textSize, Position position)
+        protected bool TryCalcRendererPosition(PdfDocumentManager manager, XSize textSize, Location location)
         {
+            var layoutParam = GetLayoutParameter();
             BoxModel container;
-            if (position == Position.Header)
+            if (location == Location.Header)
             {
                 var pageHeader = manager.PageHeaderContainer;
                 var reportHeader = manager.ReportHeaderContainer;
@@ -282,6 +347,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     ? new BoxModel(pageHeader.X, pageHeader.Y, pageHeader.Width, pageHeader.Height)
                     : new BoxModel(reportHeader.X, reportHeader.Y, reportHeader.Width, reportHeader.Height);
 
+            }
+            else if (location == Location.Body)
+            {
+                var x = manager.PageBodyContainer.LeftBoundary;
+                var y = manager.PageBodyContainer.FirstPageTopBoundary;
+                var width = manager.PageBodyContainer.RightBoundary - manager.PageBodyContainer.LeftBoundary;
+                var height = manager.PageBodyContainer.NonLastPageBottomBoundary - manager.PageBodyContainer.FirstPageTopBoundary;
+                container = new BoxModel(x, y, width, height);
             }
             else
             {
@@ -294,14 +367,17 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             if (!LayoutHelper.TryCreateMarginBox(container, textSize, this, out var marginBox, HorizontalAlignment))
                 return false;
+            marginBox = LayoutHelper.AdjustBoxLocation(marginBox, layoutParam);
             MarginBox = marginBox;
 
             if (!LayoutHelper.TryCreatePaddingBox(container, textSize, this, out var paddingBox, HorizontalAlignment))
                 return false;
+            paddingBox = LayoutHelper.AdjustBoxLocation(paddingBox, layoutParam);
             PaddingBox = paddingBox;
 
             if (!LayoutHelper.TryCreateContentBox(container, textSize, this, out var contentBox, HorizontalAlignment))
                 return false;
+            contentBox = LayoutHelper.AdjustBoxLocation(contentBox, layoutParam);
             ContentBox = contentBox;
 
             return true;
@@ -394,5 +470,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         Top,
         Center,
         Bottom
+    }
+
+    public enum Position
+    {
+        Static,
+        Relative
     }
 }

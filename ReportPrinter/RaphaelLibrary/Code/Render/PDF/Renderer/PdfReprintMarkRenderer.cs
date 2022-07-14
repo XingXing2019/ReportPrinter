@@ -12,9 +12,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     {
         private string _text;
         private double _boardThickness;
-        private Position _reprintMarkPosition;
+        private Location _reprintMarkLocation;
 
-        public PdfReprintMarkRenderer(PdfStructure position) : base(position) { }
+        public PdfReprintMarkRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {
@@ -41,13 +41,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _boardThickness = boardThickness;
 
-            var reprintMarkPositionStr = node.SelectSingleNode(XmlElementHelper.S_REPRINT_MARK)?.InnerText;
-            if (!Enum.TryParse(reprintMarkPositionStr, out Position reprintMarkPosition))
+            var reprintMarkLocationStr = node.SelectSingleNode(XmlElementHelper.S_LOCATION)?.InnerText;
+            if (!Enum.TryParse(reprintMarkLocationStr, out Location reprintMarkLocation))
             {
-                reprintMarkPosition = Position.Header;
-                Logger.LogDefaultValue(node, XmlElementHelper.S_REPRINT_MARK, reprintMarkPosition, procName);
+                reprintMarkLocation = Location.Header;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_LOCATION, reprintMarkLocation, procName);
             }
-            _reprintMarkPosition = reprintMarkPosition;
+            _reprintMarkLocation = reprintMarkLocation;
 
             Logger.Info($"Success to read ReprintMark, text:{_text}", procName);
             return true;
@@ -60,7 +60,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             using var graph = XGraphics.FromPdfPage(page);
             var textSize = graph.MeasureString(_text.Trim(), Font);
 
-            if (!TryCalcRendererPosition(manager, textSize, _reprintMarkPosition))
+            if (!TryCalcRendererPosition(manager, textSize, _reprintMarkLocation))
                 return false;
 
             RenderBoxModel(graph);

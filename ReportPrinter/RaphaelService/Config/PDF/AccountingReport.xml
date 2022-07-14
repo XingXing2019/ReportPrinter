@@ -89,8 +89,7 @@
 			<SqlResColumn Id="VendorName" Title="Vendor Name" Width="2*" />
 			<SqlResColumn Id="ShortName" Title="Short Name" Width="1*" />
 			<SqlResColumn Id="GroupID" Title="Group ID" Width="1*" />
-			<SqlResColumn Id="CurrencyCode" Title="Currency Code" Width="1*" />
-<!--
+
 			<Table Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
 			       FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black">
 				<Space>0.7</Space>
@@ -101,13 +100,13 @@
 				<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
 				<SqlId>VendorTransaction</SqlId>
 				<SqlVariable>VendorID</SqlVariable>
-				<SqlResColumn Id="TransactionID" Title="Transaction ID" Width="1.5*" />
-				<SqlResColumn Id="GLAccount" Title="GL Account" Width="2*" />
+				<SqlResColumn Id="TransactionID" Title="Transaction ID" Width="1.5*" Position="Relative" Left="20"/>
+				<SqlResColumn Id="GLAccount" Title="GL Account" Width="2*" Position="Relative" Left="20"/>
 				<SqlResColumn Id="Debit" Title="Debit" Width="1*" />
 				<SqlResColumn Id="Credit" Title="Credit" Width="1*" />
 				<SqlResColumn Id="InvoiceNo" Title="Invoice No" Width="1*" />
 			</Table>
--->	
+
 		</Table>
 		<WaterMark Margin="5 5 5 5" Padding="5 5 5 5" Position="Relative" Left="20" Top="20"
 		           FontSize="40" FontFamily="Times New Roman" BackgroundColor="Green" FontStyle="Regular" BrushColor="Red" Opacity="0.5">
@@ -119,7 +118,7 @@
 			<EndPage>-2</EndPage>
 			<Rotate>315</Rotate>
 		</WaterMark>
-		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" Position="Relative" Left="20" Top="20"
+		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Center" Position="Relative" Left="0" Top="0"
 		            FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Red" Opacity="1">
 			<Location>Header</Location>
 			<StartPage>1</StartPage>

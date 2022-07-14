@@ -247,6 +247,22 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             }
         }
 
+        public static BoxModel AdjustBoxLocation(BoxModel box, Position position, double left, double right)
+        {
+            var procName = $"LayoutHelper.{nameof(AdjustBoxLocation)}";
+
+            if (position == Position.Static)
+            {
+                Logger.Debug($"Position is {position}, no need to adjust box location", procName);
+                return box;
+            }
+            else
+            {
+                var x = box.X + left - right;
+                return new BoxModel(x, box.Y, box.Width, box.Height);
+            }
+        }
+
         public static BoxModel CreateContainer(XSize pageSize, PdfStructure location, Dictionary<PdfStructure, PdfStructureBase> pdfStructureList)
         {
             var structure = pdfStructureList[location];

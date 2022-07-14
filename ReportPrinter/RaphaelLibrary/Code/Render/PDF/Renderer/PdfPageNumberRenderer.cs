@@ -14,7 +14,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private int _endPage;
         private Location _pageNumberLocation;
 
-        public PdfPageNumberRenderer(PdfStructure position) : base(position) { }
+        public PdfPageNumberRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {
@@ -91,6 +91,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     public enum Location
     {
         Header,
+        Body,
         Footer
     }
 }

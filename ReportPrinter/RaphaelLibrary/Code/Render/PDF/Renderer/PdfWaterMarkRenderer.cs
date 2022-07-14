@@ -15,6 +15,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
     {
         private WaterMarkRendererType _waterMarkType;
         private string _content;
+        private readonly Location _waterMarkLocation;
 
         private Sql _sql;
         private SqlResColumn _sqlResColumn;
@@ -23,7 +24,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private int _endPage;
         private double? _rotate;
 
-        public PdfWaterMarkRenderer(PdfStructure position) : base(position) { }
+        public PdfWaterMarkRenderer(PdfStructure location) : base(location)
+        {
+            _waterMarkLocation = Location.Body;
+            HorizontalAlignment = HorizontalAlignment.Center;
+        }
 
         public override bool ReadXml(XmlNode node)
         {
@@ -124,23 +129,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 textSize = graph.MeasureString(_content, Font);
             }
 
-            var x = manager.PageBodyContainer.LeftBoundary;
-            var y = manager.PageBodyContainer.FirstPageTopBoundary;
-            var width = manager.PageBodyContainer.RightBoundary - manager.PageBodyContainer.LeftBoundary;
-            var height = manager.PageBodyContainer.NonLastPageBottomBoundary - manager.PageBodyContainer.FirstPageTopBoundary;
-
-            var container = new BoxModel(x, y, width, height);
-            if (!LayoutHelper.TryCreateMarginBox(container, textSize, this, out var marginBox))
+            if (!TryCalcRendererPosition(manager, textSize, _waterMarkLocation))
                 return false;
-            MarginBox = marginBox;
-
-            if (!LayoutHelper.TryCreatePaddingBox(container, textSize, this, out var paddingBox))
-                return false;
-            PaddingBox = paddingBox;
-
-            if (!LayoutHelper.TryCreateContentBox(container, textSize, this, out var contentBox))
-                return false;
-            ContentBox = contentBox;
 
             var pageCount = pdf.PageCount;
             for (int i = _startPage; i <= pageCount + _endPage; i++)

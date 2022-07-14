@@ -14,7 +14,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private double _boardThickness;
         private Location _reprintMarkLocation;
 
-        public PdfReprintMarkRenderer(PdfStructure position) : base(position) { }
+        public PdfReprintMarkRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {

@@ -23,7 +23,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private BarcodeFormat _barcodeFormat;
         private bool _showBarcodeText;
 
-        public PdfBarcodeRenderer(PdfStructure position) : base(position) { }
+        public PdfBarcodeRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {

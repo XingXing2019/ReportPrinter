@@ -28,7 +28,6 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_PAGE_NUMBER = "PageNumber";
         public const string S_PDF_TEMPLATE = "PdfTemplate";
         public const string S_PDF_TEMPLATE_LIST = "PdfTemplateList";
-        public const string S_POSITION = "Position";
         public const string S_QUERY = "Query";
         public const string S_REPORT_FOOTER = "ReportFooter";
         public const string S_REPORT_HEADER = "ReportHeader";
@@ -62,6 +61,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         #region Attribute
 
         public const string S_BACKGROUND_COLOR = "BackgroundColor";
+        public const string S_BOTTOM = "Bottom";
         public const string S_BRUSH_COLOR = "BrushColor";
         public const string S_COLUMNS = "Columns";
         public const string S_FILE_NAME_SUFFIX = "FileNameSuffix";
@@ -71,14 +71,18 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_HEIGHT = "Height";
         public const string S_HORIZONTAL_ALIGNMENT = "HorizontalAlignment";
         public const string S_ID = "Id";
+        public const string S_LEFT = "Left";
         public const string S_MARGIN = "Margin";
         public const string S_NAME = "Name";
         public const string S_OPACITY = "Opacity";
         public const string S_ORIENTATION = "Orientation";
         public const string S_PADDING = "Padding";
         public const string S_PAGE_SIZE = "PageSize";
+        public const string S_POSITION = "Position";
+        public const string S_RIGHT = "Right";
         public const string S_ROWS = "Rows";
         public const string S_SAVE_PATH = "SavePath";
+        public const string S_TOP = "Top";
         public const string S_VERTICAL_ALIGNMENT = "VerticalAlignment";
 
         #endregion

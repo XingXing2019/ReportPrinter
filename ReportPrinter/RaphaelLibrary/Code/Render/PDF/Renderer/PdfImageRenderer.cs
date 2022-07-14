@@ -17,7 +17,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private SourceType _sourceType;
         private string _imageSource;
         
-        public PdfImageRenderer(PdfStructure position) : base(position) { }
+        public PdfImageRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {

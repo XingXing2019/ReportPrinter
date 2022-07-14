@@ -229,20 +229,38 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             }
         }
 
-        public static BoxModel CreateContainer(XSize pageSize, PdfStructure position, Dictionary<PdfStructure, PdfStructureBase> pdfStructureList)
+        public static BoxModel AdjustBoxLocation(BoxModel box, LayoutParameter layoutParam)
         {
-            var structure = pdfStructureList[position];
+            var procName = $"LayoutHelper.{nameof(AdjustBoxLocation)}";
+            var position = layoutParam.Position;
+
+            if (position == Position.Static)
+            {
+                Logger.Debug($"Position is {position}, no need to adjust box location", procName);
+                return box;
+            }
+            else
+            {
+                var x = box.X + layoutParam.Left - layoutParam.Right;
+                var y = box.Y + layoutParam.Top - layoutParam.Bottom;
+                return new BoxModel(x, y, box.Width, box.Height);
+            }
+        }
+
+        public static BoxModel CreateContainer(XSize pageSize, PdfStructure location, Dictionary<PdfStructure, PdfStructureBase> pdfStructureList)
+        {
+            var structure = pdfStructureList[location];
             MarginPaddingModel margin = structure.Margin, padding = structure.Padding;
 
             double x = margin.Left + padding.Left, y = margin.Top + padding.Top;
             double width = pageSize.Width, height = 0;
-            if (position == PdfStructure.PdfReportHeader || position == PdfStructure.PdfReportFooter)
+            if (location == PdfStructure.PdfReportHeader || location == PdfStructure.PdfReportFooter)
             {
                 var totalHeightRatio = pdfStructureList[PdfStructure.PdfReportHeader].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfPageBody].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfReportFooter].HeightRatio;
 
-                if (position == PdfStructure.PdfReportHeader)
+                if (location == PdfStructure.PdfReportHeader)
                 {
                     height = pageSize.Height * pdfStructureList[PdfStructure.PdfReportHeader].HeightRatio / totalHeightRatio;
                 }
@@ -252,13 +270,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
                     y = pageSize.Height - height;
                 }
             }
-            else if (position == PdfStructure.PdfPageHeader || position == PdfStructure.PdfPageFooter)
+            else if (location == PdfStructure.PdfPageHeader || location == PdfStructure.PdfPageFooter)
             {
                 var totalHeightRatio = pdfStructureList[PdfStructure.PdfPageHeader].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfPageBody].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfPageFooter].HeightRatio;
 
-                if (position == PdfStructure.PdfPageHeader)
+                if (location == PdfStructure.PdfPageHeader)
                 {
                     height = pageSize.Height * pdfStructureList[PdfStructure.PdfPageHeader].HeightRatio / totalHeightRatio;
                 }
@@ -274,17 +292,17 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
             return new BoxModel(x, y, width, height);
         }
 
-        public static double CalcPdfStructureHeight(XSize pageSize, PdfStructure position, Dictionary<PdfStructure, PdfStructureBase> pdfStructureList)
+        public static double CalcPdfStructureHeight(XSize pageSize, PdfStructure location, Dictionary<PdfStructure, PdfStructureBase> pdfStructureList)
         {
             double height = 0;
 
-            if (position == PdfStructure.PdfReportHeader || position == PdfStructure.PdfReportFooter)
+            if (location == PdfStructure.PdfReportHeader || location == PdfStructure.PdfReportFooter)
             {
                 var totalHeightRatio = pdfStructureList[PdfStructure.PdfReportHeader].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfPageBody].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfReportFooter].HeightRatio;
 
-                if (position == PdfStructure.PdfReportHeader)
+                if (location == PdfStructure.PdfReportHeader)
                 {
                     height = pageSize.Height * pdfStructureList[PdfStructure.PdfReportHeader].HeightRatio / totalHeightRatio;
                 }
@@ -293,13 +311,13 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
                     height = pageSize.Height * pdfStructureList[PdfStructure.PdfReportFooter].HeightRatio / totalHeightRatio;
                 }
             }
-            else if (position == PdfStructure.PdfPageHeader || position == PdfStructure.PdfPageFooter)
+            else if (location == PdfStructure.PdfPageHeader || location == PdfStructure.PdfPageFooter)
             {
                 var totalHeightRatio = pdfStructureList[PdfStructure.PdfPageHeader].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfPageBody].HeightRatio +
                                        pdfStructureList[PdfStructure.PdfPageFooter].HeightRatio;
 
-                if (position == PdfStructure.PdfPageHeader)
+                if (location == PdfStructure.PdfPageHeader)
                 {
                     height = pageSize.Height * pdfStructureList[PdfStructure.PdfPageHeader].HeightRatio / totalHeightRatio;
                 }

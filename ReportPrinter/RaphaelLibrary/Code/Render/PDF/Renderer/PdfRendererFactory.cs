@@ -7,26 +7,26 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {
     public class PdfRendererFactory
     {
-        public static PdfRendererBase CreatePdfRenderer(string name, PdfStructure position)
+        public static PdfRendererBase CreatePdfRenderer(string name, PdfStructure location)
         {
             var procName = $"PdfRendererFactory.{nameof(CreatePdfRenderer)}";
 
             if (name == XmlElementHelper.S_TEXT)
-                return new PdfTextRenderer(position);
+                return new PdfTextRenderer(location);
             else if (name == XmlElementHelper.S_BARCODE)
-                return new PdfBarcodeRenderer(position);
+                return new PdfBarcodeRenderer(location);
             else if (name == XmlElementHelper.S_IMAGE)
-                return new PdfImageRenderer(position);
+                return new PdfImageRenderer(location);
             else if (name == XmlElementHelper.S_ANNOTATION)
-                return new PdfAnnotationRenderer(position);
+                return new PdfAnnotationRenderer(location);
             else if (name == XmlElementHelper.S_TABLE)
-                return new PdfTableRenderer(position);
+                return new PdfTableRenderer(location);
             else if (name == XmlElementHelper.S_WATER_MARK)
-                return new PdfWaterMarkRenderer(position);
+                return new PdfWaterMarkRenderer(location);
             else if (name == XmlElementHelper.S_PAGE_NUMBER)
-                return new PdfPageNumberRenderer(position);
+                return new PdfPageNumberRenderer(location);
             else if (name == XmlElementHelper.S_REPRINT_MARK)
-                return new PdfReprintMarkRenderer(position);
+                return new PdfReprintMarkRenderer(location);
             else
             {
                 var error = $"Invalid name: {name} for pdf renderer";

@@ -30,7 +30,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
         private Dictionary<SqlResColumn, BoxModel> _columnPositions;
 
-        public PdfTableRenderer(PdfStructure position) : base(position) { }
+        public PdfTableRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {

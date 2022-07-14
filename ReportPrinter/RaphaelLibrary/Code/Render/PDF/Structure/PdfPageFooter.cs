@@ -23,7 +23,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
                     return false;
             }
 
-            Logger.Info($"Success to render: {Position} for message: {manager.MessageId}", procName);
+            Logger.Info($"Success to render: {Location} for message: {manager.MessageId}", procName);
             return true;
         }
     }

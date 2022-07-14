@@ -23,7 +23,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private string _title;
         private PdfTextAnnotationIcon _icon;
 
-        public PdfAnnotationRenderer(PdfStructure position) : base(position) { }
+        public PdfAnnotationRenderer(PdfStructure location) : base(location) { }
 
         public override bool ReadXml(XmlNode node)
         {

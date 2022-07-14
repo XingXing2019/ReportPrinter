@@ -271,10 +271,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             return true;
         }
 
-        protected bool TryCalcRendererPosition(PdfDocumentManager manager, XSize textSize, Position position)
+        protected bool TryCalcRendererPosition(PdfDocumentManager manager, XSize textSize, Location location)
         {
             BoxModel container;
-            if (position == Position.Header)
+            if (location == Location.Header)
             {
                 var pageHeader = manager.PageHeaderContainer;
                 var reportHeader = manager.ReportHeaderContainer;

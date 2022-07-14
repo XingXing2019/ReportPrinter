@@ -109,7 +109,7 @@
 		</WaterMark>
 		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right"
 		            FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
-			<Position>Footer</Position>
+			<Location>Header</Location>
 			<StartPage>1</StartPage>
 			<EndPage>-1</EndPage>
 		</PageNumber>
@@ -118,7 +118,7 @@
 		             FontSize="12" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Red" BackgroundColor="" Opacity="1">
 			<Text>REPRINT</Text>
 			<BoardThickness>3</BoardThickness>
-			<Position>Footer</Position>
+			<Location>Footer</Location>
 		</ReprintMark>
 	</PageBody>
 

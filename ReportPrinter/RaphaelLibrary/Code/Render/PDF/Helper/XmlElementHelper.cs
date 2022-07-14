@@ -20,6 +20,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_IMAGE = "Image";
         public const string S_IMAGE_SOURCE = "ImageSource";
         public const string S_LINE_SPACE = "LineSpace";
+        public const string S_LOCATION = "Location";
         public const string S_MASK = "Mask";
         public const string S_PAGE_BODY = "PageBody";
         public const string S_PAGE_FOOTER = "PageFooter";

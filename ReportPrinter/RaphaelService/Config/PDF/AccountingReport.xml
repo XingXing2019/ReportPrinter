@@ -2,71 +2,65 @@
 <PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber">
 	<ReportHeader Height="1*" Rows="2" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
 		
-		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" Position="Relative" Left="20"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Blue" Opacity="1">
-			<Type>Sql</Type>
+		<Text Margin="10 5 10 5" Padding="5 5 5 5" HorizontalAlignment="Center" VerticalAlignment="Center" Position="Relative" Left="20"
+		      FontSize="25" FontFamily="Times New Roman" FontStyle="Bold" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Type>Text</Type>
 			<Row>0</Row>
-			<Column>0</Column>
+			<Column>1</Column>
 			<RowSpan>1</RowSpan>
-			<ColumnSpan>1</ColumnSpan>
-			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
-			<SqlId>GlAccount</SqlId>
-			<SqlResColumn Id="Description" />
+			<ColumnSpan>2</ColumnSpan>
+			<Content>Vendor Report</Content>
 		</Text>
 
-		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Green" Opacity="1">
-			<Type>Sql</Type>
+		<Text Margin="0 0 10 0" Padding="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Type>Timestamp</Type>
 			<Row>1</Row>
 			<Column>0</Column>
 			<RowSpan>1</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
-			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
-			<SqlId>GlAccount</SqlId>
-			<SqlResColumn Id="Description" />
 		</Text>
 
-		<!--
-		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" BackgroundColor="">
+		<Barcode Margin="0 0 0 0" FontSize="9" FontFamily="Calibri" Position="Relative" Top="10"
+		         FontStyle="Regular" BrushColor="Navy" Opacity="1">
 			<Row>0</Row>
-			<Column>1</Column>
+			<Column>0</Column>
 			<RowSpan>1</RowSpan>
+			<ColumnSpan>1</ColumnSpan>
+			<Format>CODE_128</Format>
+			<ShowBarcodeText>true</ShowBarcodeText>
+			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+			<SqlId>GlAccount</SqlId>
+			<SqlResColumn Id="AccountNumber" />
+		</Barcode>
+		
+		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" VerticalAlignment="Center" BackgroundColor="">
+			<Row>0</Row>
+			<Column>3</Column>
+			<RowSpan>2</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
 			<SourceType>Local</SourceType>
 			<ImageSource>.\Image\Logo.png</ImageSource>
 		</Image>
 
 		
-		<Annotation HorizontalAlignment="Center" VerticalAlignment="Center"
-		            BrushColor="Yellow" BackgroundColor="Red" Opacity="0.5">
-			<Type>Sql</Type>
+		<Annotation Margin="10 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"
+		            BrushColor="Yellow" BackgroundColor="" Opacity="0.5">
+			<Type>Text</Type>
 			<Row>0</Row>
-			<Column>2</Column>
+			<Column>3</Column>
 			<RowSpan>1</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
-			<Title>Description</Title>
 			<Icon>Note</Icon>
-			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
-			<SqlId>GlAccount</SqlId>
-			<SqlResColumn Id="Description" />
+			<Content>Report of vendor and associate transactions based on the currency</Content>
 		</Annotation>
 
-		<Text Margin="10 20 10 20" Padding="0 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center"
-		      FontSize="9" FontFamily="Times New Roman" FontStyle="Italic" BrushColor="Red">
-			<Type>Sql</Type>
-			<Row>2</Row>
-			<Column>2</Column>
-			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
-			<SqlId>GlAccount</SqlId>
-			<SqlResColumn Id="Description" />
-		</Text>
-		-->
 	</ReportHeader>
-	<PageHeader Height="0.5*" Rows="1" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
+	<PageHeader Height="0.5*" Rows="1" Columns="3" Margin="0 20 0 20" Padding="0 10 0 10">
 		
-		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center" BackgroundColor="">
+		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" VerticalAlignment="Center" BackgroundColor="">
 			<Row>0</Row>
-			<Column>0</Column>
+			<Column>2</Column>
 			<RowSpan>1</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
 			<SourceType>Local</SourceType>
@@ -108,25 +102,23 @@
 			</Table>
 
 		</Table>
-		<WaterMark Margin="5 5 5 5" Padding="5 5 5 5" Position="Relative" Left="20" Top="20"
-		           FontSize="40" FontFamily="Times New Roman" BackgroundColor="Green" FontStyle="Regular" BrushColor="Red" Opacity="0.5">
-			<Type>Sql</Type>
-			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
-			<SqlId>GlAccount</SqlId>
-			<SqlResColumn Id="AccountNumber" />
+		<WaterMark Margin="5 5 5 5" Padding="5 5 5 5"
+		           FontSize="40" FontFamily="Times New Roman" BackgroundColor="" FontStyle="Regular" BrushColor="Red" Opacity="0.5">
+			<Type>Text</Type>
+			<Content>Vendor Report</Content>
 			<StartPage>1</StartPage>
 			<EndPage>-2</EndPage>
 			<Rotate>315</Rotate>
 		</WaterMark>
-		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Center" Position="Relative" Left="0" Top="0"
-		            FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="Red" Opacity="1">
-			<Location>Header</Location>
+		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Center"
+		            FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Location>Footer</Location>
 			<StartPage>1</StartPage>
 			<EndPage>-1</EndPage>
 		</PageNumber>
 
-		<ReprintMark Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" Position="Relative" Left="20" Top="20"
-		             FontSize="12" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Red" BackgroundColor="Green" Opacity="1">
+		<ReprintMark Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right"
+		             FontSize="12" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Red" BackgroundColor="" Opacity="1">
 			<Text>REPRINT</Text>
 			<BoardThickness>3</BoardThickness>
 			<Location>Footer</Location>
@@ -135,18 +127,7 @@
 
 	<PageFooter Height="0.5*" Rows="1" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
 		
-		<Barcode Padding="0 20 0 20" FontSize="9" FontFamily="Calibri"
-		         FontStyle="Regular" BrushColor="Navy" Opacity="1">
-			<Row>0</Row>
-			<Column>0</Column>
-			<RowSpan>1</RowSpan>
-			<ColumnSpan>1</ColumnSpan>
-			<Format>CODE_128</Format>
-			<ShowBarcodeText>true</ShowBarcodeText>
-			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
-			<SqlId>GlAccount</SqlId>
-			<SqlResColumn Id="AccountNumber" />
-		</Barcode>
+		
 	</PageFooter>
 	<ReportFooter Height="1*" Rows="1" Columns="2" Margin="0 20 0 20" Padding="0 10 0 10">
 		
@@ -157,7 +138,7 @@
 			<Column>0</Column>
 			<RowSpan>1</RowSpan>
 			<ColumnSpan>1</ColumnSpan>
-			<Content>Hello World</Content>
+			<Content>Created By________________________________________</Content>
 		</Text>
 	</ReportFooter>
 </PdfTemplate>

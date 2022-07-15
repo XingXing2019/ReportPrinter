@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using PdfSharp.Drawing;
-using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;

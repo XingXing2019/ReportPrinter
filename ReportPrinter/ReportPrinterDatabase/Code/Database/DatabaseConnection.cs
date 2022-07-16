@@ -2,9 +2,9 @@
 {
     public class DatabaseConnection
     {
-        public string Id { get; set; }
-        public string DatabaseName { get; set; }
-        public string ConnectionString { get; set; }
+        public string Id { get; }
+        public string DatabaseName { get; }
+        public string ConnectionString { get; }
 
         public DatabaseConnection(string id, string databaseName, string connectionString)
         {

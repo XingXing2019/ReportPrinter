@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber">
+<PdfTemplate Id="AccountingReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber" Timeout="10">
 	<ReportHeader Height="1*" Rows="2" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
 		
 		<Text Margin="10 5 10 5" Padding="5 5 5 5" HorizontalAlignment="Center" VerticalAlignment="Center" Position="Relative" Left="20"

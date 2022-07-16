@@ -6,6 +6,7 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Print;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
@@ -26,6 +27,7 @@ namespace RaphaelLibrary.Code.Init.PDF
         private string _fileName;
         private string _fileNameSuffix;
         private string _savePath;
+        private int _timeout;
 
         private readonly HashSet<string> _rendererInHeaderFooter;
         private readonly HashSet<string> _rendererInBody;
@@ -107,6 +109,14 @@ namespace RaphaelLibrary.Code.Init.PDF
                 return false;
             }
             _fileNameSuffix = fileNameSuffix;
+
+            var timeoutStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_TIMEOUT);
+            if (!int.TryParse(timeoutStr, out var timeout))
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_TIMEOUT, node, procName);
+                return false;
+            }
+            _timeout = timeout;
 
             var reportHeader = new PdfReportHeader(_rendererInHeaderFooter);
             if (!reportHeader.ReadXml(node.SelectSingleNode(XmlElementHelper.S_REPORT_HEADER)))
@@ -196,16 +206,20 @@ namespace RaphaelLibrary.Code.Init.PDF
             return cloned;
         }
 
-        public bool TryCreatePdfReport(Guid messageId, bool hasReprintMark, Dictionary<string, SqlVariable> sqlVariables)
+        public bool TryCreatePdfReport(IPrintReport message)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreatePdfReport)}";
 
-            var pdf = new PdfDocument();
-            var manager = new PdfDocumentManager(messageId, pdf, hasReprintMark, _pageSize, _pdfStructureSizeList);
-
+            var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
+            var hasReprintMark = message.HasReprintFlag ?? false;
+            var messageId = message.MessageId;
+            
             try
             {
                 SqlVariableManager.Instance.StoreSqlVariables(messageId, sqlVariables);
+
+                var pdf = new PdfDocument();
+                var manager = new PdfDocumentManager(messageId, pdf, hasReprintMark, _pageSize, _pdfStructureSizeList);
 
                 var pageBody = _pdfStructureList[PdfStructure.PdfPageBody];
                 if (!pageBody.TryRenderPdfStructure(manager))
@@ -215,15 +229,23 @@ namespace RaphaelLibrary.Code.Init.PDF
                 if (headerFooter.Any(x => !x.TryRenderPdfStructure(manager)))
                     return false;
 
-                var fileName = $"{_savePath}{_fileName}_{manager.MessageId}.pdf";
-                manager.Pdf.Save(fileName);
+                var filePath = $"{_savePath}{_fileName}_{manager.MessageId}.pdf";
+                manager.Pdf.Save(filePath);
 
                 Logger.Info($"Success to render pdf: {Id} for message: {manager.MessageId}", procName);
+
+                if (!string.IsNullOrEmpty(message.PrinterId))
+                {
+                    var printer = PrinterFactory.CreatePrinter(message.ReportType);
+                    if (!printer.PrintReport(filePath, message.PrinterId, message.NumberOfCopy, _timeout))
+                        return false;
+                }
+
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during creating pdf report for message: {manager.MessageId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during creating pdf report for message: {messageId}. Ex: {ex.Message}", procName);
                 return false;
             }
             finally

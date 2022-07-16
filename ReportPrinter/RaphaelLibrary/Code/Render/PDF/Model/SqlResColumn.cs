@@ -9,12 +9,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Model
 {
     public class SqlResColumn : IXmlReader
     {
-        public string Id { get; set; }
-        public string Title { get; set; }
         public double WidthRatio { get; set; }
-        public Position Position { get; set; }
-        public double Left { get; set; }
-        public double Right { get; set; }
+        public string Id { get; private set; }
+        public string Title { get; private set; }
+        public Position Position { get; private set; }
+        public double Left { get; private set; }
+        public double Right { get; private set; }
 
         public bool ReadXml(XmlNode node)
         {

@@ -12,10 +12,10 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
 {
     public abstract class PdfStructureBase : IXmlReader
     {
-        public double HeightRatio { get; set; }
         public double Height { get; set; }
-        public MarginPaddingModel Margin { get; set; }
-        public MarginPaddingModel Padding { get; set; }
+        public double HeightRatio { get; private set; }
+        public MarginPaddingModel Margin { get; private set; }
+        public MarginPaddingModel Padding { get; private set; }
 
         protected int Rows;
         protected int Columns;

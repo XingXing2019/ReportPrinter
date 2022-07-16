@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Render.PDF.Model;
@@ -13,6 +12,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
     {
         public PdfDocument Pdf { get; }
         public Guid MessageId { get; }
+        public bool HasReprintMark { get; }
 
         public ContainerModel ReportHeaderContainer { get; }
         public ContainerModel PageHeaderContainer { get; }
@@ -27,10 +27,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Manager
 
         private readonly XSize _pageSize;
 
-        public PdfDocumentManager(Guid messageId, PdfDocument pdf, XSize pageSize, Dictionary<PdfStructure, ContainerModel> pdfStructureSizeList)
+        public PdfDocumentManager(Guid messageId, PdfDocument pdf, bool hasReprintMark, XSize pageSize, Dictionary<PdfStructure, ContainerModel> pdfStructureSizeList)
         {
             MessageId = messageId;
             Pdf = pdf; 
+            HasReprintMark = hasReprintMark;
             _pageSize = pageSize;
 
             ReportHeaderContainer = pdfStructureSizeList[PdfStructure.PdfReportHeader];

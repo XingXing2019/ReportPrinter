@@ -196,12 +196,12 @@ namespace RaphaelLibrary.Code.Init.PDF
             return cloned;
         }
 
-        public bool TryCreatePdfReport(Guid messageId, Dictionary<string, SqlVariable> sqlVariables)
+        public bool TryCreatePdfReport(Guid messageId, bool hasReprintMark, Dictionary<string, SqlVariable> sqlVariables)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreatePdfReport)}";
 
             var pdf = new PdfDocument();
-            var manager = new PdfDocumentManager(messageId, pdf, _pageSize, _pdfStructureSizeList);
+            var manager = new PdfDocumentManager(messageId, pdf, hasReprintMark, _pageSize, _pdfStructureSizeList);
 
             try
             {

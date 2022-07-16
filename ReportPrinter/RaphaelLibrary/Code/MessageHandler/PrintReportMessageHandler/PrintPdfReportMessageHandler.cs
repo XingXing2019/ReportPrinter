@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Init.PDF;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -20,8 +19,9 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
             }
 
             var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
-            
-            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId, sqlVariables));
+            var hasReprintMark = message.HasReprintFlag ?? false;
+
+            var isSuccess = await Task.Run(() => pdfTemplate.TryCreatePdfReport(message.MessageId, hasReprintMark, sqlVariables));
             return isSuccess;
         }
     }

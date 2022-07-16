@@ -13,5 +13,11 @@
         public double Y => NonFirstPageTopBoundary;
         public double Width => RightBoundary - LeftBoundary;
         public double Height => NonLastPageBottomBoundary - NonFirstPageTopBoundary;
+
+
+        public ContainerModel Clone()
+        {
+            return this.MemberwiseClone() as ContainerModel;
+        }
     }
 }

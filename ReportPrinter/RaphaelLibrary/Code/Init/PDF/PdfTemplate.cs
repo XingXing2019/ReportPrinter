@@ -197,10 +197,17 @@ namespace RaphaelLibrary.Code.Init.PDF
         public PdfTemplate Clone()
         {
             var cloned = this.MemberwiseClone() as PdfTemplate;
+
             cloned._pdfStructureList = new Dictionary<PdfStructure, PdfStructureBase>();
             foreach (var structure in this._pdfStructureList.Keys)
             {
                 cloned._pdfStructureList.Add(structure, this._pdfStructureList[structure].Clone());
+            }
+
+            cloned._pdfStructureSizeList = new Dictionary<PdfStructure, ContainerModel>();
+            foreach (var structure in this._pdfStructureSizeList.Keys)
+            {
+                cloned._pdfStructureSizeList.Add(structure, this._pdfStructureSizeList[structure].Clone());
             }
 
             return cloned;

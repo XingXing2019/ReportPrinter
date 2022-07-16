@@ -55,6 +55,12 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
         protected override bool TryPerformRender(PdfDocumentManager manager, string procName)
         {
+            if (!manager.HasReprintMark)
+            {
+                Logger.Info($"Current pdf report does not need reprint mark", procName);
+                return true;
+            }
+
             var pdf = manager.Pdf;
             var page = pdf.Pages[0];
             using var graph = XGraphics.FromPdfPage(page);

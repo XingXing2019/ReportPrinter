@@ -4,7 +4,7 @@ namespace ReportPrinterDatabase.Code.StoredProcedures
 {
     public abstract class StoredProcedureBase
     {
-        public string StoredProcedureName { get; set; }
+        public string StoredProcedureName { get; }
         public Dictionary<string, object> Parameters { get; }
 
         protected StoredProcedureBase()

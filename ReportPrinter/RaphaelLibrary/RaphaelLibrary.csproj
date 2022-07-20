@@ -1,17 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Code\Print\**" />
-    <EmbeddedResource Remove="Code\Print\**" />
-    <None Remove="Code\Print\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Code\Init\PDF\" />
+    <Folder Include="Code\Print\" />
     <Folder Include="Code\Render\PDF\Manager\" />
   </ItemGroup>
 
@@ -28,6 +23,9 @@
   <ItemGroup>
     <Reference Include="PdfSharp">
       <HintPath>Code\Plugin\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="RawPrint">
+      <HintPath>Code\Plugin\RawPrint.dll</HintPath>
     </Reference>
     <Reference Include="zxing">
       <HintPath>Code\Plugin\zxing.dll</HintPath>

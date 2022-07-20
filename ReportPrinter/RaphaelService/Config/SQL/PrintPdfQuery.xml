@@ -26,7 +26,7 @@
 	</Sql>
 	<Sql Id="VendorInfo" DatabaseId="AccountingSystem">
 		<Query>
-			SELECT
+			SELECT TOP 1
 				VendorID,
 				VendorName,
 				ShortName,
@@ -36,6 +36,8 @@
 				Vendors
 			WHERE
 				CurrencyCode = '%%%CurrencyCode%%%'
+			ORDER BY
+				VendorID
 		</Query>
 		<Variable Name="CurrencyCode" />
 	</Sql>

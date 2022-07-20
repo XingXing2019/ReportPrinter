@@ -82,6 +82,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_RIGHT = "Right";
         public const string S_ROWS = "Rows";
         public const string S_SAVE_PATH = "SavePath";
+        public const string S_TIMEOUT = "Timeout";
         public const string S_TOP = "Top";
         public const string S_VERTICAL_ALIGNMENT = "VerticalAlignment";
 

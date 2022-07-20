@@ -6,14 +6,14 @@ namespace RaphaelLibrary.Code.Print
 {
     public abstract class PrinterBase
     {
-        public bool PrintReport(string filePath, string printerId, int numberOfCopy, int timeout)
+        public bool PrintReport(string fileName, string filePath, string printerId, int numberOfCopy, int timeout)
         {
             var procName = $"{this.GetType().Name}.{nameof(PrintReport)}";
 
             try
             {
                 Logger.Info($"Start print file: {filePath} at printer: {printerId}", procName);
-                var tSendToPrinter = new Thread(() => SendToPrinter(filePath, printerId, numberOfCopy));
+                var tSendToPrinter = new Thread(() => SendToPrinter(fileName, filePath, printerId, numberOfCopy));
                 tSendToPrinter.Start();
                 var isSuccess = tSendToPrinter.Join(timeout);
 
@@ -37,6 +37,6 @@ namespace RaphaelLibrary.Code.Print
 
         }
 
-        protected abstract void SendToPrinter(string filePath, string printerId, int numberOfCopy);
+        protected abstract void SendToPrinter(string fileName, string filePath, string printerId, int numberOfCopy);
     }
 }

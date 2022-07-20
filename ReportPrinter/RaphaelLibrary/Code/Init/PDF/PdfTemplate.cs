@@ -236,7 +236,8 @@ namespace RaphaelLibrary.Code.Init.PDF
                 if (headerFooter.Any(x => !x.TryRenderPdfStructure(manager)))
                     return false;
 
-                var filePath = $"{_savePath}{_fileName}_{manager.MessageId}.pdf";
+                var fileName = $"{_fileName}_{manager.MessageId}";
+                var filePath = $"{_savePath}{fileName}.pdf";
                 manager.Pdf.Save(filePath);
 
                 Logger.Info($"Success to render pdf: {Id} for message: {manager.MessageId}", procName);
@@ -244,7 +245,7 @@ namespace RaphaelLibrary.Code.Init.PDF
                 if (!string.IsNullOrEmpty(message.PrinterId))
                 {
                     var printer = PrinterFactory.CreatePrinter(message.ReportType);
-                    if (!printer.PrintReport(filePath, message.PrinterId, message.NumberOfCopy, _timeout))
+                    if (!printer.PrintReport(fileName, filePath, message.PrinterId, message.NumberOfCopy, _timeout))
                         return false;
                 }
 

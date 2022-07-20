@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -23,6 +23,9 @@
   <ItemGroup>
     <Reference Include="PdfSharp">
       <HintPath>Code\Plugin\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="RawPrint">
+      <HintPath>Code\Plugin\RawPrint.dll</HintPath>
     </Reference>
     <Reference Include="zxing">
       <HintPath>Code\Plugin\zxing.dll</HintPath>

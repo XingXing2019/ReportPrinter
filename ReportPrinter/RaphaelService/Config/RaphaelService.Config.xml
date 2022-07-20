@@ -6,4 +6,10 @@
 	<PdfTemplateList>
 		<PdfTemplate>.\Config\PDF\AccountingReport.xml</PdfTemplate>
 	</PdfTemplateList>
+	<LabelStructureList>
+		<LabelStructure Id=""></LabelStructure>
+	</LabelStructureList>
+	<LabelTemplateList>
+		<LabelTemplate></LabelTemplate>
+	</LabelTemplateList>
 </RaphaelConfig>

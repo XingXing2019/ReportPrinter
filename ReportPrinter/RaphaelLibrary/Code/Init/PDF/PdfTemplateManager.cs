@@ -7,10 +7,9 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Init.PDF
 {
-    public class PdfTemplateManager : IXmlReader
+    public class PdfTemplateManager : TemplateManagerBase, IXmlReader
     {
         private static readonly object _lock = new object();
-        private readonly Dictionary<string, PdfTemplate> _pdfTemplateList;
 
         private static PdfTemplateManager _instance;
         public static PdfTemplateManager Instance
@@ -32,10 +31,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             }
         }
 
-        private PdfTemplateManager()
-        {
-            _pdfTemplateList = new Dictionary<string, PdfTemplate>();
-        }
+        private PdfTemplateManager() { }
 
         public bool ReadXml(XmlNode node)
         {
@@ -67,43 +63,22 @@ namespace RaphaelLibrary.Code.Init.PDF
                     return false;
                 }
 
-                if (_pdfTemplateList.ContainsKey(pdfTemplate.Id))
+                if (ReportTemplateList.ContainsKey(pdfTemplate.Id))
                 {
                     Logger.Error($"Duplicate pdf template id: {pdfTemplate.Id} detected", procName);
                     return false;
                 }
 
-                _pdfTemplateList.Add(pdfTemplate.Id, pdfTemplate);
+                ReportTemplateList.Add(pdfTemplate.Id, pdfTemplate);
             }
 
-            if (_pdfTemplateList.Count == 0)
+            if (ReportTemplateList.Count == 0)
             {
                 Logger.Error($"There is no valid pdf template in the config", procName);
                 return false;
             }
 
-            Logger.Info($"Success to initialize pdf template manager with {_pdfTemplateList.Count} pdf template(s)", procName);
-            return true;
-        }
-
-        /// <summary>
-        /// Get a copy of pdf template
-        /// </summary>
-        /// <returns></returns>
-        public bool TryGetPdfTemplate(string pdfTemplateId, out PdfTemplate pdfTemplate)
-        {
-            var procName = $"{this.GetType().Name}.{nameof(TryGetPdfTemplate)}";
-            pdfTemplate = null;
-
-            if (!_pdfTemplateList.ContainsKey(pdfTemplateId))
-            {
-                Logger.Error($"Pdf template id: {pdfTemplateId} does not exist in pdf template manager", procName);
-                return false;
-            }
-            
-            pdfTemplate = _pdfTemplateList[pdfTemplateId].Clone();
-
-            Logger.Debug($"Return a deep clone of pdf template: {pdfTemplateId}", procName);
+            Logger.Info($"Success to initialize pdf template manager with {ReportTemplateList.Count} pdf template(s)", procName);
             return true;
         }
     }

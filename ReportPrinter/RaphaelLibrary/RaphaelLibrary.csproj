@@ -1,10 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Code\Init\Label\" />
     <Folder Include="Code\Init\PDF\" />
     <Folder Include="Code\Print\" />
     <Folder Include="Code\Render\PDF\Manager\" />

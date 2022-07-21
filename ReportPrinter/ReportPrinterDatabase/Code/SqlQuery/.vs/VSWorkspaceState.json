@@ -1,10 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\StoredProcedure",
-    "\\StoredProcedure\\PrintReportMessage",
-    "\\StoredProcedure\\PrintReportSqlVariable"
+    "\\Database",
+    "\\StoredProcedure\\PrintReportSqlVariable",
+    "\\Table"
   ],
-  "SelectedNode": "\\Table",
+  "SelectedNode": "\\Database\\ReportPrinterDatabase.sql",
   "PreviewInSolutionExplorer": false
 }

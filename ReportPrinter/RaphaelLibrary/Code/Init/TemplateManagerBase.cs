@@ -23,7 +23,7 @@ namespace RaphaelLibrary.Code.Init
 
             if (!ReportTemplateList.ContainsKey(reportTemplateId))
             {
-                Logger.Error($"Report template id: {reportTemplateId} does not exist in pdf template manager", procName);
+                Logger.Error($"Report template id: {reportTemplateId} does not exist in template manager", procName);
                 return false;
             }
 

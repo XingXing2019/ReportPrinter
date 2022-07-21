@@ -8,10 +8,13 @@
 	</RabbitMQConfig>
 	<DatabaseConfigList>
 		<DatabaseConfig Id="ReportPrinter" DatabaseName="ReportPrinter">
-			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinter</ConnectionString>
+			<ConnectionString>Data Source=LAPTOP-ETHALNIF;Initial Catalog=ReportPrinter;Integrated Security=True</ConnectionString>
 		</DatabaseConfig>
 		<DatabaseConfig Id="AccountingSystem" DatabaseName="AccountingSystem">
-			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=AccountingSystem</ConnectionString>
+			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=AccountingSystem;Integrated Security=True</ConnectionString>
+		</DatabaseConfig>
+		<DatabaseConfig Id="AdventureWorks2019" DatabaseName="AdventureWorks2019">
+			<ConnectionString>Data Source=LAPTOP-ETHALNIF;Initial Catalog=AdventureWorks2019;Integrated Security=True</ConnectionString>
 		</DatabaseConfig>
 	</DatabaseConfigList>
 	<TargetDatabase>ReportPrinter</TargetDatabase>

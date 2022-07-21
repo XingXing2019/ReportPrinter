@@ -8,7 +8,7 @@
 	</RabbitMQConfig>
 	<DatabaseConfigList>
 		<DatabaseConfig Id="ReportPrinter" DatabaseName="ReportPrinter">
-			<ConnectionString>Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=ReportPrinter</ConnectionString>
+			<ConnectionString>Data Source=LAPTOP-ETHALNIF;Initial Catalog=ReportPrinter;Integrated Security=True</ConnectionString>
 		</DatabaseConfig>
 	</DatabaseConfigList>
 	<TargetDatabase>ReportPrinter</TargetDatabase>

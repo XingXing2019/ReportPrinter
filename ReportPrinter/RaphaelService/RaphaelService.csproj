@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config\PDF\EmployeeReport.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Config\PDF\AccountingReport.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

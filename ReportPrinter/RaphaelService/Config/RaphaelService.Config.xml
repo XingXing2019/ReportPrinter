@@ -5,6 +5,7 @@
 	</SqlTemplateList>
 	<PdfTemplateList>
 		<PdfTemplate>.\Config\PDF\AccountingReport.xml</PdfTemplate>
+		<PdfTemplate>.\Config\PDF\EmployeeReport.xml</PdfTemplate>
 	</PdfTemplateList>
 	<LabelStructureList>
 		<LabelStructure Id=""></LabelStructure>

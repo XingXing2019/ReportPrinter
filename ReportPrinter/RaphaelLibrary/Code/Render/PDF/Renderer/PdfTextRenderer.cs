@@ -46,7 +46,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     return false;
 
                 _content = content;
-                Logger.Info($"Success to read Text with type of {_textRendererType}, content: {_content}", procName);
+                Logger.Info($"Success to read {this.GetType().Name} with type of {_textRendererType}, content: {_content}", procName);
             }
             else if (_textRendererType == TextRendererType.Sql)
             {
@@ -65,7 +65,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 var sqlTitle = node.SelectSingleNode(XmlElementHelper.S_TITLE)?.InnerText;
                 _title = sqlTitle;
 
-                Logger.Info($"Success to read Text with type of {_textRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
+                Logger.Info($"Success to read {this.GetType().Name} with type of {_textRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
             }
             else if (_textRendererType == TextRendererType.Timestamp)
             {
@@ -85,7 +85,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 }
                 _title = timestampTitle;
 
-                Logger.Info($"Success to read Text with type of {_textRendererType}", procName);
+                Logger.Info($"Success to read {this.GetType().Name} with type of {_textRendererType}", procName);
             }
 
             return true;

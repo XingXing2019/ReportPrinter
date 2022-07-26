@@ -70,17 +70,17 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
-            //var labelStructureList = node.SelectSingleNode(XmlElementHelper.S_LABEL_STRUCTURE_LIST);
-            //if (labelStructureList == null)
-            //{
-            //    Logger.LogMissingXmlLog(XmlElementHelper.S_LABEL_STRUCTURE_LIST, node, procName);
-            //    return false;
-            //}
+            var labelStructureList = node.SelectSingleNode(XmlElementHelper.S_LABEL_STRUCTURE_LIST);
+            if (labelStructureList == null)
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_LABEL_STRUCTURE_LIST, node, procName);
+                return false;
+            }
 
-            //if (!LabelStructureManager.Instance.ReadXml(labelStructureList))
-            //{
-            //    return false;
-            //}
+            if (!LabelStructureManager.Instance.ReadXml(labelStructureList))
+            {
+                return false;
+            }
 
             //var labelTemplateList = node.SelectSingleNode(XmlElementHelper.S_LABEL_TEMPLATE_LIST);
             //if (labelTemplateList == null)

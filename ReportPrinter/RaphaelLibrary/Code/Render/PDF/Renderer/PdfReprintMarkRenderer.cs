@@ -49,7 +49,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _reprintMarkLocation = reprintMarkLocation;
 
-            Logger.Info($"Success to read ReprintMark, text:{_text}", procName);
+            Logger.Info($"Success to read {this.GetType().Name}, text:{_text}", procName);
             return true;
         }
 

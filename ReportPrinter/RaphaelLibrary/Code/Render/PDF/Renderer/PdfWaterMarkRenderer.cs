@@ -80,7 +80,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     return false;
 
                 _content = content;
-                Logger.Info($"Success to read WaterMark with type of {_waterMarkType}, content: {_content}, rotate: {_rotate}, start page: {_startPage}, end page: {_endPage}", procName);
+                Logger.Info($"Success to read {this.GetType().Name} with type of {_waterMarkType}, content: {_content}, rotate: {_rotate}, start page: {_startPage}, end page: {_endPage}", procName);
             }
             else if (_waterMarkType == WaterMarkRendererType.Sql)
             {
@@ -95,7 +95,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 _sql = sql;
                 _sqlResColumn = sqlResColumnList[0];
-                Logger.Info($"Success to read WaterMark with type of {_waterMarkType}, sql id: {_sql.Id}, res column: {_sqlResColumn}, rotate: {_rotate}, start page: {_startPage}, end page: {_endPage}", procName);
+                Logger.Info($"Success to read {this.GetType().Name} with type of {_waterMarkType}, sql id: {_sql.Id}, res column: {_sqlResColumn}, rotate: {_rotate}, start page: {_startPage}, end page: {_endPage}", procName);
             }
 
             return true;

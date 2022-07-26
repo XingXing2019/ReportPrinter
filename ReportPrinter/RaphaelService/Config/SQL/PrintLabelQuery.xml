@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SqlTemplate Id="PrintLabelQuery">
+	<Sql Id="TransactionInfo" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				TransactionID,
+				CONVERT(DATE, TransactionDate) AS TransactionDate,
+				GLAccount,
+				PostSequence,
+				BatchEntry,
+				VendorCode,
+				Debit,
+				Credit,
+				ExchangeRate,
+				Description
+			FROM
+				Transactions
+			JOIN
+				GlAccounts
+			ON
+				AccountNumber = GlAccount
+			WHERE
+				AccountNumber = '%%%AccountNumber%%%'
+		</Query>
+		<Variable Name="AccountNumber" />
+	</Sql>
+	<Sql Id="VendorInfo" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT TOP 1
+				VendorID,
+				VendorName,
+				ShortName,
+				GroupID,
+				CurrencyCode
+			FROM
+				Vendors
+			WHERE
+				CurrencyCode = '%%%CurrencyCode%%%'
+			ORDER BY
+				VendorID
+		</Query>
+		<Variable Name="CurrencyCode" />
+	</Sql>
+	<Sql Id="GlAccount" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				AccountNumber,
+				Description,
+				Status,
+				Configuration,
+				Code
+			FROM 
+				GlAccounts
+			WHERE 
+				AccountNumber = '%%%AccountNumber%%%'
+		</Query>
+		<Variable Name="AccountNumber" />
+	</Sql>
+	<Sql Id="VendorTransaction" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				TransactionID,
+				GLAccount,
+				Debit,
+				Credit,
+				InvoiceNo
+			FROM
+				Transactions
+			WHERE
+				VendorCode = '%%%VendorID%%%'
+		</Query>
+		<Variable Name="VendorID" />
+	</Sql>
+
+	<Sql Id="EmployeeByGender" DatabaseId="AdventureWorks2019">
+		<Query>
+			SELECT
+				BusinessEntityID,
+				JobTitle,
+				CONVERT(VARCHAR, BirthDate) AS BirthDate,
+				MaritalStatus,
+				Gender,
+				CONVERT(VARCHAR, HireDate) AS HireDate
+			FROM
+				HumanResources.Employee
+			WHERE
+				Gender = '%%%Gender%%%'
+		</Query>
+		<Variable Name="Gender" />
+	</Sql>
+
+	<Sql Id="EmployeeDepartment" DatabaseId="AdventureWorks2019">
+		<Query>
+			SELECT
+				d.Name,
+				d.GroupName,
+				CONVERT(VARCHAR, edh.StartDate) AS StartDate,
+				CASE
+					WHEN edh.EndDate IS NULL THEN 'Current'
+					ELSE CONVERT(VARCHAR, edh.EndDate)
+				END AS EndDate
+			FROM
+				HumanResources.EmployeeDepartmentHistory edh
+			JOIN
+				HumanResources.Department d
+			ON
+				edh.DepartmentID = d.DepartmentID
+			WHERE
+				BusinessEntityID = '%%%BusinessEntityID%%%'
+		</Query>
+		<Variable Name="BusinessEntityID" />
+	</Sql>
+
+	<Sql Id="Version" DatabaseId="AdventureWorks2019">
+		<Query>
+			SELECT
+				SystemInformationID,
+				[Database Version]
+			FROM
+				AWBuildVersion
+			WHERE
+				SystemInformationID = '%%%SystemInformationID%%%'
+		</Query>
+		<Variable Name="SystemInformationID" />
+	</Sql>
+</SqlTemplate>

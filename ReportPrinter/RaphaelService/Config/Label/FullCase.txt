@@ -1,0 +1,8 @@
+^XA
+^LRY
+^A0N,41,40^FO41,41^FD%%%<Sql 
+SqlResColumn="Database Version" 
+SqlTemplateId="PrintLabelQuery" 
+SqlId="Version" 
+/>%%%^XA%%%<Sql SqlTemplateId="PrintLabelQuery" SqlId="Version" SqlResColumn="Database Version" />%%%^FS
+^FO28,85^GB731,69,35,B,0^FS

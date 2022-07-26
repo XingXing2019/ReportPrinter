@@ -2,13 +2,14 @@
 <RaphaelConfig>
 	<SqlTemplateList>
 		<SqlTemplate>.\Config\SQL\PrintPdfQuery.xml</SqlTemplate>
+		<SqlTemplate>.\Config\SQL\PrintLabelQuery.xml</SqlTemplate>
 	</SqlTemplateList>
 	<PdfTemplateList>
 		<PdfTemplate>.\Config\PDF\AccountingReport.xml</PdfTemplate>
 		<PdfTemplate>.\Config\PDF\EmployeeReport.xml</PdfTemplate>
 	</PdfTemplateList>
 	<LabelStructureList>
-		<LabelStructure Id=""></LabelStructure>
+		<LabelStructure Id="FullCase">.\Config\Label\FullCase.txt</LabelStructure>
 	</LabelStructureList>
 	<LabelTemplateList>
 		<LabelTemplate></LabelTemplate>

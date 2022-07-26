@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using ReportPrinterLibrary.Code.Log;
 
@@ -66,7 +67,8 @@ namespace RaphaelLibrary.Code.Init.Label
                     return false;
                 }
 
-                var labelStructure = new LabelStructure(id);
+                var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
+                var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);
                 if (!labelStructure.ReadFile(path))
                 {
                     return false;

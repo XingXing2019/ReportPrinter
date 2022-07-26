@@ -43,7 +43,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _imageSource = imageSource.Trim().Replace("\r\n", "");
 
-            Logger.Info($"Success to read Image with source type: {_sourceType}, image source: {_imageSource}", procName);
+            Logger.Info($"Success to read {this.GetType().Name} with source type: {_sourceType}, image source: {_imageSource}", procName);
             return true;
         }
 

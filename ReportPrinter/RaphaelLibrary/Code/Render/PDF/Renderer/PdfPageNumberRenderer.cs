@@ -49,7 +49,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             }
             _endPage = endPage;
             
-            Logger.Info($"Success to read PageNumber, start page: {_startPage}, end page: {_endPage}", procName);
+            Logger.Info($"Success to read {this.GetType().Name}, start page: {_startPage}, end page: {_endPage}", procName);
             return true;
         }
 

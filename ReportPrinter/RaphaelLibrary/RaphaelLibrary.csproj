@@ -8,6 +8,9 @@
     <Folder Include="Code\Init\Label\" />
     <Folder Include="Code\Init\PDF\" />
     <Folder Include="Code\Print\" />
+    <Folder Include="Code\Render\Label\Manager\" />
+    <Folder Include="Code\Render\Label\PlaceHolder\" />
+    <Folder Include="Code\Render\Label\Renderer\" />
     <Folder Include="Code\Render\PDF\Manager\" />
   </ItemGroup>
 

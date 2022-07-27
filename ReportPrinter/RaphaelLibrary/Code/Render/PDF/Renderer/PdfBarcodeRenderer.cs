@@ -61,7 +61,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             _sql = sql;
             _sqlResColumn = sqlResColumnList[0];
-            Logger.Info($"Success to read Barcode with format: {_barcodeFormat}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
+            Logger.Info($"Success to read {this.GetType().Name} with format: {_barcodeFormat}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
             
             return true;
         }

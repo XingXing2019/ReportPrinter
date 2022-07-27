@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<SqlTemplate Id="PrintPdfQuery">
+<SqlTemplate Id="PrintLabelQuery">
 	<Sql Id="TransactionInfo" DatabaseId="AccountingSystem">
 		<Query>
 			SELECT

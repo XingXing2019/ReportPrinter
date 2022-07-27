@@ -115,7 +115,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 _subTableRender = subTableRenderer;
             }
 
-            Logger.Info($"Success to read Table, sql id: {_sql.Id}, result columns: {string.Join(',', _sqlResColumnList.Select(x => x.Id))}", procName);
+            Logger.Info($"Success to read {this.GetType().Name}, sql id: {_sql.Id}, result columns: {string.Join(',', _sqlResColumnList.Select(x => x.Id))}", procName);
             return true;
         }
 

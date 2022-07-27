@@ -1,6 +1,6 @@
 ﻿<PrintPdfReport>
 	<TemplateId>AccountingReport</TemplateId>
-	<PrinterId>HP Photosmart 5520 series</PrinterId>
+	<!--PrinterId>HP Photosmart 5520 series</PrinterId-->
 	<NumberOf>1</NumberOf>
 	<HasReprintFlag>false</HasReprintFlag>
 	<SqlVariables>

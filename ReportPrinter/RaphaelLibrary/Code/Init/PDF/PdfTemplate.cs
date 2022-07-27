@@ -16,7 +16,7 @@ using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Init.PDF
 {
-    public class PdfTemplate : IXmlReader
+    public class PdfTemplate : ITemplate
     {
         public string Id { get; private set; }
 
@@ -73,7 +73,6 @@ namespace RaphaelLibrary.Code.Init.PDF
                 pageSize = PageSizeConverter.ToSize(PageSize.A4);
                 Logger.LogDefaultValue(node, XmlElementHelper.S_PAGE_SIZE, PageSize.A4, procName);
             }
-
             _pageSize = pageSize;
 
             var orientationStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ORIENTATION);
@@ -194,7 +193,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             return true;
         }
 
-        public PdfTemplate Clone()
+        public ITemplate Clone()
         {
             var cloned = this.MemberwiseClone() as PdfTemplate;
 
@@ -213,9 +212,9 @@ namespace RaphaelLibrary.Code.Init.PDF
             return cloned;
         }
 
-        public bool TryCreatePdfReport(IPrintReport message)
+        public bool TryCreateReport(IPrintReport message)
         {
-            var procName = $"{this.GetType().Name}.{nameof(TryCreatePdfReport)}";
+            var procName = $"{this.GetType().Name}.{nameof(TryCreateReport)}";
 
             var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
             var hasReprintMark = message.HasReprintFlag ?? false;

@@ -6,7 +6,7 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
 {
     public class PrintReportMessageHandlerFactory
     {
-        public static IMessageHandler CreatePrintReportMessageHandler(ReportTypeEnum reportType)
+        public static PrintReportMessageHandlerBase CreatePrintReportMessageHandler(ReportTypeEnum reportType)
         {
             var procName = $"PrintReportMessageHandlerFactory.{nameof(CreatePrintReportMessageHandler)}";
 

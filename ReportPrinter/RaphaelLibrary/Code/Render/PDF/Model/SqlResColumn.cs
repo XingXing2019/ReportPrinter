@@ -16,6 +16,14 @@ namespace RaphaelLibrary.Code.Render.PDF.Model
         public double Left { get; private set; }
         public double Right { get; private set; }
 
+
+        public SqlResColumn() { }
+
+        public SqlResColumn(string id)
+        {
+            Id = id;
+        }
+        
         public bool ReadXml(XmlNode node)
         {
             var procName = $"{this.GetType().Name}.{nameof(ReadXml)}";

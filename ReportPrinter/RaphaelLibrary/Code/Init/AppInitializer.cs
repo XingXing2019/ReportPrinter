@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.PDF;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
@@ -65,6 +66,30 @@ namespace RaphaelLibrary.Code.Init
             }
 
             if (!PdfTemplateManager.Instance.ReadXml(pdfTemplateList))
+            {
+                return false;
+            }
+
+            var labelStructureList = node.SelectSingleNode(XmlElementHelper.S_LABEL_STRUCTURE_LIST);
+            if (labelStructureList == null)
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_LABEL_STRUCTURE_LIST, node, procName);
+                return false;
+            }
+
+            if (!LabelStructureManager.Instance.ReadXml(labelStructureList))
+            {
+                return false;
+            }
+
+            var labelTemplateList = node.SelectSingleNode(XmlElementHelper.S_LABEL_TEMPLATE_LIST);
+            if (labelTemplateList == null)
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_LABEL_TEMPLATE_LIST, node, procName);
+                return false;
+            }
+
+            if (!LabelTemplateManager.Instances.ReadXml(labelTemplateList))
             {
                 return false;
             }

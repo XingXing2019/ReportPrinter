@@ -1,17 +1,13 @@
-﻿using System.Threading.Tasks;
-using ReportPrinterLibrary.Code.Log;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+﻿using RaphaelLibrary.Code.Init;
+using RaphaelLibrary.Code.Init.Label;
 
 namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
 {
-    public class PrintLabelMessageHandler : IMessageHandler
+    public class PrintLabelMessageHandler : PrintReportMessageHandlerBase
     {
-        public async Task<bool> Handle(IPrintReport message)
+        protected override bool TryGetReportTemplate(string templateId, out ITemplate template)
         {
-            var procName = $"{this.GetType().Name}.{nameof(Handle)}";
-            await Task.Run(() => Logger.Debug($"Process message: {message.MessageId}", procName));
-
-            return true;
+            return LabelTemplateManager.Instances.TryGetReportTemplate(templateId, out template);
         }
     }
 }

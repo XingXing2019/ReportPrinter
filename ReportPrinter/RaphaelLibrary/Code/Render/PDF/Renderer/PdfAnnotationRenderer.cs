@@ -59,7 +59,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     return false;
                 
                 _content = content;
-                Logger.Info($"Success to read Annotation with type of {_annotationRendererType}, content: {_content}", procName);
+                Logger.Info($"Success to read {this.GetType().Name} with type of {_annotationRendererType}, content: {_content}", procName);
             }
             else if (_annotationRendererType == AnnotationRendererType.Sql)
             {
@@ -74,7 +74,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 _sql = sql;
                 _sqlResColumn = sqlResColumnList[0];
-                Logger.Info($"Success to read Annotation with type of {_annotationRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
+                Logger.Info($"Success to read {this.GetType().Name} with type of {_annotationRendererType}, sql id: {_sql.Id}, res column: {_sqlResColumn}", procName);
             }
 
             return true;

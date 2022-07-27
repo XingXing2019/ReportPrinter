@@ -21,6 +21,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_IMAGE_SOURCE = "ImageSource";
         public const string S_LABEL_STRUCTURE = "LabelStructure";
         public const string S_LABEL_STRUCTURE_LIST = "LabelStructureList";
+        public const string S_LABEL_BODY = "LabelBody";
+        public const string S_LABEL_FOOTER = "LabelFooter";
+        public const string S_LABEL_HEADER = "LabelHeader";
         public const string S_LABEL_TEMPLATE = "LabelTemplate";
         public const string S_LABEL_TEMPLATE_LIST = "LabelTemplateList";
         public const string S_LINE_SPACE = "LineSpace";

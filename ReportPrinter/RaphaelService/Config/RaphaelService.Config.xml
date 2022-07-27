@@ -12,6 +12,6 @@
 		<LabelStructure Id="FullCase">.\Config\Label\FullCase.txt</LabelStructure>
 	</LabelStructureList>
 	<LabelTemplateList>
-		<LabelTemplate></LabelTemplate>
+		<LabelTemplate>.\Config\Label\LabelTemplate.xml</LabelTemplate>
 	</LabelTemplateList>
 </RaphaelConfig>

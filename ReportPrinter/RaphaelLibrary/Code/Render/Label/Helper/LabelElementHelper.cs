@@ -7,7 +7,7 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
         public const string S_START = "Start";
         public const string S_SQL = "Sql";
         public const string S_END = "End";
-        
+
         public const string S_RENDERER_START = "%%%<";
         public const string S_SQL_RENDERER = "%%%<Sql";
         public const string S_RENDERER_END = "/>%%%";
@@ -25,7 +25,7 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
         public static Dictionary<string, string> LABEL_RENDERER = new Dictionary<string, string>
         {
             { S_START, S_RENDERER_START },
-            {S_SQL, S_SQL_RENDERER},
+            { S_SQL, S_SQL_RENDERER },
             { S_END, S_RENDERER_END }
         };
     }

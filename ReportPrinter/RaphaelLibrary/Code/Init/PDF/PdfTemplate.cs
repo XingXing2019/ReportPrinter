@@ -73,7 +73,6 @@ namespace RaphaelLibrary.Code.Init.PDF
                 pageSize = PageSizeConverter.ToSize(PageSize.A4);
                 Logger.LogDefaultValue(node, XmlElementHelper.S_PAGE_SIZE, PageSize.A4, procName);
             }
-
             _pageSize = pageSize;
 
             var orientationStr = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_ORIENTATION);

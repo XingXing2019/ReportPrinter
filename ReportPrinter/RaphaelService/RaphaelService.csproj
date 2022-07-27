@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config\Label\LabelTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Config\Label\FullCase.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -44,10 +47,6 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Config\Label\" />
   </ItemGroup>
 
 </Project>

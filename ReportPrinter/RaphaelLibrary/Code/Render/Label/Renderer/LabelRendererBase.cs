@@ -16,9 +16,17 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
         protected LabelRendererBase(int lineIndex)
         {
             LineIndex = lineIndex;
+            PlaceHolders = new List<PlaceHolderBase>();
         }
 
         public abstract bool ReadLine(string line, LabelDeserializeHelper deserializer);
+
+        public LabelRendererBase Clone()
+        {
+            var cloned = this.MemberwiseClone() as LabelRendererBase;
+            cloned.PlaceHolders = this.PlaceHolders.Select(x => x.Clone()).ToList();
+            return cloned;
+        }
 
         public virtual bool TryRenderLabel(LabelManager manager)
         {

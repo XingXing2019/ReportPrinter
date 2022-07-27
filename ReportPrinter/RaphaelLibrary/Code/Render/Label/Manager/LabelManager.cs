@@ -6,5 +6,11 @@ namespace RaphaelLibrary.Code.Render.Label.Manager
     {
         public string[] Lines { get; }
         public Guid MessageId { get; }
+
+        public LabelManager(string[] lines, Guid messageId)
+        {
+            Lines = lines;
+            MessageId = messageId;
+        }
     }
 }

@@ -82,17 +82,17 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
-            //var labelTemplateList = node.SelectSingleNode(XmlElementHelper.S_LABEL_TEMPLATE_LIST);
-            //if (labelTemplateList == null)
-            //{
-            //    Logger.LogMissingXmlLog(XmlElementHelper.S_LABEL_TEMPLATE_LIST, node, procName);
-            //    return false;
-            //}
+            var labelTemplateList = node.SelectSingleNode(XmlElementHelper.S_LABEL_TEMPLATE_LIST);
+            if (labelTemplateList == null)
+            {
+                Logger.LogMissingXmlLog(XmlElementHelper.S_LABEL_TEMPLATE_LIST, node, procName);
+                return false;
+            }
 
-            //if (!LabelTemplateManager.Instances.ReadXml(labelTemplateList))
-            //{
-            //    return false;
-            //}
+            if (!LabelTemplateManager.Instances.ReadXml(labelTemplateList))
+            {
+                return false;
+            }
 
             Logger.Info($"Success to read config of RaphaelLibrary", procName);
             return true;

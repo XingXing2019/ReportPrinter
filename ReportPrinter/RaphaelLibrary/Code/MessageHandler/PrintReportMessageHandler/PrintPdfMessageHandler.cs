@@ -3,7 +3,7 @@ using RaphaelLibrary.Code.Init.PDF;
 
 namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
 {
-    public class PrintPdfReportMessageHandler : PrintReportMessageHandlerBase
+    public class PrintPdfMessageHandler : PrintReportMessageHandlerBase
     {
         protected override bool TryGetReportTemplate(string templateId, out ITemplate template)
         {

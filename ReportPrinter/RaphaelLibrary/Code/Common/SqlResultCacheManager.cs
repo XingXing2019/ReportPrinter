@@ -71,9 +71,12 @@ namespace RaphaelLibrary.Code.Common
         public void RemoveSqlResult(Guid messageId)
         {
             var procName = $"{this.GetType().Name}.{nameof(RemoveSqlResult)}";
-            
-            _cache.Remove(messageId);
-            Logger.Debug($"Remove all sql result for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
+
+            if (_cache.ContainsKey(messageId))
+            {
+                _cache.Remove(messageId);
+                Logger.Debug($"Remove all sql result for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
+            }
         }
     }
 }

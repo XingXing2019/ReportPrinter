@@ -10,19 +10,10 @@ namespace CosmoService.Code.Producer.PrintReportCommand
         public PrintLabelCommandProducer(string queueName, IMessageManager<IPrintReport> manager)
             : base(queueName, manager) { }
 
-        protected override Task SendMessageAsync(IPrintReport message)
+        protected override async Task SendMessageAsync(IPrintReport message)
         {
-            throw new System.NotImplementedException();
-        }
-
-        protected override Task PostMessageAsync(IPrintReport message)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override Task DeleteMessageAsync(Guid messageId)
-        {
-            throw new NotImplementedException();
+            var endpoint = await Bus.GetSendEndpoint(new Uri($"queue:{QueueName}"));
+            await endpoint.Send<IPrintLabelReport>(message);
         }
     }
 }

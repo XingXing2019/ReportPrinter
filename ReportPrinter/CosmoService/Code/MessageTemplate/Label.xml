@@ -1,0 +1,12 @@
+﻿<PrintLabelReport>
+	<TemplateId>Label</TemplateId>
+	<!--PrinterId>HP Photosmart 5520 series</PrinterId-->
+	<NumberOf>1</NumberOf>
+	<HasReprintFlag>false</HasReprintFlag>
+	<SqlVariables>
+		<SqlVariable>
+			<Name>SystemInformationID</Name>
+			<Value>1</Value>
+		</SqlVariable>
+	</SqlVariables>
+</PrintLabelReport>

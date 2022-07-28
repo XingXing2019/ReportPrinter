@@ -47,7 +47,7 @@
             // rdbPDF
             // 
             this.rdbPDF.AutoSize = true;
-            this.rdbPDF.Checked = true;
+            this.rdbPDF.Checked = false;
             this.rdbPDF.Location = new System.Drawing.Point(76, 57);
             this.rdbPDF.Name = "rdbPDF";
             this.rdbPDF.Size = new System.Drawing.Size(75, 34);
@@ -59,6 +59,7 @@
             // rdbLabel
             // 
             this.rdbLabel.AutoSize = true;
+            this.rdbLabel.Checked = true;
             this.rdbLabel.Location = new System.Drawing.Point(271, 57);
             this.rdbLabel.Name = "rdbLabel";
             this.rdbLabel.Size = new System.Drawing.Size(87, 34);

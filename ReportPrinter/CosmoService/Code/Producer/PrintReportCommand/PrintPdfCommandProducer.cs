@@ -15,15 +15,5 @@ namespace CosmoService.Code.Producer.PrintReportCommand
             var endPoint = await Bus.GetSendEndpoint(new Uri($"queue:{QueueName}"));
             await endPoint.Send<IPrintPdfReport>(message);
         }
-
-        protected override async Task PostMessageAsync(IPrintReport message)
-        {
-            await Manager.Post(message);
-        }
-
-        protected override async Task DeleteMessageAsync(Guid messageId)
-        {
-            await Manager.Delete(messageId);
-        }
     }
 }

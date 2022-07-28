@@ -11,7 +11,7 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
             var procName = $"PrintReportMessageHandlerFactory.{nameof(CreatePrintReportMessageHandler)}";
 
             if (reportType == ReportTypeEnum.PDF)
-                return new PrintPdfReportMessageHandler();
+                return new PrintPdfMessageHandler();
             else if (reportType == ReportTypeEnum.Label)
                 return new PrintLabelMessageHandler();
             else

@@ -72,8 +72,11 @@ namespace RaphaelLibrary.Code.Common
         {
             var procName = $"{this.GetType().Name}.{nameof(RemoveImage)}";
 
-            _cache.Remove(messageId);
-            Logger.Debug($"Remove all images for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
+            if (_cache.ContainsKey(messageId))
+            {
+                _cache.Remove(messageId);
+                Logger.Debug($"Remove all images for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
+            }
         }
     }
 }

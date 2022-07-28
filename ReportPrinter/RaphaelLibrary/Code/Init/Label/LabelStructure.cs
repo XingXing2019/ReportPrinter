@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.Manager;
 using RaphaelLibrary.Code.Render.Label.Renderer;
@@ -65,12 +66,21 @@ namespace RaphaelLibrary.Code.Init.Label
             }
         }
 
-        public bool TryCreateLabelStructure(IPrintReport message)
+        public bool TryCreateLabelStructure(IPrintReport message, out StringBuilder labelStructure)
         {
+            var procName = $"{this.GetType().Name}.{nameof(TryCreateLabelStructure)}";
+
+            labelStructure = new StringBuilder();
             var manager = new LabelManager(_lines, message.MessageId);
             if (_labelRenderer.Any(x => !x.TryRenderLabel(manager)))
                 return false;
+            
+            foreach (var line in _lines)
+            {
+                labelStructure.AppendLine(line);
+            }
 
+            Logger.Info($"Success to create label structure for message: {message.MessageId}", procName);
             return true;
         }
 

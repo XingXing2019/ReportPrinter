@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Render.PDF.Helper;
@@ -11,6 +14,7 @@ namespace RaphaelLibrary.Code.Init.Label
     {
         private string _savePath;
         private string _fileNameSuffix;
+        private string _fileName;
         private int _timeout;
         private List<IStructure> _labelStructures;
 
@@ -32,6 +36,7 @@ namespace RaphaelLibrary.Code.Init.Label
                 return false;
             }
             Id = id;
+            _fileName = id;
 
             var savePath = XmlElementHelper.GetAttribute(node, XmlElementHelper.S_SAVE_PATH);
             if (string.IsNullOrEmpty(savePath))
@@ -94,12 +99,49 @@ namespace RaphaelLibrary.Code.Init.Label
 
         public ITemplate Clone()
         {
-            throw new System.NotImplementedException();
+            var cloned = this.MemberwiseClone() as LabelTemplate;
+            cloned._labelStructures = this._labelStructures.Select(x => x.Clone()).ToList();
+            return cloned;
         }
 
         public bool TryCreateReport(IPrintReport message)
         {
-            throw new System.NotImplementedException();
+            var procName = $"{this.GetType().Name}.{nameof(TryCreateReport)}";
+
+            var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
+            var messageId = message.MessageId;
+
+            try
+            {
+                SqlVariableManager.Instance.StoreSqlVariables(messageId, sqlVariables);
+
+                var labelLines = new StringBuilder();
+
+                foreach (var labelStructure in _labelStructures)
+                {
+                    if (labelStructure == null) continue;
+                    if (!labelStructure.TryCreateLabelStructure(message, out var lines))
+                        return false;
+                    labelLines.Append(lines);
+                }
+
+                var fileName = $"{_fileName}_{messageId}";
+                var filePath = $"{_savePath}{fileName}.zpl";
+                
+                FileHelper.CreateFile(filePath, labelLines.ToString());
+                Logger.Info($"Success to create label report to {filePath}", procName);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during creating label report for message: {messageId}. Ex: {ex.Message}", procName);
+                return false;
+            }
+            finally
+            {
+                SqlVariableManager.Instance.RemoveSqlVariables(messageId);
+                SqlResultCacheManager.Instance.RemoveSqlResult(messageId);
+            }
         }
     }
 }

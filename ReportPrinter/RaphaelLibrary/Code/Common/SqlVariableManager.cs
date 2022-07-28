@@ -61,8 +61,11 @@ namespace RaphaelLibrary.Code.Common
         {
             var procName = $"{this.GetType().Name}.{nameof(RemoveSqlVariables)}";
 
-            _sqlVariableRepo.Remove(messageId);
-            Logger.Debug($"Remove sql variables for message: {messageId}. Current variable repo size: {_sqlVariableRepo.Count}", procName);
+            if (_sqlVariableRepo.ContainsKey(messageId))
+            {
+                _sqlVariableRepo.Remove(messageId);
+                Logger.Debug($"Remove sql variables for message: {messageId}. Current variable repo size: {_sqlVariableRepo.Count}", procName);
+            }
         }
     }
 }

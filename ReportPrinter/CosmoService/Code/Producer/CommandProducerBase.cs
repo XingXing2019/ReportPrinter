@@ -12,14 +12,15 @@ namespace CosmoService.Code.Producer
     public abstract class CommandProducerBase<T> where T : IMessage
     {
         protected readonly string QueueName;
-        protected readonly IMessageManager<T> Manager;
         protected IBusControl Bus;
+        
+        private readonly IMessageManager<T> _manager;
         private readonly RabbitMQConfig _rabbitMqConfig;
 
         protected CommandProducerBase(string queueName, IMessageManager<T> manager)
         {
             QueueName = queueName;
-            Manager = manager;
+            _manager = manager;
             _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
             Bus = CreateBus(queueName);
         }
@@ -51,8 +52,16 @@ namespace CosmoService.Code.Producer
         }
 
         protected abstract Task SendMessageAsync(T message);
-        protected abstract Task PostMessageAsync(T message);
-        protected abstract Task DeleteMessageAsync(Guid messageId);
+
+        private async Task PostMessageAsync(T message)
+        {
+            await _manager.Post(message);
+        }
+
+        private async Task DeleteMessageAsync(Guid messageId)
+        {
+            await _manager.Delete(messageId);
+        }
 
         #region Helper
 

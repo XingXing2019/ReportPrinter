@@ -239,7 +239,7 @@ namespace RaphaelLibrary.Code.Init.PDF
                 var filePath = $"{_savePath}{fileName}.pdf";
                 manager.Pdf.Save(filePath);
 
-                Logger.Info($"Success to render pdf: {Id} for message: {manager.MessageId}", procName);
+                Logger.Info($"Success to create pdf: {Id} for message: {manager.MessageId}", procName);
 
                 if (!string.IsNullOrEmpty(message.PrinterId))
                 {

@@ -8,14 +8,14 @@ namespace RaphaelLibrary.Code.Print
         {
             for (int i = 0; i < numberOfCopy; i++)
             {
-                Print(fileName, filePath, printerId);
+                SendFileToPrinter(fileName, filePath, printerId);
             }
         }
 
 
 		#region Helper
 
-		private void Print(string fileName, string filePath, string printerId)
+		private void SendFileToPrinter(string fileName, string filePath, string printerId)
         {
             IPrinter printer = new Printer();
             printer.PrintRawFile(printerId, filePath, fileName);

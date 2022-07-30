@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<LabelTemplate Id="Label" SavePath=".\Result\Label\" FileNameSuffix="AccountNumber" Timeout="10">
-	<LabelHeader></LabelHeader>
-	<LabelBody>FullCase</LabelBody>
-	<LabelFooter></LabelFooter>
-</LabelTemplate>

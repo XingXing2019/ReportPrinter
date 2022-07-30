@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Print;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
@@ -129,7 +130,15 @@ namespace RaphaelLibrary.Code.Init.Label
                 var filePath = $"{_savePath}{fileName}.zpl";
                 
                 FileHelper.CreateFile(filePath, labelLines.ToString());
-                Logger.Info($"Success to create label report to {filePath}", procName);
+                Logger.Info($"Success to create label for massage: {message.MessageId}", procName);
+
+                if (!string.IsNullOrEmpty(message.PrinterId))
+                {
+                    var printer = PrinterFactory.CreatePrinter(message.ReportType);
+                    if (!printer.PrintReport(fileName, filePath, message.PrinterId, message.NumberOfCopy, _timeout))
+                        return false;
+                }
+
                 return true;
             }
             catch (Exception ex)

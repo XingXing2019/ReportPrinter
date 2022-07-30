@@ -19,3 +19,7 @@
 /ReportPrinter/RaphaelLibrary/obj
 /ReportPrinter/RaphaelLibrary/bin/Debug/netcoreapp3.1
 /.vs
+/ReportPrinter/RaphaelService/Config
+/ReportPrinter/RaphaelService/Config.xml
+/ReportPrinter/CosmoService/Config.xml
+/ReportPrinter/ReportPrinterUnitTest/Config.xml

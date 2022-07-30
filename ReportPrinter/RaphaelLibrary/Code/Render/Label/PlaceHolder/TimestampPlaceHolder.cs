@@ -20,11 +20,5 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
             value = time.ToString(_mask);
             return true;
         }
-
-        public override PlaceHolderBase Clone()
-        {
-            var cloned = this.MemberwiseClone() as TimestampPlaceHolder;
-            return cloned;
-        }
     }
 }

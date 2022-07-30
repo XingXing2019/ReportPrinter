@@ -41,7 +41,7 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
             return cloned;
         }
 
-        public virtual bool TryRenderLabel(LabelManager manager)
+        public bool TryRenderLabel(LabelManager manager)
         {
             var renderName = this.GetType().Name;
             var procName = $"{renderName}.{nameof(TryRenderLabel)}";

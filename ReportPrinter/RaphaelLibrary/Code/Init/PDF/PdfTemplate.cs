@@ -16,7 +16,7 @@ using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Init.PDF
 {
-    public class PdfTemplate : ITemplate
+    public class PdfTemplate : TemplateBase
     {
         public string Id { get; private set; }
 
@@ -193,7 +193,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             return true;
         }
 
-        public ITemplate Clone()
+        public override TemplateBase Clone()
         {
             var cloned = this.MemberwiseClone() as PdfTemplate;
 
@@ -212,20 +212,17 @@ namespace RaphaelLibrary.Code.Init.PDF
             return cloned;
         }
 
-        public bool TryCreateReport(IPrintReport message)
+        public override bool TryCreateReport(IPrintReport message)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreateReport)}";
-
-            var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
-            var hasReprintMark = message.HasReprintFlag ?? false;
-            var messageId = message.MessageId;
             
             try
             {
-                SqlVariableManager.Instance.StoreSqlVariables(messageId, sqlVariables);
+                StoreSqlVariables(message);
 
                 var pdf = new PdfDocument();
-                var manager = new PdfDocumentManager(messageId, pdf, hasReprintMark, _pageSize, _pdfStructureSizeList);
+                var hasReprintMark = message.HasReprintFlag ?? false;
+                var manager = new PdfDocumentManager(message.MessageId, pdf, hasReprintMark, _pageSize, _pdfStructureSizeList);
 
                 var pageBody = _pdfStructureList[PdfStructure.PdfPageBody];
                 if (!pageBody.TryRenderPdfStructure(manager))
@@ -243,23 +240,21 @@ namespace RaphaelLibrary.Code.Init.PDF
 
                 if (!string.IsNullOrEmpty(message.PrinterId))
                 {
-                    var printer = PrinterFactory.CreatePrinter(message.ReportType);
-                    if (!printer.PrintReport(fileName, filePath, message.PrinterId, message.NumberOfCopy, _timeout))
-                        return false;
+                    PrintReport(message, fileName, filePath, _timeout);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during creating pdf report for message: {messageId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during creating pdf report for message: {message.MessageId}. Ex: {ex.Message}", procName);
                 return false;
             }
             finally
             {
-                SqlVariableManager.Instance.RemoveSqlVariables(messageId);
-                SqlResultCacheManager.Instance.RemoveSqlResult(messageId);
-                ImageCacheManager.Instance.RemoveImage(messageId);
+                SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
+                SqlResultCacheManager.Instance.RemoveSqlResult(message.MessageId);
+                ImageCacheManager.Instance.RemoveImage(message.MessageId);
             }
         }
     }

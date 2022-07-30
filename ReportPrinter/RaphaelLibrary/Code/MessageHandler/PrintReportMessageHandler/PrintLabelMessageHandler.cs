@@ -5,7 +5,7 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
 {
     public class PrintLabelMessageHandler : PrintReportMessageHandlerBase
     {
-        protected override bool TryGetReportTemplate(string templateId, out ITemplate template)
+        protected override bool TryGetReportTemplate(string templateId, out TemplateBase template)
         {
             return LabelTemplateManager.Instances.TryGetReportTemplate(templateId, out template);
         }

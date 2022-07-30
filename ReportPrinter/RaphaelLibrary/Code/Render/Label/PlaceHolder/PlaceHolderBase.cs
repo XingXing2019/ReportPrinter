@@ -26,6 +26,9 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
 
         protected abstract bool TryGetPlaceHolderValue(LabelManager manager, out string value);
 
-        public abstract PlaceHolderBase Clone();
+        public virtual PlaceHolderBase Clone()
+        {
+            return this.MemberwiseClone() as PlaceHolderBase;
+        }
     }
 }

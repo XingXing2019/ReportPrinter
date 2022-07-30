@@ -19,6 +19,6 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
             return isSuccess;
         }
 
-        protected abstract bool TryGetReportTemplate(string templateId, out ITemplate template);
+        protected abstract bool TryGetReportTemplate(string templateId, out TemplateBase template);
     }
 }

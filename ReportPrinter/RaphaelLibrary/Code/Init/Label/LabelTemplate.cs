@@ -11,7 +11,7 @@ using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Init.Label
 {
-    public class LabelTemplate : ITemplate
+    public class LabelTemplate : TemplateBase, IXmlReader
     {
         private string _savePath;
         private string _fileNameSuffix;
@@ -98,26 +98,22 @@ namespace RaphaelLibrary.Code.Init.Label
             return true;
         }
 
-        public ITemplate Clone()
+        public override TemplateBase Clone()
         {
             var cloned = this.MemberwiseClone() as LabelTemplate;
             cloned._labelStructures = this._labelStructures.Select(x => x.Clone()).ToList();
             return cloned;
         }
 
-        public bool TryCreateReport(IPrintReport message)
+        public override bool TryCreateReport(IPrintReport message)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreateReport)}";
-
-            var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
-            var messageId = message.MessageId;
-
+            
             try
             {
-                SqlVariableManager.Instance.StoreSqlVariables(messageId, sqlVariables);
+                StoreSqlVariables(message);
 
                 var labelLines = new StringBuilder();
-
                 foreach (var labelStructure in _labelStructures)
                 {
                     if (labelStructure == null) continue;
@@ -126,30 +122,28 @@ namespace RaphaelLibrary.Code.Init.Label
                     labelLines.Append(lines);
                 }
 
-                var fileName = $"{_fileName}_{messageId}";
+                var fileName = $"{_fileName}_{message.MessageId}";
                 var filePath = $"{_savePath}{fileName}.zpl";
-                
                 FileHelper.CreateFile(filePath, labelLines.ToString());
+
                 Logger.Info($"Success to create label for massage: {message.MessageId}", procName);
 
                 if (!string.IsNullOrEmpty(message.PrinterId))
                 {
-                    var printer = PrinterFactory.CreatePrinter(message.ReportType);
-                    if (!printer.PrintReport(fileName, filePath, message.PrinterId, message.NumberOfCopy, _timeout))
-                        return false;
+                    PrintReport(message, fileName, filePath, _timeout);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during creating label report for message: {messageId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during creating label report for message: {message.MessageId}. Ex: {ex.Message}", procName);
                 return false;
             }
             finally
             {
-                SqlVariableManager.Instance.RemoveSqlVariables(messageId);
-                SqlResultCacheManager.Instance.RemoveSqlResult(messageId);
+                SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
+                SqlResultCacheManager.Instance.RemoveSqlResult(message.MessageId);
             }
         }
     }

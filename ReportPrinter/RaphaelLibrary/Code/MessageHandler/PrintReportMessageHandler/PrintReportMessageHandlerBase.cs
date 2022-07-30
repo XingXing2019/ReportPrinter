@@ -8,7 +8,6 @@ namespace RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler
     {
         public async Task<bool> Handle(IPrintReport message)
         {
-            var procName = $"{this.GetType().Name}.{nameof(Handle)}";
             var templateId = message.TemplateId;
 
             if (!TryGetReportTemplate(templateId, out var template))

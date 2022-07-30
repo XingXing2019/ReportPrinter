@@ -55,6 +55,12 @@ namespace ReportPrinterLibrary.Code.Log
             Debug(defaultValueLog, procName);
         }
 
+        public static void LogDefaultValue(string placeholder, string name, object value, string procName)
+        {
+            var defaultValueLog = string.Format(_setDefaultValue, placeholder, name, value);
+            Debug(defaultValueLog, procName);
+        }
+
         #region Helper
 
         private static string FormatMessage(string message, string procName)

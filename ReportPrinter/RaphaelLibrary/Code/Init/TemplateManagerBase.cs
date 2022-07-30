@@ -5,18 +5,18 @@ namespace RaphaelLibrary.Code.Init
 {
     public abstract class TemplateManagerBase
     {
-        protected readonly Dictionary<string, ITemplate> ReportTemplateList;
+        protected readonly Dictionary<string, TemplateBase> ReportTemplateList;
 
         protected TemplateManagerBase()
         {
-            ReportTemplateList = new Dictionary<string, ITemplate>();
+            ReportTemplateList = new Dictionary<string, TemplateBase>();
         }
 
         /// <summary>
         /// Get a copy of pdf template
         /// </summary>
         /// <returns></returns>
-        public bool TryGetReportTemplate(string reportTemplateId, out ITemplate reportTemplate)
+        public bool TryGetReportTemplate(string reportTemplateId, out TemplateBase reportTemplate)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryGetReportTemplate)}";
             reportTemplate = null;

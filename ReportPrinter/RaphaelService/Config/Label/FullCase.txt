@@ -1,8 +1,41 @@
 ^XA
 ^LRY
-^A0N,41,40^FO41,41^FD%%%<Sql 
-SqlResColumn="Database Version" 
-SqlTemplateId="PrintLabelQuery" 
-SqlId="Version" 
-/>%%%^XA%%%<Sql SqlTemplateId="PrintLabelQuery" SqlId="Version" SqlResColumn="Database Version" />%%%^FS
+^A0N,41,40^FO41,41^FD%%%<Sql SqlResColumn="DeliveryToName" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer" />%%%^FS
 ^FO28,85^GB731,69,35,B,0^FS
+^A0N,57,40^FO41,95^FD%%%<Sql  SqlResColumn="DeliveryAddress1" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,41,40^FO41,168^FD%%%<Sql SqlResColumn="DeliveryAddress2" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,55,36^FO41,215^FD%%%<Sql SqlResColumn="DeliveryAddress3" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,96,96^FO41,272^FD%%%<Sql SqlResColumn="TrackID" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,41,40^FO424,304^FD%%%<Sql SqlResColumn="City" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%, %%%<Sql SqlResColumn="DeliveryState" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^FO41,351^GB717,1,3,B,0^FS
+^A0N,28,28^FO41,367^FD%%%<Sql SqlResColumn="WayfinderCode" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,20,20^FO568,367^FD%%%<Calc Function="DateTime" Format="dd/MM/yyyy hh:mm:ss"/>%%%^FS
+^A0N,28,28^FO41,400^FD%%%<Sql SqlResColumn="DeliveryAttnTo" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^FO41,432^GB717,1,3,B,0^FS
+^A0N,96,96^FO41,441^FD%%%<Sql SqlResColumn="SendersRef" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,96,96^FO688,447^FD%%%<Sql SqlResColumn="rp_priority" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,26,24^FO41,536^FDItem::^FS
+^A0N,26,24^FO191,536^FDMFG:^FS
+^A0N,26,24^FO335,536^FDQty:^FS
+^A0N,26,24^FO447,536^FDUOM:^FS
+^A0N,26,24^FO574,536^FDLoc:^FS
+^A0N,26,22^FO41,568^FD%%%<Sql SqlResColumn="rp_sku_id" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,26,22^FO191,568^FD%%%<Sql SqlResColumn="Manufacturer" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,26,22^FO335,568^FD%%%<Sql SqlResColumn="Qty" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,26,22^FO447,568^FD%%%<Sql SqlResColumn="rp_uom" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,26,24^FO574,568^FD%%%<Sql SqlResColumn="rp_location_id" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,26,24^FO41,599^FD%%%<Sql SqlResColumn="rp_desc" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^FO35,629^GB725,1,3,B,0^FS
+^FO32,631^GB731,65,33,B,0^FS
+^A0N,57,44^FO41,639^FD%%%<Sql SqlResColumn="CarrierServiceDescription" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,121,120^FO41,710^FD%%%<Sql SqlResColumn="DeliveryPostCode" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,41,40^FO405,810^FD%%%<Sql SqlResColumn="ConNote" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^BY3^FO319,706^BCN,95,N,N,N^FD>:%%%<Sql SqlResColumn="ConNote_Barcode" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,45,44^FO41,824^FD%%%<Sql SqlResColumn="City" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,28,28^FO520,848^FDItem Wt. %%%<Sql SqlResColumn="rp_act_weight" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%% kg^FS
+^BY4^FO83,879^BCN,160,N,N,N^FD>;>8%%%<Sql SqlResColumn="rp_carrier_barcode" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,40,40^FO193,1047^FD%%%<Sql SqlResColumn="rp_carrier_barcode" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,41,40^FO623,1060^FDLCD:%%%<Sql SqlResColumn="rp_checkdigit" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^A0N,26,24^FO41,1098^FB707,2,,C^FD%%%<Sql SqlResColumn="DGDeclarationText" SqlTemplateId="LabelPrintQuery" SqlId="FullCaseContainer"/>%%%^FS
+^PQ1,0,1,Y
+^XZ

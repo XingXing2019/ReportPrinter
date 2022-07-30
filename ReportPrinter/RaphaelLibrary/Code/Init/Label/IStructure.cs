@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using RaphaelLibrary.Code.Render.Label.Manager;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Init.Label

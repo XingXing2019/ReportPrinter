@@ -16,6 +16,9 @@
 		<DatabaseConfig Id="AdventureWorks2019" DatabaseName="AdventureWorks2019">
 			<ConnectionString>Data Source=LAPTOP-ETHALNIF;Initial Catalog=AdventureWorks2019;Integrated Security=True</ConnectionString>
 		</DatabaseConfig>
+		<DatabaseConfig Id="PD" DatabaseName="PD">
+			<ConnectionString>Data Source=LAPTOP-ETHALNIF;Initial Catalog=PickDirector;Integrated Security=True</ConnectionString>
+		</DatabaseConfig>
 	</DatabaseConfigList>
 	<TargetDatabase>ReportPrinter</TargetDatabase>
 </AppConfig>

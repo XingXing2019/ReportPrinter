@@ -5,8 +5,8 @@
 	<HasReprintFlag>false</HasReprintFlag>
 	<SqlVariables>
 		<SqlVariable>
-			<Name>SystemInformationID</Name>
-			<Value>1</Value>
+			<Name>ContainerID</Name>
+			<Value>500024</Value>
 		</SqlVariable>
 	</SqlVariables>
 </PrintLabelReport>

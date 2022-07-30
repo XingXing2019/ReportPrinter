@@ -94,7 +94,7 @@ namespace RaphaelLibrary.Code.Init.Label
                 if (line.Contains(_labelRendererSigns[rendererName]))
                 {
                     var labelRenderer = LabelRendererFactory.CreateLabelRenderer(rendererName, lineIndex);
-                    if (!labelRenderer.ReadLine(line, _deserializer))
+                    if (!labelRenderer.ReadLine(line, _deserializer, rendererName))
                         return false;
                     _labelRenderer.Add(labelRenderer);
                 }

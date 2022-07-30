@@ -1,4 +1,5 @@
-﻿using RaphaelLibrary.Code.Init.SQL;
+﻿using System.Collections.Generic;
+using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.PDF.Model;
@@ -9,13 +10,9 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
     public class LabelSqlRenderer : LabelRendererBase
     {
         public LabelSqlRenderer(int lineIndex) : base(lineIndex) { }
-
-        public override bool ReadLine(string line, LabelDeserializeHelper deserializer)
+        
+        protected override bool TryCreatePlaceHolders(LabelDeserializeHelper deserializer, HashSet<string> placeholders)
         {
-            var procName = $"{this.GetType().Name}.{nameof(ReadLine)}";
-            if (!deserializer.TryGetPlaceHolders(line, LabelElementHelper.S_SQL, LabelElementHelper.S_END, out var placeholders))
-                return false;
-
             foreach (var placeholder in placeholders)
             {
                 if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_TEMPLATE_ID, out var sqlTemplateId))
@@ -34,7 +31,6 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
                 PlaceHolders.Add(sqlPlaceHolder);
             }
 
-            Logger.Info($"Success to read {this.GetType().Name}", procName);
             return true;
         }
     }

@@ -1,4 +1,5 @@
-﻿using RaphaelLibrary.Code.Render.Label.Helper;
+﻿using System.Collections.Generic;
+using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using ReportPrinterLibrary.Code.Log;
 
@@ -7,12 +8,10 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
     public class LabelTimestampRenderer : LabelRendererBase
     {
         public LabelTimestampRenderer(int lineIndex) : base(lineIndex) { }
-
-        public override bool ReadLine(string line, LabelDeserializeHelper deserializer)
+        
+        protected override bool TryCreatePlaceHolders(LabelDeserializeHelper deserializer, HashSet<string> placeholders)
         {
-            var procName = $"{this.GetType().Name}.{nameof(ReadLine)}";
-            if (!deserializer.TryGetPlaceHolders(line, LabelElementHelper.S_TIMESTAMP, LabelElementHelper.S_END, out var placeholders))
-                return false;
+            var procName = $"{this.GetType().Name}.{nameof(TryCreatePlaceHolders)}";
 
             foreach (var placeholder in placeholders)
             {
@@ -32,7 +31,6 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
                 PlaceHolders.Add(timestampPlaceHolder);
             }
 
-            Logger.Info($"Success to read {this.GetType().Name}", procName);
             return true;
         }
     }

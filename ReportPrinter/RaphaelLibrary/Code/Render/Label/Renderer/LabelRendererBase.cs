@@ -19,7 +19,20 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
             PlaceHolders = new List<PlaceHolderBase>();
         }
 
-        public abstract bool ReadLine(string line, LabelDeserializeHelper deserializer);
+        public bool ReadLine(string line, LabelDeserializeHelper deserializer, string rendererName)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(ReadLine)}";
+            if (!deserializer.TryGetPlaceHolders(line, rendererName, LabelElementHelper.S_END, out var placeholders))
+                return false;
+
+            if (!TryCreatePlaceHolders(deserializer, placeholders))
+                return false;
+
+            Logger.Info($"Success to read {this.GetType().Name}", procName);
+            return true;
+        }
+
+        protected abstract bool TryCreatePlaceHolders(LabelDeserializeHelper deserializer, HashSet<string> placeholders);
 
         public LabelRendererBase Clone()
         {

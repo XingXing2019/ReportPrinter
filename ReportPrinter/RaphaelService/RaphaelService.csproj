@@ -23,6 +23,12 @@
     <None Update="Config\Label\DeliveryInfoBody.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Config\Label\DeliveryInfoFooter.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Label\DeliveryInfoHeader.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Config\PDF\EmployeeReport.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

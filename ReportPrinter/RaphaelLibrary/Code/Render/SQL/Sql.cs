@@ -111,15 +111,23 @@ namespace RaphaelLibrary.Code.Render.SQL
             if (!TryExecuteQuery(messageId, _connectionString, _query, sqlVariables, out var dataTable, useCache))
                 return false;
 
-            if (dataTable.Rows.Count != 1)
+            if (dataTable.Rows.Count == 0)
+            {
+                Logger.Error($"No row returned from sql: {Id}", procName);
+                return false;
+            }
+
+            if (dataTable.Rows.Count > 1)
             {
                 Logger.Error($"More than 1 row returned from sql: {Id}", procName);
+                return false;
             }
 
             var index = dataTable.Columns.IndexOf(sqlResColumn.Id);
             if (index == -1)
             {
                 Logger.Error($"Sql res column: {sqlResColumn} is not returned from sql: {Id}", procName);
+                return false;
             }
             res = dataTable.Rows[0][index].ToString()?.Trim();
 

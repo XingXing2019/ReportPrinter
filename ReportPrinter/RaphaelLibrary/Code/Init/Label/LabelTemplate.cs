@@ -120,6 +120,7 @@ namespace RaphaelLibrary.Code.Init.Label
                     if (!labelStructure.TryCreateLabelStructure(message, out var lines))
                         return false;
                     labelLines.Append(lines);
+                    labelLines.AppendLine();
                 }
 
                 var fileName = $"{_fileName}_{message.MessageId}";

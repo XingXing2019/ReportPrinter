@@ -7,6 +7,6 @@ namespace RaphaelLibrary.Code.Init.Label
     {
         public IStructure Clone();
         public bool ReadFile(string filePath);
-        public bool TryCreateLabelStructure(Guid messageId, out StringBuilder labelStructure);
+        public bool TryCreateLabelStructure(Guid messageId, out StringBuilder lines);
     }
 }

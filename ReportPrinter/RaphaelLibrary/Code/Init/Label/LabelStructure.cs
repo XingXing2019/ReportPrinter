@@ -66,18 +66,18 @@ namespace RaphaelLibrary.Code.Init.Label
             }
         }
 
-        public bool TryCreateLabelStructure(Guid messageId, out StringBuilder labelStructure)
+        public bool TryCreateLabelStructure(Guid messageId, out StringBuilder lines)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreateLabelStructure)}";
 
-            labelStructure = new StringBuilder();
+            lines = new StringBuilder();
             var manager = new LabelManager(_lines, messageId);
             if (_labelRenderer.Any(x => !x.TryRenderLabel(manager)))
                 return false;
             
             foreach (var line in _lines)
             {
-                labelStructure.AppendLine(line);
+                lines.AppendLine(line);
             }
 
             Logger.Info($"Success to create label structure for message: {messageId}", procName);

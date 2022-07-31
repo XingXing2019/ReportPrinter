@@ -16,10 +16,10 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
         protected override bool TryGetPlaceHolderValue(LabelManager manager, out string value)
         {
             value = String.Empty;
-            if (!_labelStructure.TryCreateLabelStructure(manager.MessageId, out var labelStructure))
+            if (!_labelStructure.TryCreateLabelStructure(manager.MessageId, out var lines))
                 return false;
 
-            value = labelStructure.ToString();
+            value = lines.ToString();
             return true;
         }
 

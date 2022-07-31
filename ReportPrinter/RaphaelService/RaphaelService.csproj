@@ -17,10 +17,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Config\Label\DeliveryInfo.xml">
+    <None Update="Config\Label\Reference\DeliveryInfo.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Config\Label\DeliveryInfoBody.txt">
+    <None Update="Config\Label\Reference\ReferenceBody.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Label\Structure\DeliveryInfo.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Label\Share\DeliveryInfoBody.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Label\Share\DeliveryInfoFooter.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Label\Share\DeliveryInfoHeader.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Config\PDF\EmployeeReport.xml">

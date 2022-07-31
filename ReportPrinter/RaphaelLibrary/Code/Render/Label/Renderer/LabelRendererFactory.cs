@@ -16,6 +16,8 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
                 return new LabelTimestampRenderer(lineIndex);
             else if (name == LabelElementHelper.S_SQL_Variable)
                 return new LabelSqlVariableRenderer(lineIndex);
+            else if (name == LabelElementHelper.S_REFERENCE)
+                return new LabelReferenceRenderer(lineIndex);
             else
             {
                 var error = $"Invalid name: {name} for label renderer";

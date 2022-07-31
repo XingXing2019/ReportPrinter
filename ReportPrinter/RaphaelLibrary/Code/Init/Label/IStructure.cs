@@ -1,5 +1,5 @@
-﻿using System.Text;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+﻿using System;
+using System.Text;
 
 namespace RaphaelLibrary.Code.Init.Label
 {
@@ -7,6 +7,6 @@ namespace RaphaelLibrary.Code.Init.Label
     {
         public IStructure Clone();
         public bool ReadFile(string filePath);
-        public bool TryCreateLabelStructure(IPrintReport message, out StringBuilder labelStructure);
+        public bool TryCreateLabelStructure(Guid messageId, out StringBuilder lines);
     }
 }

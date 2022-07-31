@@ -117,9 +117,10 @@ namespace RaphaelLibrary.Code.Init.Label
                 foreach (var labelStructure in _labelStructures)
                 {
                     if (labelStructure == null) continue;
-                    if (!labelStructure.TryCreateLabelStructure(message, out var lines))
+                    if (!labelStructure.TryCreateLabelStructure(message.MessageId, out var lines))
                         return false;
                     labelLines.Append(lines);
+                    labelLines.AppendLine();
                 }
 
                 var fileName = $"{_fileName}_{message.MessageId}";

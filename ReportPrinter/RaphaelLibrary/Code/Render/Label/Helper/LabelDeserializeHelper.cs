@@ -91,10 +91,11 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
             
             try
             {
-                while (input.IndexOf(startSign, startPos) != -1 && input.IndexOf(endSign, endPos) != -1)
+                while (input.IndexOf(startSign, startPos, StringComparison.Ordinal) != -1 && 
+                       input.IndexOf(endSign, endPos, StringComparison.Ordinal) != -1)
                 {
-                    var startIndex = input.IndexOf(startSign, startPos);
-                    var endIndex = input.IndexOf(endSign, startIndex);
+                    var startIndex = input.IndexOf(startSign, startPos, StringComparison.Ordinal);
+                    var endIndex = input.IndexOf(endSign, startIndex, StringComparison.Ordinal);
 
                     startIndexes.Add(startIndex);
                     endIndexes.Add(endIndex);
@@ -131,29 +132,37 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
 
             try
             {
-                var nameIndex = input.IndexOf(name);
-                var startQuote = input.IndexOf(_quoteSign, nameIndex);
-                var endQuote = input.IndexOf(_quoteSign, startQuote + 1);
+                var nameIndex = input.IndexOf(name, StringComparison.Ordinal);
+                var startQuote = input.IndexOf(_quoteSign, nameIndex, StringComparison.Ordinal);
+                var endQuote = input.IndexOf(_quoteSign, startQuote + 1, StringComparison.Ordinal);
                 value = input.Substring(startQuote + 1, endQuote - startQuote - 1);
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Unbale to get value of {name} from input: {input}. Ex: {ex.Message}", procName);
+                Logger.Error($"Unable to get value of {name} from input: {input}. Ex: {ex.Message}", procName);
                 return false;
             }
         }
 
+        public bool ContainsPlaceholder(string input, string placeholder)
+        {
+            var index = input.IndexOf(placeholder, StringComparison.Ordinal);
+            if (index == -1)
+                return false;
+
+            return input[index + placeholder.Length] == ' ';
+        }
 
         #region Helper
 
         private int CountSign(string line, string sign)
         {
             int count = 0, start = 0;
-            while (line.IndexOf(sign, start) >= 0)
+            while (line.IndexOf(sign, start, StringComparison.Ordinal) >= 0)
             {
                 count++;
-                var index = line.IndexOf(sign, start);
+                var index = line.IndexOf(sign, start, StringComparison.Ordinal);
                 start = index + sign.Length;
             }
             return count;

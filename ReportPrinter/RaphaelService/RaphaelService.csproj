@@ -17,10 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Config\Label\LabelTemplate.xml">
+    <None Update="Config\Label\DeliveryInfo.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Config\Label\FullCase.txt">
+    <None Update="Config\Label\DeliveryInfoBody.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Config\PDF\EmployeeReport.xml">

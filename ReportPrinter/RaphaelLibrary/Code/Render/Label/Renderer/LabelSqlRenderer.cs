@@ -13,19 +13,30 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
         
         protected override bool TryCreatePlaceHolders(LabelDeserializeHelper deserializer, HashSet<string> placeholders)
         {
+            var procName = $"{this.GetType().Name}.{nameof(TryCreatePlaceHolders)}";
+
             foreach (var placeholder in placeholders)
             {
                 if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_TEMPLATE_ID, out var sqlTemplateId))
+                {
+                    Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_TEMPLATE_ID, placeholder, procName);
                     return false;
+                }
 
                 if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_ID, out var sqlId))
+                {
+                    Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_ID, placeholder, procName);
                     return false;
+                }
 
                 if (!SqlTemplateManager.Instance.TryGetSql(sqlTemplateId, sqlId, out var sql))
                     return false;
 
                 if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_RES_COLUMN, out var sqlResColumn))
+                {
+                    Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_RES_COLUMN, placeholder, procName);
                     return false;
+                }
 
                 var sqlPlaceHolder = new SqlPlaceHolder(placeholder, sql, new SqlResColumn(sqlResColumn));
                 PlaceHolders.Add(sqlPlaceHolder);

@@ -91,7 +91,7 @@ namespace RaphaelLibrary.Code.Init.Label
         {
             foreach (var rendererName in _labelRendererSigns.Keys)
             {
-                if (line.Contains(_labelRendererSigns[rendererName]))
+                if (_deserializer.ContainsPlaceholder(line, _labelRendererSigns[rendererName]))
                 {
                     var labelRenderer = LabelRendererFactory.CreateLabelRenderer(rendererName, lineIndex);
                     if (!labelRenderer.ReadLine(line, _deserializer, rendererName))
@@ -102,7 +102,7 @@ namespace RaphaelLibrary.Code.Init.Label
 
             return true;
         }
-
+        
         #endregion
     }
 }

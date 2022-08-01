@@ -24,7 +24,8 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
         public const string S_DOUBLE_QUOTE = "\"";
 
         public const string S_COMPARATOR = "Comparator";
-        public const string S_FALSE_STRUCTURE_ID = "FalseStructureId";
+        public const string S_EXPECTED_VALUE = "ExpectedValue";
+        public const string S_FALSE_STRUCTURE = "FalseStructure";
         public const string S_IS_UTC = "IsUTC";
         public const string S_MASK = "Mask";
         public const string S_NAME = "Name";
@@ -32,7 +33,8 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
         public const string S_SQL_RES_COLUMN = "SqlResColumn";
         public const string S_SQL_TEMPLATE_ID = "SqlTemplateId";
         public const string S_STRUCTURE_ID = "StructureId";
-        public const string S_TRUE_STRUCTURE_ID = "TrueStructureId";
+        public const string S_TRUE_STRUCTURE = "TrueStructure";
+        public const string S_TYPE = "Type";
 
 
 
@@ -43,6 +45,7 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
             { S_SQL, S_SQL_RENDERER },
             { S_SQL_VARIABLE, S_SQL_VARIABLE_RENDERER },
             { S_TIMESTAMP, S_TIMESTAMP_RENDERER },
+            { S_VALIDATION, S_VALIDATION_RENDERER },
             { S_END, S_RENDERER_END }
         };
     }

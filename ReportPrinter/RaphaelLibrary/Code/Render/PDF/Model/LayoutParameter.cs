@@ -1,5 +1,4 @@
 ﻿using RaphaelLibrary.Code.Render.PDF.Renderer;
-using RaphaelLibrary.Code.Render.PDF.Structure;
 
 namespace RaphaelLibrary.Code.Render.PDF.Model
 {

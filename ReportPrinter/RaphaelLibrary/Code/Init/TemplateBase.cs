@@ -19,10 +19,7 @@ namespace RaphaelLibrary.Code.Init
         protected bool PrintReport(IPrintReport message, string fileName, string filePath, int timeout)
         {
             var printer = PrinterFactory.CreatePrinter(message.ReportType);
-            if (!printer.PrintReport(fileName, filePath, message.PrinterId, message.NumberOfCopy, timeout))
-                return false;
-
-            return true;
+            return printer.PrintReport(fileName, filePath, message.PrinterId, message.NumberOfCopy, timeout);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Automatonymous.Behaviors;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.Label.Helper

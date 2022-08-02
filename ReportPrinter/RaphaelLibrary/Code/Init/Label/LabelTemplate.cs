@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
-using RaphaelLibrary.Code.Print;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
@@ -131,7 +130,7 @@ namespace RaphaelLibrary.Code.Init.Label
 
                 if (!string.IsNullOrEmpty(message.PrinterId))
                 {
-                    PrintReport(message, fileName, filePath, _timeout);
+                    return PrintReport(message, fileName, filePath, _timeout);
                 }
 
                 return true;

@@ -7,7 +7,6 @@ using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.Manager;
 using RaphaelLibrary.Code.Render.Label.Renderer;
 using ReportPrinterLibrary.Code.Log;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Init.Label
 {

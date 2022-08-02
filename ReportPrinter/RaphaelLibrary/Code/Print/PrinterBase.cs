@@ -15,7 +15,7 @@ namespace RaphaelLibrary.Code.Print
                 Logger.Info($"Start print file: {filePath} at printer: {printerId}", procName);
                 var tSendToPrinter = new Thread(() => SendToPrinter(fileName, filePath, printerId, numberOfCopy));
                 tSendToPrinter.Start();
-                var isSuccess = tSendToPrinter.Join(timeout);
+                var isSuccess = tSendToPrinter.Join(timeout * 1000);
 
                 if (isSuccess)
                 {
@@ -24,15 +24,15 @@ namespace RaphaelLibrary.Code.Print
                 }
                 else
                 {
-                    Logger.Warn($"Print process reach timeout: {timeout}, force to stop process", procName);
-                    tSendToPrinter.Abort();
+                    Logger.Warn($"Print process reach timeout: {timeout}s, force to stop process", procName);
+                    tSendToPrinter.Interrupt();
                     return false;
                 }
             }
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during print file: {filePath} at printer: {printerId}. Ex: {ex.Message}", procName);
-                return true;
+                return false;
             }
 
         }

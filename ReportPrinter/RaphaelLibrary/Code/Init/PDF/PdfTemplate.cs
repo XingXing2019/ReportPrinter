@@ -6,7 +6,6 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
-using RaphaelLibrary.Code.Print;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
@@ -240,7 +239,7 @@ namespace RaphaelLibrary.Code.Init.PDF
 
                 if (!string.IsNullOrEmpty(message.PrinterId))
                 {
-                    PrintReport(message, fileName, filePath, _timeout);
+                    return PrintReport(message, fileName, filePath, _timeout);
                 }
 
                 return true;

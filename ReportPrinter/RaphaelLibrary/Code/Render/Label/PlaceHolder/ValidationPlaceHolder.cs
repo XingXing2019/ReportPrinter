@@ -5,6 +5,7 @@ using RaphaelLibrary.Code.Render.Label.Model;
 using RaphaelLibrary.Code.Render.Label.Renderer;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
 {
@@ -12,6 +13,7 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
     {
         private readonly ValidationType _validationType;
         private readonly string _expectedValue;
+        private readonly Comparator _comparator;
         private Sql _sql;
         private SqlResColumn _sqlResColumn;
 
@@ -26,6 +28,7 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
         {
             _validationType = validationModel.ValidationType;
             _expectedValue = validationModel.ExpectedValue;
+            _comparator = validationModel.Comparator;
             _sql = sql;
             _sqlResColumn = sqlResColumn;
 
@@ -37,7 +40,42 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
 
         protected override bool TryGetPlaceHolderValue(LabelManager manager, out string value)
         {
-            throw new System.NotImplementedException();
+            value = string.Empty;
+
+            if (!_sql.TryExecute(manager.MessageId, _sqlResColumn, out var actualValue))
+                return false;
+
+            if (!Validate(_expectedValue, actualValue, _comparator, out var isTrue))
+                return false;
+
+            if (isTrue)
+            {
+                if (_validationType == ValidationType.Text)
+                {
+                    value = _trueContent;
+                }
+                else if (_validationType == ValidationType.Structure)
+                {
+                    if (!_trueStructure.TryCreateLabelStructure(manager.MessageId, out var lines))
+                        return false;
+                    value = lines.ToString();
+                }
+            }
+            else
+            {
+                if (_validationType == ValidationType.Text)
+                {
+                    value = _falseContent;
+                }
+                else if (_validationType == ValidationType.Structure)
+                {
+                    if (!_falseStructure.TryCreateLabelStructure(manager.MessageId, out var lines))
+                        return false;
+                    value = lines.ToString();
+                }
+            }
+
+            return true;
         }
 
         public override PlaceHolderBase Clone()
@@ -54,5 +92,44 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
 
             return cloned;
         }
+
+
+        #region Helper
+
+        private bool Validate(string expected, string actual, Comparator comparator, out bool isTrue)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(Validate)}";
+            isTrue = true;
+
+            try
+            {
+                if (comparator == Comparator.Equals)
+                    isTrue = actual == expected;
+                else if (comparator == Comparator.NotEquals)
+                    isTrue = actual != expected;
+
+                var expectedValue = double.Parse(expected);
+                var actualValue = double.Parse(actual);
+
+                if (comparator == Comparator.Greater)
+                    isTrue = actualValue > expectedValue;
+                else if (comparator == Comparator.GreaterOrEquals)
+                    isTrue = actualValue >= expectedValue;
+                else if (comparator == Comparator.Less)
+                    isTrue = actualValue < expectedValue;
+                else if (comparator == Comparator.LessOrEquals)
+                    isTrue = actualValue <= expectedValue;
+
+                return true;
+            }
+            catch (Exception)
+            {
+                Logger.Error($"Unable to validate expected: {expected} and actual: {actual} with comparator: {comparator}", procName);
+                return false;
+            }
+        }
+
+
+        #endregion
     }
 }

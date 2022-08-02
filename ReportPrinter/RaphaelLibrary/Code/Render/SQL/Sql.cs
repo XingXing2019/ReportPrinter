@@ -126,7 +126,7 @@ namespace RaphaelLibrary.Code.Render.SQL
             var index = dataTable.Columns.IndexOf(sqlResColumn.Id);
             if (index == -1)
             {
-                Logger.Error($"Sql res column: {sqlResColumn} is not returned from sql: {Id}", procName);
+                Logger.Error($"Sql res column: {sqlResColumn.Id} is not returned from sql: {Id}", procName);
                 return false;
             }
             res = dataTable.Rows[0][index].ToString()?.Trim();

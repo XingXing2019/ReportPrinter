@@ -151,7 +151,7 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
             if (index == -1)
                 return false;
 
-            return input[index + placeholder.Length] == ' ';
+            return input[index + placeholder.Length] == ' ' || input[index + placeholder.Length] == '\n';
         }
 
         #region Helper

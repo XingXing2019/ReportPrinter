@@ -35,6 +35,12 @@
     <None Update="Config\Label\Share\DeliveryInfoHeader.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Config\Label\Validation\DeliveryInfo.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Label\Validation\ValidationBody.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Config\PDF\EmployeeReport.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

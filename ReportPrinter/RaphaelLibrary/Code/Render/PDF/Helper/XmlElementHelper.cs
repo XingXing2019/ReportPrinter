@@ -56,6 +56,8 @@ namespace RaphaelLibrary.Code.Render.PDF.Helper
         public const string S_TABLE = "Table";
         public const string S_TEXT = "Text";
         public const string S_TITLE = "Title";
+        public const string S_TITLE_COLOR = "TitleColor";
+        public const string S_TITLE_COLOR_OPACITY = "TitleColorOpacity";
         public const string S_TITLE_HORIZONTAL_ALIGNMENT = "TitleHorizontalAlignment";
         public const string S_TYPE = "Type";
         public const string S_VARIABLE = "Variable";

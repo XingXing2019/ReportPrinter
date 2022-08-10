@@ -23,6 +23,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         private string _sqlVariable;
         private bool _isSubTable;
         private double _space;
+        private XSolidBrush _titleColor;
 
         private Sql _sql;
         private List<SqlResColumn> _sqlResColumnList;
@@ -80,6 +81,22 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 Logger.LogDefaultValue(node, XmlElementHelper.S_SPACE, space, procName);
             }
             _space = space;
+
+            var titleColorStr = node.SelectSingleNode(XmlElementHelper.S_TITLE_COLOR)?.InnerText;
+            if (!ColorHelper.TryGenerateColor(titleColorStr, out var titleColor))
+            {
+                titleColor = XColors.Transparent;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_TITLE_COLOR, titleColor, procName);
+            }
+
+            var titleColorOpacityStr = node.SelectSingleNode(XmlElementHelper.S_TITLE_COLOR_OPACITY)?.InnerText;
+            if (!double.TryParse(titleColorOpacityStr, out var titleColorOpacity))
+            {
+                titleColorOpacity = 1;
+                Logger.LogDefaultValue(node, XmlElementHelper.S_TITLE_COLOR_OPACITY, titleColorOpacity, procName);
+            }
+
+            _titleColor = new XSolidBrush(XColor.FromArgb((int)(titleColorOpacity * byte.MaxValue), titleColor));
 
             if (!TryReadSql(node, procName, out var sql, out var sqlResColumnList))
             {
@@ -177,6 +194,9 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                 manager.AddPage();
                 graph = XGraphics.FromPdfPage(pdf.Pages[^1]);
             }
+
+            var titleRect = new XRect(left, manager.YCursor - lineSpace + _boardThickness, container.RightBoundary - left, textSize.Height * maxLineCount + 2 * lineSpace);
+            graph.DrawRectangle(_titleColor, titleRect);
 
             foreach (var column in _columnPositions.Keys)
             {

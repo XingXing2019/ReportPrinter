@@ -61,17 +61,17 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
             try
             {
                 using var context = new ReportPrinterContext();
-                var entity = await context.PrintReportMessages
+                var message = await context.PrintReportMessages
                     .Include(x => x.PrintReportSqlVariables)
                     .FirstOrDefaultAsync(x => x.MessageId == messageId);
 
-                if (entity == null)
+                if (message == null)
                     return null;
 
-                var message = CreateMessage(entity);
+                var res = CreateMessage(message);
 
                 Logger.Debug($"Retrieve message: {messageId}", procName);
-                return message;
+                return res;
             }
             catch (Exception ex)
             {
@@ -87,18 +87,18 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
             try
             {
                 using var context = new ReportPrinterContext();
-                var entities = await context.PrintReportMessages
+                var messages = await context.PrintReportMessages
                     .Include(x => x.PrintReportSqlVariables)
                     .ToListAsync();
 
-                var messages = new List<IPrintReport>();
-                foreach (var entity in entities)
+                var res = new List<IPrintReport>();
+                foreach (var entity in messages)
                 {
-                    messages.Add(CreateMessage(entity));
+                    res.Add(CreateMessage(entity));
                 }
 
                 Logger.Debug($"Retrieve all messages", procName);
-                return messages;
+                return res;
             }
             catch (Exception ex)
             {

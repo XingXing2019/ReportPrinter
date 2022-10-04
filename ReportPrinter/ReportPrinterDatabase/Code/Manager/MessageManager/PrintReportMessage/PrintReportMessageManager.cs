@@ -9,6 +9,7 @@ using ReportPrinterDatabase.Code.StoredProcedures.PrintReportSqlVariable;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using static MassTransit.Monitoring.Performance.BuiltInCounters;
 
 namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 {
@@ -27,11 +28,16 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                var spList = new List<StoredProcedureBase>();
+                var sp = new PostPrintReportMessage(
+                    message.MessageId,
+                    message.CorrelationId,
+                    message.ReportType, 
+                    message.TemplateId,
+                    message.PrinterId,
+                    message.NumberOfCopy,
+                    message.HasReprintFlag);
 
-                spList.Add(new PostPrintReportMessage(message.MessageId, message.CorrelationId,
-                    message.ReportType, message.TemplateId, message.PrinterId, message.NumberOfCopy,
-                    message.HasReprintFlag));
+                var spList = new List<StoredProcedureBase> { sp };
 
                 spList.AddRange(message.SqlVariables.Select(x => new PostPrintReportSqlVariable(message.MessageId, x.Name, x.Value)));
 
@@ -49,14 +55,45 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
-            throw new NotImplementedException();
+            try
+            {
+                var message = await _executor.ExecuteQueryOneAsync<Code.Entity.PrintReportMessage>(new GetPrintReportMessage(messageId));
+                var sqlVariables = await _executor.ExecuteQueryBatchAsync<Code.Entity.PrintReportSqlVariable>(new GetPrintReportSqlVariable(messageId));
+
+                var res = CreateMessage(message, sqlVariables);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during retrieving message: {messageId}. Ex: {ex.Message}", procName);
+                throw;
+            }
         }
 
         public async Task<IList<IPrintReport>> GetAll()
         {
             var procName = $"{this.GetType().Name}.{nameof(GetAll)}";
 
-            throw new NotImplementedException();
+            try
+            {
+                var messages = await _executor.ExecuteQueryBatchAsync<Code.Entity.PrintReportMessage>(new GetAllPrintReportMessage());
+                var sqlVariables = await _executor.ExecuteQueryBatchAsync<Code.Entity.PrintReportSqlVariable>(new GetAllPrintReportSqlVariable());
+
+                var res = new List<IPrintReport>();
+
+                foreach (var message in messages)
+                {
+                    var variables = sqlVariables.Where(x => x.MessageId == message.MessageId);
+                    res.Add(CreateMessage(message, variables));
+                }
+
+                return res;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during retrieving all messages. Ex: {ex.Message}", procName);
+                throw;
+            }
         }
 
         public async Task Delete(Guid messageId)
@@ -106,5 +143,31 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
                 throw;
             }
         }
+
+        #region Helper
+
+        private IPrintReport CreateMessage(Code.Entity.PrintReportMessage entity, IEnumerable<Code.Entity.PrintReportSqlVariable> sqlVariables)
+        {
+            if (entity == null)
+                return null;
+
+            var message = PrintReportMessageFactory.CreatePrintReportMessage(entity.ReportType);
+
+            message.MessageId = entity.MessageId;
+            message.CorrelationId = entity.CorrelationId;
+            message.TemplateId = entity.TemplateId;
+            message.PrinterId = entity.PrinterId;
+            message.NumberOfCopy = entity.NumberOfCopy;
+            message.HasReprintFlag = entity.HasReprintFlag;
+            message.PublishTime = entity.PublishTime;
+            message.ReceiveTime = entity.ReceiveTime;
+            message.CompleteTime = entity.CompleteTime;
+            message.Status = entity.Status;
+            message.SqlVariables = sqlVariables.Select(x => new SqlVariable{Name = x.Name, Value = x.Value}).ToList();
+
+            return message;
+        }
+
+        #endregion
     }
 }

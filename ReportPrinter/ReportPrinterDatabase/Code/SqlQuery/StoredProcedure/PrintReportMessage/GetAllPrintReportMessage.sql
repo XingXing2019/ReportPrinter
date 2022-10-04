@@ -18,13 +18,7 @@ BEGIN
 		[PRM_PublishTime] AS PublishTime,
 		[PRM_ReceiveTime] AS ReceiveTime,
 		[PRM_CompleteTime] AS CompleteTime,
-		[PRM_Status] AS Status,
-		[PRSV_Name] AS Name,
-		[PRSV_Value] AS Value
+		[PRM_Status] AS Status
 	FROM 
 		[dbo].[PrintReportMessage]
-	LEFT JOIN 
-		[dbo].PrintReportSqlVariable
-	ON 
-		[PRM_MessageId] = [PRSV_MessageId]
 END

@@ -12,11 +12,14 @@ namespace ReportPrinterUnitTest
     {
         protected IManager<T> Manager;
         protected readonly Dictionary<string, string> ServicePath;
+        private readonly Random _random;
 
         protected TestBase()
         {
             var servicePathList = AppConfig.Instance.ServicePathConfigList;
             ServicePath = servicePathList.ToDictionary(x => x.Id, x => x.Path);
+
+            _random = new Random();
         }
 
         #region Helper
@@ -29,10 +32,12 @@ namespace ReportPrinterUnitTest
             var printerId = "Printer1";
             var numberOfCopy = 3;
             var hasReprintFlag = true;
+
+            var index = _random.Next(100);
             var sqlVariables = new List<SqlVariable>
             {
-                new SqlVariable { Name = "Name1", Value = "Value1" },
-                new SqlVariable { Name = "Name2", Value = "Value2" },
+                new SqlVariable { Name = $"Name{index}", Value = $"Value{index}" },
+                new SqlVariable { Name = $"Name{index + 1}", Value = $"Value{index + 1}" },
             };
 
             var expectedMessage = PrintReportMessageFactory.CreatePrintReportMessage(reportType);

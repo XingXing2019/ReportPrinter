@@ -23,12 +23,14 @@ namespace ReportPrinterUnitTest.Manager
         }
 
         [Test]
-        public async Task TestPrintReportMessageManager_Get()
+        [TestCase(typeof(PrintReportMessageManager))]
+        [TestCase(typeof(PrintReportMessageEFCoreManager))]
+        public async Task TestPrintReportMessageManager_Get(Type managerType)
         {
             try
             {
                 var expectedMessage = CreateMessage(ReportTypeEnum.PDF.ToString());
-                var mgr = new PrintReportMessageManager();
+                var mgr = (IPrintReportMessageManager<IPrintReport>)Activator.CreateInstance(managerType);
 
                 await mgr.Post(expectedMessage);
 
@@ -52,11 +54,13 @@ namespace ReportPrinterUnitTest.Manager
         }
 
         [Test]
-        public async Task TestPrintReportMessageManager_GetAll()
+        [TestCase(typeof(PrintReportMessageManager))]
+        [TestCase(typeof(PrintReportMessageEFCoreManager))]
+        public async Task TestPrintReportMessageManager_GetAll(Type managerType)
         {
             try
             {
-                var mgr = new PrintReportMessageManager();
+                var mgr = (IPrintReportMessageManager<IPrintReport>)Activator.CreateInstance(managerType);
                 var expectedMessages = new List<IPrintReport>();
                 
                 for (int i = 0; i < 10; i++)

@@ -23,14 +23,14 @@ namespace CosmoService.Code.Form
             var hasError = false;
             if (rdbPDF.Checked)
             {
-                if (!MessageDeserializer<PrintPdfReport>.Deserialize(txtMessage.Text, out var message) || !message.IsValid)
+                if (!MessageDeserializer<PrintPdfReport>.DeserializeXmlMessage(txtMessage.Text, out var message) || !message.IsValid)
                     hasError = true;
                 else
                     await producer.ProduceAsync(message);
             }
             else if (rdbLabel.Checked)
             {
-                if (!MessageDeserializer<PrintLabelReport>.Deserialize(txtMessage.Text, out var message) || !message.IsValid)
+                if (!MessageDeserializer<PrintLabelReport>.DeserializeXmlMessage(txtMessage.Text, out var message) || !message.IsValid)
                     hasError = true;
                 else
                     await producer.ProduceAsync(message);

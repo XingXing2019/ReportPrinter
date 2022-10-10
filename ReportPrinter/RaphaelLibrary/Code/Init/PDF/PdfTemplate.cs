@@ -233,6 +233,10 @@ namespace RaphaelLibrary.Code.Init.PDF
 
                 var fileName = $"{_fileName}_{manager.MessageId}";
                 var filePath = $"{_savePath}{fileName}.pdf";
+
+                if (!FileHelper.DirectoryExists(filePath))
+                    FileHelper.CreateDirectory(filePath);
+
                 manager.Pdf.Save(filePath);
 
                 Logger.Info($"Success to create pdf: {Id} for message: {manager.MessageId}", procName);

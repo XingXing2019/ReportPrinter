@@ -26,8 +26,9 @@ namespace ReportPrinterUnitTest.RabbitMQ
         }
 
         [Test]
-        [TestCase(QueueName.PDF_QUEUE, ReportTypeEnum.PDF)]
-        public async Task TestPrintReport(string queueName, ReportTypeEnum reportType)
+        [TestCase(QueueName.PDF_QUEUE, ReportTypeEnum.PDF, typeof(PrintPdfReport))]
+        [TestCase(QueueName.LABEL_QUEUE, ReportTypeEnum.Label, typeof(PrintLabelReport))]
+        public async Task TestPublishPrintReport(string queueName, ReportTypeEnum reportType, Type messageType)
         {
             try
             {
@@ -42,6 +43,11 @@ namespace ReportPrinterUnitTest.RabbitMQ
                 Assert.NotNull(actualMessage);
                 AssetMessage(expectedMessage, actualMessage);
                 Assert.AreEqual(MessageStatus.Publish.ToString(), actualMessage.Status);
+
+                var messages = GetMessages(queueName, messageType);
+                Assert.AreEqual(1, messages.Count);
+
+                AssetMessage(expectedMessage, (IPrintReport)messages[0]);
             }
             catch (Exception ex)
             {

@@ -24,6 +24,8 @@ namespace RaphaelLibrary.Code.Common
 
         public static void CreateFile(string filePath, string data)
         {
+            if (!DirectoryExists(filePath))
+                CreateDirectory(filePath);
             File.WriteAllText(filePath, data);
         }
     }

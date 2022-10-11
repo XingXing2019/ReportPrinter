@@ -5,7 +5,7 @@ using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace CosmoService.Code.Producer.PrintReportCommand
 {
-    public class PrintPdfCommandProducer : CosmoService.Code.Producer.CommandProducerBase<IPrintReport>
+    public class PrintPdfCommandProducer : CommandProducerBase<IPrintReport>
     {
         public PrintPdfCommandProducer(string queueName, IMessageManager<IPrintReport> manager) 
             : base(queueName, manager) { }

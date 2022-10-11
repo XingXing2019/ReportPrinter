@@ -1,27 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Xml;
-using MassTransit.Transports;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using RabbitMQ.Client;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterLibrary.Code.Config.Configuration;
-using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest
 {
-    public abstract class TestBase<T>
+    public abstract class TestBase
     {
-        protected IManager<T> Manager;
         protected readonly Dictionary<string, string> ServicePath;
-
-        private readonly RabbitMQConfig _rabbitMqConfig;
+        
         private readonly Random _random;
 
         protected TestBase()
@@ -29,13 +19,12 @@ namespace ReportPrinterUnitTest
             var servicePathList = AppConfig.Instance.ServicePathConfigList;
             ServicePath = servicePathList.ToDictionary(x => x.Id, x => x.Path);
 
-            _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
             _random = new Random();
         }
 
         #region Helper
 
-        protected IPrintReport CreateMessage(string reportType)
+        protected IPrintReport CreateMessage(ReportTypeEnum reportType, bool isValidMessage = true)
         {
             var messageId = Guid.NewGuid();
             var correlationId = Guid.NewGuid();
@@ -51,7 +40,11 @@ namespace ReportPrinterUnitTest
                 new SqlVariable { Name = $"Name{index + 1}", Value = $"Value{index + 1}" },
             };
 
-            var expectedMessage = PrintReportMessageFactory.CreatePrintReportMessage(reportType);
+            reportType = isValidMessage 
+                ? reportType 
+                : reportType == ReportTypeEnum.Label ? ReportTypeEnum.PDF : ReportTypeEnum.Label;
+
+            var expectedMessage = PrintReportMessageFactory.CreatePrintReportMessage(reportType.ToString());
 
             expectedMessage.MessageId = messageId;
             expectedMessage.CorrelationId = correlationId;
@@ -81,31 +74,7 @@ namespace ReportPrinterUnitTest
             }
         }
 
-        protected List<object> GetMessages(string queueName, Type messageType)
-        {
-            var messages = new List<object>();
-            var factory = new ConnectionFactory
-            {
-                HostName = _rabbitMqConfig.Host,
-                UserName = _rabbitMqConfig.UserName,
-                Password = _rabbitMqConfig.Password
-            };
-
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
-            while (channel.MessageCount(queueName) != 0)
-            {
-                var body = channel.BasicGet(queueName, true).Body.ToArray();
-                var msg = Encoding.UTF8.GetString(body);
-
-                dynamic obj = JsonConvert.DeserializeObject(msg);
-                var message = obj.message.ToObject(messageType);
-                messages.Add(message);
-            }
-
-            return messages;
-        }
-
+        
         #endregion
     }
 }

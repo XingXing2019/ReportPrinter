@@ -10,11 +10,9 @@ using ReportPrinterLibrary.Code.RabbitMQ.MessageQueue;
 
 namespace ReportPrinterUnitTest.RabbitMQ
 {
-    public class PrintReportTest : TestBase<IPrintReport>
+    public class PublishMessageTest : RabbitMQTestBase<IPrintReport>
     {
-        private const string _serviceName = "RaphaelService";
-
-        public PrintReportTest()
+        public PublishMessageTest()
         {
             Manager = new PrintReportMessageEFCoreManager();
         }
@@ -34,7 +32,7 @@ namespace ReportPrinterUnitTest.RabbitMQ
             {
                 var mgr = new PrintReportMessageManager();
                 var producer = PrintReportProducerFactory.CreatePrintReportProducer(queueName, mgr);
-                var expectedMessage = CreateMessage(reportType.ToString());
+                var expectedMessage = CreateMessage(reportType);
 
                 await producer.ProduceAsync(expectedMessage);
 

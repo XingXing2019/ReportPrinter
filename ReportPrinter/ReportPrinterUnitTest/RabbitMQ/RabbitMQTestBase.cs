@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
 using ReportPrinterLibrary.Code.Config.Configuration;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 using System.Collections.Generic;
 using System.Text;
 using System;
 using ReportPrinterDatabase.Code.Manager;
-using ReportPrinterLibrary.Code.RabbitMQ.Message;
-using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.RabbitMQ
 {

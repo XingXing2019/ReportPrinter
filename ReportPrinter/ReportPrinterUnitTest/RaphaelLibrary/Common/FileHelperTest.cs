@@ -3,7 +3,7 @@ using System.IO;
 using RaphaelLibrary.Code.Common;
 using NUnit.Framework;
 
-namespace ReportPrinterUnitTest.RaphaelLibrary
+namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 {
     public class FileHelperTest
     {
@@ -11,7 +11,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary
         public void TestManipulateDirectory()
         {
             var path = CreatePath();
-            
+
             try
             {
                 var isExist = FileHelper.DirectoryExists(path);

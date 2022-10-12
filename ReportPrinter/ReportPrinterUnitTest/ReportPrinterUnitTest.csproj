@@ -23,11 +23,19 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="RaphaelLibrary\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PdfSharp">
+      <HintPath>..\RaphaelLibrary\Code\Plugin\PdfSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Common\Image\Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

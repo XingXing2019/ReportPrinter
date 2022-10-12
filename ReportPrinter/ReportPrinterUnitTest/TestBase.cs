@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterLibrary.Code.Config.Configuration;
@@ -74,7 +75,14 @@ namespace ReportPrinterUnitTest
             }
         }
 
-        
+        protected T GetPrivateField<T>(Type objectType, string fieldName, object instance)
+        {
+            var fieldInfo = objectType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            var field = (T)fieldInfo?.GetValue(instance);
+
+            return field;
+        }
+
         #endregion
     }
 }

@@ -32,7 +32,10 @@ namespace RaphaelLibrary.Code.Common
 
         private ImageCacheManager()
         {
-            _cache = new Dictionary<Guid, Dictionary<string, XImage>>();
+            lock (_lock)
+            {
+                _cache = new Dictionary<Guid, Dictionary<string, XImage>>();
+            }
         }
 
         public void StoreImage(Guid messageId, string imageSource, XImage image)

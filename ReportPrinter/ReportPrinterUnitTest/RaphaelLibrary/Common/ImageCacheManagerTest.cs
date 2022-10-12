@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using NUnit.Framework;
 using PdfSharp.Drawing;
 using RaphaelLibrary.Code.Common;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 {
-    public class ImageCacheManagerTest
+    public class ImageCacheManagerTest : TestBase
     {
         private readonly string _imageSource = @".\RaphaelLibrary\Common\Image\Logo.png";
         private readonly Guid _messageId = Guid.NewGuid();
+        private readonly string _fieldName = "_cache";
 
         [Test]
         public void TestStoreImage()
@@ -102,13 +101,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         #region Helper
 
-        Dictionary<Guid, Dictionary<string, XImage>> GetImageCache()
+        private Dictionary<Guid, Dictionary<string, XImage>> GetImageCache()
         {
             var type = typeof(ImageCacheManager);
-            var fieldInfo = type.GetField("_cache", BindingFlags.NonPublic | BindingFlags.Instance);
-            var cache = fieldInfo?.GetValue(ImageCacheManager.Instance) as Dictionary<Guid, Dictionary<string, XImage>>;
-
-            return cache;
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, XImage>>>(type, _fieldName, ImageCacheManager.Instance);
         }
 
         #endregion

@@ -16,16 +16,26 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CosmoService\CosmoService.csproj" />
+    <ProjectReference Include="..\RaphaelLibrary\RaphaelLibrary.csproj" />
     <ProjectReference Include="..\ReportPrinterDatabase\ReportPrinterDatabase.csproj" />
     <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Manager\" />
+    <Folder Include="Database\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PdfSharp">
+      <HintPath>..\RaphaelLibrary\Code\Plugin\PdfSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Common\Image\Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

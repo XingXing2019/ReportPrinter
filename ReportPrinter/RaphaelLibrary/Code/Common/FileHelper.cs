@@ -6,20 +6,20 @@ namespace RaphaelLibrary.Code.Common
     {
         public static bool DirectoryExists(string path)
         {
-            var dir = path.Substring(0, path.LastIndexOf('\\'));
+            var dir = Path.GetDirectoryName(path);
             return Directory.Exists(dir);
         }
 
         public static void CreateDirectory(string path)
         {
-            var dir = path.Substring(0, path.LastIndexOf('\\'));
+            var dir = Path.GetDirectoryName(path);
             Directory.CreateDirectory(dir);
         }
 
         public static void DeleteDirectory(string path)
         {
-            var dir = path.Substring(0, path.LastIndexOf('\\'));
-            Directory.Delete(dir);
+            var dir = Path.GetDirectoryName(path);
+            Directory.Delete(dir, true);
         }
 
         public static void CreateFile(string filePath, string data)

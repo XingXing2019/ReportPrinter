@@ -7,9 +7,9 @@ using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
-namespace ReportPrinterUnitTest.Manager
+namespace ReportPrinterUnitTest.Database
 {
-    public class PrintReportMessageManagerTest : TestBase<IPrintReport>
+    public class PrintReportMessageManagerTest : DatabaseTestBase<IPrintReport>
     {
         public PrintReportMessageManagerTest()
         {
@@ -29,7 +29,7 @@ namespace ReportPrinterUnitTest.Manager
         {
             try
             {
-                var expectedMessage = CreateMessage(ReportTypeEnum.PDF.ToString());
+                var expectedMessage = CreateMessage(ReportTypeEnum.PDF);
                 var mgr = (IPrintReportMessageManager<IPrintReport>)Activator.CreateInstance(managerType);
 
                 await mgr.Post(expectedMessage);
@@ -65,7 +65,7 @@ namespace ReportPrinterUnitTest.Manager
                 
                 for (int i = 0; i < 10; i++)
                 {
-                    var expectedMessage = CreateMessage(ReportTypeEnum.PDF.ToString());
+                    var expectedMessage = CreateMessage(ReportTypeEnum.PDF);
                     expectedMessages.Add(expectedMessage);
                     await mgr.Post(expectedMessage);
                 }

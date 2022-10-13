@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
+using System.Data;
 using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Xml;
-using MassTransit.Transports;
-using Newtonsoft.Json;
+using System.Reflection;
 using NUnit.Framework;
-using RabbitMQ.Client;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterLibrary.Code.Config.Configuration;
-using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest
 {
-    public abstract class TestBase<T>
+    public abstract class TestBase
     {
-        protected IManager<T> Manager;
         protected readonly Dictionary<string, string> ServicePath;
-
-        private readonly RabbitMQConfig _rabbitMqConfig;
+        
         private readonly Random _random;
 
         protected TestBase()
@@ -29,13 +21,12 @@ namespace ReportPrinterUnitTest
             var servicePathList = AppConfig.Instance.ServicePathConfigList;
             ServicePath = servicePathList.ToDictionary(x => x.Id, x => x.Path);
 
-            _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
             _random = new Random();
         }
 
         #region Helper
 
-        protected IPrintReport CreateMessage(string reportType)
+        protected IPrintReport CreateMessage(ReportTypeEnum reportType, bool isValidMessage = true)
         {
             var messageId = Guid.NewGuid();
             var correlationId = Guid.NewGuid();
@@ -51,7 +42,11 @@ namespace ReportPrinterUnitTest
                 new SqlVariable { Name = $"Name{index + 1}", Value = $"Value{index + 1}" },
             };
 
-            var expectedMessage = PrintReportMessageFactory.CreatePrintReportMessage(reportType);
+            reportType = isValidMessage 
+                ? reportType 
+                : reportType == ReportTypeEnum.Label ? ReportTypeEnum.PDF : ReportTypeEnum.Label;
+
+            var expectedMessage = PrintReportMessageFactory.CreatePrintReportMessage(reportType.ToString());
 
             expectedMessage.MessageId = messageId;
             expectedMessage.CorrelationId = correlationId;
@@ -81,29 +76,33 @@ namespace ReportPrinterUnitTest
             }
         }
 
-        protected List<object> GetMessages(string queueName, Type messageType)
+        protected T GetPrivateField<T>(Type objectType, string fieldName, object instance)
         {
-            var messages = new List<object>();
-            var factory = new ConnectionFactory
-            {
-                HostName = _rabbitMqConfig.Host,
-                UserName = _rabbitMqConfig.UserName,
-                Password = _rabbitMqConfig.Password
-            };
+            var fieldInfo = objectType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            var field = (T)fieldInfo?.GetValue(instance);
 
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
-            while (channel.MessageCount(queueName) != 0)
-            {
-                var body = channel.BasicGet(queueName, true).Body.ToArray();
-                var msg = Encoding.UTF8.GetString(body);
+            return field;
+        }
 
-                dynamic obj = JsonConvert.DeserializeObject(msg);
-                var message = obj.message.ToObject(messageType);
-                messages.Add(message);
+        protected DataTable ListToDataTable<T>(List<T> list, string tableName)
+        {
+            var dataTable = new DataTable(tableName);
+
+            foreach (PropertyInfo info in typeof(T).GetProperties())
+            {
+                dataTable.Columns.Add(new DataColumn(info.Name, Nullable.GetUnderlyingType(info.PropertyType) ?? info.PropertyType));
             }
 
-            return messages;
+            foreach (var t in list)
+            {
+                var row = dataTable.NewRow();
+                foreach (PropertyInfo info in typeof(T).GetProperties())
+                {
+                    row[info.Name] = info.GetValue(t, null) ?? DBNull.Value;
+                }
+                dataTable.Rows.Add(row);
+            }
+            return dataTable;
         }
 
         #endregion

@@ -10,23 +10,27 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
     {
         private readonly string _fieldName = "_sqlVariableRepo";
         private readonly Guid _messageId = Guid.NewGuid();
+        private readonly Dictionary<string, SqlVariable> _expectedVariables;
+        private readonly Dictionary<Guid, Dictionary<string, SqlVariable>> _variableRepo;
+
+        public SqlVariableManagerTest()
+        {
+            _expectedVariables = GenerateSqlVariables();
+            _variableRepo = GetSqlVariableRepo();
+        }
 
         [Test]
         public void TestStoreSqlVariables()
         {
-            var expectedVariables = GenerateSqlVariables();
-            var variableRepo = GetSqlVariableRepo();
-            Assert.IsNotNull(variableRepo);
-
             try
             {
-                SqlVariableManager.Instance.StoreSqlVariables(_messageId, expectedVariables);
+                SqlVariableManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
 
-                Assert.AreEqual(1, variableRepo.Count);
-                Assert.IsTrue(variableRepo.ContainsKey(_messageId));
-                var actualVariables = variableRepo[_messageId];
+                Assert.AreEqual(1, _variableRepo.Count);
+                Assert.IsTrue(_variableRepo.ContainsKey(_messageId));
+                var actualVariables = _variableRepo[_messageId];
 
-                AssertSqlVariables(expectedVariables, actualVariables);
+                AssertSqlVariables(_expectedVariables, actualVariables);
             }
             catch (Exception ex)
             {
@@ -34,22 +38,19 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             }
             finally
             {
-                variableRepo.Clear();
+                _variableRepo.Clear();
             }
         }
 
         [Test]
         public void TestGetSqlVariables()
         {
-            var expectedVariables = GenerateSqlVariables();
-            var variableRepo = GetSqlVariableRepo();
-            Assert.IsNotNull(variableRepo);
-
             try
             {
-                variableRepo.Add(_messageId, expectedVariables);
+                SqlVariableManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
+                Assert.AreEqual(1, _variableRepo.Count);
                 var actualVariables = SqlVariableManager.Instance.GetSqlVariables(_messageId);
-                AssertSqlVariables(expectedVariables, actualVariables);
+                AssertSqlVariables(_expectedVariables, actualVariables);
             }
             catch (Exception ex)
             {
@@ -57,23 +58,19 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             }
             finally
             {
-                variableRepo.Clear();
+                _variableRepo.Clear();
             }
         }
 
         [Test]
         public void TestRemoveSqlVariables()
         {
-            var expectedVariables = GenerateSqlVariables();
-            var variableRepo = GetSqlVariableRepo();
-            Assert.IsNotNull(variableRepo);
-
             try
             {
-                SqlVariableManager.Instance.StoreSqlVariables(_messageId, expectedVariables);
-                Assert.AreEqual(1, variableRepo.Count);
+                SqlVariableManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
+                Assert.AreEqual(1, _variableRepo.Count);
                 SqlVariableManager.Instance.RemoveSqlVariables(_messageId);
-                Assert.AreEqual(0, variableRepo.Count);
+                Assert.AreEqual(0, _variableRepo.Count);
             }
             catch (Exception ex)
             {
@@ -81,7 +78,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             }
             finally
             {
-                variableRepo.Clear();
+                _variableRepo.Clear();
             }
         }
 

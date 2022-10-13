@@ -11,24 +11,28 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         private readonly string _imageSource = @".\RaphaelLibrary\Common\Image\Logo.png";
         private readonly Guid _messageId = Guid.NewGuid();
         private readonly string _fieldName = "_cache";
+        private readonly XImage _expectedImage;
+        private readonly Dictionary<Guid, Dictionary<string, XImage>> _cache;
+
+        public ImageCacheManagerTest()
+        {
+            _expectedImage = XImage.FromFile(_imageSource);
+            _cache = GetImageCache();
+        }
 
         [Test]
         public void TestStoreImage()
         {
-            var expectedImage = XImage.FromFile(_imageSource);
-            var cache = GetImageCache();
-            Assert.IsNotNull(cache);
-
             try
             {
-                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, expectedImage);
+                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
 
-                Assert.AreEqual(1, cache.Count);
-                Assert.IsTrue(cache.ContainsKey(_messageId));
-                Assert.IsTrue(cache[_messageId].ContainsKey(_imageSource));
+                Assert.AreEqual(1, _cache.Count);
+                Assert.IsTrue(_cache.ContainsKey(_messageId));
+                Assert.IsTrue(_cache[_messageId].ContainsKey(_imageSource));
 
-                var actualImage = cache[_messageId][_imageSource];
-                Assert.AreSame(expectedImage, actualImage);
+                var actualImage = _cache[_messageId][_imageSource];
+                Assert.AreSame(_expectedImage, actualImage);
             }
             catch (Exception ex)
             {
@@ -36,7 +40,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             }
             finally
             {
-                cache.Clear();
+                _cache.Clear();
             }
         }
 
@@ -45,14 +49,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         [TestCase(false)]
         public void TestTryGetImage(bool storeImage)
         {
-            var expectedImage = XImage.FromFile(_imageSource);
-            var cache = GetImageCache();
-            Assert.IsNotNull(cache);
-
             if (storeImage)
             {
-                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, expectedImage);
+                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
             }
+
+            var expectedCount = storeImage ? 1 : 0;
+            Assert.AreEqual(expectedCount, _cache.Count);
 
             try
             {
@@ -61,7 +64,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
                 Assert.AreEqual(storeImage, isSuccess);
                 if (storeImage)
                 {
-                    Assert.AreSame(expectedImage, actualImage);
+                    Assert.AreSame(_expectedImage, actualImage);
                 }
             }
             catch (Exception ex)
@@ -70,23 +73,19 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             }
             finally
             {
-                cache.Clear();
+                _cache.Clear();
             }
         }
 
         [Test]
         public void TestRemoveImage()
         {
-            var expectedImage = XImage.FromFile(_imageSource);
-            var cache = GetImageCache();
-            cache.Add(_messageId, new Dictionary<string, XImage>());
-            cache[_messageId].Add(_imageSource, expectedImage);
-
             try
             {
-                Assert.AreEqual(1, cache.Count);
+                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
+                Assert.AreEqual(1, _cache.Count);
                 ImageCacheManager.Instance.RemoveImage(_messageId);
-                Assert.AreEqual(0, cache.Count);
+                Assert.AreEqual(0, _cache.Count);
             }
             catch (Exception ex)
             {
@@ -94,7 +93,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             }
             finally
             {
-                cache.Clear();
+                _cache.Clear();
             }
         }
 

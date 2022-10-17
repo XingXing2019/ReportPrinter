@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="RaphaelLibrary\Init\Label\" />
+    <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
   </ItemGroup>
 
   <ItemGroup>

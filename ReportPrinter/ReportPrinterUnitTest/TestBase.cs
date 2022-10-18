@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.SQL;
@@ -21,7 +22,7 @@ namespace ReportPrinterUnitTest
     public abstract class TestBase
     {
         protected readonly Dictionary<string, string> ServicePath;
-        
+
         private readonly Random _random;
 
         protected TestBase()
@@ -50,8 +51,8 @@ namespace ReportPrinterUnitTest
                 new SqlVariable { Name = $"Name{index + 1}", Value = $"Value{index + 1}" },
             };
 
-            reportType = isValidMessage 
-                ? reportType 
+            reportType = isValidMessage
+                ? reportType
                 : reportType == ReportTypeEnum.Label ? ReportTypeEnum.PDF : ReportTypeEnum.Label;
 
             var expectedMessage = PrintReportMessageFactory.CreatePrintReportMessage(reportType.ToString());
@@ -103,58 +104,21 @@ namespace ReportPrinterUnitTest
 
                         if (value1 == null && value2 == null)
                             continue;
-
                         if (value1 == null || value2 == null)
-                        {
                             throw new ApplicationException($"Could not get value of obj1 or obj2");
-                        }
 
                         if (prop.PropertyType.IsInterface)
                             AssertObject(value1, value2);
                         else if (!prop.PropertyType.IsClass || prop.PropertyType == typeof(string))
                             Assert.AreEqual(value1, value2);
+                        else if (!typeof(IEnumerable).IsAssignableFrom(prop.PropertyType))
+                            AssertObject(value1, value2);
                         else if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
-                        {
-                            var dict1 = (IDictionary)value1;
-                            var dict2 = (IDictionary)value2;
-
-                            Assert.AreEqual(dict1.Count, dict2.Count);
-                            foreach (var key in dict1.Keys)
-                            {
-                                Assert.IsTrue(dict2.Contains(key));
-                                AssertObject(dict1[key], dict2[key]);
-                            }
-                        }
-                        else if (prop.PropertyType.IsClass || prop.PropertyType == typeof(string))
-                        {
-                            if (!typeof(IEnumerable).IsAssignableFrom(prop.PropertyType))
-                                AssertObject(value1, value2);
-                            else
-                            {
-                                var itemType = prop.PropertyType.GetElementType() ?? prop.PropertyType.GenericTypeArguments[0];
-                                var listType = typeof(List<>).MakeGenericType(itemType);
-                                var list1 = (IList)Activator.CreateInstance(listType);
-                                var list2 = (IList)Activator.CreateInstance(listType);
-
-                                if (list1 == null || list2 == null)
-                                {
-                                    throw new ApplicationException($"List of {itemType.Name} is not created");
-                                }
-
-                                foreach (var item in (IEnumerable)value1)
-                                    list1.Add(item);
-                                foreach (var item in (IEnumerable)value2)
-                                    list2.Add(item);
-
-                                Assert.AreEqual(list1.Count, list2.Count);
-                                for (int i = 0; i < list1.Count; i++)
-                                    AssertObject(list1[i], list2[i]);
-                            }
-                        }
+                            AssertDictionary(value1, value2);
+                        else if (typeof(IEnumerable).IsAssignableFrom(prop.PropertyType))
+                            AssertList(prop.PropertyType, value1, value2);
                         else
-                        {
-                            throw new ApplicationException($"Unknown property type");
-                        }
+                            throw new ApplicationException($"Unknown field type");
                     }
 
                     var fieldInfos = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).Where(x => !x.Name.Contains("k__BackingField")).ToArray();
@@ -165,58 +129,21 @@ namespace ReportPrinterUnitTest
 
                         if (value1 == null && value2 == null)
                             continue;
-
                         if (value1 == null || value2 == null)
-                        {
                             throw new ApplicationException($"Could not get value of obj1 or obj2");
-                        }
 
                         if (field.FieldType.IsInterface)
                             AssertObject(value1, value2);
                         else if (!field.FieldType.IsClass || field.FieldType == typeof(string))
                             Assert.AreEqual(value1, value2);
+                        else if (!typeof(IEnumerable).IsAssignableFrom(field.FieldType))
+                            AssertObject(value1, value2);
+                        else if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                            AssertDictionary(value1, value2);
+                        else if (typeof(IEnumerable).IsAssignableFrom(field.FieldType))
+                            AssertList(field.FieldType, value1, value2);
                         else
-                        {
-                            if (!typeof(IEnumerable).IsAssignableFrom(field.FieldType))
-                                AssertObject(value1, value2);
-                            else if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
-                            {
-                                var dict1 = (IDictionary)value1;
-                                var dict2 = (IDictionary)value2;
-                                
-                                Assert.AreEqual(dict1.Count, dict2.Count);
-                                foreach (var key in dict1.Keys)
-                                {
-                                    Assert.IsTrue(dict2.Contains(key));
-                                    AssertObject(dict1[key], dict2[key]);
-                                }
-                            }
-                            else if (typeof(IEnumerable).IsAssignableFrom(field.FieldType))
-                            {
-                                var itemType = field.FieldType.GetElementType() ?? field.FieldType.GenericTypeArguments[0];
-                                var listType = typeof(List<>).MakeGenericType(itemType);
-                                var list1 = (IList)Activator.CreateInstance(listType);
-                                var list2 = (IList)Activator.CreateInstance(listType);
-
-                                if (list1 == null || list2 == null)
-                                {
-                                    throw new ApplicationException($"List of {itemType.Name} is not created");
-                                }
-
-                                foreach (var item in (IEnumerable)value1)
-                                    list1.Add(item);
-                                foreach (var item in (IEnumerable)value2)
-                                    list2.Add(item);
-
-                                Assert.AreEqual(list1.Count, list2.Count);
-                                for (int i = 0; i < list1.Count; i++)
-                                    AssertObject(list1[i], list2[i]);
-                            }
-                            else
-                            {
-                                throw new ApplicationException($"Unknown field type");
-                            }
-                        }
+                            throw new ApplicationException($"Unknown field type");
                     }
                 }
             }
@@ -225,7 +152,42 @@ namespace ReportPrinterUnitTest
                 Assert.Fail(ex.Message);
             }
         }
-        
+
+        private void AssertDictionary(object value1, object value2)
+        {
+            var dict1 = (IDictionary)value1;
+            var dict2 = (IDictionary)value2;
+
+            Assert.AreEqual(dict1.Count, dict2.Count);
+            foreach (var key in dict1.Keys)
+            {
+                Assert.IsTrue(dict2.Contains(key));
+                AssertObject(dict1[key], dict2[key]);
+            }
+        }
+
+        private void AssertList(Type type, object value1, object value2)
+        {
+            var itemType = type.GetElementType() ?? type.GenericTypeArguments[0];
+            var listType = typeof(List<>).MakeGenericType(itemType);
+            var list1 = (IList)Activator.CreateInstance(listType);
+            var list2 = (IList)Activator.CreateInstance(listType);
+
+            if (list1 == null || list2 == null)
+            {
+                throw new ApplicationException($"List of {itemType.Name} is not created");
+            }
+
+            foreach (var item in (IEnumerable)value1)
+                list1.Add(item);
+            foreach (var item in (IEnumerable)value2)
+                list2.Add(item);
+
+            Assert.AreEqual(list1.Count, list2.Count);
+            for (int i = 0; i < list1.Count; i++)
+                AssertObject(list1[i], list2[i]);
+        }
+
         protected T GetPrivateField<T>(Type objectType, string fieldName, object instance)
         {
             var fieldInfo = objectType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
@@ -254,7 +216,7 @@ namespace ReportPrinterUnitTest
             }
             return dataTable;
         }
-        
+
         protected void SetupDummySqlTemplateManager(Dictionary<string, List<string>> sqlDict)
         {
             var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(typeof(SqlTemplateManager), "_sqlTemplateList", SqlTemplateManager.Instance);
@@ -278,7 +240,7 @@ namespace ReportPrinterUnitTest
         {
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
             var labelStructureList = GetPrivateField<Dictionary<string, IStructure>>(typeof(LabelStructureManager), "_labelStructureList", LabelStructureManager.Instance);
-            
+
             foreach (var labelStructureId in labelStructureIds)
             {
                 var labelStructure = new LabelStructure(labelStructureId, deserializer, LabelElementHelper.LABEL_RENDERER);

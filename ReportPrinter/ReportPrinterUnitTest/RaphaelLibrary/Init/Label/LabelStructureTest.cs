@@ -39,6 +39,11 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             {
                 Assert.Fail(ex.Message);
             }
+            finally
+            {
+                SqlTemplateManager.Instance.Reset();
+                LabelStructureManager.Instance.Reset();
+            }
         }
 
 

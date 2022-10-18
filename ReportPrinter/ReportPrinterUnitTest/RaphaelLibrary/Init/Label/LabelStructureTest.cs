@@ -14,6 +14,35 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
     public class LabelStructureTest : TestBase
     {
         [Test]
+        public void TestClone()
+        {
+            var filePath = @".\RaphaelLibrary\Init\Label\TestTemplate\ValidLabelTemplate.txt";
+            var id = "TestId";
+            var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
+            var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);
+
+            SetupDummySqlTemplateManager(new Dictionary<string, List<string>>
+            {
+                {"PrintLabelQuery", new List<string>{ "FullCaseContainer", "SplitCaseContainer"}},
+            });
+
+            SetupDummyLabelStructureManager("DeliveryInfoHeader", "DeliveryInfoBody", "DeliveryInfoFooter");
+
+            try
+            {
+                labelStructure.ReadFile(filePath);
+                var cloned = labelStructure.Clone();
+
+                AssertObject(labelStructure, cloned);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+
+        [Test]
         [TestCase(@".\RaphaelLibrary\Init\Label\TestTemplate\ValidLabelTemplate.txt", true)]
         [TestCase(@".\RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Reference_CannotGetStructure.txt", false)]
         [TestCase(@".\RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Reference_StructureId.txt", false)]

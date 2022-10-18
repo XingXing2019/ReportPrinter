@@ -2,8 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.SQL;
@@ -106,9 +109,23 @@ namespace ReportPrinterUnitTest
                             throw new ApplicationException($"Could not get value of obj1 or obj2");
                         }
 
-                        if (!prop.PropertyType.IsClass || prop.PropertyType == typeof(string))
+                        if (prop.PropertyType.IsInterface)
+                            AssertObject(value1, value2);
+                        else if (!prop.PropertyType.IsClass || prop.PropertyType == typeof(string))
                             Assert.AreEqual(value1, value2);
-                        else
+                        else if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                        {
+                            var dict1 = (IDictionary)value1;
+                            var dict2 = (IDictionary)value2;
+
+                            Assert.AreEqual(dict1.Count, dict2.Count);
+                            foreach (var key in dict1.Keys)
+                            {
+                                Assert.IsTrue(dict2.Contains(key));
+                                AssertObject(dict1[key], dict2[key]);
+                            }
+                        }
+                        else if (prop.PropertyType.IsClass || prop.PropertyType == typeof(string))
                         {
                             if (!typeof(IEnumerable).IsAssignableFrom(prop.PropertyType))
                                 AssertObject(value1, value2);
@@ -134,6 +151,10 @@ namespace ReportPrinterUnitTest
                                     AssertObject(list1[i], list2[i]);
                             }
                         }
+                        else
+                        {
+                            throw new ApplicationException($"Unknown property type");
+                        }
                     }
 
                     var fieldInfos = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).Where(x => !x.Name.Contains("k__BackingField")).ToArray();
@@ -150,13 +171,27 @@ namespace ReportPrinterUnitTest
                             throw new ApplicationException($"Could not get value of obj1 or obj2");
                         }
 
-                        if (!field.FieldType.IsClass || field.FieldType == typeof(string))
+                        if (field.FieldType.IsInterface)
+                            AssertObject(value1, value2);
+                        else if (!field.FieldType.IsClass || field.FieldType == typeof(string))
                             Assert.AreEqual(value1, value2);
                         else
                         {
                             if (!typeof(IEnumerable).IsAssignableFrom(field.FieldType))
                                 AssertObject(value1, value2);
-                            else
+                            else if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                            {
+                                var dict1 = (IDictionary)value1;
+                                var dict2 = (IDictionary)value2;
+                                
+                                Assert.AreEqual(dict1.Count, dict2.Count);
+                                foreach (var key in dict1.Keys)
+                                {
+                                    Assert.IsTrue(dict2.Contains(key));
+                                    AssertObject(dict1[key], dict2[key]);
+                                }
+                            }
+                            else if (typeof(IEnumerable).IsAssignableFrom(field.FieldType))
                             {
                                 var itemType = field.FieldType.GetElementType() ?? field.FieldType.GenericTypeArguments[0];
                                 var listType = typeof(List<>).MakeGenericType(itemType);
@@ -177,6 +212,10 @@ namespace ReportPrinterUnitTest
                                 for (int i = 0; i < list1.Count; i++)
                                     AssertObject(list1[i], list2[i]);
                             }
+                            else
+                            {
+                                throw new ApplicationException($"Unknown field type");
+                            }
                         }
                     }
                 }
@@ -186,7 +225,7 @@ namespace ReportPrinterUnitTest
                 Assert.Fail(ex.Message);
             }
         }
-
+        
         protected T GetPrivateField<T>(Type objectType, string fieldName, object instance)
         {
             var fieldInfo = objectType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);

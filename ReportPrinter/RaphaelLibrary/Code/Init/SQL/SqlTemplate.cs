@@ -8,11 +8,11 @@ namespace RaphaelLibrary.Code.Init.SQL
 {
     public class SqlTemplate : SqlElementBase
     {
-        private Dictionary<string, SqlElementBase> _sqlLists;
+        private Dictionary<string, SqlElementBase> _sqlList;
 
         public SqlTemplate()
         {
-            _sqlLists = new Dictionary<string, SqlElementBase>();
+            _sqlList = new Dictionary<string, SqlElementBase>();
         }
 
         public override bool ReadXml(XmlNode node)
@@ -43,26 +43,26 @@ namespace RaphaelLibrary.Code.Init.SQL
                     return false;
                 }
 
-                if (_sqlLists.ContainsKey(sql.Id))
+                if (_sqlList.ContainsKey(sql.Id))
                 {
                     Logger.Error($"Duplicate SQl id: {sql} detected", procName);
                     return false;
                 }
 
-                _sqlLists.Add(sql.Id, sql);
+                _sqlList.Add(sql.Id, sql);
             }
 
-            Logger.Info($"Success to read sql template: {id} with {_sqlLists.Count} sql(s)", procName);
+            Logger.Info($"Success to read sql template: {id} with {_sqlList.Count} sql(s)", procName);
             return true;
         }
 
         public override SqlElementBase Clone()
         {
             var cloned = (SqlTemplate)base.Clone();
-            cloned._sqlLists = new Dictionary<string, SqlElementBase>();
-            foreach (var id in this._sqlLists.Keys)
+            cloned._sqlList = new Dictionary<string, SqlElementBase>();
+            foreach (var id in this._sqlList.Keys)
             {
-                cloned._sqlLists.Add(id, _sqlLists[id].Clone());
+                cloned._sqlList.Add(id, _sqlList[id].Clone());
             }
 
             return cloned;
@@ -73,13 +73,13 @@ namespace RaphaelLibrary.Code.Init.SQL
             var procName = $"{this.GetType().Name}.{nameof(TryGetSql)}";
             sql = null;
 
-            if (!_sqlLists.ContainsKey(sqlId))
+            if (!_sqlList.ContainsKey(sqlId))
             {
                 Logger.Error($"Sql id: {sqlId} does not exist in sql template", procName);
                 return false;
             }
 
-            sql = (Sql)_sqlLists[sqlId].Clone();
+            sql = (Sql)_sqlList[sqlId].Clone();
 
             Logger.Debug($"Return a deep clone of sql: {sqlId}", procName);
             return true;

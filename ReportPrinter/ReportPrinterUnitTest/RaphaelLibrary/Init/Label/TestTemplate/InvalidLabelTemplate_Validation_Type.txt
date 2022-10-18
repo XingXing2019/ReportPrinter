@@ -1,0 +1,9 @@
+%%%<Validation
+	Comparator="Equals"
+	ExpectedValue="500024"
+	SqlTemplateId="PrintLabelQuery"
+	SqlId="SplitCaseContainer"
+	SqlResColumn="ContainerID"
+	TrueStructure="DeliveryInfoBody"
+	FalseStructure="DeliveryInfoFooter"
+/>%%%

@@ -1,0 +1,15 @@
+^A0N,41,40^FO41,41^FD%%%<Sql SqlResColumn="DeliveryToName" SqlTemplateId="PrintLabelQuery" SqlId="FullCaseContainer" />%%%^FS
+%%%<Timestamp />%%%
+%%%<Timestamp Mask="dd-MM-yyyy" IsUTC="true"/>%%%
+%%%<SqlVariable Name="VariableName" />%%%
+%%%<Reference StructureId="DeliveryInfoHeader"/>%%%
+%%%<Validation
+	Type="Structure"
+	Comparator="Equals"
+	ExpectedValue="500024"
+	SqlTemplateId="PrintLabelQuery"
+	SqlId="SplitCaseContainer"
+	SqlResColumn="ContainerID"
+	TrueStructure="DeliveryInfoBody"
+	FalseStructure="DeliveryInfoFooter"
+/>%%%

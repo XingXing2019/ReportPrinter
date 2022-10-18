@@ -109,5 +109,10 @@ namespace RaphaelLibrary.Code.Init.SQL
 
             return ((SqlTemplate)_sqlTemplateList[sqlTemplateId]).TryGetSql(sqlId, out sql);
         }
+
+        public void Reset()
+        {
+            _instance = new SqlTemplateManager();
+        }
     }
 }

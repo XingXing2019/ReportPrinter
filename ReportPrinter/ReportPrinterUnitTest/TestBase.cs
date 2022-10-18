@@ -98,6 +98,9 @@ namespace ReportPrinterUnitTest
                         var value1 = prop.GetValue(obj1);
                         var value2 = prop.GetValue(obj2);
 
+                        if (value1 == null && value2 == null)
+                            continue;
+
                         if (value1 == null || value2 == null)
                         {
                             throw new ApplicationException($"Could not get value of obj1 or obj2");
@@ -138,6 +141,9 @@ namespace ReportPrinterUnitTest
                     {
                         var value1 = field.GetValue(obj1);
                         var value2 = field.GetValue(obj2);
+
+                        if (value1 == null && value2 == null)
+                            continue;
 
                         if (value1 == null || value2 == null)
                         {

@@ -67,5 +67,10 @@ namespace RaphaelLibrary.Code.Common
                 Logger.Debug($"Remove sql variables for message: {messageId}. Current variable repo size: {_sqlVariableRepo.Count}", procName);
             }
         }
+
+        public void Reset()
+        {
+            _instance = new SqlVariableManager();
+        }
     }
 }

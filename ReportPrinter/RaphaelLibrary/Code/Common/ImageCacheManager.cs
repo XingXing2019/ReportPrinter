@@ -81,5 +81,10 @@ namespace RaphaelLibrary.Code.Common
                 Logger.Debug($"Remove all images for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
             }
         }
+
+        public void Reset()
+        {
+            _instance = new ImageCacheManager();
+        }
     }
 }

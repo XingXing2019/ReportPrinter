@@ -1,0 +1,1 @@
+^A0N,41,40^FO41,41^FD%%%<Sql SqlTemplateId="PrintLabelQuery" SqlId="FullCaseContainer" />%%%^FS

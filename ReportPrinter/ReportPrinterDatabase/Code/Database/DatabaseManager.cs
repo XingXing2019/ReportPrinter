@@ -63,5 +63,10 @@ namespace ReportPrinterDatabase.Code.Database
             Logger.Info($"Return connection string for {id}: {connectionString}", procName);
             return true;
         }
+
+        public void Reset()
+        {
+            _instance = new DatabaseManager();
+        }
     }
 }

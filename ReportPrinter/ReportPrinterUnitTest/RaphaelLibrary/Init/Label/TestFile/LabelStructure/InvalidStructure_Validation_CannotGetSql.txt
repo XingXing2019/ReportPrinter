@@ -1,0 +1,10 @@
+%%%<Validation
+	Type="Structure"
+	Comparator="Equals"
+	ExpectedValue="500024"
+	SqlTemplateId="WrongId"
+	SqlId="SplitCaseContainer"
+	SqlResColumn="ContainerID"
+	TrueStructure="DeliveryInfoBody"
+	FalseStructure="DeliveryInfoFooter"
+/>%%%

@@ -80,5 +80,10 @@ namespace RaphaelLibrary.Code.Init.PDF
             Logger.Info($"Success to initialize pdf template manager with {ReportTemplateList.Count} pdf template(s)", procName);
             return true;
         }
+
+        public void Reset()
+        {
+            _instance = new PdfTemplateManager();
+        }
     }
 }

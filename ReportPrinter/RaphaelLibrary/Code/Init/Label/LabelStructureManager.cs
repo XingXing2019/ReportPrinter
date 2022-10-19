@@ -109,5 +109,10 @@ namespace RaphaelLibrary.Code.Init.Label
             Logger.Debug($"Return a deep clone of label structure: {labelStructureId}", procName);
             return true;
         }
+
+        public void Reset()
+        {
+            _instance = new LabelStructureManager();
+        }
     }
 }

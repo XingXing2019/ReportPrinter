@@ -10,10 +10,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
     public class LabelStructureManagerTest : TestBase
     {
         [Test]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\ValidConfig.xml", true)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\InvalidConfig_Id.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\InvalidConfig_InvalidStructure.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\InvalidConfig_Duplicate.xml", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\ValidConfig.xml", true)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_Id.xml", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_InvalidStructure.xml", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_Duplicate.xml", false)]
         public void TestReadXml(string filePath, bool expectedRes)
         {
             var xmlDoc = new XmlDocument();

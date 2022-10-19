@@ -16,7 +16,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidLabelTemplate.txt";
+            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt";
             var id = "TestId";
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
             var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);
@@ -48,23 +48,23 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
 
         [Test]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidLabelTemplate.txt", true)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Reference_CannotGetStructure.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Reference_StructureId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_CannotGetSql.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_SqlId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_SqlResColumn.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_SqlTemplateId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_SqlVariable_Name.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_CannotGetSql.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_Comparator.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_ExpectedValue.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_FalseStructure.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_SqlId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_SqlResColumn.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_SqlTemplateId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_TrueStructure.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_Type.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt", true)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Reference_CannotGetStructure.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Reference_StructureId.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_CannotGetSql.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_SqlId.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_SqlResColumn.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_SqlTemplateId.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_SqlVariable_Name.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_CannotGetSql.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_Comparator.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_ExpectedValue.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_FalseStructure.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_SqlId.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_SqlResColumn.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_SqlTemplateId.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_TrueStructure.txt", false)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_Type.txt", false)]
         public void TestReadFile(string filePath, bool expectedRes)
         {
             var id = "TestId";

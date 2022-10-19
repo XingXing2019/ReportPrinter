@@ -39,55 +39,67 @@
     <None Update="RaphaelLibrary\Common\Image\Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Reference_CannotGetStructure.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\InvalidConfig_Id.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_FalseStructure.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\InvalidConfig_Duplicate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_TrueStructure.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\InvalidConfig_InvalidStructure.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_SqlResColumn.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Reference_CannotGetStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_SqlId.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_FalseStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_Type.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_TrueStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_SqlTemplateId.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_SqlResColumn.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_ExpectedValue.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_SqlId.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_Comparator.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_Type.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Validation_CannotGetSql.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_SqlTemplateId.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Sql_SqlResColumn.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_ExpectedValue.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_SqlVariable_Name.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_Comparator.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Reference_StructureId.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Validation_CannotGetSql.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Sql_CannotGetSql.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_SqlResColumn.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Sql_SqlTemplateId.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_SqlVariable_Name.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\InvalidLabelTemplate_Sql_SqlId.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Reference_StructureId.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestTemplate\ValidLabelTemplate.txt">
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_CannotGetSql.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_SqlTemplateId.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidLabelTemplate_Sql_SqlId.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructureManagerConfig\ValidConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidLabelTemplate.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

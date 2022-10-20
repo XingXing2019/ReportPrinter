@@ -214,7 +214,32 @@ namespace ReportPrinterUnitTest
                 Assert.Fail(ex.Message);
             }
         }
+        protected string GetTempFilePathAfterRemove(string filePath, string name)
+        {
+            var content = File.ReadAllText(filePath);
+            var start = content.IndexOf(name);
+            var firstQuote = content.IndexOf("\"", start);
+            var secondQuote = content.IndexOf("\"", firstQuote + 1);
+            var removeContent = content.Substring(start, secondQuote - start + 1);
+            content = content.Replace(removeContent, "");
 
+            var tempPath = Path.Combine(Path.GetTempPath(), "temp.txt");
+            File.WriteAllText(tempPath, content);
+            return tempPath;
+        }
+
+        protected string GetTempFilePathAfterReplace(string filePath, string name, string value)
+        {
+            var content = File.ReadAllText(filePath);
+            var start = content.IndexOf(name);
+            var firstQuote = content.IndexOf("\"", start);
+            var secondQuote = content.IndexOf("\"", firstQuote + 1);
+            content = content.Substring(0, firstQuote + 1) + value + content.Substring(secondQuote);
+
+            var tempPath = Path.Combine(Path.GetTempPath(), "temp.txt");
+            File.WriteAllText(tempPath, content);
+            return tempPath;
+        }
 
         #region Helper
 

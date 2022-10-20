@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.SQL;
@@ -27,11 +28,18 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
             SetupDummyLabelStructureManager("DeliveryInfoHeader", "DeliveryInfoBody", "DeliveryInfoFooter");
 
+            var tempFile = "";
             try
             {
+                if (!expectedRes)
+                {
+                    var structureFile = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt";
+                    tempFile = GetTempFilePathAfterRemove(structureFile, "SqlId");
+                }
+
                 var actualRes = LabelStructureManager.Instance.ReadXml(node);
                 Assert.AreEqual(expectedRes, actualRes);
-
+                
                 if (expectedRes)
                 {
                     var labelStructureId = "TestStructure";
@@ -47,6 +55,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             {
                 SqlTemplateManager.Instance.Reset();
                 LabelStructureManager.Instance.Reset();
+                if (!expectedRes)
+                {
+                    File.Delete(tempFile);
+                }
             }
         }
 

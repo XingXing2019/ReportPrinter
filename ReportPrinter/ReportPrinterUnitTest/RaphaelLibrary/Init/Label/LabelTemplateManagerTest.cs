@@ -76,22 +76,22 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
         }
 
-        [Test]
-        public void Test()
-        {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
-            var parentName = "LabelTemplateList";
-            var nodeName = "TestNode";
-            var innerText = "TestInnerText";
-            var attribute = new Dictionary<string, string>
-            {
-                { "id", "111" },
-                { "name", "Xing" }
-            };
+        //[Test]
+        //public void Test()
+        //{
+        //    var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+        //    var parentName = "LabelTemplateList";
+        //    var nodeName = "TestNode";
+        //    var innerText = "TestInnerText";
+        //    var attribute = new Dictionary<string, string>
+        //    {
+        //        { "id", "111" },
+        //        { "name", "Xing" }
+        //    };
 
-            filePath = AppendXmlNodeToXmlFile(filePath, parentName, nodeName, innerText, attribute);
-            filePath = RemoveXmlNodeOfXmlFile(filePath, nodeName);
-        }
+        //    filePath = AppendXmlNodeToXmlFile(filePath, parentName, nodeName, innerText, attribute);
+        //    filePath = RemoveXmlNodeOfXmlFile(filePath, nodeName);
+        //}
         
     }
 }

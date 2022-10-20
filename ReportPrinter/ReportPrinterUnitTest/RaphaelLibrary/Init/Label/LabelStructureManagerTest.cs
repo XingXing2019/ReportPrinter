@@ -32,8 +32,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 if (!expectedRes)
                 {
                     filePath = isReplace
-                        ? filePath = ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
-                        : filePath = RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
+                        ? ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
+                        : RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
 
                     if (isReplace)
                     {

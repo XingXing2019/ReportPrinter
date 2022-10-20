@@ -39,15 +39,6 @@
     <None Update="RaphaelLibrary\Common\Image\Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_Id.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_Duplicate.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_InvalidStructure.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -83,8 +83,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 if (!expectedRes)
                 {
                     filePath = isRemove
-                        ? GetTempFilePathAfterRemove(filePath, name)
-                        : GetTempFilePathAfterReplace(filePath, name, value);
+                        ? RemoveAttributeOfTxtFile(filePath, name)
+                        : ReplaceAttributeOfTxtFile(filePath, name, value);
                 }
 
                 var actualRes = labelStructure.ReadFile(filePath);

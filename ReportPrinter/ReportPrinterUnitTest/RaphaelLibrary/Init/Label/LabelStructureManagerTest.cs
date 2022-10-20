@@ -11,15 +11,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
     public class LabelStructureManagerTest : TestBase
     {
         [Test]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\ValidConfig.xml", true)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_Id.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_InvalidStructure.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\InvalidConfig_Duplicate.xml", false)]
-        public void TestReadXml(string filePath, bool expectedRes)
+        [TestCase(true)]
+        [TestCase(false, "Id", false)]
+        [TestCase(false, "", true, @"C:\Users\61425\AppData\Local\Temp\InvalidStructure_Sql.txt")]
+        [TestCase(false, "", true, @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt")]
+        public void TestReadXml(bool expectedRes, string name = "", bool isReplace = true, string value = "")
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
-            var node = xmlDoc.DocumentElement;
+            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\ValidConfig.xml";
 
             SetupDummySqlTemplateManager(new Dictionary<string, List<string>>
             {
@@ -28,18 +26,30 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
             SetupDummyLabelStructureManager("DeliveryInfoHeader", "DeliveryInfoBody", "DeliveryInfoFooter");
 
-            var tempFile = "";
+            var tempStructureFile = "";
             try
             {
                 if (!expectedRes)
                 {
-                    var structureFile = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt";
-                    tempFile = GetTempFilePathAfterRemove(structureFile, "SqlId");
+                    filePath = isReplace
+                        ? filePath = ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
+                        : filePath = RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
+
+                    if (isReplace)
+                    {
+                        var structureFile = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt";
+                        tempStructureFile = RemoveAttributeOfTxtFile(structureFile, "SqlId");
+                        SetupDummyLabelStructureManager("TestStructure");
+                    }
                 }
+
+                var xmlDoc = new XmlDocument();
+                xmlDoc.Load(filePath);
+                var node = xmlDoc.DocumentElement;
 
                 var actualRes = LabelStructureManager.Instance.ReadXml(node);
                 Assert.AreEqual(expectedRes, actualRes);
-                
+
                 if (expectedRes)
                 {
                     var labelStructureId = "TestStructure";
@@ -57,7 +67,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 LabelStructureManager.Instance.Reset();
                 if (!expectedRes)
                 {
-                    File.Delete(tempFile);
+                    if (!string.IsNullOrEmpty(tempStructureFile))
+                        File.Delete(tempStructureFile);
+
+                    File.Delete(filePath);
                 }
             }
         }
@@ -83,6 +96,5 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 LabelStructureManager.Instance.Reset();
             }
         }
-
     }
 }

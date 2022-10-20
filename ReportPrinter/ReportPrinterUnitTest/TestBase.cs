@@ -5,15 +5,12 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Xml;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.SQL;
-using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -214,7 +211,8 @@ namespace ReportPrinterUnitTest
                 Assert.Fail(ex.Message);
             }
         }
-        protected string GetTempFilePathAfterRemove(string filePath, string name)
+
+        protected string RemoveAttributeOfTxtFile(string filePath, string name)
         {
             var content = File.ReadAllText(filePath);
             var start = content.IndexOf(name);
@@ -223,12 +221,13 @@ namespace ReportPrinterUnitTest
             var removeContent = content.Substring(start, secondQuote - start + 1);
             content = content.Replace(removeContent, "");
 
-            var tempPath = Path.Combine(Path.GetTempPath(), "temp.txt");
+            var fileName = Path.GetFileName(filePath);
+            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
             File.WriteAllText(tempPath, content);
             return tempPath;
         }
 
-        protected string GetTempFilePathAfterReplace(string filePath, string name, string value)
+        protected string ReplaceAttributeOfTxtFile(string filePath, string name, string value)
         {
             var content = File.ReadAllText(filePath);
             var start = content.IndexOf(name);
@@ -236,9 +235,76 @@ namespace ReportPrinterUnitTest
             var secondQuote = content.IndexOf("\"", firstQuote + 1);
             content = content.Substring(0, firstQuote + 1) + value + content.Substring(secondQuote);
 
-            var tempPath = Path.Combine(Path.GetTempPath(), "temp.txt");
+            var fileName = Path.GetFileName(filePath);
+            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
             File.WriteAllText(tempPath, content);
             return tempPath;
+        }
+
+        protected string RemoveAttributeOfXmlFile(string filePath, string nodeName, string attributeName)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var root = xmlDoc.DocumentElement;
+            RemoveAttributeOfNode(root, nodeName, attributeName);
+
+            var fileName = Path.GetFileName(filePath);
+            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+            xmlDoc.Save(tempPath);
+            return tempPath;
+        }
+
+        protected string ReplaceInnerTextOfXmlFile(string filePath, string nodeName, string innerText)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var root = xmlDoc.DocumentElement;
+            ReplaceInnerTextOfNode(root, nodeName, innerText);
+
+            var fileName = Path.GetFileName(filePath);
+            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+            xmlDoc.Save(tempPath);
+            return tempPath;
+        }
+
+        private void RemoveAttributeOfNode(XmlNode node, string nodeName, string attributeName)
+        {
+            if (node.Name == nodeName && node.Attributes != null)
+            {
+                foreach (XmlAttribute attribute in node.Attributes)
+                {
+                    if (attribute.Name != attributeName) continue;
+                    node.Attributes.Remove(attribute);
+                }
+            }
+
+            if (!node.HasChildNodes)
+            {
+                return;
+            }
+
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                RemoveAttributeOfNode(childNode, nodeName, attributeName);
+            }
+        }
+
+        private void ReplaceInnerTextOfNode(XmlNode node, string nodeName, string innerText)
+        {
+            if (node.Name == nodeName)
+            {
+                node.InnerXml = innerText;
+            }
+
+            if (!node.HasChildNodes)
+            {
+                return;
+            }
+
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                ReplaceInnerTextOfNode(childNode, nodeName, innerText);
+            }
         }
 
         #region Helper

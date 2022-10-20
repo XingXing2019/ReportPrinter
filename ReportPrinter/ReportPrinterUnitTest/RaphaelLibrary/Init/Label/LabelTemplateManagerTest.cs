@@ -67,8 +67,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
             finally
             {
-                LabelTemplateManager.Instance.Reset();
-                LabelStructureManager.Instance.Reset();
                 if (!expectedRes)
                 {
                     if (!string.IsNullOrEmpty(tempLabelTemplate))

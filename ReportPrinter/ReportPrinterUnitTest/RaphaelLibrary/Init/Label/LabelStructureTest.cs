@@ -40,11 +40,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             {
                 Assert.Fail(ex.Message);
             }
-            finally
-            {
-                SqlTemplateManager.Instance.Reset();
-                LabelStructureManager.Instance.Reset();
-            }
         }
         
         [Test]
@@ -125,8 +120,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
             finally
             {
-                SqlTemplateManager.Instance.Reset();
-                LabelStructureManager.Instance.Reset();
                 if (!expectedRes)
                 {
                     File.Delete(filePath);

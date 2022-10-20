@@ -34,6 +34,16 @@ namespace ReportPrinterUnitTest
             _random = new Random();
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            LabelStructureManager.Instance.Reset();
+            LabelTemplateManager.Instance.Reset();
+            PdfTemplateManager.Instance.Reset();
+            SqlTemplateManager.Instance.Reset();
+            DatabaseManager.Instance.Reset();
+        }
+
         protected IPrintReport CreateMessage(ReportTypeEnum reportType, bool isValidMessage = true)
         {
             var messageId = Guid.NewGuid();

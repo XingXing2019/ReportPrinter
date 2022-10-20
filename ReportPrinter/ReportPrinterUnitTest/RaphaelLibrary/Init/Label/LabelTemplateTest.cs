@@ -81,7 +81,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
             finally
             {
-                LabelStructureManager.Instance.Reset();
                 if (!expectedRes)
                 {
                     File.Delete(filePath);
@@ -110,10 +109,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                LabelStructureManager.Instance.Reset();
             }
         }
     }

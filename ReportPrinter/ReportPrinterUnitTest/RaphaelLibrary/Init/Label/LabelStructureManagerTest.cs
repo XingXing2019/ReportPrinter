@@ -63,8 +63,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
             finally
             {
-                SqlTemplateManager.Instance.Reset();
-                LabelStructureManager.Instance.Reset();
                 if (!expectedRes)
                 {
                     if (!string.IsNullOrEmpty(tempStructureFile))
@@ -90,10 +88,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                LabelStructureManager.Instance.Reset();
             }
         }
     }

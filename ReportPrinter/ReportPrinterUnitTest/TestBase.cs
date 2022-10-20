@@ -271,11 +271,13 @@ namespace ReportPrinterUnitTest
         {
             if (node.Name == nodeName && node.Attributes != null)
             {
+                var toBeRemove = new List<XmlAttribute>();
                 foreach (XmlAttribute attribute in node.Attributes)
                 {
                     if (attribute.Name != attributeName) continue;
-                    node.Attributes.Remove(attribute);
+                    toBeRemove.Add(attribute);
                 }
+                toBeRemove.ForEach(x => node.Attributes.Remove(x));
             }
 
             if (!node.HasChildNodes)

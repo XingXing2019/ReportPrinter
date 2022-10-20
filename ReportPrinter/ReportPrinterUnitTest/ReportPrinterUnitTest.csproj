@@ -57,27 +57,6 @@
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_Id.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_LabelBody.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_LabelHeader.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_Timeout.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_FileNameSuffix.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_SavePath.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_LabelFooter.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

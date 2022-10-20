@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<LabelTemplate Id="DeliveryInfoValidation" SavePath=".\Result\Label\" FileNameSuffix="AccountNumber" Timeout="10">
-	<LabelHeader></LabelHeader>
-	<LabelBody>ValidationBody</LabelBody>
-	<LabelFooter>ValidationFooter</LabelFooter>
-</LabelTemplate>

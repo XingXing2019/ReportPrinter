@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Xml;
 using RaphaelLibrary.Code.Init.Label;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
@@ -10,26 +11,37 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
     {
         [Test]
         [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", true)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_Id.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_SavePath.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_FileNameSuffix.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_Timeout.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_LabelHeader.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_LabelBody.xml", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\InvalidTemplate_LabelFooter.xml", false)]
-        public void TestReadXml(string filePath, bool expectedRes)
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelTemplate", "Id")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelTemplate", "SavePath")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelTemplate", "FileNameSuffix")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelTemplate", "Timeout")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelFooter", "", true)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelBody", "", true)]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelHeader", "", true)]
+        public void TestReadXml(string filePath, bool expectedRes, string nodeName ="", string attributeName = "", bool resetManager = false)
         {
+            SetupDummyLabelStructureManager("ValidationHeader", "ValidationBody", "ValidationFooter");
+
+            if (!expectedRes)
+            {
+                filePath = RemoveAttributeOfXmlFile(filePath, nodeName, attributeName);
+            }
+
+            if (resetManager)
+            {
+                LabelStructureManager.Instance.Reset();
+                filePath = ReplaceInnerTextOfXmlFile(filePath, nodeName, "");
+
+                if (nodeName == "LabelHeader" || nodeName == "LabelFooter")
+                    SetupDummyLabelStructureManager("ValidationBody");
+                else if (nodeName == "LabelBody")
+                    SetupDummyLabelStructureManager("ValidationHeader", "ValidationFooter");
+            }
+
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(filePath);
             var node = xmlDoc.DocumentElement;
             var labelTemplate = new LabelTemplate();
-
-            SetupDummyLabelStructureManager("ValidationBody");
-
-            if (expectedRes)
-            {
-                SetupDummyLabelStructureManager("ValidationHeader", "ValidationFooter");
-            }
 
             try
             {
@@ -69,7 +81,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
             finally
             {
-                LabelStructureManager.Instance.Reset();
+                if (!expectedRes)
+                {
+                    File.Delete(filePath);
+                }
             }
         }
 
@@ -94,10 +109,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                LabelStructureManager.Instance.Reset();
             }
         }
     }

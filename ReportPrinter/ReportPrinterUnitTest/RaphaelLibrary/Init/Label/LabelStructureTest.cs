@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.SQL;
@@ -39,33 +40,27 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             {
                 Assert.Fail(ex.Message);
             }
-            finally
-            {
-                SqlTemplateManager.Instance.Reset();
-                LabelStructureManager.Instance.Reset();
-            }
         }
-
-
+        
         [Test]
         [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt", true)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Reference_CannotGetStructure.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Reference_StructureId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_CannotGetSql.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_SqlId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_SqlResColumn.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql_SqlTemplateId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_SqlVariable_Name.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_CannotGetSql.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_Comparator.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_ExpectedValue.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_FalseStructure.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_SqlId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_SqlResColumn.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_SqlTemplateId.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_TrueStructure.txt", false)]
-        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation_Type.txt", false)]
-        public void TestReadFile(string filePath, bool expectedRes)
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Reference.txt", false, "StructureId", false, "WrongId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Reference.txt", false, "StructureId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt", false, "SqlId", false, "WrongId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt", false, "SqlId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt", false, "SqlResColumn")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt", false, "SqlTemplateId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_SqlVariable.txt", false, "Name")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "SqlId", false, "WrongId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "Comparator")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "ExpectedValue")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "FalseStructure")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "SqlId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "SqlResColumn")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "SqlTemplateId")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "TrueStructure")]
+        [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Validation.txt", false, "Type")]
+        public void TestReadFile(string filePath, bool expectedRes, string name = "", bool isRemove = true, string value = "")
         {
             var id = "TestId";
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
@@ -80,6 +75,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
             try
             {
+                if (!expectedRes)
+                {
+                    filePath = isRemove
+                        ? RemoveAttributeOfTxtFile(filePath, name)
+                        : ReplaceAttributeOfTxtFile(filePath, name, value);
+                }
+
                 var actualRes = labelStructure.ReadFile(filePath);
                 Assert.AreEqual(expectedRes, actualRes);
 
@@ -118,33 +120,22 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
             finally
             {
-                SqlTemplateManager.Instance.Reset();
-                LabelStructureManager.Instance.Reset();
+                if (!expectedRes)
+                {
+                    File.Delete(filePath);
+                }
             }
         }
         
 
         #region Helper
-
+        
         private List<PlaceHolderBase> GetPlaceHolder(LabelRendererBase renderer)
         {
             var placeHolder = GetPrivateField<List<PlaceHolderBase>>(renderer.GetType(), "PlaceHolders", renderer);
             return placeHolder;
         }
-
-        private TPlaceHolder GetPlaceHolder<TRenderer, TPlaceHolder>(List<LabelRendererBase> rendererList, int index)
-            where TRenderer : LabelRendererBase where TPlaceHolder: PlaceHolderBase
-        {
-            var renderer = rendererList[index] as TRenderer;
-            Assert.IsNotNull(renderer);
-            var placeHolders = GetPlaceHolder(renderer);
-            Assert.AreEqual(1, placeHolders.Count);
-            var placeHolder = placeHolders[0] as TPlaceHolder;
-            Assert.IsNotNull(placeHolder);
-
-            return placeHolder;
-        }
-
+        
         private void AssertPlaceHolder<TRenderer, TPlaceHolder>(List<LabelRendererBase> rendererList, int index, Dictionary<string, object> expectedValues)
             where TRenderer : LabelRendererBase where TPlaceHolder : PlaceHolderBase
         {

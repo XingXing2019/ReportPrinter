@@ -1,9 +1,0 @@
-%%%<Validation
-	Type="Structure"
-	Comparator="Equals"
-	SqlTemplateId="PrintLabelQuery"
-	SqlId="SplitCaseContainer"
-	SqlResColumn="ContainerID"
-	TrueStructure="DeliveryInfoBody"
-	FalseStructure="DeliveryInfoFooter"
-/>%%%

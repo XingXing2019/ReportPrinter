@@ -89,7 +89,7 @@ namespace RaphaelLibrary.Code.Init
                 return false;
             }
 
-            if (!LabelTemplateManager.Instances.ReadXml(labelTemplateList))
+            if (!LabelTemplateManager.Instance.ReadXml(labelTemplateList))
             {
                 return false;
             }

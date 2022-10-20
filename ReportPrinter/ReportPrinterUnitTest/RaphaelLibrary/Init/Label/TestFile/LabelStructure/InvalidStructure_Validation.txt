@@ -1,4 +1,5 @@
 %%%<Validation
+	Type="Structure"
 	Comparator="Equals"
 	ExpectedValue="500024"
 	SqlTemplateId="PrintLabelQuery"

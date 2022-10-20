@@ -11,7 +11,7 @@ namespace RaphaelLibrary.Code.Init.Label
         private static readonly object _lock = new object();
         
         private static LabelTemplateManager _instance;
-        public static LabelTemplateManager Instances
+        public static LabelTemplateManager Instance
         {
             get
             {
@@ -77,7 +77,7 @@ namespace RaphaelLibrary.Code.Init.Label
                 return false;
             }
 
-            Logger.Info($"Success to initialize pdf template manager with {ReportTemplateList.Count} pdf template(s)", procName);
+            Logger.Info($"Success to initialize label template manager with {ReportTemplateList.Count} pdf template(s)", procName);
             return true;
         }
 

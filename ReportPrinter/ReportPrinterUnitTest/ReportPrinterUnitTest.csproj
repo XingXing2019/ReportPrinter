@@ -57,6 +57,9 @@
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

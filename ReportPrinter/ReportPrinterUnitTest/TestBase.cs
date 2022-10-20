@@ -5,12 +5,16 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Xml;
 using NUnit.Framework;
+using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Init.Label;
+using RaphaelLibrary.Code.Init.PDF;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterDatabase.Code.Database;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -29,7 +33,6 @@ namespace ReportPrinterUnitTest
 
             _random = new Random();
         }
-        
 
         protected IPrintReport CreateMessage(ReportTypeEnum reportType, bool isValidMessage = true)
         {
@@ -221,10 +224,7 @@ namespace ReportPrinterUnitTest
             var removeContent = content.Substring(start, secondQuote - start + 1);
             content = content.Replace(removeContent, "");
 
-            var fileName = Path.GetFileName(filePath);
-            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
-            File.WriteAllText(tempPath, content);
-            return tempPath;
+            return CreateTxtFile(filePath, content);
         }
 
         protected string ReplaceAttributeOfTxtFile(string filePath, string name, string value)
@@ -235,10 +235,7 @@ namespace ReportPrinterUnitTest
             var secondQuote = content.IndexOf("\"", firstQuote + 1);
             content = content.Substring(0, firstQuote + 1) + value + content.Substring(secondQuote);
 
-            var fileName = Path.GetFileName(filePath);
-            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
-            File.WriteAllText(tempPath, content);
-            return tempPath;
+            return CreateTxtFile(filePath, content);
         }
 
         protected string RemoveAttributeOfXmlFile(string filePath, string nodeName, string attributeName)
@@ -248,10 +245,7 @@ namespace ReportPrinterUnitTest
             var root = xmlDoc.DocumentElement;
             RemoveAttributeOfNode(root, nodeName, attributeName);
 
-            var fileName = Path.GetFileName(filePath);
-            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
-            xmlDoc.Save(tempPath);
-            return tempPath;
+            return CreateXmlFile(filePath, xmlDoc);
         }
 
         protected string ReplaceInnerTextOfXmlFile(string filePath, string nodeName, string innerText)
@@ -261,23 +255,42 @@ namespace ReportPrinterUnitTest
             var root = xmlDoc.DocumentElement;
             ReplaceInnerTextOfNode(root, nodeName, innerText);
 
-            var fileName = Path.GetFileName(filePath);
-            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
-            xmlDoc.Save(tempPath);
-            return tempPath;
+            return CreateXmlFile(filePath, xmlDoc);
         }
+
+        protected string AppendXmlNodeToXmlFile(string filePath, string parentNode, string nodeName, string innerText, Dictionary<string, string> attributes = null)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var root = xmlDoc.DocumentElement;
+            AppendXmlNode(xmlDoc, root, parentNode, nodeName, innerText, attributes);
+
+            return CreateXmlFile(filePath, xmlDoc);
+        }
+
+        protected string RemoveXmlNodeOfXmlFile(string filePath, string nodeName)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var root = xmlDoc.DocumentElement;
+            RemoveXmlNode(root, nodeName);
+
+            return CreateXmlFile(filePath, xmlDoc);
+        }
+
+        #region Helper
 
         private void RemoveAttributeOfNode(XmlNode node, string nodeName, string attributeName)
         {
             if (node.Name == nodeName && node.Attributes != null)
             {
-                var toBeRemove = new List<XmlAttribute>();
+                var toBeRemoved = new List<XmlAttribute>();
                 foreach (XmlAttribute attribute in node.Attributes)
                 {
                     if (attribute.Name != attributeName) continue;
-                    toBeRemove.Add(attribute);
+                    toBeRemoved.Add(attribute);
                 }
-                toBeRemove.ForEach(x => node.Attributes.Remove(x));
+                toBeRemoved.ForEach(x => node.Attributes.Remove(x));
             }
 
             if (!node.HasChildNodes)
@@ -309,7 +322,72 @@ namespace ReportPrinterUnitTest
             }
         }
 
-        #region Helper
+        private void AppendXmlNode(XmlDocument xmlDoc, XmlNode node, string parentNode, string nodeName, string innerText, Dictionary<string, string> attributes)
+        {
+            if (!node.HasChildNodes)
+            {
+                return;
+            }
+
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                AppendXmlNode(xmlDoc, childNode, parentNode, nodeName, innerText, attributes);
+            }
+
+            if (node.Name == parentNode)
+            {
+                var newChild = xmlDoc.CreateElement(nodeName);
+                newChild.InnerXml = innerText;
+
+                if (attributes != null)
+                {
+                    foreach (var key in attributes.Keys)
+                    {
+                        newChild.SetAttribute(key, attributes[key]);
+                    }
+                }
+                
+                node.AppendChild(newChild);
+            }
+        }
+
+        private void RemoveXmlNode(XmlNode node, string nodeName)
+        {
+            if (!node.HasChildNodes)
+            {
+                return;
+            }
+
+            var toBeRemoved = new List<XmlNode>();
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                if (childNode.Name != nodeName) continue;
+                toBeRemoved.Add(childNode);
+            }
+
+            toBeRemoved.ForEach(x => node.RemoveChild(x));
+
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                RemoveXmlNode(childNode, nodeName);
+            }
+        }
+
+        private string CreateXmlFile(string filePath, XmlDocument xmlDoc)
+        {
+            var fileName = Path.GetFileName(filePath);
+            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+            xmlDoc.Save(tempPath);
+            return tempPath;
+        }
+
+        private string CreateTxtFile(string filePath, string content)
+        {
+            var fileName = Path.GetFileName(filePath);
+            var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+            File.WriteAllText(tempPath, content);
+            return tempPath;
+        }
 
         private void AssertDictionary(object value1, object value2)
         {

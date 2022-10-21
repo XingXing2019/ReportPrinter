@@ -4,6 +4,8 @@ using System.IO;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Init.Label;
 using System.Xml;
+using RaphaelLibrary.Code.Render.Label.Helper;
+using System.Reflection;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
@@ -18,7 +20,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         public void TestReadXml(bool expectedRes, string operation = "")
         {
             var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
-
             SetupDummyLabelStructureManager("ValidationHeader", "ValidationBody", "ValidationFooter");
 
             var tempLabelTemplate = "";
@@ -55,9 +56,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
                 if (expectedRes)
                 {
-                    var isExist =
-                        LabelTemplateManager.Instance.TryGetReportTemplate("DeliveryInfoValidation",
-                            out var labelTemplate);
+                    var isExist = LabelTemplateManager.Instance.TryGetReportTemplate("DeliveryInfoValidation", out var labelTemplate);
                     Assert.IsTrue(isExist);
                 }
             }
@@ -76,22 +75,75 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             }
         }
 
-        //[Test]
-        //public void Test()
-        //{
-        //    var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
-        //    var parentName = "LabelTemplateList";
-        //    var nodeName = "TestNode";
-        //    var innerText = "TestInnerText";
-        //    var attribute = new Dictionary<string, string>
-        //    {
-        //        { "id", "111" },
-        //        { "name", "Xing" }
-        //    };
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void TestTryGetReportTemplate(bool expectedRes)
+        {
+            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+            var labelStructureIds = new[] { "ValidationHeader", "ValidationBody", "ValidationFooter" };
+            SetupDummyLabelStructureManager(labelStructureIds);
 
-        //    filePath = AppendXmlNodeToXmlFile(filePath, parentName, nodeName, innerText, attribute);
-        //    filePath = RemoveXmlNodeOfXmlFile(filePath, nodeName);
-        //}
-        
+            if (!expectedRes)
+            {
+                filePath = RemoveXmlNodeOfXmlFile(filePath, "LabelTemplate");
+            }
+
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var node = xmlDoc.DocumentElement;
+
+            LabelTemplateManager.Instance.ReadXml(node);
+
+            try
+            {
+                var actualRes = LabelTemplateManager.Instance.TryGetReportTemplate("DeliveryInfoValidation", out var template);
+                Assert.AreEqual(expectedRes, actualRes);
+
+                if (expectedRes)
+                {
+                    var labelTemplate = template as LabelTemplate;
+                    Assert.IsNotNull(labelTemplate);
+
+                    Assert.AreEqual("DeliveryInfoValidation", labelTemplate.Id);
+
+                    var savePath = GetPrivateField<string>(labelTemplate.GetType(), "_savePath", labelTemplate);
+                    Assert.AreEqual(@".\Result\Label\", savePath);
+
+                    var fileNameSuffix = GetPrivateField<string>(labelTemplate.GetType(), "_fileNameSuffix", labelTemplate);
+                    Assert.AreEqual("AccountNumber", fileNameSuffix);
+                    
+                    var fileName = GetPrivateField<string>(labelTemplate.GetType(), "_fileName", labelTemplate);
+                    Assert.AreEqual("DeliveryInfoValidation", fileName);
+
+                    var timeout = GetPrivateField<int>(labelTemplate.GetType(), "_timeout", labelTemplate);
+                    Assert.AreEqual(10, timeout);
+                    
+                    var labelStructures = GetPrivateField<List<IStructure>>(labelTemplate.GetType(), "_labelStructures", labelTemplate);
+
+                    var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
+                    for (int i = 0; i < labelStructureIds.Length; i++)
+                    {
+                        var id = labelStructureIds[i];
+                        var expectedLabelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);
+                        var prop = expectedLabelStructure.GetType().GetField("_lines", BindingFlags.NonPublic | BindingFlags.Instance);
+                        prop?.SetValue(expectedLabelStructure, Array.Empty<string>());
+
+                        AssertObject(expectedLabelStructure, labelStructures[i]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+            finally
+            {
+                if (!expectedRes)
+                {
+                    File.Delete(filePath);
+                }
+            }
+        }
     }
 }

@@ -63,7 +63,10 @@
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RaphaelLibrary\Init\SQL\TestFile\ValidTemplate.xml">
+    <None Update="RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml">

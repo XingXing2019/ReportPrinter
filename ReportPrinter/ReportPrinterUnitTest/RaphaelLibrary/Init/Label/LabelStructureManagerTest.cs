@@ -2,9 +2,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
 using RaphaelLibrary.Code.Init.Label;
-using RaphaelLibrary.Code.Init.SQL;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {

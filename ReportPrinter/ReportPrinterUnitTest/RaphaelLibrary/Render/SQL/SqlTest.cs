@@ -69,7 +69,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
                     var actualConnStr = GetPrivateField<string>(type, "_connectionString", sql);
                     Assert.AreEqual(expectedConnStr, actualConnStr);
 
-                    var expectedQuery = "SELECT PRM_ReportType FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_PrinterId = '%%%PrinterId%%%'";
+                    var expectedQuery = "SELECT * FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_PrinterId = '%%%PrinterId%%%'";
                     var actualQuery = GetPrivateField<string>(type, "_query", sql).Trim('\r','\n','\t');
                     Assert.AreEqual(expectedQuery, actualQuery);
 
@@ -127,19 +127,19 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
         [TestCase(false, false, "DeleteRes")]
         [TestCase(false, false, "AddRes")]
         [TestCase(false, false, "ReplaceRes")]
-        public async Task TestTryExecute_String(bool expectedRes, bool hasExtraVariable = false, string operation = "")
+        public async Task TestTryExecute(bool expectedRes, bool hasExtraVariable = false, string operation = "")
         {
             var message = CreateMessage(ReportTypeEnum.PDF);
+            var filePath = @".\RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml";
+            var replaceFile = false;
+
             await _manager.Post(message);
             
             SetupDummySqlVariableManager(message.MessageId, new Dictionary<string, object>
             {
                 { "MessageId", message.MessageId }, { "PrinterId", message.PrinterId }
             });
-
-            var filePath = @".\RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml";
-            var replaceFile = false;
-
+            
             if (!expectedRes)
             {
                 if (operation == "RemoveSqlVariable")
@@ -159,7 +159,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
                 }
                 else if (operation == "AddRes")
                 {
-                    var query = "SELECT PRM_ReportType FROM PrintReportMessage";
+                    var query = "SELECT * FROM PrintReportMessage";
                     filePath = ReplaceInnerTextOfXmlFile(filePath, "Query", query);
                     replaceFile = true;
 
@@ -177,7 +177,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
             KeyValuePair<string, SqlVariable> extraSqlVariable = default;
             if (hasExtraVariable)
             {
-                var query = "SELECT PRM_ReportType FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_TemplateId = '%%%TemplateId%%%'";
+                var query = "SELECT * FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_TemplateId = '%%%TemplateId%%%'";
                 filePath = ReplaceInnerTextOfXmlFile(filePath, "Query", query);
                 replaceFile = true;
                 extraSqlVariable = new KeyValuePair<string, SqlVariable>("TemplateId", new SqlVariable { Name = "TemplateId", Value = message.TemplateId });
@@ -191,12 +191,37 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
             try
             {
                 var sqlResColumn = new SqlResColumn("PRM_ReportType");
-                var actualRes = sql.TryExecute(message.MessageId, sqlResColumn, out string res, true, extraSqlVariable);
+                var actualRes = sql.TryExecute(message.MessageId, sqlResColumn, out var strRes, true, extraSqlVariable);
 
                 Assert.AreEqual(expectedRes, actualRes);
                 if (expectedRes)
                 {
-                    Assert.AreEqual(message.ReportType.ToString(), res);
+                    Assert.AreEqual(message.ReportType.ToString(), strRes);
+                }
+
+                var sqlResColumnList = new List<SqlResColumn>
+                {
+                    new SqlResColumn("PRM_ReportType"),
+                    new SqlResColumn("PRM_NumberOfCopy"),
+                };
+
+                // TryExecute with returning dictionary allows more than one row or no row
+                if (operation == "AddRes" || operation == "DeleteRes")
+                    return;
+
+                actualRes = sql.TryExecute(message.MessageId, sqlResColumnList, out var dictRes);
+                Assert.AreEqual(expectedRes, actualRes);
+
+                if (expectedRes)
+                {
+                    Assert.AreEqual(1, dictRes.Count);
+                    var row = dictRes[0];
+
+                    Assert.IsTrue(row.ContainsKey("PRM_ReportType"));
+                    Assert.AreEqual(message.ReportType.ToString(), row["PRM_ReportType"]);
+
+                    Assert.IsTrue(row.ContainsKey("PRM_NumberOfCopy"));
+                    Assert.AreEqual(message.NumberOfCopy.ToString(), row["PRM_NumberOfCopy"]);
                 }
             }
             catch (Exception ex)

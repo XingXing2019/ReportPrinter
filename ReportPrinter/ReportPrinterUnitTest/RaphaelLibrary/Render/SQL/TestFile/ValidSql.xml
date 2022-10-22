@@ -1,6 +1,6 @@
 ﻿<Sql Id="TestSql" DatabaseId="ReportPrinterTest">
 	<Query>
-		SELECT PRM_ReportType FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_PrinterId = '%%%PrinterId%%%'
+		SELECT * FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_PrinterId = '%%%PrinterId%%%'
 	</Query>
 	<Variable Name="MessageId" />
 	<Variable Name="PrinterId" />

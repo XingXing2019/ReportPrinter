@@ -1,0 +1,42 @@
+﻿<SqlTemplate Id="PrintPdfQuery">
+	<Sql Id="TransactionInfo" DatabaseId="AccountingSystem">
+		<Query>
+			SELECT
+				TransactionID,
+				CONVERT(DATE, TransactionDate) AS TransactionDate,
+				GLAccount,
+				PostSequence,
+				BatchEntry,
+				VendorCode,
+				Debit,
+				Credit,
+				ExchangeRate,
+				Description
+			FROM
+				Transactions
+			JOIN
+				GlAccounts
+			ON
+				AccountNumber = GlAccount
+			WHERE
+				AccountNumber = '%%%AccountNumber%%%'
+		</Query>
+		<Variable Name="AccountNumber" />
+	</Sql>
+	<Sql Id="EmployeeByGender" DatabaseId="AdventureWorks2019">
+		<Query>
+			SELECT
+				BusinessEntityID,
+				JobTitle,
+				CONVERT(VARCHAR, BirthDate) AS BirthDate,
+				MaritalStatus,
+				Gender,
+				CONVERT(VARCHAR, HireDate) AS HireDate
+			FROM
+				HumanResources.Employee
+			WHERE
+				Gender = '%%%Gender%%%'
+		</Query>
+		<Variable Name="Gender" />
+	</Sql>
+</SqlTemplate>

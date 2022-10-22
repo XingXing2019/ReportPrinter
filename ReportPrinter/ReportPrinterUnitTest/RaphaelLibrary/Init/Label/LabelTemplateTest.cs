@@ -38,9 +38,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                     SetupDummyLabelStructureManager("ValidationHeader", "ValidationFooter");
             }
 
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
-            var node = xmlDoc.DocumentElement;
+            var node = GetXmlNode(filePath);
             var labelTemplate = new LabelTemplate();
 
             try
@@ -92,9 +90,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         public void TestClone()
         {
             var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml";
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
-            var node = xmlDoc.DocumentElement;
+            var node = GetXmlNode(filePath);
             var labelTemplate = new LabelTemplate();
 
             SetupDummyLabelStructureManager("ValidationHeader", "ValidationBody", "ValidationFooter");

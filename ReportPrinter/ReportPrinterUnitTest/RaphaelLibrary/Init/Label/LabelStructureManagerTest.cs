@@ -42,11 +42,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                         SetupDummyLabelStructureManager("TestStructure");
                     }
                 }
-
-                var xmlDoc = new XmlDocument();
-                xmlDoc.Load(filePath);
-                var node = xmlDoc.DocumentElement;
-
+                
+                var node = GetXmlNode(filePath);
                 var actualRes = LabelStructureManager.Instance.ReadXml(node);
                 Assert.AreEqual(expectedRes, actualRes);
 

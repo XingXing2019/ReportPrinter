@@ -45,9 +45,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 }
             }
 
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
-            var node = xmlDoc.DocumentElement;
+            var node = GetXmlNode(filePath);
 
             try
             {
@@ -89,10 +87,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 filePath = RemoveXmlNodeOfXmlFile(filePath, "LabelTemplate");
             }
 
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
-            var node = xmlDoc.DocumentElement;
-
+            var node = GetXmlNode(filePath);
             LabelTemplateManager.Instance.ReadXml(node);
 
             try

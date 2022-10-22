@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Init.Label;
-using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.Label.Renderer;

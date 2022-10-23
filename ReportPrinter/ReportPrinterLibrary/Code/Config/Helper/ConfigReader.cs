@@ -6,10 +6,9 @@ namespace ReportPrinterLibrary.Code.Config.Helper
 {
     public static class ConfigReader<T>
     {
-        public static T ReadConfig()
+        public static T ReadConfig(string configPath)
         {
             var procName = $"ConfigReader.{nameof(ReadConfig)}";
-            var configPath = new ConfigPath().GetConfigPath();
 
             if (!File.Exists(configPath))
             {

@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Database\" />
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
+    <Folder Include="ReportPrinterLibrary\Config\" />
   </ItemGroup>
 
   <ItemGroup>

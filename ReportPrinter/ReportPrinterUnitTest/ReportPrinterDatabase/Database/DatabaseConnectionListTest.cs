@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Database;
 
-namespace ReportPrinterUnitTest.Database
+namespace ReportPrinterUnitTest.ReportPrinterDatabase.Database
 {
     public class DatabaseConnectionListTest : TestBase
     {

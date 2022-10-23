@@ -1,17 +1,17 @@
-﻿using NUnit.Framework;
-using ReportPrinterDatabase.Code.Executor;
-using System.Threading.Tasks;
-using System;
-using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterDatabase.Code.StoredProcedures.PrintReportMessage;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
-using ReportPrinterDatabase.Code.StoredProcedures;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ReportPrinterDatabase.Code.StoredProcedures.PrintReportSqlVariable;
+using System.Threading.Tasks;
+using NUnit.Framework;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Executor;
+using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterDatabase.Code.StoredProcedures;
+using ReportPrinterDatabase.Code.StoredProcedures.PrintReportMessage;
+using ReportPrinterDatabase.Code.StoredProcedures.PrintReportSqlVariable;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
-namespace ReportPrinterUnitTest.Database
+namespace ReportPrinterUnitTest.ReportPrinterDatabase.Executor
 {
     public class StoredProcedureExecutorTest : DatabaseTestBase<IPrintReport>
     {

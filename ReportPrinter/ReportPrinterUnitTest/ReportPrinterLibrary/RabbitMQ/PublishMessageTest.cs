@@ -8,7 +8,7 @@ using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.Code.RabbitMQ.MessageQueue;
 
-namespace ReportPrinterUnitTest.RabbitMQ
+namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
 {
     public class PublishMessageTest : RabbitMQTestBase<IPrintReport>
     {

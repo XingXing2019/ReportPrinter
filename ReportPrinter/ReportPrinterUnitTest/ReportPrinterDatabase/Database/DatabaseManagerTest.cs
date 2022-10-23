@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Database;
 
-namespace ReportPrinterUnitTest.Database
+namespace ReportPrinterUnitTest.ReportPrinterDatabase.Database
 {
     public class DatabaseManagerTest : TestBase
     {
@@ -25,7 +25,7 @@ namespace ReportPrinterUnitTest.Database
 
             var dummyDbConnectionList = new DatabaseConnectionList(databaseConnections);
             SetPrivateField<DatabaseConnectionList>(DatabaseManager.Instance, "_databaseConnectionList", dummyDbConnectionList);
-            
+
             try
             {
                 var actualRes = DatabaseManager.Instance.TryGetConnectionString(id, out var actualConnStr);

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
-namespace ReportPrinterUnitTest.RabbitMQ
+namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
 {
     public class PrintReportMessageFactoryTest
     {

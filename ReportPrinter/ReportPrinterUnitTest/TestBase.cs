@@ -76,6 +76,8 @@ namespace ReportPrinterUnitTest
             return expectedMessage;
         }
         
+        #region Access Private Field
+        
         protected T GetPrivateField<T>(object instance, string fieldName)
         {
             var type = instance.GetType();
@@ -92,8 +94,10 @@ namespace ReportPrinterUnitTest
             fieldInfo.SetValue(instance, value);
         }
         
-        #region Database
+        #endregion
         
+        #region Database
+
         protected DataTable ListToDataTable<T>(List<T> list, string tableName)
         {
             var dataTable = new DataTable(tableName);

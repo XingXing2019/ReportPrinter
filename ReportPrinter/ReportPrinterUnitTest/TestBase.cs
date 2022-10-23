@@ -76,12 +76,20 @@ namespace ReportPrinterUnitTest
             return expectedMessage;
         }
         
-        protected T GetPrivateField<T>(Type objectType, string fieldName, object instance)
+        protected T GetPrivateField<T>(object instance, string fieldName)
         {
-            var fieldInfo = objectType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            var type = instance.GetType();
+            var fieldInfo = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var field = (T)fieldInfo?.GetValue(instance);
 
             return field;
+        }
+
+        protected void SetPrivateField<T>(object instance, string fieldName, object value)
+        {
+            var type = instance.GetType();
+            var fieldInfo = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            fieldInfo.SetValue(instance, value);
         }
         
         #region Database
@@ -113,13 +121,13 @@ namespace ReportPrinterUnitTest
 
         protected void SetupDummySqlTemplateManager(Dictionary<string, List<string>> sqlDict)
         {
-            var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(typeof(SqlTemplateManager), "_sqlTemplateList", SqlTemplateManager.Instance);
+            var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
 
             foreach (var sqlTemplateId in sqlDict.Keys)
             {
                 var sqlIds = sqlDict[sqlTemplateId];
                 var sqlTemplate = new SqlTemplate();
-                var sqlList = GetPrivateField<Dictionary<string, SqlElementBase>>(typeof(SqlTemplate), "_sqlList", sqlTemplate);
+                var sqlList = GetPrivateField<Dictionary<string, SqlElementBase>>(sqlTemplate, "_sqlList");
 
                 foreach (var sqlId in sqlIds)
                 {
@@ -133,7 +141,7 @@ namespace ReportPrinterUnitTest
         protected void SetupDummyLabelStructureManager(params string[] labelStructureIds)
         {
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
-            var labelStructureList = GetPrivateField<Dictionary<string, IStructure>>(typeof(LabelStructureManager), "_labelStructureList", LabelStructureManager.Instance);
+            var labelStructureList = GetPrivateField<Dictionary<string, IStructure>>(LabelStructureManager.Instance, "_labelStructureList");
 
             foreach (var labelStructureId in labelStructureIds)
             {

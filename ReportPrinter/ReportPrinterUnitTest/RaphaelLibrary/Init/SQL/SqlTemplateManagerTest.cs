@@ -80,7 +80,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 
             if (!expectedRes)
             {
-                var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(typeof(SqlTemplateManager), "_sqlTemplateList", SqlTemplateManager.Instance);
+                var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
                 sqlTemplateList.Clear();
             }
 
@@ -108,12 +108,12 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 
             try
             {
-                var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(typeof(SqlTemplateManager), "_sqlTemplateList", SqlTemplateManager.Instance);
+                var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
                 Assert.IsTrue(sqlTemplateList.Count != 0);
 
                 SqlTemplateManager.Instance.Reset();
 
-                sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(typeof(SqlTemplateManager), "_sqlTemplateList", SqlTemplateManager.Instance);
+                sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
                 Assert.IsTrue(sqlTemplateList.Count == 0);
             }
             catch (Exception ex)

@@ -102,8 +102,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         private Dictionary<Guid, Dictionary<string, XImage>> GetImageCache()
         {
-            var type = typeof(ImageCacheManager);
-            return GetPrivateField<Dictionary<Guid, Dictionary<string, XImage>>>(type, _fieldName, ImageCacheManager.Instance);
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, XImage>>>(ImageCacheManager.Instance, _fieldName);
         }
 
         #endregion

@@ -102,7 +102,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 
             if (!expectedRes)
             {
-                var sqlList = GetPrivateField<Dictionary<string, SqlElementBase>>(sqlTemplate.GetType(), "_sqlList", sqlTemplate);
+                var sqlList = GetPrivateField<Dictionary<string, SqlElementBase>>(sqlTemplate, "_sqlList");
                 sqlList.Clear();
             }
 

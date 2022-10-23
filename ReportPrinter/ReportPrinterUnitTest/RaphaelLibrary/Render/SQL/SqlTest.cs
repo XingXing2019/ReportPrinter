@@ -59,21 +59,19 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
 
                 if (expectedRes)
                 {
-                    var type = sql.GetType();
-
                     var expectedId = "TestSql";
                     var actualId = sql.Id;
                     Assert.AreEqual(expectedId, actualId);
 
                     var expectedConnStr = AppConfig.Instance.DatabaseConfigList.First(x => x.Id == "ReportPrinterTest").ConnectionString;
-                    var actualConnStr = GetPrivateField<string>(type, "_connectionString", sql);
+                    var actualConnStr = GetPrivateField<string>(sql, "_connectionString");
                     Assert.AreEqual(expectedConnStr, actualConnStr);
 
                     var expectedQuery = "SELECT * FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_PrinterId = '%%%PrinterId%%%'";
-                    var actualQuery = GetPrivateField<string>(type, "_query", sql).Trim('\r','\n','\t');
+                    var actualQuery = GetPrivateField<string>(sql, "_query").Trim('\r','\n','\t');
                     Assert.AreEqual(expectedQuery, actualQuery);
 
-                    var sqlVariables = GetPrivateField<Dictionary<string, SqlVariable>>(type, "_sqlVariables", sql);
+                    var sqlVariables = GetPrivateField<Dictionary<string, SqlVariable>>(sql, "_sqlVariables");
                     Assert.AreEqual(2, sqlVariables.Count);
                     var expectedSqlVariable = new SqlVariable { Name = "MessageId" };
                     var actualSqlVariable = sqlVariables["MessageId"];
@@ -144,7 +142,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
             {
                 if (operation == "RemoveSqlVariable")
                 {
-                    var sqlVariableRepo = GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(typeof(SqlVariableManager), "_sqlVariableRepo", SqlVariableManager.Instance);
+                    var sqlVariableRepo = GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(SqlVariableManager.Instance, "_sqlVariableRepo");
                     sqlVariableRepo[message.MessageId].Remove("PrinterId");
                 }
                 else if (operation == "ReplaceQuery")

@@ -102,19 +102,19 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
                     Assert.AreEqual("DeliveryInfoValidation", labelTemplate.Id);
 
-                    var savePath = GetPrivateField<string>(labelTemplate.GetType(), "_savePath", labelTemplate);
+                    var savePath = GetPrivateField<string>(labelTemplate, "_savePath");
                     Assert.AreEqual(@".\Result\Label\", savePath);
 
-                    var fileNameSuffix = GetPrivateField<string>(labelTemplate.GetType(), "_fileNameSuffix", labelTemplate);
+                    var fileNameSuffix = GetPrivateField<string>(labelTemplate, "_fileNameSuffix");
                     Assert.AreEqual("AccountNumber", fileNameSuffix);
                     
-                    var fileName = GetPrivateField<string>(labelTemplate.GetType(), "_fileName", labelTemplate);
+                    var fileName = GetPrivateField<string>(labelTemplate, "_fileName");
                     Assert.AreEqual("DeliveryInfoValidation", fileName);
 
-                    var timeout = GetPrivateField<int>(labelTemplate.GetType(), "_timeout", labelTemplate);
+                    var timeout = GetPrivateField<int>(labelTemplate, "_timeout");
                     Assert.AreEqual(10, timeout);
                     
-                    var labelStructures = GetPrivateField<List<IStructure>>(labelTemplate.GetType(), "_labelStructures", labelTemplate);
+                    var labelStructures = GetPrivateField<List<IStructure>>(labelTemplate, "_labelStructures");
 
                     var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
                     for (int i = 0; i < labelStructureIds.Length; i++)

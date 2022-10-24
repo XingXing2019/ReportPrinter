@@ -87,13 +87,23 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
             var startIndexes = new List<int>();
             var endIndexes = new List<int>();
             int startPos = 0, endPos = 0;
-            
+            var startIndex = input.IndexOf(startSign, startPos, StringComparison.Ordinal);
+
+            var nextEndIndex = input.IndexOf(endSign, startIndex + startSign.Length, StringComparison.Ordinal);
+            var nextStartIndex = input.IndexOf(startSign, startIndex + startSign.Length, StringComparison.Ordinal);
+
+            if (startIndex != -1 && nextEndIndex == -1)
+            {
+                Logger.Error($"Unpaired start sign and end sign for place holder: {placeHolderName} detected from input: {input}", procName);
+                return false;
+            }
+
             try
             {
                 while (input.IndexOf(startSign, startPos, StringComparison.Ordinal) != -1 && 
                        input.IndexOf(endSign, endPos, StringComparison.Ordinal) != -1)
                 {
-                    var startIndex = input.IndexOf(startSign, startPos, StringComparison.Ordinal);
+                    startIndex = input.IndexOf(startSign, startPos, StringComparison.Ordinal);
                     var endIndex = input.IndexOf(endSign, startIndex, StringComparison.Ordinal);
 
                     startIndexes.Add(startIndex);
@@ -101,6 +111,20 @@ namespace RaphaelLibrary.Code.Render.Label.Helper
 
                     startPos = startIndex + startSign.Length;
                     endPos = endIndex + endSign.Length;
+
+                    nextStartIndex = input.IndexOf(LabelElementHelper.S_RENDERER_START, startPos, StringComparison.Ordinal);
+                    if (nextStartIndex != -1 && nextStartIndex < endIndex)
+                    {
+                        Logger.Error($"Unpaired start sign and end sign for place holder: {placeHolderName} detected from input: {input}", procName);
+                        return false;
+                    }
+
+                    nextEndIndex = input.IndexOf(endSign, endPos, StringComparison.Ordinal);
+                    if (nextStartIndex == -1 && nextEndIndex != -1)
+                    {
+                        Logger.Error($"Unpaired start sign and end sign for place holder: {placeHolderName} detected from input: {input}", procName);
+                        return false;
+                    }
                 }
 
                 if (startIndexes.Count != endIndexes.Count)

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
+    <Folder Include="RaphaelLibrary\Print\" />
   </ItemGroup>
 
   <ItemGroup>

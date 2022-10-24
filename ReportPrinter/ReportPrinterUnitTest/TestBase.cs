@@ -34,7 +34,7 @@ namespace ReportPrinterUnitTest
         }
 
         [TearDown]
-        public void TearDown()
+        protected void TearDown()
         {
             LabelStructureManager.Instance.Reset();
             LabelTemplateManager.Instance.Reset();

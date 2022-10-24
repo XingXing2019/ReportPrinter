@@ -132,5 +132,51 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Helper
                 Assert.Fail(ex.Message);
             }
         }
+
+        [Test]
+        [TestCase(true, "Mask", "dd-MM-yyyy")]
+        [TestCase(true, "IsUTC", "true")]
+        [TestCase(false, "Id", "")]
+        public void TestTryGetValue(bool expectedRes, string name, string expectedValue)
+        {
+            var line = "%%%<Timestamp Mask=\"dd-MM-yyyy\" IsUTC=\"true\"/>%%%";
+            var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
+
+            try
+            {
+                var actualRes = deserializer.TryGetValue(line, name, out var actualValue);
+                Assert.AreEqual(expectedRes, actualRes);
+                Assert.AreEqual(expectedValue, actualValue);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        [TestCase(LabelElementHelper.S_REFERENCE_RENDERER, true)]
+        [TestCase(LabelElementHelper.S_SQL_RENDERER, false)]
+        [TestCase(LabelElementHelper.S_SQL_VARIABLE_RENDERER, false)]
+        [TestCase(LabelElementHelper.S_TIMESTAMP_RENDERER, true)]
+        [TestCase(LabelElementHelper.S_VALIDATION_RENDERER, false)]
+        public void TestContainsPlaceholder(string placeholder, bool expectedRes)
+        {
+            var line = "%%%<Timestamp Mask=\"dd-MM-yyyy\" IsUTC=\"true\"/>%%% " +
+                       "%%%<Timestamp />%%% " +
+                       "%%%<Reference StructureId=\"DeliveryInfoHeader\"/>%%%";
+            
+            var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
+
+            try
+            {
+                var actualRes = deserializer.ContainsPlaceholder(line, placeholder);
+                Assert.AreEqual(expectedRes, actualRes);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

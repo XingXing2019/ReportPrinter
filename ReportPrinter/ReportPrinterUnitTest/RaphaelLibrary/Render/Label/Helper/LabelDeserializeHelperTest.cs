@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Render.Label.Helper;
 

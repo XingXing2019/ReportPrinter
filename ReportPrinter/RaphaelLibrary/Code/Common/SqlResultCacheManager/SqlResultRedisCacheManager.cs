@@ -68,7 +68,7 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 
             try
             {
-                var key = CreateRedisKey(messageId, sqlId);
+                var key = RedisCacheHelper.CreateRedisKey(GetType().Name, messageId, sqlId);
                 var value = RedisCacheHelper.ObjectToByteArray(sqlResult);
 
                 _cache.Set(key, value, _options);
@@ -89,7 +89,7 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 
             try
             {
-                var key = CreateRedisKey(messageId, sqlId);
+                var key = RedisCacheHelper.CreateRedisKey(GetType().Name, messageId, sqlId);
                 var value = _cache.Get(key);
 
                 if (value == null)
@@ -153,15 +153,5 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
                 throw new ApplicationException(error);
             }
         }
-
-
-        #region Helper
-
-        private string CreateRedisKey(Guid messageId, string sqlId)
-        {
-            return $"SqlResultRedisCacheManager_{messageId}_{sqlId}";
-        }
-
-        #endregion
     }
 }

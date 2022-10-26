@@ -41,5 +41,10 @@ namespace RaphaelLibrary.Code.Common
             stream.Seek(0, SeekOrigin.Begin);
             return (T)bf.Deserialize(stream);
         }
+
+        public static string CreateRedisKey(string managerName, Guid messageId, string sqlId)
+        {
+            return $"{managerName}_{messageId}_{sqlId}";
+        }
     }
 }

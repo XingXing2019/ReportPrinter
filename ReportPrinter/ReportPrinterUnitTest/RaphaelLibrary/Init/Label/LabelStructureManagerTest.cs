@@ -2,9 +2,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
 using RaphaelLibrary.Code.Init.Label;
-using RaphaelLibrary.Code.Init.SQL;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
@@ -32,8 +30,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 if (!expectedRes)
                 {
                     filePath = isReplace
-                        ? filePath = ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
-                        : filePath = RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
+                        ? ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
+                        : RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
 
                     if (isReplace)
                     {
@@ -42,11 +40,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                         SetupDummyLabelStructureManager("TestStructure");
                     }
                 }
-
-                var xmlDoc = new XmlDocument();
-                xmlDoc.Load(filePath);
-                var node = xmlDoc.DocumentElement;
-
+                
+                var node = GetXmlNode(filePath);
                 var actualRes = LabelStructureManager.Instance.ReadXml(node);
                 Assert.AreEqual(expectedRes, actualRes);
 

@@ -38,9 +38,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                     SetupDummyLabelStructureManager("ValidationHeader", "ValidationFooter");
             }
 
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
-            var node = xmlDoc.DocumentElement;
+            var node = GetXmlNode(filePath);
             var labelTemplate = new LabelTemplate();
 
             try
@@ -52,20 +50,20 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 {
                     Assert.AreEqual("DeliveryInfoValidation", labelTemplate.Id);
                     
-                    var fileName = GetPrivateField<string>(typeof(LabelTemplate), "_fileName", labelTemplate);
+                    var fileName = GetPrivateField<string>(labelTemplate, "_fileName");
                     Assert.AreEqual("DeliveryInfoValidation", fileName);
 
-                    var savePath = GetPrivateField<string>(typeof(LabelTemplate), "_savePath", labelTemplate);
+                    var savePath = GetPrivateField<string>(labelTemplate, "_savePath");
                     Assert.AreEqual(@".\Result\Label\", savePath);
 
-                    var fileNameSuffix = GetPrivateField<string>(typeof(LabelTemplate), "_fileNameSuffix", labelTemplate);
+                    var fileNameSuffix = GetPrivateField<string>(labelTemplate, "_fileNameSuffix");
                     Assert.AreEqual("AccountNumber", fileNameSuffix);
 
-                    var timeout = GetPrivateField<int>(typeof(LabelTemplate), "_timeout", labelTemplate);
+                    var timeout = GetPrivateField<int>(labelTemplate, "_timeout");
                     Assert.AreEqual(10, timeout);
 
 
-                    var labelStructures = GetPrivateField<List<IStructure>>(typeof(LabelTemplate), "_labelStructures", labelTemplate);
+                    var labelStructures = GetPrivateField<List<IStructure>>(labelTemplate, "_labelStructures");
                     LabelStructureManager.Instance.TryGetLabelStructure("ValidationHeader", out var header);
                     LabelStructureManager.Instance.TryGetLabelStructure("ValidationBody", out var body);
                     LabelStructureManager.Instance.TryGetLabelStructure("ValidationFooter", out var footer);
@@ -92,9 +90,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         public void TestClone()
         {
             var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml";
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(filePath);
-            var node = xmlDoc.DocumentElement;
+            var node = GetXmlNode(filePath);
             var labelTemplate = new LabelTemplate();
 
             SetupDummyLabelStructureManager("ValidationHeader", "ValidationBody", "ValidationFooter");

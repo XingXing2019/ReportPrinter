@@ -22,8 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Database\" />
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
+    <Folder Include="RaphaelLibrary\Print\" />
+    <Folder Include="RaphaelLibrary\Render\Label\PlaceHolder\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +62,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\Label\Helper\TestFile\ValidStructure.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ReportPrinterLibrary\Config\TestFile\ValidConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

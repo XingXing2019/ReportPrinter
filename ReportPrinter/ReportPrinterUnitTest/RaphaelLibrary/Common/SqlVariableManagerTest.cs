@@ -87,8 +87,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         private Dictionary<Guid, Dictionary<string, SqlVariable>> GetSqlVariableRepo()
         {
-            var type = typeof(SqlVariableManager);
-            return GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(type, _fieldName, SqlVariableManager.Instance);
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(SqlVariableManager.Instance, _fieldName);
         }
 
         private Dictionary<string, SqlVariable> GenerateSqlVariables()

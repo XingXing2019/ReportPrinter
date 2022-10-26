@@ -1,10 +1,10 @@
-﻿using ReportPrinterDatabase.Code.Manager;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Manager;
+using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
-namespace ReportPrinterUnitTest.Database
+namespace ReportPrinterUnitTest.ReportPrinterDatabase
 {
     public class DatabaseTestBase<T> : TestBase
     {

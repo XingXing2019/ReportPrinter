@@ -101,8 +101,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         private Dictionary<Guid, Dictionary<string, DataTable>> GetSqlResultCache()
         {
-            var type = typeof(SqlResultCacheManager);
-            return GetPrivateField<Dictionary<Guid, Dictionary<string, DataTable>>>(type, _fieldName, SqlResultCacheManager.Instance);
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, DataTable>>>(SqlResultCacheManager.Instance, _fieldName);
         }
 
         private DataTable GenerateDataTable()

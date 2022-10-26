@@ -23,7 +23,8 @@ namespace ReportPrinterLibrary.Code.Config.Configuration
                     {
                         if (_instance == null)
                         {
-                            _instance = ConfigReader<AppConfig>.ReadConfig();
+                            var configPath = new ConfigPath().GetConfigPath();
+                            _instance = ConfigReader<AppConfig>.ReadConfig(configPath);
                         }
                     }
                 }

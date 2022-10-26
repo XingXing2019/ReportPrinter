@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Init.Label;
-using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.Label.Renderer;
@@ -87,7 +86,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
                 if (expectedRes)
                 {
-                    var rendererList = GetPrivateField<List<LabelRendererBase>>(labelStructure.GetType(), "_labelRenderer", labelStructure);
+                    var rendererList = GetPrivateField<List<LabelRendererBase>>(labelStructure, "_labelRenderer");
                     Assert.AreEqual(6, rendererList.Count);
 
                     AssertPlaceHolder<LabelSqlRenderer, SqlPlaceHolder>(rendererList, 0, new Dictionary<string, object>
@@ -132,7 +131,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         
         private List<PlaceHolderBase> GetPlaceHolder(LabelRendererBase renderer)
         {
-            var placeHolder = GetPrivateField<List<PlaceHolderBase>>(renderer.GetType(), "PlaceHolders", renderer);
+            var placeHolder = GetPrivateField<List<PlaceHolderBase>>(renderer, "PlaceHolders");
             return placeHolder;
         }
         
@@ -148,7 +147,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
             foreach (var name in expectedValues.Keys)
             {
-                var actualValue = GetPrivateField<object>(placeHolder.GetType(), name, placeHolder);
+                var actualValue = GetPrivateField<object>(placeHolder, name);
                 AssertObject(expectedValues[name], actualValue);
             }
         }

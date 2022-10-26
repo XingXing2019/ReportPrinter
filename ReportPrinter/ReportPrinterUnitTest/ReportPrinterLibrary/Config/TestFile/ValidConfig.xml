@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AppConfig>
+	<RabbitMQConfig>
+		<UserName>TestUserName</UserName>
+		<Password>TestPassword</Password>
+		<Host>TestHost</Host>
+		<VirtualHost>TestVirtualHost</VirtualHost>
+	</RabbitMQConfig>
+	<DatabaseConfigList>
+		<DatabaseConfig Id="TestDB1" DatabaseName="TestDB1">
+			<ConnectionString>TestConnectionString1</ConnectionString>
+		</DatabaseConfig>
+		<DatabaseConfig Id="TestDB2" DatabaseName="TestDB2">
+			<ConnectionString>TestConnectionString2</ConnectionString>
+		</DatabaseConfig>
+		<DatabaseConfig Id="TestDB3" DatabaseName="TestDB3">
+			<ConnectionString>TestConnectionString3</ConnectionString>
+		</DatabaseConfig>
+	</DatabaseConfigList>
+	<TargetDatabase>TestDB1</TargetDatabase>
+	<ServicePathConfigList>
+		<ServicePathConfig>
+			<Id>TestService</Id>
+			<Path>TestServicePath</Path>
+		</ServicePathConfig>
+	</ServicePathConfigList>
+</AppConfig>

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
-using NUnit.Framework;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
+using NUnit.Framework;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
-using Newtonsoft.Json;
 
-namespace ReportPrinterUnitTest.RabbitMQ
+namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
 {
     public class MessageDeserializerTest : TestBase
     {

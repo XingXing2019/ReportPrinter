@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MassTransit.Internals.Reflection;
 using ReportPrinterLibrary.Code.Config.Helper;
 
 namespace ReportPrinterLibrary.Code.Config.Configuration
@@ -6,8 +7,10 @@ namespace ReportPrinterLibrary.Code.Config.Configuration
     public class AppConfig
     {
         public RabbitMQConfig RabbitMQConfig { get; set; }
+        public RedisConfig RedisConfig { get; set; }
         public List<DatabaseConfig> DatabaseConfigList { get; set; }
         public string TargetDatabase { get; set; }
+        public SqlResultCacheManagerType SqlResultCacheManagerType { get; set; }
         public List<ServicePathConfig> ServicePathConfigList { get; set; }
 
         private static AppConfig _instance;

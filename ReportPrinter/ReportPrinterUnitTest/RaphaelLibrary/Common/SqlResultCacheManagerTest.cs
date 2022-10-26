@@ -1,8 +1,8 @@
-﻿using RaphaelLibrary.Code.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Data;
 using NUnit.Framework;
+using RaphaelLibrary.Code.Common.SqlResultCacheManager;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 {
@@ -25,7 +25,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlResultCacheManager.Instance.StoreSqlResult(_messageId, _id, _expectedDataTable);
+                SqlResultMemoryCacheManager.Instance.StoreSqlResult(_messageId, _id, _expectedDataTable);
 
                 Assert.AreEqual(1, _cache.Count);
                 Assert.IsTrue(_cache.ContainsKey(_messageId));
@@ -51,7 +51,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             if (storeData)
             {
-                SqlResultCacheManager.Instance.StoreSqlResult(_messageId, _id, _expectedDataTable);
+                SqlResultMemoryCacheManager.Instance.StoreSqlResult(_messageId, _id, _expectedDataTable);
             }
 
             var expectedCount = storeData ? 1 : 0;
@@ -59,7 +59,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
             try
             {
-                var isSuccess = SqlResultCacheManager.Instance.TryGetSqlResult(_messageId, _id, out var actualDataTable);
+                var isSuccess = SqlResultMemoryCacheManager.Instance.TryGetSqlResult(_messageId, _id, out var actualDataTable);
 
                 Assert.AreEqual(storeData, isSuccess);
                 if (storeData)
@@ -82,9 +82,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlResultCacheManager.Instance.StoreSqlResult(_messageId, _id, _expectedDataTable);
+                SqlResultMemoryCacheManager.Instance.StoreSqlResult(_messageId, _id, _expectedDataTable);
                 Assert.AreEqual(1, _cache.Count);
-                SqlResultCacheManager.Instance.RemoveSqlResult(_messageId);
+                SqlResultMemoryCacheManager.Instance.RemoveSqlResult(_messageId);
                 Assert.AreEqual(0, _cache.Count);
             }
             catch (Exception ex)
@@ -101,7 +101,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         private Dictionary<Guid, Dictionary<string, DataTable>> GetSqlResultCache()
         {
-            return GetPrivateField<Dictionary<Guid, Dictionary<string, DataTable>>>(SqlResultCacheManager.Instance, _fieldName);
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, DataTable>>>(SqlResultMemoryCacheManager.Instance, _fieldName);
         }
 
         private DataTable GenerateDataTable()

@@ -5,9 +5,11 @@ using System.Linq;
 using System.Xml;
 using Microsoft.Data.SqlClient;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlResultCacheManager;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using ReportPrinterDatabase.Code.Database;
+using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -212,7 +214,10 @@ namespace RaphaelLibrary.Code.Render.SQL
         {
             var procName = $"{this.GetType().Name}.{nameof(TryExecuteQuery)}";
 
-            if (userCache && SqlResultCacheManager.Instance.TryGetSqlResult(messageId, Id, out dataTable))
+            var managerType = AppConfig.Instance.SqlResultCacheManagerType;
+            var manager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(managerType);
+
+            if (userCache && manager.TryGetSqlResult(messageId, Id, out dataTable))
             {
                 return true;
             }
@@ -236,7 +241,7 @@ namespace RaphaelLibrary.Code.Render.SQL
 
                 if (userCache)
                 {
-                    SqlResultCacheManager.Instance.StoreSqlResult(messageId, Id, dataTable);
+                    manager.StoreSqlResult(messageId, Id, dataTable);
                 }
 
                 return true;

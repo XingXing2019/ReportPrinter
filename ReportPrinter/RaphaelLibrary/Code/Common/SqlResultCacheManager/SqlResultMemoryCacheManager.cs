@@ -81,7 +81,10 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 
         public void Reset()
         {
+            var procName = $"{GetType().Name}.{nameof(Reset)}";
+           
             _instance = new SqlResultMemoryCacheManager();
+            Logger.Debug($"Reset SqlResultMemoryCacheManager", procName);
         }
     }
 }

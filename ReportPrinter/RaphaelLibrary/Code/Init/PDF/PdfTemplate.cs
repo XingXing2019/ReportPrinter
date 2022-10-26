@@ -157,7 +157,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             {
                 _pdfStructureList[structure].Height = LayoutHelper.CalcPdfStructureHeight(_pageSize, structure, _pdfStructureList);
             }
-            
+
             foreach (var structure in _pdfStructureList.Keys)
             {
                 if (structure == PdfStructure.PdfPageBody)
@@ -216,7 +216,7 @@ namespace RaphaelLibrary.Code.Init.PDF
         public override bool TryCreateReport(IPrintReport message)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreateReport)}";
-            
+
             try
             {
                 StoreSqlVariables(message);

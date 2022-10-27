@@ -1,6 +1,4 @@
-﻿using GreenPipes.Caching;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System;
 
 namespace RaphaelLibrary.Code.Common.SqlResultCacheManager

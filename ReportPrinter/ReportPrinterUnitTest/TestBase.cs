@@ -96,31 +96,6 @@ namespace ReportPrinterUnitTest
         
         #endregion
         
-        #region Database
-
-        protected DataTable ListToDataTable<T>(List<T> list, string tableName)
-        {
-            var dataTable = new DataTable(tableName);
-
-            foreach (PropertyInfo info in typeof(T).GetProperties())
-            {
-                dataTable.Columns.Add(new DataColumn(info.Name, Nullable.GetUnderlyingType(info.PropertyType) ?? info.PropertyType));
-            }
-
-            foreach (var t in list)
-            {
-                var row = dataTable.NewRow();
-                foreach (PropertyInfo info in typeof(T).GetProperties())
-                {
-                    row[info.Name] = info.GetValue(t, null) ?? DBNull.Value;
-                }
-                dataTable.Rows.Add(row);
-            }
-            return dataTable;
-        }
-
-        #endregion
-        
         #region Setup
 
         protected void SetupDummySqlTemplateManager(Dictionary<string, List<string>> sqlDict)

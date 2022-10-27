@@ -6,7 +6,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
 using ReportPrinterLibrary.Code.Log;
 using StackExchange.Redis;
-using static MassTransit.Monitoring.Performance.BuiltInCounters;
 
 namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 {
@@ -45,7 +44,8 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 
             var options = new ConfigurationOptions
             {
-                EndPoints = { { _config.Host, _config.Port } }
+                EndPoints = { { _config.Host, _config.Port } },
+                AllowAdmin = true
             };
 
             _connection = ConnectionMultiplexer.Connect(options);

@@ -10,7 +10,8 @@ namespace ReportPrinterLibrary.Code.Config.Configuration
         public RedisConfig RedisConfig { get; set; }
         public List<DatabaseConfig> DatabaseConfigList { get; set; }
         public string TargetDatabase { get; set; }
-        public SqlResultCacheManagerType SqlResultCacheManagerType { get; set; }
+        public CacheManagerType SqlResultCacheManagerType { get; set; }
+        public CacheManagerType ImageCacheManagerType { get; set; }
         public List<ServicePathConfig> ServicePathConfigList { get; set; }
 
         private static AppConfig _instance;

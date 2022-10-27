@@ -147,8 +147,8 @@ namespace RaphaelLibrary.Code.Init.Label
                 SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
 
                 var managerType = AppConfig.Instance.SqlResultCacheManagerType;
-                var manager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(managerType);
-                manager.RemoveSqlResult(message.MessageId);
+                var sqlResultManager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(managerType);
+                sqlResultManager.RemoveSqlResult(message.MessageId);
             }
         }
     }

@@ -6,17 +6,17 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 {
     public class SqlResultCacheManagerFactory
     {
-        public static ISqlResultCacheManager CreateSqlResultCacheManager(SqlResultCacheManagerType type)
+        public static ISqlResultCacheManager CreateSqlResultCacheManager(CacheManagerType managerType)
         {
             var procName = $"SqlResultCacheManagerFactory.{nameof(CreateSqlResultCacheManager)}";
 
-            if (type == SqlResultCacheManagerType.Memory)
+            if (managerType == CacheManagerType.Memory)
                 return SqlResultMemoryCacheManager.Instance;
-            else if (type == SqlResultCacheManagerType.Redis)
+            else if (managerType == CacheManagerType.Redis)
                 return SqlResultRedisCacheManager.Instance;
             else
             {
-                var error = $"Invalid type: {type} for sql result cache manager";
+                var error = $"Invalid type: {managerType} for sql result cache manager";
                 Logger.Error(error, procName);
                 throw new InvalidOperationException(error);
             }

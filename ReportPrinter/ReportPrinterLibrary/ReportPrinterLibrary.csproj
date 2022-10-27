@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Code\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.0.0" />
     <PackageReference Include="NLog" Version="5.0.0" />
   </ItemGroup>

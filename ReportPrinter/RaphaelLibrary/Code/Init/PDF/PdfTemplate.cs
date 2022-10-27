@@ -6,6 +6,7 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.ImageCacheManager;
 using RaphaelLibrary.Code.Common.SqlResultCacheManager;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
@@ -258,11 +259,14 @@ namespace RaphaelLibrary.Code.Init.PDF
             finally
             {
                 SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
-                ImageCacheManager.Instance.RemoveImage(message.MessageId);
 
-                var managerType = AppConfig.Instance.SqlResultCacheManagerType;
-                var manager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(managerType);
-                manager.RemoveSqlResult(message.MessageId);
+                var imageManagerType = AppConfig.Instance.ImageCacheManagerType;
+                var imageManager = ImageCacheManagerFactory.CreateImageCacheManager(imageManagerType);
+                imageManager.RemoveImage(message.MessageId);
+
+                var sqlResultManagerType = AppConfig.Instance.SqlResultCacheManagerType;
+                var sqlResultManager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(sqlResultManagerType);
+                sqlResultManager.RemoveSqlResult(message.MessageId);
             }
         }
     }

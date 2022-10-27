@@ -3,10 +3,11 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using PdfSharp.Drawing;
-using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.ImageCacheManager;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Structure;
+using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
@@ -55,7 +56,11 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             RenderBoxModel(graph);
 
             XImage image;
-            if (!ImageCacheManager.Instance.TryGetImage(manager.MessageId, _imageSource, out image))
+
+            var managerType = AppConfig.Instance.ImageCacheManagerType;
+            var imageManager = ImageCacheManagerFactory.CreateImageCacheManager(managerType);
+
+            if (!imageManager.TryGetImage(manager.MessageId, _imageSource, out image))
             {
                 if (_sourceType == SourceType.Local)
                 {
@@ -83,7 +88,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     }
                 }
 
-                ImageCacheManager.Instance.StoreImage(manager.MessageId, _imageSource, image);
+                imageManager.StoreImage(manager.MessageId, _imageSource, image);
             }
 
             RenderImage(graph, image);

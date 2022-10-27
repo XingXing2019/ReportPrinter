@@ -215,9 +215,9 @@ namespace RaphaelLibrary.Code.Render.SQL
             var procName = $"{this.GetType().Name}.{nameof(TryExecuteQuery)}";
 
             var managerType = AppConfig.Instance.SqlResultCacheManagerType;
-            var manager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(managerType);
+            var sqlResultManager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(managerType);
 
-            if (userCache && manager.TryGetSqlResult(messageId, Id, out dataTable))
+            if (userCache && sqlResultManager.TryGetSqlResult(messageId, Id, out dataTable))
             {
                 return true;
             }
@@ -241,7 +241,7 @@ namespace RaphaelLibrary.Code.Render.SQL
 
                 if (userCache)
                 {
-                    manager.StoreSqlResult(messageId, Id, dataTable);
+                    sqlResultManager.StoreSqlResult(messageId, Id, dataTable);
                 }
 
                 return true;

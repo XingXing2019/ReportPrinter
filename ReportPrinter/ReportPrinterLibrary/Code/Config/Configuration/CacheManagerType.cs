@@ -1,6 +1,6 @@
 ﻿namespace ReportPrinterLibrary.Code.Config.Configuration
 {
-    public enum SqlResultCacheManagerType
+    public enum CacheManagerType
     {
         Redis,
         Memory

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using PdfSharp.Drawing;
-using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.ImageCacheManager;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 {
@@ -25,7 +25,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
+                ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
 
                 Assert.AreEqual(1, _cache.Count);
                 Assert.IsTrue(_cache.ContainsKey(_messageId));
@@ -51,7 +51,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             if (storeImage)
             {
-                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
+                ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
             }
 
             var expectedCount = storeImage ? 1 : 0;
@@ -59,7 +59,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
             try
             {
-                var isSuccess = ImageCacheManager.Instance.TryGetImage(_messageId, _imageSource, out var actualImage);
+                var isSuccess = ImageMemoryCacheManager.Instance.TryGetImage(_messageId, _imageSource, out var actualImage);
 
                 Assert.AreEqual(storeImage, isSuccess);
                 if (storeImage)
@@ -82,9 +82,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                ImageCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
+                ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
                 Assert.AreEqual(1, _cache.Count);
-                ImageCacheManager.Instance.RemoveImage(_messageId);
+                ImageMemoryCacheManager.Instance.RemoveImage(_messageId);
                 Assert.AreEqual(0, _cache.Count);
             }
             catch (Exception ex)
@@ -102,7 +102,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         private Dictionary<Guid, Dictionary<string, XImage>> GetImageCache()
         {
-            return GetPrivateField<Dictionary<Guid, Dictionary<string, XImage>>>(ImageCacheManager.Instance, _fieldName);
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, XImage>>>(ImageMemoryCacheManager.Instance, _fieldName);
         }
 
         #endregion

@@ -84,7 +84,7 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
             var procName = $"{GetType().Name}.{nameof(Reset)}";
            
             _instance = new SqlResultMemoryCacheManager();
-            Logger.Debug($"Reset SqlResultMemoryCacheManager", procName);
+            Logger.Debug($"Reset {GetType().Name}", procName);
         }
     }
 }

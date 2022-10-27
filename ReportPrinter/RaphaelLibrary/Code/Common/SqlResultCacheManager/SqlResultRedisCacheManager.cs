@@ -1,23 +1,14 @@
-﻿using ReportPrinterLibrary.Code.Config.Configuration;
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Redis;
 using ReportPrinterLibrary.Code.Log;
-using StackExchange.Redis;
 
 namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 {
-    public class SqlResultRedisCacheManager : ISqlResultCacheManager
+    public class SqlResultRedisCacheManager : RedisCacheManagerBase, ISqlResultCacheManager
     {
         private static readonly object _lock = new object();
-
-        private readonly RedisConfig _config;
-        private readonly DistributedCacheEntryOptions _options;
-        private readonly IDistributedCache _cache;
-        private readonly IConnectionMultiplexer _connection;
-
+        
         private static SqlResultRedisCacheManager _instance;
         public static SqlResultRedisCacheManager Instance
         {
@@ -38,29 +29,7 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
             }
         }
 
-        private SqlResultRedisCacheManager()
-        {
-            _config = AppConfig.Instance.RedisConfig;
-
-            var options = new ConfigurationOptions
-            {
-                EndPoints = { { _config.Host, _config.Port } },
-                AllowAdmin = true
-            };
-
-            _connection = ConnectionMultiplexer.Connect(options);
-
-            var optionsAccessor = new RedisCacheOptions
-            {
-                ConfigurationOptions = options
-            };
-
-            _cache = new RedisCache(optionsAccessor);
-            _options = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_config.AbsoluteExpirationRelativeToNow)
-            };
-        }
+        private SqlResultRedisCacheManager() { }
 
         public void StoreSqlResult(Guid messageId, string sqlId, DataTable sqlResult)
         {
@@ -71,7 +40,7 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
                 var key = RedisCacheHelper.CreateRedisKey(GetType().Name, messageId, sqlId);
                 var value = RedisCacheHelper.ObjectToByteArray(sqlResult);
 
-                _cache.Set(key, value, _options);
+                Cache.Set(key, value, Options);
                 Logger.Debug($"Store sql result for message: {messageId}, sql: {sqlId} into redis cache", procName);
             }
             catch (Exception ex)
@@ -90,7 +59,7 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
             try
             {
                 var key = RedisCacheHelper.CreateRedisKey(GetType().Name, messageId, sqlId);
-                var value = _cache.Get(key);
+                var value = Cache.Get(key);
 
                 if (value == null)
                 {
@@ -115,13 +84,13 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 
             try
             {
-                var db = _connection.GetDatabase();
-                var endpoints = _connection.GetEndPoints();
-                var pattern = $"SqlResultRedisCacheManager_{messageId}_*";
+                var db = Connection.GetDatabase();
+                var endpoints = Connection.GetEndPoints();
+                var pattern = $"{GetType().Name}_{messageId}_*";
 
                 foreach (var endpoint in endpoints)
                 {
-                    var server = _connection.GetServer(endpoint);
+                    var server = Connection.GetServer(endpoint);
                     var keys = server.Keys(database: db.Database, pattern: pattern).ToArray();
                     db.KeyDelete(keys);
                 }
@@ -136,22 +105,9 @@ namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
             }
         }
 
-        public void Reset()
+        public new void Reset()
         {
-            var procName = $"{GetType().Name}.{nameof(Reset)}";
-
-            try
-            {
-                var server = _connection.GetServer(_config.Host, _config.Port);
-                server.FlushAllDatabases();
-                Logger.Debug($"Reset SqlResultRedisCacheManager", procName);
-            }
-            catch (Exception ex)
-            {
-                var error = $"Unable to reset SqlResultRedisCacheManager. Ex: {ex.Message}";
-                Logger.Error(error, procName);
-                throw new ApplicationException(error);
-            }
+            base.Reset();
         }
     }
 }

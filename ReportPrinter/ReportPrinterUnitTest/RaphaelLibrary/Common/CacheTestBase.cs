@@ -37,6 +37,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             _connection = ConnectionMultiplexer.Connect(options);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            FlushAllDatabases();
+        }
+
+
         protected DataTable GenerateDataTable()
         {
             var testDataList = new List<TestData>

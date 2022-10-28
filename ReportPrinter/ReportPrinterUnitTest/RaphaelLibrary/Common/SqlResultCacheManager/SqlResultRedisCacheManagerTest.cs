@@ -16,7 +16,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
 
         public SqlResultRedisCacheManagerTest()
         {
-            
             _expectedDataTable = GenerateDataTable();
         }
 
@@ -45,10 +44,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
             {
                 Assert.Fail(ex.Message);
             }
-            finally
-            {
-                FlushAllDatabases();
-            }
         }
 
         [Test]
@@ -76,10 +71,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                FlushAllDatabases();
             }
         }
         
@@ -114,10 +105,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
             {
                 Assert.Fail(ex.Message);
             }
-            finally
-            {
-                FlushAllDatabases();
-            }
         }
 
         [Test]
@@ -141,10 +128,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                FlushAllDatabases();
             }
         }
     }

@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
-namespace ReportPrinterUnitTest.RaphaelLibrary.Common
+namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
 {
-    public class SqlVariableManagerTest : TestBase
+    public class SqlVariableMemoryCacheManagerTest : TestBase
     {
         private readonly string _fieldName = "_sqlVariableRepo";
         private readonly Guid _messageId = Guid.NewGuid();
         private readonly Dictionary<string, SqlVariable> _expectedVariables;
         private readonly Dictionary<Guid, Dictionary<string, SqlVariable>> _variableRepo;
 
-        public SqlVariableManagerTest()
+        public SqlVariableMemoryCacheManagerTest()
         {
             _expectedVariables = GenerateSqlVariables();
             _variableRepo = GetSqlVariableRepo();
@@ -25,7 +24,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlVariableManager.StoreSqlVariables(_messageId, _expectedVariables);
+                SqlVariableMemoryCacheManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
 
                 Assert.AreEqual(1, _variableRepo.Count);
                 Assert.IsTrue(_variableRepo.ContainsKey(_messageId));
@@ -48,9 +47,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlVariableManager.StoreSqlVariables(_messageId, _expectedVariables);
+                SqlVariableMemoryCacheManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
                 Assert.AreEqual(1, _variableRepo.Count);
-                var actualVariables = SqlVariableManager.GetSqlVariables(_messageId);
+                var actualVariables = SqlVariableMemoryCacheManager.Instance.GetSqlVariables(_messageId);
                 AssertSqlVariables(_expectedVariables, actualVariables);
             }
             catch (Exception ex)
@@ -68,9 +67,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlVariableManager.StoreSqlVariables(_messageId, _expectedVariables);
+                SqlVariableMemoryCacheManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
                 Assert.AreEqual(1, _variableRepo.Count);
-                SqlVariableManager.RemoveSqlVariables(_messageId);
+                SqlVariableMemoryCacheManager.Instance.RemoveSqlVariables(_messageId);
                 Assert.AreEqual(0, _variableRepo.Count);
             }
             catch (Exception ex)
@@ -111,7 +110,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
             foreach (var name in expectedVariables.Keys)
             {
                 Assert.IsTrue(actualVariables.ContainsKey(name));
-                
+
                 var expectedVariable = expectedVariables[name];
                 var actualVariable = actualVariables[name];
 

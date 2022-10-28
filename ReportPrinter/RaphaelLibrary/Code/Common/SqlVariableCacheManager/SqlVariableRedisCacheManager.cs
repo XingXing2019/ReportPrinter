@@ -57,6 +57,7 @@ namespace RaphaelLibrary.Code.Common.SqlVariableCacheManager
 
             var key = messageId.ToString();
             var value = Cache.Get(key);
+
             var variables = RedisCacheHelper.ByteArrayToObject<Dictionary<string, SqlVariable>>(value);
 
             Logger.Debug($"Get sql variables for message: {messageId}", procName);

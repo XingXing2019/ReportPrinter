@@ -19,6 +19,7 @@ namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
         bool IsValid { get; }
     }
 
+    [Serializable]
     public class SqlVariable
     {
         public string Name { get; set; }

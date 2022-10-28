@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
@@ -142,7 +142,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
             {
                 if (operation == "RemoveSqlVariable")
                 {
-                    var sqlVariableRepo = GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(SqlVariableManager.Instance, "_sqlVariableRepo");
+                    var sqlVariableRepo = GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(SqlVariableMemoryCacheManager.Instance, "_sqlVariableRepo");
                     sqlVariableRepo[message.MessageId].Remove("PrinterId");
                 }
                 else if (operation == "ReplaceQuery")

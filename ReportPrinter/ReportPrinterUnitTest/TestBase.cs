@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using NUnit.Framework;
-using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.PDF;
 using RaphaelLibrary.Code.Init.SQL;
@@ -21,6 +21,7 @@ namespace ReportPrinterUnitTest
     public abstract class TestBase
     {
         protected readonly Dictionary<string, string> ServicePath;
+        protected readonly ISqlVariableCacheManager SqlVariableManager;
 
         private readonly Random _random;
 
@@ -29,6 +30,9 @@ namespace ReportPrinterUnitTest
             var servicePathList = AppConfig.Instance.ServicePathConfigList;
             ServicePath = servicePathList.ToDictionary(x => x.Id, x => x.Path);
 
+            var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+            SqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
+            
             _random = new Random();
         }
 
@@ -134,7 +138,7 @@ namespace ReportPrinterUnitTest
         protected void SetupDummySqlVariableManager(Guid messageId, Dictionary<string, object> sqlVariablesDict)
         {
             var sqlVariables = sqlVariablesDict.ToDictionary(x => x.Key, x => new SqlVariable { Name = x.Key, Value = x.Value.ToString() });
-            SqlVariableManager.Instance.StoreSqlVariables(messageId, sqlVariables);
+            SqlVariableManager.StoreSqlVariables(messageId, sqlVariables);
         }
 
         #endregion

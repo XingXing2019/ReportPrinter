@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
-namespace RaphaelLibrary.Code.Common
+namespace RaphaelLibrary.Code.Common.SqlVariableCacheManager
 {
-    public class SqlVariableManager
+    public class SqlVariableMemoryCacheManager : ISqlVariableCacheManager
     {
         private static readonly object _lock = new object();
         private Dictionary<Guid, Dictionary<string, SqlVariable>> _sqlVariableRepo;
 
-        private static SqlVariableManager _instance;
-        public static SqlVariableManager Instance
+        private static SqlVariableMemoryCacheManager _instance;
+        public static SqlVariableMemoryCacheManager Instance
         {
             get
             {
@@ -21,7 +21,7 @@ namespace RaphaelLibrary.Code.Common
                     {
                         if (_instance == null)
                         {
-                            _instance = new SqlVariableManager();
+                            _instance = new SqlVariableMemoryCacheManager();
                         }
                     }
                 }
@@ -30,7 +30,7 @@ namespace RaphaelLibrary.Code.Common
             }
         }
 
-        public SqlVariableManager()
+        private SqlVariableMemoryCacheManager()
         {
             lock (_lock)
             {
@@ -40,7 +40,7 @@ namespace RaphaelLibrary.Code.Common
 
         public void StoreSqlVariables(Guid messageId, Dictionary<string, SqlVariable> sqlVariables)
         {
-            var procName = $"{this.GetType().Name}.{nameof(StoreSqlVariables)}";
+            var procName = $"{GetType().Name}.{nameof(StoreSqlVariables)}";
 
             lock (_lock)
             {
@@ -51,15 +51,15 @@ namespace RaphaelLibrary.Code.Common
 
         public Dictionary<string, SqlVariable> GetSqlVariables(Guid messageId)
         {
-            var procName = $"{this.GetType().Name}.{nameof(GetSqlVariables)}";
-            
+            var procName = $"{GetType().Name}.{nameof(GetSqlVariables)}";
+
             Logger.Debug($"Get sql variables for message: {messageId}", procName);
             return _sqlVariableRepo[messageId];
         }
 
         public void RemoveSqlVariables(Guid messageId)
         {
-            var procName = $"{this.GetType().Name}.{nameof(RemoveSqlVariables)}";
+            var procName = $"{GetType().Name}.{nameof(RemoveSqlVariables)}";
 
             if (_sqlVariableRepo.ContainsKey(messageId))
             {
@@ -70,7 +70,10 @@ namespace RaphaelLibrary.Code.Common
 
         public void Reset()
         {
-            _instance = new SqlVariableManager();
+            var procName = $"{GetType().Name}.{nameof(Reset)}";
+
+            _instance = new SqlVariableMemoryCacheManager();
+            Logger.Debug($"Reset {GetType().Name}", procName);
         }
     }
 }

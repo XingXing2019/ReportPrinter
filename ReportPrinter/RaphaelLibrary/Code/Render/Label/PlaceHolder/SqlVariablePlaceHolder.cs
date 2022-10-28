@@ -1,5 +1,7 @@
 ﻿using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Render.Label.Manager;
+using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
@@ -19,7 +21,10 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
             value = string.Empty;
             
             var messageId = manager.MessageId;
-            var sqlVariables = SqlVariableManager.Instance.GetSqlVariables(messageId);
+            var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+            var sqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
+            var sqlVariables = sqlVariableManager.GetSqlVariables(messageId);
+
             if (!sqlVariables.ContainsKey(_name))
             {
                 Logger.Error($"Unable to retrieve sql variable with name: {_name} for message: {messageId}", procName);

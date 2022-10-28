@@ -6,6 +6,7 @@ using System.Xml;
 using Microsoft.Data.SqlClient;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Common.SqlResultCacheManager;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using ReportPrinterDatabase.Code.Database;
@@ -184,7 +185,10 @@ namespace RaphaelLibrary.Code.Render.SQL
             var procName = $"{this.GetType().Name}.{nameof(TrySetSqlVariables)}";
             sqlVariables = null;
 
-            var values = SqlVariableManager.Instance.GetSqlVariables(messageId);
+            var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+            var sqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
+            var values = sqlVariableManager.GetSqlVariables(messageId);
+
             foreach (var variable in _sqlVariables)
             {
                 if (!values.ContainsKey(variable.Key) && variable.Key != extraSqlVariable.Key)

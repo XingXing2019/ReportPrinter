@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common
@@ -24,7 +25,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlVariableManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
+                SqlVariableManager.StoreSqlVariables(_messageId, _expectedVariables);
 
                 Assert.AreEqual(1, _variableRepo.Count);
                 Assert.IsTrue(_variableRepo.ContainsKey(_messageId));
@@ -47,9 +48,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlVariableManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
+                SqlVariableManager.StoreSqlVariables(_messageId, _expectedVariables);
                 Assert.AreEqual(1, _variableRepo.Count);
-                var actualVariables = SqlVariableManager.Instance.GetSqlVariables(_messageId);
+                var actualVariables = SqlVariableManager.GetSqlVariables(_messageId);
                 AssertSqlVariables(_expectedVariables, actualVariables);
             }
             catch (Exception ex)
@@ -67,9 +68,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                SqlVariableManager.Instance.StoreSqlVariables(_messageId, _expectedVariables);
+                SqlVariableManager.StoreSqlVariables(_messageId, _expectedVariables);
                 Assert.AreEqual(1, _variableRepo.Count);
-                SqlVariableManager.Instance.RemoveSqlVariables(_messageId);
+                SqlVariableManager.RemoveSqlVariables(_messageId);
                 Assert.AreEqual(0, _variableRepo.Count);
             }
             catch (Exception ex)
@@ -87,7 +88,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         private Dictionary<Guid, Dictionary<string, SqlVariable>> GetSqlVariableRepo()
         {
-            return GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(SqlVariableManager.Instance, _fieldName);
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, SqlVariable>>>(SqlVariableMemoryCacheManager.Instance, _fieldName);
         }
 
         private Dictionary<string, SqlVariable> GenerateSqlVariables()

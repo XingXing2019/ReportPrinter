@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
 using NUnit.Framework;
-using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.PDF;
 using RaphaelLibrary.Code.Init.SQL;
@@ -22,6 +21,7 @@ namespace ReportPrinterUnitTest
     public abstract class TestBase
     {
         protected readonly Dictionary<string, string> ServicePath;
+        protected readonly ISqlVariableCacheManager SqlVariableManager;
 
         private readonly Random _random;
 
@@ -30,6 +30,9 @@ namespace ReportPrinterUnitTest
             var servicePathList = AppConfig.Instance.ServicePathConfigList;
             ServicePath = servicePathList.ToDictionary(x => x.Id, x => x.Path);
 
+            var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+            SqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
+            
             _random = new Random();
         }
 
@@ -96,31 +99,6 @@ namespace ReportPrinterUnitTest
         
         #endregion
         
-        #region Database
-
-        protected DataTable ListToDataTable<T>(List<T> list, string tableName)
-        {
-            var dataTable = new DataTable(tableName);
-
-            foreach (PropertyInfo info in typeof(T).GetProperties())
-            {
-                dataTable.Columns.Add(new DataColumn(info.Name, Nullable.GetUnderlyingType(info.PropertyType) ?? info.PropertyType));
-            }
-
-            foreach (var t in list)
-            {
-                var row = dataTable.NewRow();
-                foreach (PropertyInfo info in typeof(T).GetProperties())
-                {
-                    row[info.Name] = info.GetValue(t, null) ?? DBNull.Value;
-                }
-                dataTable.Rows.Add(row);
-            }
-            return dataTable;
-        }
-
-        #endregion
-        
         #region Setup
 
         protected void SetupDummySqlTemplateManager(Dictionary<string, List<string>> sqlDict)
@@ -160,7 +138,7 @@ namespace ReportPrinterUnitTest
         protected void SetupDummySqlVariableManager(Guid messageId, Dictionary<string, object> sqlVariablesDict)
         {
             var sqlVariables = sqlVariablesDict.ToDictionary(x => x.Key, x => new SqlVariable { Name = x.Key, Value = x.Value.ToString() });
-            SqlVariableManager.Instance.StoreSqlVariables(messageId, sqlVariables);
+            SqlVariableManager.StoreSqlVariables(messageId, sqlVariables);
         }
 
         #endregion
@@ -414,6 +392,10 @@ namespace ReportPrinterUnitTest
 
                 if (!type.IsClass || type == typeof(string))
                     Assert.AreEqual(obj1, obj2);
+                else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    AssertDictionary(obj1, obj2);
+                else if (typeof(IEnumerable).IsAssignableFrom(type))
+                    AssertList(type, obj1, obj2);
                 else
                 {
                     var propInfos = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);

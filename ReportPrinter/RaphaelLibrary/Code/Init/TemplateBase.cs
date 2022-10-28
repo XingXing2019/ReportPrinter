@@ -1,6 +1,7 @@
 ﻿using System.Linq;
-using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Print;
+using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Init
@@ -13,7 +14,10 @@ namespace RaphaelLibrary.Code.Init
         protected void StoreSqlVariables(IPrintReport message)
         {
             var sqlVariables = message.SqlVariables.ToDictionary(x => x.Name, x => new SqlVariable { Name = x.Name, Value = x.Value });
-            SqlVariableManager.Instance.StoreSqlVariables(message.MessageId, sqlVariables);
+
+            var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+            var sqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
+            sqlVariableManager.StoreSqlVariables(message.MessageId, sqlVariables);
         }
 
         protected bool PrintReport(IPrintReport message, string fileName, string filePath, int timeout)

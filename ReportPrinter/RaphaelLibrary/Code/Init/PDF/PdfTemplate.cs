@@ -6,10 +6,14 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.ImageCacheManager;
+using RaphaelLibrary.Code.Common.SqlResultCacheManager;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
+using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -155,7 +159,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             {
                 _pdfStructureList[structure].Height = LayoutHelper.CalcPdfStructureHeight(_pageSize, structure, _pdfStructureList);
             }
-            
+
             foreach (var structure in _pdfStructureList.Keys)
             {
                 if (structure == PdfStructure.PdfPageBody)
@@ -214,7 +218,7 @@ namespace RaphaelLibrary.Code.Init.PDF
         public override bool TryCreateReport(IPrintReport message)
         {
             var procName = $"{this.GetType().Name}.{nameof(TryCreateReport)}";
-            
+
             try
             {
                 StoreSqlVariables(message);
@@ -255,9 +259,15 @@ namespace RaphaelLibrary.Code.Init.PDF
             }
             finally
             {
-                SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
-                SqlResultCacheManager.Instance.RemoveSqlResult(message.MessageId);
-                ImageCacheManager.Instance.RemoveImage(message.MessageId);
+                var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+                var sqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
+                sqlVariableManager.RemoveSqlVariables(message.MessageId);
+
+                ImageMemoryCacheManager.Instance.RemoveImage(message.MessageId);
+
+                var sqlResultManagerType = AppConfig.Instance.SqlResultCacheManagerType;
+                var sqlResultManager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(sqlResultManagerType);
+                sqlResultManager.RemoveSqlResult(message.MessageId);
             }
         }
     }

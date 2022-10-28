@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Data;
 using ReportPrinterLibrary.Code.Log;
 
-namespace RaphaelLibrary.Code.Common
+namespace RaphaelLibrary.Code.Common.SqlResultCacheManager
 {
-    public class SqlResultCacheManager
+    public class SqlResultMemoryCacheManager : ISqlResultCacheManager
     {
         private static readonly object _lock = new object();
         private readonly Dictionary<Guid, Dictionary<string, DataTable>> _cache;
 
-        private static SqlResultCacheManager _instance;
-        public static SqlResultCacheManager Instance
+        private static SqlResultMemoryCacheManager _instance;
+        public static SqlResultMemoryCacheManager Instance
         {
             get
             {
@@ -21,7 +21,7 @@ namespace RaphaelLibrary.Code.Common
                     {
                         if (_instance == null)
                         {
-                            _instance = new SqlResultCacheManager();
+                            _instance = new SqlResultMemoryCacheManager();
                         }
                     }
                 }
@@ -30,14 +30,14 @@ namespace RaphaelLibrary.Code.Common
             }
         }
 
-        private SqlResultCacheManager()
+        private SqlResultMemoryCacheManager()
         {
             _cache = new Dictionary<Guid, Dictionary<string, DataTable>>();
         }
 
         public void StoreSqlResult(Guid messageId, string sqlId, DataTable sqlResult)
         {
-            var procName = $"{this.GetType().Name}.{nameof(StoreSqlResult)}";
+            var procName = $"{GetType().Name}.{nameof(StoreSqlResult)}";
 
             lock (_lock)
             {
@@ -47,41 +47,44 @@ namespace RaphaelLibrary.Code.Common
                 if (!_cache[messageId].ContainsKey(sqlId))
                 {
                     _cache[messageId].Add(sqlId, sqlResult);
-                    Logger.Debug($"Store sql result for message: {messageId}, sql: {sqlId}. Current cache size: {_cache.Count}", procName);
+                    Logger.Debug($"Store sql result for message: {messageId}, sql: {sqlId} into memory cache. Current cache size: {_cache.Count}", procName);
                 }
             }
         }
 
         public bool TryGetSqlResult(Guid messageId, string sqlId, out DataTable sqlResult)
         {
-            var procName = $"{this.GetType().Name}.{nameof(TryGetSqlResult)}";
+            var procName = $"{GetType().Name}.{nameof(TryGetSqlResult)}";
             sqlResult = null;
-            
+
             if (!_cache.ContainsKey(messageId) || !_cache[messageId].ContainsKey(sqlId))
             {
-                Logger.Debug($"Unable to retrieve sql result from cache for message: {messageId}, execute query for sql: {sqlId}", procName);
+                Logger.Debug($"Unable to retrieve sql result from memory cache for message: {messageId}, execute query for sql: {sqlId}", procName);
                 return false;
             }
 
-            Logger.Debug($"Retrieve sql result from cache for message: {messageId}, skip executing query for sql: {sqlId}", procName);
+            Logger.Debug($"Retrieve sql result from memory cache for message: {messageId}, skip executing query for sql: {sqlId}", procName);
             sqlResult = _cache[messageId][sqlId];
             return true;
         }
 
         public void RemoveSqlResult(Guid messageId)
         {
-            var procName = $"{this.GetType().Name}.{nameof(RemoveSqlResult)}";
+            var procName = $"{GetType().Name}.{nameof(RemoveSqlResult)}";
 
             if (_cache.ContainsKey(messageId))
             {
                 _cache.Remove(messageId);
-                Logger.Debug($"Remove all sql result for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
+                Logger.Debug($"Remove all sql result for message: {messageId} from memory cache. Current cache size: {_cache.Count}", procName);
             }
         }
 
         public void Reset()
         {
-            _instance = new SqlResultCacheManager();
+            var procName = $"{GetType().Name}.{nameof(Reset)}";
+           
+            _instance = new SqlResultMemoryCacheManager();
+            Logger.Debug($"Reset {GetType().Name}", procName);
         }
     }
 }

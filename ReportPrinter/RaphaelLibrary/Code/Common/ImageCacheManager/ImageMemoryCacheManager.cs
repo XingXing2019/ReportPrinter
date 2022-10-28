@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using PdfSharp.Drawing;
 using ReportPrinterLibrary.Code.Log;
 
-namespace RaphaelLibrary.Code.Common
+namespace RaphaelLibrary.Code.Common.ImageCacheManager
 {
-    public class ImageCacheManager
+    public class ImageMemoryCacheManager
     {
         private static readonly object _lock = new object();
         private readonly Dictionary<Guid, Dictionary<string, XImage>> _cache;
 
-        private static ImageCacheManager _instance;
-        public static ImageCacheManager Instance
+        private static ImageMemoryCacheManager _instance;
+        public static ImageMemoryCacheManager Instance
         {
             get
             {
@@ -21,7 +21,7 @@ namespace RaphaelLibrary.Code.Common
                     {
                         if (_instance == null)
                         {
-                            _instance = new ImageCacheManager();
+                            _instance = new ImageMemoryCacheManager();
                         }
                     }
                 }
@@ -30,7 +30,7 @@ namespace RaphaelLibrary.Code.Common
             }
         }
 
-        private ImageCacheManager()
+        private ImageMemoryCacheManager()
         {
             lock (_lock)
             {
@@ -40,7 +40,7 @@ namespace RaphaelLibrary.Code.Common
 
         public void StoreImage(Guid messageId, string imageSource, XImage image)
         {
-            var procName = $"{this.GetType().Name}.{nameof(StoreImage)}";
+            var procName = $"{GetType().Name}.{nameof(StoreImage)}";
 
             lock (_lock)
             {
@@ -50,41 +50,44 @@ namespace RaphaelLibrary.Code.Common
                 if (!_cache[messageId].ContainsKey(imageSource))
                 {
                     _cache[messageId].Add(imageSource, image);
-                    Logger.Debug($"Store image for message: {messageId}, image source: {imageSource}. Current cache size: {_cache.Count}", procName);
+                    Logger.Debug($"Store image for message: {messageId} in memory cache, image source: {imageSource}. Current cache size: {_cache.Count}", procName);
                 }
             }
         }
 
         public bool TryGetImage(Guid messageId, string imageSource, out XImage image)
         {
-            var procName = $"{this.GetType().Name}.{nameof(TryGetImage)}";
+            var procName = $"{GetType().Name}.{nameof(TryGetImage)}";
             image = null;
 
             if (!_cache.ContainsKey(messageId) || !_cache[messageId].ContainsKey(imageSource))
             {
-                Logger.Debug($"Unable to retrieve image from cache for message: {messageId}, image source: {imageSource}", procName);
+                Logger.Debug($"Unable to retrieve image from memory cache for message: {messageId}, image source: {imageSource}", procName);
                 return false;
             }
 
-            Logger.Debug($"Retrieve image from cache for message: {messageId}, image source: {imageSource}", procName);
+            Logger.Debug($"Retrieve image from memory cache for message: {messageId}, image source: {imageSource}", procName);
             image = _cache[messageId][imageSource];
             return true;
         }
 
         public void RemoveImage(Guid messageId)
         {
-            var procName = $"{this.GetType().Name}.{nameof(RemoveImage)}";
+            var procName = $"{GetType().Name}.{nameof(RemoveImage)}";
 
             if (_cache.ContainsKey(messageId))
             {
                 _cache.Remove(messageId);
-                Logger.Debug($"Remove all images for message: {messageId} from cache. Current cache size: {_cache.Count}", procName);
+                Logger.Debug($"Remove all images for message: {messageId} from memory cache. Current cache size: {_cache.Count}", procName);
             }
         }
 
         public void Reset()
         {
-            _instance = new ImageCacheManager();
+            var procName = $"{GetType().Name}.{nameof(Reset)}";
+
+            _instance = new ImageMemoryCacheManager();
+            Logger.Debug($"Reset {GetType().Name}", procName);
         }
     }
 }

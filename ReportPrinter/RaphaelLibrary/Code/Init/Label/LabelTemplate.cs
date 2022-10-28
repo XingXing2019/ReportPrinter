@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using RaphaelLibrary.Code.Common;
+using RaphaelLibrary.Code.Common.SqlResultCacheManager;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Render.PDF.Helper;
+using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -142,8 +145,13 @@ namespace RaphaelLibrary.Code.Init.Label
             }
             finally
             {
-                SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
-                SqlResultCacheManager.Instance.RemoveSqlResult(message.MessageId);
+                var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+                var sqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
+                sqlVariableManager.RemoveSqlVariables(message.MessageId);
+
+                var sqlResultManagerType = AppConfig.Instance.SqlResultCacheManagerType;
+                var sqlResultManager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(sqlResultManagerType);
+                sqlResultManager.RemoveSqlResult(message.MessageId);
             }
         }
     }

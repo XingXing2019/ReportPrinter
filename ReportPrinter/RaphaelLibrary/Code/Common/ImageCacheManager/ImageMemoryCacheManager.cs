@@ -5,7 +5,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Common.ImageCacheManager
 {
-    public class ImageMemoryCacheManager : IImageCacheManager
+    public class ImageMemoryCacheManager
     {
         private static readonly object _lock = new object();
         private readonly Dictionary<Guid, Dictionary<string, XImage>> _cache;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -389,6 +388,10 @@ namespace ReportPrinterUnitTest
 
                 if (!type.IsClass || type == typeof(string))
                     Assert.AreEqual(obj1, obj2);
+                else if (typeof(IEnumerable).IsAssignableFrom(type))
+                    AssertList(type, obj1, obj2);
+                else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    AssertDictionary(obj1, obj2);
                 else
                 {
                     var propInfos = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);

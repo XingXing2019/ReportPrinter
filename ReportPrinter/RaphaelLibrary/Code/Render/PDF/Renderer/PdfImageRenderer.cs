@@ -56,11 +56,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
             RenderBoxModel(graph);
 
             XImage image;
-
-            var managerType = AppConfig.Instance.ImageCacheManagerType;
-            var imageManager = ImageCacheManagerFactory.CreateImageCacheManager(managerType);
-
-            if (!imageManager.TryGetImage(manager.MessageId, _imageSource, out image))
+            if (!ImageMemoryCacheManager.Instance.TryGetImage(manager.MessageId, _imageSource, out image))
             {
                 if (_sourceType == SourceType.Local)
                 {
@@ -88,7 +84,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
                     }
                 }
 
-                imageManager.StoreImage(manager.MessageId, _imageSource, image);
+                ImageMemoryCacheManager.Instance.StoreImage(manager.MessageId, _imageSource, image);
             }
 
             RenderImage(graph, image);

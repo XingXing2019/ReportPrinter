@@ -11,7 +11,6 @@ namespace ReportPrinterLibrary.Code.Config.Configuration
         public List<DatabaseConfig> DatabaseConfigList { get; set; }
         public string TargetDatabase { get; set; }
         public CacheManagerType SqlResultCacheManagerType { get; set; }
-        public CacheManagerType ImageCacheManagerType { get; set; }
         public List<ServicePathConfig> ServicePathConfigList { get; set; }
 
         private static AppConfig _instance;

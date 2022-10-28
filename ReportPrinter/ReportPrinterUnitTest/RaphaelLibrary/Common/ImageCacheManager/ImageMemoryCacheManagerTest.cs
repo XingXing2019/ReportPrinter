@@ -4,9 +4,9 @@ using NUnit.Framework;
 using PdfSharp.Drawing;
 using RaphaelLibrary.Code.Common.ImageCacheManager;
 
-namespace ReportPrinterUnitTest.RaphaelLibrary.Common
+namespace ReportPrinterUnitTest.RaphaelLibrary.Common.ImageCacheManager
 {
-    public class ImageCacheManagerTest : TestBase
+    public class ImageMemoryCacheManagerTest : TestBase
     {
         private readonly string _imageSource = @".\RaphaelLibrary\Common\Image\Logo.png";
         private readonly Guid _messageId = Guid.NewGuid();
@@ -14,7 +14,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         private readonly XImage _expectedImage;
         private readonly Dictionary<Guid, Dictionary<string, XImage>> _cache;
 
-        public ImageCacheManagerTest()
+        public ImageMemoryCacheManagerTest()
         {
             _expectedImage = XImage.FromFile(_imageSource);
             _cache = GetImageCache();
@@ -25,7 +25,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
+                global::RaphaelLibrary.Code.Common.ImageCacheManager.ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
 
                 Assert.AreEqual(1, _cache.Count);
                 Assert.IsTrue(_cache.ContainsKey(_messageId));
@@ -51,7 +51,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             if (storeImage)
             {
-                ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
+                global::RaphaelLibrary.Code.Common.ImageCacheManager.ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
             }
 
             var expectedCount = storeImage ? 1 : 0;
@@ -59,7 +59,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
             try
             {
-                var isSuccess = ImageMemoryCacheManager.Instance.TryGetImage(_messageId, _imageSource, out var actualImage);
+                var isSuccess = global::RaphaelLibrary.Code.Common.ImageCacheManager.ImageMemoryCacheManager.Instance.TryGetImage(_messageId, _imageSource, out var actualImage);
 
                 Assert.AreEqual(storeImage, isSuccess);
                 if (storeImage)
@@ -82,9 +82,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
         {
             try
             {
-                ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
+                global::RaphaelLibrary.Code.Common.ImageCacheManager.ImageMemoryCacheManager.Instance.StoreImage(_messageId, _imageSource, _expectedImage);
                 Assert.AreEqual(1, _cache.Count);
-                ImageMemoryCacheManager.Instance.RemoveImage(_messageId);
+                global::RaphaelLibrary.Code.Common.ImageCacheManager.ImageMemoryCacheManager.Instance.RemoveImage(_messageId);
                 Assert.AreEqual(0, _cache.Count);
             }
             catch (Exception ex)
@@ -102,7 +102,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
         private Dictionary<Guid, Dictionary<string, XImage>> GetImageCache()
         {
-            return GetPrivateField<Dictionary<Guid, Dictionary<string, XImage>>>(ImageMemoryCacheManager.Instance, _fieldName);
+            return GetPrivateField<Dictionary<Guid, Dictionary<string, XImage>>>(global::RaphaelLibrary.Code.Common.ImageCacheManager.ImageMemoryCacheManager.Instance, _fieldName);
         }
 
         #endregion

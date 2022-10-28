@@ -259,10 +259,7 @@ namespace RaphaelLibrary.Code.Init.PDF
             finally
             {
                 SqlVariableManager.Instance.RemoveSqlVariables(message.MessageId);
-
-                var imageManagerType = AppConfig.Instance.ImageCacheManagerType;
-                var imageManager = ImageCacheManagerFactory.CreateImageCacheManager(imageManagerType);
-                imageManager.RemoveImage(message.MessageId);
+                ImageMemoryCacheManager.Instance.RemoveImage(message.MessageId);
 
                 var sqlResultManagerType = AppConfig.Instance.SqlResultCacheManagerType;
                 var sqlResultManager = SqlResultCacheManagerFactory.CreateSqlResultCacheManager(sqlResultManagerType);

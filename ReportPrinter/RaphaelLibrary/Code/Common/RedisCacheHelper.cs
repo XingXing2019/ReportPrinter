@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Xml.Serialization;
 using ReportPrinterLibrary.Code.Log;
 
@@ -20,12 +19,8 @@ namespace RaphaelLibrary.Code.Common
                 Logger.Error(error, procName);
                 throw new InvalidOperationException(error);
             }
-
-            var type = typeof(T);
-            var serializable = type.GetCustomAttributes(typeof(SerializableAttribute), true).FirstOrDefault() as SerializableAttribute;
-            var isSerializable = serializable != null;
-
-            if (isSerializable)
+            
+            if (IsSerializable(typeof(T)))
             {
                 var bf = new BinaryFormatter();
                 using var stream = new MemoryStream();
@@ -39,13 +34,6 @@ namespace RaphaelLibrary.Code.Common
                 serializer.Serialize(stream, obj);
                 return stream.ToArray();
             }
-           
-
-            //using var writer = new StringWriter();
-            //var serializer = new XmlSerializer(typeof(T));
-            //serializer.Serialize(writer, obj);
-            //var str = writer.ToString();
-            //return Encoding.ASCII.GetBytes(str);
         }
 
         public static T ByteArrayToObject<T>(byte[] arr)
@@ -58,12 +46,8 @@ namespace RaphaelLibrary.Code.Common
                 Logger.Error(error, procName);
                 throw new InvalidOperationException(error);
             }
-
-            var type = typeof(T);
-            var serializable = type.GetCustomAttributes(typeof(SerializableAttribute), true).FirstOrDefault() as SerializableAttribute;
-            var isSerializable = serializable != null;
-
-            if (isSerializable)
+            
+            if (IsSerializable(typeof(T)))
             {
                 var bf = new BinaryFormatter();
                 using var stream = new MemoryStream();
@@ -78,18 +62,24 @@ namespace RaphaelLibrary.Code.Common
                 var obj = serializer.Deserialize(stream);
                 return (T)obj;
             }
-            
-
-            //var str = Encoding.ASCII.GetString(arr);
-            //using var reader = new StringReader(str);
-            //var serializer = new XmlSerializer(typeof(T));
-            //var obj = serializer.Deserialize(reader);
-            //return (T)obj;
         }
 
         public static string CreateRedisKey(string managerName, Guid messageId, string itemId)
         {
             return $"{managerName}_{messageId}_{itemId}";
         }
+
+
+        #region Helper
+
+        private static bool IsSerializable(Type type)
+        {
+            var serializable = type.GetCustomAttributes(typeof(SerializableAttribute), true).FirstOrDefault();
+            var isSerializable = serializable != null;
+
+            return isSerializable;
+        }
+
+        #endregion
     }
 }

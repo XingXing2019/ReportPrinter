@@ -37,7 +37,7 @@ namespace RaphaelLibrary.Code.Common.SqlVariableCacheManager
 
             try
             {
-                var key = messageId.ToString();
+                var key = RedisCacheHelper.CreateRedisKey(GetType().Name, messageId);
                 var value = RedisCacheHelper.ObjectToByteArray(sqlVariables);
 
                 Cache.Set(key, value, Options);
@@ -55,7 +55,7 @@ namespace RaphaelLibrary.Code.Common.SqlVariableCacheManager
         {
             var procName = $"{GetType().Name}.{nameof(GetSqlVariables)}";
 
-            var key = messageId.ToString();
+            var key = RedisCacheHelper.CreateRedisKey(GetType().Name, messageId);
             var value = Cache.Get(key);
 
             var variables = RedisCacheHelper.ByteArrayToObject<Dictionary<string, SqlVariable>>(value);
@@ -68,7 +68,7 @@ namespace RaphaelLibrary.Code.Common.SqlVariableCacheManager
         {
             var procName = $"{GetType().Name}.{nameof(RemoveSqlVariables)}";
 
-            var key = messageId.ToString();
+            var key = RedisCacheHelper.CreateRedisKey(GetType().Name, messageId);
             Cache.Remove(key);
             Logger.Debug($"Remove sql variables for message: {messageId}.", procName);
         }

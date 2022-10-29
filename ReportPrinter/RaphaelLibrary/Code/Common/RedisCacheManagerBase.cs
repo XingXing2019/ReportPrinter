@@ -32,9 +32,23 @@ namespace RaphaelLibrary.Code.Common
             };
 
             Cache = new RedisCache(optionsAccessor);
+
+            TimeSpan? absoluteExpiration = null;
+            if (Config.AbsoluteExpirationRelativeToNow.HasValue)
+            {
+                absoluteExpiration = TimeSpan.FromMinutes(Config.AbsoluteExpirationRelativeToNow.Value);
+            }
+
+            TimeSpan? slidingExpiration = null;
+            if (Config.SlidingExpiration.HasValue)
+            {
+                slidingExpiration = TimeSpan.FromMinutes(Config.SlidingExpiration.Value);
+            }
+
             Options = new DistributedCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(Config.AbsoluteExpirationRelativeToNow)
+                AbsoluteExpirationRelativeToNow = absoluteExpiration,
+                SlidingExpiration = slidingExpiration
             };
         }
 

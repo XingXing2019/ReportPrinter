@@ -64,9 +64,10 @@ namespace RaphaelLibrary.Code.Common
             }
         }
 
-        public static string CreateRedisKey(string managerName, Guid messageId, string itemId)
+        public static string CreateRedisKey(string managerName, Guid messageId, string itemId = null)
         {
-            return $"{managerName}_{messageId}_{itemId}";
+            var key = $"{managerName}_{messageId}";
+            return string.IsNullOrEmpty(itemId) ? key : $"{key}_{itemId}";
         }
 
 

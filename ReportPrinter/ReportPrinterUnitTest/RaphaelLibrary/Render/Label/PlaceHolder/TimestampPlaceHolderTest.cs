@@ -19,8 +19,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 
             try
             {
-                var timestamp = new TimestampPlaceHolder(S_PLACE_HOLDER, isUtc, mask);
-                var actualRes = timestamp.TryReplacePlaceHolder(manager, 0);
+                var timestampPlaceHolder = new TimestampPlaceHolder(S_PLACE_HOLDER, isUtc, mask);
+                var actualRes = timestampPlaceHolder.TryReplacePlaceHolder(manager, 0);
                 var expectedValue = isUtc ? DateTime.UtcNow.ToString(mask) : DateTime.Now.ToString(mask);
                 
                 Assert.AreEqual(expectedRes, actualRes);

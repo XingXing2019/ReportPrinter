@@ -19,6 +19,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         public void TestTryGetPlaceHolderValue(bool expectedRes, string name)
         {
             var messageId = Guid.NewGuid();
+            var manager = CreateLabelManager(S_PLACE_HOLDER, messageId);
+
             var value = "Value";
 
             if (expectedRes)
@@ -33,13 +35,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
                 cacheManager.StoreSqlVariables(messageId, sqlVariables);
             }
 
-            var lines = new string[] { S_PLACE_HOLDER };
-            var manager = new LabelManager(lines, messageId);
-
             try
             {
-                var sqlVariable = new SqlVariablePlaceHolder(S_PLACE_HOLDER, name);
-                var actualRes = sqlVariable.TryReplacePlaceHolder(manager, 0);
+                var sqlVariablePlaceHolder = new SqlVariablePlaceHolder(S_PLACE_HOLDER, name);
+                var actualRes = sqlVariablePlaceHolder.TryReplacePlaceHolder(manager, 0);
                 Assert.AreEqual(expectedRes, actualRes);
 
                 if (expectedRes)

@@ -17,7 +17,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [TearDown]
-        public void TearDown()
+        public new void TearDown()
         {
             Manager.DeleteAll();
         }

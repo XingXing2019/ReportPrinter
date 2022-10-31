@@ -1,4 +1,4 @@
-﻿using RaphaelLibrary.Code.Common;
+﻿using System;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Render.Label.Manager;
 using ReportPrinterLibrary.Code.Config.Configuration;
@@ -23,16 +23,25 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
             var messageId = manager.MessageId;
             var sqlVariableManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
             var sqlVariableManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(sqlVariableManagerType);
-            var sqlVariables = sqlVariableManager.GetSqlVariables(messageId);
 
-            if (!sqlVariables.ContainsKey(_name))
+            try
             {
-                Logger.Error($"Unable to retrieve sql variable with name: {_name} for message: {messageId}", procName);
+                var sqlVariables = sqlVariableManager.GetSqlVariables(messageId);
+
+                if (!sqlVariables.ContainsKey(_name))
+                {
+                    Logger.Error($"Unable to retrieve sql variable with name: {_name} for message: {messageId}", procName);
+                    return false;
+                }
+
+                value = sqlVariables[_name].Value;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during getting placeholder value. Ex: {ex.Message}", procName);
                 return false;
             }
-
-            value = sqlVariables[_name].Value;
-            return true;
         }
     }
 }

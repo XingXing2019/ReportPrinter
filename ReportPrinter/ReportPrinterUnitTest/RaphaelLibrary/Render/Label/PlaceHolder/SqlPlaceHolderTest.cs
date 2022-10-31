@@ -6,6 +6,7 @@ using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.PDF.Model;
+using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
@@ -69,6 +70,31 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             finally
             {
                 await databaseManager.DeleteAll();
+            }
+        }
+
+        [Test]
+        public void TestClone()
+        {
+            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
+            var node = GetXmlNode(filePath);
+            var sqlTemplate = new SqlTemplate();
+            var isSuccess = sqlTemplate.ReadXml(node);
+            Assert.IsTrue(isSuccess);
+
+            isSuccess = sqlTemplate.TryGetSql("TestSqlPlaceHolder", out var sql);
+            Assert.IsTrue(isSuccess);
+            var sqlResColumn = new SqlResColumn("PRM_CorrelationId");
+            var sqlPlaceHolder = new SqlPlaceHolder(S_PLACE_HOLDER, sql, sqlResColumn);
+
+            try
+            {
+                var cloned = sqlPlaceHolder.Clone();
+                AssertObject(sqlPlaceHolder, cloned);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
             }
         }
     }

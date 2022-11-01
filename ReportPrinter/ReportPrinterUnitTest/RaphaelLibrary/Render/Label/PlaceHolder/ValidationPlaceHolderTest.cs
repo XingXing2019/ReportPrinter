@@ -92,7 +92,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             var falseStructurePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\FalseLabelStructure.txt";
             var falseStructure = new LabelStructure("FalseStructureId", deserializer, LabelElementHelper.LABEL_RENDERER);
             falseStructure.ReadFile(falseStructurePath);
-            var falseValue = $"{DateTime.UtcNow:dd-MM-yyyy hh:mm}\r\n";
+            var falseValue = "DummyId\r\n";
             
             return new object[]
             {

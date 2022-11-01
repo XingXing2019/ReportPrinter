@@ -42,7 +42,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 
             var sqlVariables = new Dictionary<string, SqlVariable>
             {
-                { "MessageId", new SqlVariable { Name = "MessageId", Value = message.MessageId.ToString() } }
+                { "MessageId", new SqlVariable { Name = "MessageId", Value = message.MessageId.ToString() } },
+                { "DummyId", new SqlVariable { Name = "DummyId", Value = "DummyId" } },
             };
             cacheManager.StoreSqlVariables(message.MessageId, sqlVariables);
 

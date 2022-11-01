@@ -93,8 +93,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             var falseStructure = new LabelStructure("FalseStructureId", deserializer, LabelElementHelper.LABEL_RENDERER);
             falseStructure.ReadFile(falseStructurePath);
             var falseValue = $"{DateTime.UtcNow:dd-MM-yyyy hh:mm}\r\n";
-
-
+            
             return new object[]
             {
                 new object[]

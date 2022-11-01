@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
-using RaphaelLibrary.Code.Render.Label.Manager;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
@@ -11,8 +10,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 {
     public class SqlVariablePlaceHolderTest : PlaceHolderTestBase
     {
-        private const string S_PLACE_HOLDER = "%%%<SqlVariable Name=\"VariableName\" />%%%";
-
         [Test]
         [TestCase(true, "Name")]
         [TestCase(false, "Name")]

@@ -9,8 +9,6 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 {
     public class ReferencePlaceHolderTest : PlaceHolderTestBase
     {
-        private const string S_PLACE_HOLDER = "%%%<Reference StructureId=\"DeliveryInfoHeader\"/>%%%";
-
         [Test]
         [TestCase(true)]
         [TestCase(false)]

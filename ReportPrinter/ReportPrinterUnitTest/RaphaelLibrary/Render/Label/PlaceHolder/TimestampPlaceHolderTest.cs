@@ -5,9 +5,7 @@ using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 {
     public class TimestampPlaceHolderTest : PlaceHolderTestBase
-    {
-        private const string S_PLACE_HOLDER = "%%%<Timestamp Mask=\"dd-MM-yyyy\" IsUTC=\"true\"/>%%%";
-        
+    { 
         [Test]
         [TestCase(true, true, "dd-MM-yyyy")]
         [TestCase(true, true, "dd-MM-yyyy hh:mm:ss")]

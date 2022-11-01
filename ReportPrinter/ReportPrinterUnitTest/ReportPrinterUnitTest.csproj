@@ -79,6 +79,9 @@
     <None Update="RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RaphaelLibrary\Render\Label\PlaceHolder\TestFile\LabelStructure.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="ReportPrinterLibrary\Config\TestFile\ValidConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

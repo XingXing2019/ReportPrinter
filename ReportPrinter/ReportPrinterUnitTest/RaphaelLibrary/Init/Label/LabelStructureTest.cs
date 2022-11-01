@@ -30,9 +30,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
             try
             {
-                labelStructure.ReadFile(filePath);
-                var cloned = labelStructure.Clone();
+                var isSuccess = labelStructure.ReadFile(filePath);
+                Assert.IsTrue(isSuccess);
 
+                var cloned = labelStructure.Clone();
                 AssertObject(labelStructure, cloned);
             }
             catch (Exception ex)

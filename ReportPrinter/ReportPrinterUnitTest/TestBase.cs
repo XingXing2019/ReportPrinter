@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Xml;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
@@ -167,7 +168,16 @@ namespace ReportPrinterUnitTest
 
             return CreateTxtFile(filePath, content);
         }
-        
+
+        protected string AppendLineToTxtFile(string filePath, string line)
+        {
+            var lines = File.ReadAllLines(filePath).ToList();
+            lines.Add(line);
+            var content = string.Join('\n', lines);
+
+            return CreateTxtFile(filePath, content);
+        }
+
         private string CreateTxtFile(string filePath, string content)
         {
             var fileName = Path.GetFileName(filePath);

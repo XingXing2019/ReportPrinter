@@ -1,1 +1,1 @@
-%%%<Timestamp Mask="dd-MM-yyyy hh:mm" IsUTC="true"/>%%%
+%%%<SqlVariable Name="DummyId" />%%%

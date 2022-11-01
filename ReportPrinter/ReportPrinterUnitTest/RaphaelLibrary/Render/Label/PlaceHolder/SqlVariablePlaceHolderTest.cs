@@ -13,7 +13,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         [TestCase(true, "Name")]
         [TestCase(false, "Name")]
-        public void TestTryGetPlaceHolderValue(bool expectedRes, string name)
+        public void TestTryReplacePlaceHolder(bool expectedRes, string name)
         {
             var messageId = Guid.NewGuid();
             var manager = CreateLabelManager(S_PLACE_HOLDER, messageId);

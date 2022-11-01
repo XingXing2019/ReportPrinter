@@ -29,7 +29,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
             {
                 SqlVariableRedisCacheManager.Instance.StoreSqlVariables(_messageId, _expectedSqlVariables);
 
-                var value = Cache.Get(_messageId.ToString());
+                var key = RedisCacheHelper.CreateRedisKey("SqlVariableRedisCacheManager", _messageId);
+                var value = Cache.Get(key);
                 Assert.IsNotNull(value);
 
                 var actualSqlVariables = RedisCacheHelper.ByteArrayToObject<Dictionary<string, SqlVariable>>(value);
@@ -48,7 +49,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
         {
             if (storeData)
             {
-                var key = _messageId.ToString();
+                var key = RedisCacheHelper.CreateRedisKey("SqlVariableRedisCacheManager", _messageId);
                 var value = RedisCacheHelper.ObjectToByteArray(_expectedSqlVariables);
                 Cache.Set(key, value);
             }
@@ -74,18 +75,18 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
         [Test]
         public void TestRemoveSqlVariables()
         {
-            var key = _messageId.ToString();
+            var key = RedisCacheHelper.CreateRedisKey("SqlVariableRedisCacheManager", _messageId);
             var value = RedisCacheHelper.ObjectToByteArray(_expectedSqlVariables);
             Cache.Set(key, value);
 
             try
             {
-                var bytes = Cache.Get(_messageId.ToString());
+                var bytes = Cache.Get(key);
                 Assert.IsNotNull(bytes);
 
                 SqlVariableRedisCacheManager.Instance.RemoveSqlVariables(_messageId);
 
-                bytes = Cache.Get(_messageId.ToString());
+                bytes = Cache.Get(key);
                 Assert.IsNull(bytes);
             }
             catch (Exception ex)

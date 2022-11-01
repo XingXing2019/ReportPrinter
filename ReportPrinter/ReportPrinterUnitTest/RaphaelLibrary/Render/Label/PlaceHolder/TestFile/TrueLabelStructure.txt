@@ -1,0 +1,1 @@
+%%%<Timestamp Mask="dd-MM-yyyy" IsUTC="true"/>%%%

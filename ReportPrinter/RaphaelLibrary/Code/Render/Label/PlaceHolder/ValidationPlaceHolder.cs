@@ -107,18 +107,20 @@ namespace RaphaelLibrary.Code.Render.Label.PlaceHolder
                     isTrue = actual == expected;
                 else if (comparator == Comparator.NotEquals)
                     isTrue = actual != expected;
+                else
+                {
+                    var expectedValue = double.Parse(expected);
+                    var actualValue = double.Parse(actual);
 
-                var expectedValue = double.Parse(expected);
-                var actualValue = double.Parse(actual);
-
-                if (comparator == Comparator.Greater)
-                    isTrue = actualValue > expectedValue;
-                else if (comparator == Comparator.GreaterOrEquals)
-                    isTrue = actualValue >= expectedValue;
-                else if (comparator == Comparator.Less)
-                    isTrue = actualValue < expectedValue;
-                else if (comparator == Comparator.LessOrEquals)
-                    isTrue = actualValue <= expectedValue;
+                    if (comparator == Comparator.Greater)
+                        isTrue = actualValue > expectedValue;
+                    else if (comparator == Comparator.GreaterOrEquals)
+                        isTrue = actualValue >= expectedValue;
+                    else if (comparator == Comparator.Less)
+                        isTrue = actualValue < expectedValue;
+                    else if (comparator == Comparator.LessOrEquals)
+                        isTrue = actualValue <= expectedValue;
+                }
 
                 return true;
             }

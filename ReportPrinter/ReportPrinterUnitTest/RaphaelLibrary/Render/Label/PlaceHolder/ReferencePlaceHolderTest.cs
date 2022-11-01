@@ -14,7 +14,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [TestCase(false)]
         public void TestTryGetPlaceHolderValue(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\LabelStructure.txt";
+            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
 
             if (!expectedRes)
             {
@@ -35,7 +35,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             {
                 var referencePlaceHolder = new ReferencePlaceHolder(S_PLACE_HOLDER, labelStructure);
                 var actualRes = referencePlaceHolder.TryReplacePlaceHolder(manager, 0);
-                var now = DateTime.UtcNow.ToString("dd-MM-yyyy hh:mm:ss\r\n");
+                var now = $"{DateTime.UtcNow:dd-MM-yyyy}\r\n";
 
                 Assert.AreEqual(expectedRes, actualRes);
 
@@ -60,7 +60,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\LabelStructure.txt";
+            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
             var id = "TestId";
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
             var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);

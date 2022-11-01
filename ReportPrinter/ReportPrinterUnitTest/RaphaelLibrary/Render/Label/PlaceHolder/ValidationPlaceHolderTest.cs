@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.Model;
@@ -46,6 +47,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             finally
             {
                 await new PrintReportMessageEFCoreManager().DeleteAll();
+                SqlVariableMemoryCacheManager.Instance.Reset();
             }
         }
 
@@ -74,6 +76,11 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
+            }
+            finally
+            {
+                await new PrintReportMessageEFCoreManager().DeleteAll();
+                SqlVariableMemoryCacheManager.Instance.Reset();
             }
         }
 

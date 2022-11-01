@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.PDF.Model;
@@ -44,6 +45,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             finally
             {
                 await new PrintReportMessageEFCoreManager().DeleteAll();
+                SqlVariableMemoryCacheManager.Instance.Reset();
             }
         }
 

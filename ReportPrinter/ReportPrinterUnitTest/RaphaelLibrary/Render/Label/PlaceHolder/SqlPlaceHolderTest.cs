@@ -14,7 +14,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task TestTryGetPlaceHolderValue(bool expectedRes)
+        public async Task TestTryReplacePlaceHolder(bool expectedRes)
         {
             var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
             var message = CreateMessage(ReportTypeEnum.PDF);

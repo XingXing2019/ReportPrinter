@@ -15,8 +15,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
     public class ValidationPlaceHolderTest : PlaceHolderTestBase
     {
         [Test]
-        [TestCaseSource(nameof(TryGetPlaceHolderValueTestCases))]
-        public async Task TestTryGetPlaceHolderValue(bool expectedRes, string expectedValue, string resColumn, ValidationModel model)
+        [TestCaseSource(nameof(TryReplacePlaceHolderTestCases))]
+        public async Task TestTryReplacePlaceHolder(bool expectedRes, string expectedValue, string resColumn, ValidationModel model)
         {
             var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
             var message = CreateMessage(ReportTypeEnum.PDF);
@@ -77,7 +77,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             }
         }
 
-        private static object[] TryGetPlaceHolderValueTestCases()
+        private static object[] TryReplacePlaceHolderTestCases()
         {
             var trueContent = "TrueContent";
             var falseContent = "FalseContent";

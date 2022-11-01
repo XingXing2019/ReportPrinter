@@ -12,7 +12,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void TestTryGetPlaceHolderValue(bool expectedRes)
+        public void TestTryReplacePlaceHolder(bool expectedRes)
         {
             var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
 

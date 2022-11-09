@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.Model;
@@ -46,6 +47,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             finally
             {
                 await new PrintReportMessageEFCoreManager().DeleteAll();
+                SqlVariableMemoryCacheManager.Instance.Reset();
             }
         }
 
@@ -75,8 +77,16 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             {
                 Assert.Fail(ex.Message);
             }
+            finally
+            {
+                await new PrintReportMessageEFCoreManager().DeleteAll();
+                SqlVariableMemoryCacheManager.Instance.Reset();
+            }
         }
 
+
+        #region Helper
+        
         private static object[] TryReplacePlaceHolderTestCases()
         {
             var trueContent = "TrueContent";
@@ -167,6 +177,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
                     false, string.Empty, "PRM_NumberOfCopy", new ValidationModel(ValidationType.Structure, Comparator.NotEquals, "3", trueStructure, falseStructure)
                 },
             };
-        } 
+        }
+
+        #endregion
     }
 }

@@ -25,7 +25,6 @@
   <ItemGroup>
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
     <Folder Include="RaphaelLibrary\Print\" />
-    <Folder Include="RaphaelLibrary\Render\Label\Renderer\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +77,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Render\Label\PlaceHolder\TestFile\FalseLabelStructure.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\ValidStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml">

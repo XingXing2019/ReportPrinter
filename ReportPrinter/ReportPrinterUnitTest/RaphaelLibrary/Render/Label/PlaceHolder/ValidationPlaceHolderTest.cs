@@ -84,6 +84,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             }
         }
 
+
+        #region Helper
+        
         private static object[] TryReplacePlaceHolderTestCases()
         {
             var trueContent = "TrueContent";
@@ -174,6 +177,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
                     false, string.Empty, "PRM_NumberOfCopy", new ValidationModel(ValidationType.Structure, Comparator.NotEquals, "3", trueStructure, falseStructure)
                 },
             };
-        } 
+        }
+
+        #endregion
     }
 }

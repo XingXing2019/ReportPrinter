@@ -25,6 +25,7 @@
   <ItemGroup>
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
     <Folder Include="RaphaelLibrary\Print\" />
+    <Folder Include="RaphaelLibrary\Render\Label\Renderer\" />
   </ItemGroup>
 
   <ItemGroup>

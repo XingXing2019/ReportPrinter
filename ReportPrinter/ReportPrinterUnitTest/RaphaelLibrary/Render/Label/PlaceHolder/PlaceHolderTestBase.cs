@@ -22,32 +22,5 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 
             return manager;
         }
-
-        protected async Task<SqlTemplate> SetupSqlTest(string filePath, IPrintReport message, bool expectedRes)
-        {
-            var databaseManager = new PrintReportMessageEFCoreManager();
-
-            if (expectedRes)
-            {
-                await databaseManager.Post(message);
-            }
-            
-            var node = GetXmlNode(filePath);
-            var sqlTemplate = new SqlTemplate();
-            var isSuccess = sqlTemplate.ReadXml(node);
-            Assert.IsTrue(isSuccess);
-
-            var cacheManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
-            var cacheManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(cacheManagerType);
-
-            var sqlVariables = new Dictionary<string, SqlVariable>
-            {
-                { "MessageId", new SqlVariable { Name = "MessageId", Value = message.MessageId.ToString() } },
-                { "DummyId", new SqlVariable { Name = "DummyId", Value = "DummyId" } },
-            };
-            cacheManager.StoreSqlVariables(message.MessageId, sqlVariables);
-
-            return sqlTemplate;
-        }
     }
 }

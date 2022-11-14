@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
@@ -14,6 +15,7 @@ using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterDatabase.Code.Database;
+using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -141,9 +143,36 @@ namespace ReportPrinterUnitTest
             var sqlVariables = sqlVariablesDict.ToDictionary(x => x.Key, x => new SqlVariable { Name = x.Key, Value = x.Value.ToString() });
             SqlVariableManager.StoreSqlVariables(messageId, sqlVariables);
         }
+        
+        protected async Task<SqlTemplate> SetupSqlTest(string filePath, IPrintReport message, bool expectedRes)
+        {
+            var databaseManager = new PrintReportMessageEFCoreManager();
+
+            if (expectedRes)
+            {
+                await databaseManager.Post(message);
+            }
+
+            var node = GetXmlNode(filePath);
+            var sqlTemplate = new SqlTemplate();
+            var isSuccess = sqlTemplate.ReadXml(node);
+            Assert.IsTrue(isSuccess);
+
+            var cacheManagerType = AppConfig.Instance.SqlVariableCacheManagerType;
+            var cacheManager = SqlVariableCacheManagerFactory.CreateSqlVariableCacheManager(cacheManagerType);
+
+            var sqlVariables = new Dictionary<string, SqlVariable>
+            {
+                { "MessageId", new SqlVariable { Name = "MessageId", Value = message.MessageId.ToString() } },
+                { "DummyId", new SqlVariable { Name = "DummyId", Value = "DummyId" } },
+            };
+            cacheManager.StoreSqlVariables(message.MessageId, sqlVariables);
+
+            return sqlTemplate;
+        }
 
         #endregion
-        
+
         #region Txt
 
         protected string RemoveAttributeOfTxtFile(string filePath, string name)

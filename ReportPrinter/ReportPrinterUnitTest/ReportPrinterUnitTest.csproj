@@ -79,7 +79,13 @@
     <None Update="RaphaelLibrary\Render\Label\PlaceHolder\TestFile\FalseLabelStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\FalseLabelStructure.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\SqlTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\TrueLabelStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\ValidStructure.txt">

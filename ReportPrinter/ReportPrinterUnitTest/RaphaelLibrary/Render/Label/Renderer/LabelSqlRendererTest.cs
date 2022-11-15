@@ -18,30 +18,26 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
     public class LabelSqlRendererTest : TestBase
     {
         private const string S_FILE_PATH = @".\RaphaelLibrary\Render\Label\Renderer\TestFile\SqlTemplate.xml";
-        private const string S_LINE = "%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestSqlPlaceHolder\" SqlId=\"TestSqlPlaceHolder\"/>%%%";
+        private const string S_LINE = "%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestLabelRenderer\" SqlId=\"TestLabelRenderer\"/>%%%";
 
         [Test]
-        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestSqlPlaceHolder\" SqlId=\"TestSqlPlaceHolder\"/>%%%", true)]
-        [TestCase("%%%<Sql SqlResColumn=\"\" SqlTemplateId=\"TestSqlPlaceHolder\" SqlId=\"TestSqlPlaceHolder\"/>%%%", false)]
-        [TestCase("%%%<Sql SqlTemplateId=\"TestSqlPlaceHolder\" SqlId=\"TestSqlPlaceHolder\"/>%%%", false)]
-        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"\" SqlId=\"TestSqlPlaceHolder\"/>%%%", false)]
-        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlId=\"TestSqlPlaceHolder\"/>%%%", false)]
-        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestSqlPlaceHolder\" SqlId=\"\"/>%%%", false)]
-        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestSqlPlaceHolder\" />%%%", false)]
-        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"WrongSqlTemplateId\" SqlId=\"TestSqlPlaceHolder\"/>%%%", false)]
-        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestSqlPlaceHolder\" SqlId=\"WrongSqlId\"/>%%%", false)]
+        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestLabelRenderer\" SqlId=\"TestLabelRenderer\"/>%%%", true)]
+        [TestCase("%%%<Sql SqlResColumn=\"\" SqlTemplateId=\"TestLabelRenderer\" SqlId=\"TestLabelRenderer\"/>%%%", false)]
+        [TestCase("%%%<Sql SqlTemplateId=\"TestLabelRenderer\" SqlId=\"TestLabelRenderer\"/>%%%", false)]
+        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"\" SqlId=\"TestLabelRenderer\"/>%%%", false)]
+        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlId=\"TestLabelRenderer\"/>%%%", false)]
+        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestLabelRenderer\" SqlId=\"\"/>%%%", false)]
+        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestLabelRenderer\" />%%%", false)]
+        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"WrongSqlTemplateId\" SqlId=\"TestLabelRenderer\"/>%%%", false)]
+        [TestCase("%%%<Sql SqlResColumn=\"PRM_CorrelationId\" SqlTemplateId=\"TestLabelRenderer\" SqlId=\"WrongSqlId\"/>%%%", false)]
         public async Task TestReadLine(string line, bool expectedRes)
         {
             var message = CreateMessage(ReportTypeEnum.PDF);
 
             var sqlTemplate = await SetupSqlTest(S_FILE_PATH, message, expectedRes);
-            var isSuccess = sqlTemplate.TryGetSql("TestSqlPlaceHolder", out var sql);
+            var isSuccess = sqlTemplate.TryGetSql("TestLabelRenderer", out var sql);
             Assert.IsTrue(isSuccess);
-
-            var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
-            sqlTemplateList.Add("TestSqlPlaceHolder", sqlTemplate);
-
-
+            
             try
             {
                 var renderer = new LabelSqlRenderer(0);
@@ -79,10 +75,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
         public async Task TestClone()
         {
             var message = CreateMessage(ReportTypeEnum.PDF);
-
-            var sqlTemplate = await SetupSqlTest(S_FILE_PATH, message, true);
-            var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
-            sqlTemplateList.Add("TestSqlPlaceHolder", sqlTemplate);
+            await SetupSqlTest(S_FILE_PATH, message, true);
             
             try
             {
@@ -111,10 +104,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
         public async Task TestTryRenderLabel(bool expectedRes)
         {
             var message = CreateMessage(ReportTypeEnum.PDF);
-
-            var sqlTemplate = await SetupSqlTest(S_FILE_PATH, message, expectedRes);
-            var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
-            sqlTemplateList.Add("TestSqlPlaceHolder", sqlTemplate);
+            await SetupSqlTest(S_FILE_PATH, message, expectedRes);
             
             try
             {

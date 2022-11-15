@@ -40,13 +40,13 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
                     return false;
                 }
 
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_TEMPLATE_ID, out var sqlTemplateId))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_TEMPLATE_ID, out var sqlTemplateId) || string.IsNullOrEmpty(sqlTemplateId))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_TEMPLATE_ID, placeholder, procName);
                     return false;
                 }
 
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_ID, out var sqlId))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_ID, out var sqlId) || string.IsNullOrEmpty(sqlId))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_ID, placeholder, procName);
                     return false;
@@ -55,19 +55,19 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
                 if (!SqlTemplateManager.Instance.TryGetSql(sqlTemplateId, sqlId, out var sql))
                     return false;
 
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_RES_COLUMN, out var sqlResColumn))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_RES_COLUMN, out var sqlResColumn) || string.IsNullOrEmpty(sqlResColumn))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_RES_COLUMN, placeholder, procName);
                     return false;
                 }
 
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_TRUE_STRUCTURE, out var trueContent))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_TRUE_STRUCTURE, out var trueContent) || string.IsNullOrEmpty(trueContent))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_TRUE_STRUCTURE, placeholder, procName);
                     return false;
                 }
 
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_FALSE_STRUCTURE, out var falseContent))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_FALSE_STRUCTURE, out var falseContent) || string.IsNullOrEmpty(falseContent))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_FALSE_STRUCTURE, placeholder, procName);
                     return false;

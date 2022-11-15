@@ -1,5 +1,5 @@
-﻿<SqlTemplate Id="TestSqlPlaceHolder">
-	<Sql Id="TestSqlPlaceHolder" DatabaseId="ReportPrinterTest">
+﻿<SqlTemplate Id="TestLabelRenderer">
+	<Sql Id="TestLabelRenderer" DatabaseId="ReportPrinterTest">
 		<Query>
 			SELECT
 				PRM_MessageId,

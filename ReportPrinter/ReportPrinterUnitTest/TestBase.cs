@@ -168,6 +168,9 @@ namespace ReportPrinterUnitTest
             };
             cacheManager.StoreSqlVariables(message.MessageId, sqlVariables);
 
+            var sqlTemplateList = GetPrivateField<Dictionary<string, SqlElementBase>>(SqlTemplateManager.Instance, "_sqlTemplateList");
+            sqlTemplateList.Add(sqlTemplate.Id, sqlTemplate);
+
             return sqlTemplate;
         }
 

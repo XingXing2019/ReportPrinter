@@ -7,6 +7,7 @@ using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Render.Label.Helper;
 using System.Collections.Generic;
+using RaphaelLibrary.Code.Render.Label.Manager;
 using RaphaelLibrary.Code.Render.Label.Model;
 using RaphaelLibrary.Code.Render.Label.Renderer;
 using RaphaelLibrary.Code.Render.PDF.Model;
@@ -120,7 +121,44 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                 SqlVariableMemoryCacheManager.Instance.Reset();
             }
         }
-        
+
+        [Test]
+        public async Task TestTryRenderLabel()
+        {
+            var message = CreateMessage(ReportTypeEnum.PDF);
+
+            var sqlTemplate = await SetupSqlTest(S_FILE_PATH, message, true);
+            var isSuccess = sqlTemplate.TryGetSql("TestLabelRenderer", out var sql);
+            Assert.IsTrue(isSuccess);
+
+            var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
+            SetupLabelStructure(deserializer);
+
+            try
+            {
+                var renderer = new LabelValidationRenderer(0);
+                isSuccess = renderer.ReadLine(S_LINE, deserializer, LabelElementHelper.S_VALIDATION);
+                Assert.IsTrue(isSuccess);
+
+                var manager = new LabelManager(new[] { S_LINE }, message.MessageId);
+                isSuccess = renderer.TryRenderLabel(manager);
+
+                var expected = "TrueContent";
+                Assert.IsTrue(isSuccess);
+                Assert.AreEqual(expected, manager.Lines[0]);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+            finally
+            {
+                await new PrintReportMessageEFCoreManager().DeleteAll();
+                SqlVariableMemoryCacheManager.Instance.Reset();
+            }
+        }
+
+
         #region Helper
 
         private static object[] TestReadLineTestCases()

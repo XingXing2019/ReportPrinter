@@ -21,22 +21,14 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
             var replaceFile = !string.IsNullOrEmpty(operation);
 
             if (operation == "RemoveTemplateId")
-            {
                 filePath = RemoveAttributeOfXmlFile(filePath, "SqlTemplate", "Id");
-            }
             else if (operation == "RemoveSqls")
-            {
                 filePath = RemoveXmlNodeOfXmlFile(filePath, "Sql");
-            }
             else if (operation == "RemoveSqlId")
-            {
                 filePath = RemoveAttributeOfXmlFile(filePath, "Sql", "Id");
-            }
             else if (operation == "DuplicateSqlId")
-            {
                 filePath = ReplaceAttributeOfXmlFile(filePath, "Sql", "Id", "DuplicateId");
-            }
-
+            
             var node = GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 

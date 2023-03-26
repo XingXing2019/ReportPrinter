@@ -22,9 +22,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 
             var tempSqlTemplate = "";
             if (operation == "RemoveTemplate")
-            {
                 filePath = RemoveXmlNodeOfXmlFile(filePath, "SqlTemplate");
-            }
             else if (operation == "ReplaceSqlTemplate")
             {
                 var sqlTemplatePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
@@ -38,10 +36,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
                 filePath = AppendXmlNodeToXmlFile(filePath, "SqlTemplateList", "SqlTemplate", innerText);
             }
             else if (operation == "WrongFilePath")
-            {
-                var innerText = "WrongFilePath";
                 filePath = ReplaceInnerTextOfXmlFile(filePath, "SqlTemplate", "WrongFilePath");
-            }
             
             var node = GetXmlNode(filePath);
 

@@ -82,6 +82,7 @@ namespace ReportPrinterUnitTest
             return expectedMessage;
         }
         
+
         #region Access Private Field
         
         protected T GetPrivateField<T>(object instance, string fieldName)
@@ -102,6 +103,7 @@ namespace ReportPrinterUnitTest
         
         #endregion
         
+
         #region Setup
 
         protected void SetupDummySqlTemplateManager(Dictionary<string, List<string>> sqlDict)
@@ -176,6 +178,7 @@ namespace ReportPrinterUnitTest
 
         #endregion
 
+
         #region Txt
 
         protected string RemoveAttributeOfTxtFile(string filePath, string name)
@@ -220,6 +223,7 @@ namespace ReportPrinterUnitTest
         
         #endregion
         
+
         #region Xml
 
         protected XmlNode GetXmlNode(string filePath)
@@ -261,6 +265,16 @@ namespace ReportPrinterUnitTest
             return CreateXmlFile(filePath, xmlDoc);
         }
 
+        protected string ReplaceInnerTextOfXmlFile(string filePath, string nodeName, string parentNodeName, string innerText)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var root = xmlDoc.DocumentElement;
+            ReplaceInnerTextOfNode(root, nodeName, null, parentNodeName, innerText);
+
+            return CreateXmlFile(filePath, xmlDoc);
+        }
+
         protected string AppendXmlNodeToXmlFile(string filePath, string parentNode, string nodeName, string innerText, Dictionary<string, string> attributes = null)
         {
             var xmlDoc = new XmlDocument();
@@ -281,6 +295,19 @@ namespace ReportPrinterUnitTest
             return CreateXmlFile(filePath, xmlDoc);
         }
 
+        protected string RemoveXmlNodeOfXmlFile(string filePath, string nodeName, string parentNodeName)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var root = xmlDoc.DocumentElement;
+            RemoveXmlNode(root, nodeName, parentNodeName);
+
+            return CreateXmlFile(filePath, xmlDoc);
+        }
+
+
+        #region Helper
+        
         private void RemoveAttributeOfNode(XmlNode node, string nodeName, string attributeName)
         {
             if (node.Name == nodeName && node.Attributes != null)
@@ -304,7 +331,7 @@ namespace ReportPrinterUnitTest
                 RemoveAttributeOfNode(childNode, nodeName, attributeName);
             }
         }
-
+        
         private void ReplaceAttributeOfNode(XmlNode node, string nodeName, string attributeName, string value)
         {
             if (node.Name == nodeName && node.Attributes != null)
@@ -342,6 +369,24 @@ namespace ReportPrinterUnitTest
             foreach (XmlNode childNode in node.ChildNodes)
             {
                 ReplaceInnerTextOfNode(childNode, nodeName, innerText);
+            }
+        }
+
+        private void ReplaceInnerTextOfNode(XmlNode node, string nodeName, XmlNode parentNode, string parentNodeName, string innerText)
+        {
+            if (node.Name == nodeName && parentNode != null && parentNode.Name == parentNodeName)
+            {
+                node.InnerText = innerText;
+            }
+
+            if (!node.HasChildNodes)
+            {
+                return;
+            }
+
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                ReplaceInnerTextOfNode(childNode, nodeName, node, parentNodeName, innerText);
             }
         }
 
@@ -395,7 +440,32 @@ namespace ReportPrinterUnitTest
                 RemoveXmlNode(childNode, nodeName);
             }
         }
-        
+
+        private void RemoveXmlNode(XmlNode node, string nodeName, string parentNodeName)
+        {
+            if (!node.HasChildNodes)
+            {
+                return;
+            }
+
+            if (node.Name == parentNodeName)
+            {
+                var toBeRemoved = new List<XmlNode>();
+                foreach (XmlNode childNode in node.ChildNodes)
+                {
+                    if (childNode.Name != nodeName) continue;
+                    toBeRemoved.Add(childNode);
+                }
+
+                toBeRemoved.ForEach(x => node.RemoveChild(x));
+            }
+
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                RemoveXmlNode(childNode, nodeName);
+            }
+        }
+
         private string CreateXmlFile(string filePath, XmlDocument xmlDoc)
         {
             var fileName = Path.GetFileName(filePath);
@@ -405,6 +475,9 @@ namespace ReportPrinterUnitTest
         }
 
         #endregion
+
+        #endregion
+
 
         #region Assert
 

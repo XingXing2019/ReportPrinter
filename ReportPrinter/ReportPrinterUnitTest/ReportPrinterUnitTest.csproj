@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="RaphaelLibrary\Init\PDF\TestFile\PdfTemplateManager\" />
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
     <Folder Include="RaphaelLibrary\Print\" />
   </ItemGroup>
@@ -62,6 +63,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\PDF\TestFile\PdfTemplate\ValidTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml">

@@ -55,7 +55,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
             if (sqlResColumnList.Count != 1)
             {
-                Logger.Error($"{this.GetType().Name} cna only have one sql resutle column", procName);
+                Logger.Error($"{this.GetType().Name} can only have one sql result column", procName);
                 return false;
             }
 

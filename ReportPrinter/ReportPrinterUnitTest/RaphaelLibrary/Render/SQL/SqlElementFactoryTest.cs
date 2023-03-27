@@ -10,12 +10,18 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
         [Test]
         [TestCase("Sql", typeof(Sql))]
         [TestCase("SqlTemplate", typeof(SqlTemplate))]
+        [TestCase("InvalidName", null)]
         public void TestCreateSqlElement(string name, Type expectedType)
         {
             try
             {
-                var actualType = SqlElementFactory.CreateSqlElement(name);
-                Assert.AreEqual(expectedType, actualType.GetType());
+                var sqlElement = SqlElementFactory.CreateSqlElement(name);
+                Assert.AreEqual(expectedType, sqlElement.GetType());
+            }
+            catch (InvalidOperationException ex)
+            {
+                var expectedError = $"Invalid name: {name} for sql element";
+                Assert.AreEqual(expectedError, ex.Message);
             }
             catch (Exception ex)
             {

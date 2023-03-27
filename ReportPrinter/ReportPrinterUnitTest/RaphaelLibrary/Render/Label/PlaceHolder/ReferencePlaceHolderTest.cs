@@ -9,12 +9,14 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 {
     public class ReferencePlaceHolderTest : PlaceHolderTestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
+
         [Test]
         [TestCase(true)]
         [TestCase(false)]
         public void TestTryReplacePlaceHolder(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
+            var filePath = S_FILE_PATH;
 
             if (!expectedRes)
             {
@@ -60,7 +62,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
+            var filePath = S_FILE_PATH;
             var id = "TestId";
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
             var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);

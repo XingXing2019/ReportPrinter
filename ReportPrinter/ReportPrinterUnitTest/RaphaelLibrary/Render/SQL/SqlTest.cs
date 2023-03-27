@@ -16,6 +16,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
 {
     public class SqlTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml";
         private readonly IMessageManager<IPrintReport> _manager;
 
         public SqlTest()
@@ -33,7 +34,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
         [TestCase(false, "Sql", "Name", "MessageId", "AppendXmlNode")]
         public void TestReadXml(bool expectedRes, string parentNode = "", string name = "", string value = "", string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml";
+            var filePath = S_FILE_PATH;
 
             if (!expectedRes)
             {
@@ -98,7 +99,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml";
+            var filePath = S_FILE_PATH;
 
             var node = TestFileHelper.GetXmlNode(filePath);
             var sql = new Sql();
@@ -128,7 +129,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
         public async Task TestTryExecute(bool expectedRes, bool hasExtraVariable = false, string operation = "")
         {
             var message = CreateMessage(ReportTypeEnum.PDF);
-            var filePath = @".\RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml";
+            var filePath = S_FILE_PATH;
             var replaceFile = false;
 
             await _manager.Post(message);

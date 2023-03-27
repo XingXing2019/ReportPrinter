@@ -8,6 +8,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
     public class LabelStructureManagerTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\ValidConfig.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "Id", false)]
@@ -15,7 +17,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [TestCase(false, "", true, @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt")]
         public void TestReadXml(bool expectedRes, string name = "", bool isReplace = true, string value = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
 
             SetupDummySqlTemplateManager(new Dictionary<string, List<string>>
             {

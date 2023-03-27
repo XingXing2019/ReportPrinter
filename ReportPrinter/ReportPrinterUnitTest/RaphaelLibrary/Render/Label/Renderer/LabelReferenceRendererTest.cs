@@ -11,6 +11,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
 {
     public class LabelReferenceRendererTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Render\Label\Renderer\TestFile\ValidStructure.txt";
+
         [Test]
         [TestCase("%%%<Reference StructureId=\"TestId\"/>%%%", true)]
         [TestCase("%%%<Reference StructureId=\"WrongId\"/>%%%", false)]
@@ -106,7 +108,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
         public void SetupLabelStructureManager(LabelDeserializeHelper deserializer)
         {
             var expectedStructure = new LabelStructure("TestId", deserializer, LabelElementHelper.LABEL_RENDERER);
-            var filePath = @".\RaphaelLibrary\Render\Label\Renderer\TestFile\ValidStructure.txt";
+            var filePath = S_FILE_PATH;
             expectedStructure.ReadFile(filePath);
 
             var labelStructureList = GetPrivateField<Dictionary<string, IStructure>>(LabelStructureManager.Instance, "_labelStructureList");

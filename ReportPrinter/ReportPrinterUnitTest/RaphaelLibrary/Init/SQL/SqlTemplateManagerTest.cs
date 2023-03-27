@@ -9,6 +9,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 {
     public class SqlTemplateManagerTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "RemoveTemplate")]
@@ -17,7 +19,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false, "WrongFilePath")]
         public void TestReadXml(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             var replaceFile = !string.IsNullOrEmpty(operation);
 
             var tempSqlTemplate = "";
@@ -68,7 +70,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false)]
         public void TestTryGetSql(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             var node = TestFileHelper.GetXmlNode(filePath);
             var isSuccess = SqlTemplateManager.Instance.ReadXml(node);
             Assert.IsTrue(isSuccess);
@@ -96,7 +98,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [Test]
         public void TestReset()
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             var node = TestFileHelper.GetXmlNode(filePath);
             var isSuccess = SqlTemplateManager.Instance.ReadXml(node);
             Assert.IsTrue(isSuccess);

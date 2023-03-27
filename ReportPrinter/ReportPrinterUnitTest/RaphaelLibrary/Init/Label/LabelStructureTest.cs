@@ -13,10 +13,12 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
     public class LabelStructureTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt";
+
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt";
+            var filePath = S_FILE_PATH;
             var id = "TestId";
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
             var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);

@@ -11,6 +11,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
     public class LabelTemplateManagerTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "RemoveXmlNode")]
@@ -19,7 +21,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [TestCase(false, "ReplaceInnerText")]
         public void TestReadXml(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             SetupDummyLabelStructureManager("ValidationHeader", "ValidationBody", "ValidationFooter");
 
             var tempLabelTemplate = "";
@@ -78,7 +80,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [TestCase(false)]
         public void TestTryGetReportTemplate(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             var labelStructureIds = new[] { "ValidationHeader", "ValidationBody", "ValidationFooter" };
             SetupDummyLabelStructureManager(labelStructureIds);
 

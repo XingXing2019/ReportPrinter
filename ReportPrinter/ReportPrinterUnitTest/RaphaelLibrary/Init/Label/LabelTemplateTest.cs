@@ -9,6 +9,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
     public class LabelTemplateTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml";
+
         [Test]
         [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", true)]
         [TestCase(@".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml", false, "LabelTemplate", "Id")]
@@ -89,7 +91,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml";
+            var filePath = S_FILE_PATH;
             var node = TestFileHelper.GetXmlNode(filePath);
             var labelTemplate = new LabelTemplate();
 

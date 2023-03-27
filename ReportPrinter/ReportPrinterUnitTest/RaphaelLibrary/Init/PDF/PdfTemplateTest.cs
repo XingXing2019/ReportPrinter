@@ -8,6 +8,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.PDF
 {
     public class PdfTemplateTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\PDF\TestFile\PdfTemplate\ValidTemplate.xml";
+
         [SetUp]
         public void SetUp()
         {
@@ -33,7 +35,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.PDF
         [TestCase(false, "RemoveReprintMarkText")]
         public void TestReadXml(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\PDF\TestFile\PdfTemplate\ValidTemplate.xml";
+            var filePath = S_FILE_PATH;
             var replaceFile = !string.IsNullOrEmpty(operation);
 
             filePath = ModifyTestFile(filePath, operation);

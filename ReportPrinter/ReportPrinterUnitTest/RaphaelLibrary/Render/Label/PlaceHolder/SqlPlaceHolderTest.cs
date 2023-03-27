@@ -12,12 +12,14 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 {
     public class SqlPlaceHolderTest : PlaceHolderTestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task TestTryReplacePlaceHolder(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
+            var filePath = S_FILE_PATH;
             var message = CreateMessage(ReportTypeEnum.PDF);
             var manager = CreateLabelManager(S_PLACE_HOLDER, message.MessageId);
 
@@ -52,7 +54,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
+            var filePath = S_FILE_PATH;
             var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
             var isSuccess = sqlTemplate.ReadXml(node);

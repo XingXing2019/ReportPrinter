@@ -9,6 +9,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 {
     public class SqlTemplateTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "RemoveTemplateId")]
@@ -17,7 +19,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false, "DuplicateSqlId")]
         public void TestReadXml(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
+            var filePath = S_FILE_PATH;
             var replaceFile = !string.IsNullOrEmpty(operation);
 
             filePath = ModifyTestFile(filePath, operation);
@@ -54,7 +56,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
+            var filePath = S_FILE_PATH;
             var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
@@ -77,7 +79,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false)]
         public void TestTryGetSql(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
+            var filePath = S_FILE_PATH;
             var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 

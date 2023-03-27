@@ -125,6 +125,15 @@ namespace ReportPrinterUnitTest.Helper
             return CreateXmlFile(filePath, xmlDoc);
         }
 
+        public string GetInnerTextOfXmlFile(string filePath, string nodeName, string parentNodeName)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+            var root = xmlDoc.DocumentElement;
+
+            return GetInnerTextOfNode(root, nodeName, null, parentNodeName);
+        }
+
         #endregion
 
 
@@ -294,6 +303,29 @@ namespace ReportPrinterUnitTest.Helper
             {
                 RemoveXmlNode(childNode, nodeName);
             }
+        }
+
+        private string GetInnerTextOfNode(XmlNode node, string nodeName, XmlNode parentNode, string parentNodeName)
+        {
+            if (node.Name == nodeName && parentNode != null && parentNode.Name == parentNodeName)
+            {
+                return node.InnerText;
+            }
+
+            if (!node.HasChildNodes)
+            {
+                return string.Empty;
+            }
+
+            foreach (XmlNode childNode in node.ChildNodes)
+            {
+                var innerText = GetInnerTextOfNode(childNode, nodeName, node, parentNodeName);
+                if (string.IsNullOrEmpty(innerText))
+                    continue;
+                return innerText;
+            }
+
+            return string.Empty;
         }
 
         private string CreateXmlFile(string filePath, XmlDocument xmlDoc)

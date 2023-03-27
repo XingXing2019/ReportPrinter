@@ -20,15 +20,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
             var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
             var replaceFile = !string.IsNullOrEmpty(operation);
 
-            if (operation == "RemoveTemplateId")
-                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "SqlTemplate", "Id");
-            else if (operation == "RemoveSqls")
-                filePath = TestFileHelper.RemoveXmlNodeOfXmlFile(filePath, "Sql");
-            else if (operation == "RemoveSqlId")
-                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "Sql", "Id");
-            else if (operation == "DuplicateSqlId")
-                filePath = TestFileHelper.ReplaceAttributeOfXmlFile(filePath, "Sql", "Id", "DuplicateId");
-            
+            filePath = ModifyTestFile(filePath, operation);
             var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
@@ -111,5 +103,24 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
                 Assert.Fail(ex.Message);
             }
         }
+
+
+        #region Helper
+
+        private string ModifyTestFile(string filePath, string operation)
+        {
+            if (operation == "RemoveTemplateId")
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "SqlTemplate", "Id");
+            else if (operation == "RemoveSqls")
+                filePath = TestFileHelper.RemoveXmlNodeOfXmlFile(filePath, "Sql");
+            else if (operation == "RemoveSqlId")
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "Sql", "Id");
+            else if (operation == "DuplicateSqlId")
+                filePath = TestFileHelper.ReplaceAttributeOfXmlFile(filePath, "Sql", "Id", "DuplicateId");
+
+            return filePath;
+        }
+
+        #endregion
     }
 }

@@ -36,6 +36,33 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.PDF
             var filePath = @".\RaphaelLibrary\Init\PDF\TestFile\PdfTemplate\ValidTemplate.xml";
             var replaceFile = !string.IsNullOrEmpty(operation);
 
+            filePath = ModifyTestFile(filePath, operation);
+            var node = TestFileHelper.GetXmlNode(filePath);
+            var pdfTemplate = new PdfTemplate();
+
+            try
+            {
+                var actualRes = pdfTemplate.ReadXml(node);
+                Assert.AreEqual(expectedRes, actualRes);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+            finally
+            {
+                if (replaceFile)
+                {
+                    File.Delete(filePath);
+                }
+            }
+        }
+
+
+        #region Helper
+
+        private string ModifyTestFile(string filePath, string operation)
+        {
             if (operation == "RemoveTemplateId")
                 filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "Id");
             else if (operation == "RemoveSavePath")
@@ -60,26 +87,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.PDF
                 filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Type", "WaterMark", "");
             else if (operation == "RemoveReprintMarkText")
                 filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Text", "ReprintMark", "");
-            
-            var node = TestFileHelper.GetXmlNode(filePath);
-            var pdfTemplate = new PdfTemplate();
 
-            try
-            {
-                var actualRes = pdfTemplate.ReadXml(node);
-                Assert.AreEqual(expectedRes, actualRes);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-            finally
-            {
-                if (replaceFile)
-                {
-                    File.Delete(filePath);
-                }
-            }
+            return filePath;
         }
+
+        #endregion
     }
 }

@@ -34,7 +34,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
                 Assert.IsNotNull(value);
 
                 var actualSqlVariables = RedisCacheHelper.ByteArrayToObject<Dictionary<string, SqlVariable>>(value);
-                AssertObject(_expectedSqlVariables, actualSqlVariables);
+                AssertHelper.AssertObject(_expectedSqlVariables, actualSqlVariables);
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
                 var actualSqlVariables = SqlVariableRedisCacheManager.Instance.GetSqlVariables(_messageId);
                 
                 Assert.IsNotNull(actualSqlVariables);
-                AssertObject(_expectedSqlVariables, actualSqlVariables);
+                AssertHelper.AssertObject(_expectedSqlVariables, actualSqlVariables);
             }
             catch (InvalidOperationException ex)
             {

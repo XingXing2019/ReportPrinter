@@ -56,8 +56,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                     var actualSql = GetPrivateField<Sql>(placeHolder, "_sql");
                     var actualSqlResColumn = GetPrivateField<SqlResColumn>(placeHolder, "_sqlResColumn");
 
-                    AssertObject(sql, actualSql);
-                    AssertObject(new SqlResColumn("PRM_CorrelationId"), actualSqlResColumn);
+                    AssertHelper.AssertObject(sql, actualSql);
+                    AssertHelper.AssertObject(new SqlResColumn("PRM_CorrelationId"), actualSqlResColumn);
                 }
             }
             catch (Exception ex)
@@ -85,7 +85,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                 Assert.IsTrue(isSuccess);
 
                 var cloned = renderer.Clone();
-                AssertObject(renderer, cloned);
+                AssertHelper.AssertObject(renderer, cloned);
             }
             catch (Exception ex)
             {

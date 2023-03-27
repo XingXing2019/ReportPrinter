@@ -71,7 +71,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
                 var validationPlaceHolder = new ValidationPlaceHolder(S_PLACE_HOLDER, sql, sqlResColumn, model);
 
                 var cloned = validationPlaceHolder.Clone();
-                AssertObject(validationPlaceHolder, cloned);
+                AssertHelper.AssertObject(validationPlaceHolder, cloned);
             }
             catch (Exception ex)
             {

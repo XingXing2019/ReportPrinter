@@ -38,17 +38,17 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
             if (!expectedRes)
             {
                 if (operation == "ReplaceAttribute")
-                    filePath = ReplaceAttributeOfXmlFile(filePath, parentNode, name, value);
+                    filePath = TestFileHelper.ReplaceAttributeOfXmlFile(filePath, parentNode, name, value);
                 else if (operation == "ReplaceInnerText")
-                    filePath = ReplaceInnerTextOfXmlFile(filePath, name, value);
+                    filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, name, value);
                 else if (operation == "AppendXmlNode")
                 {
                     var attributes = new Dictionary<string, string> { { name, value } };
-                    filePath = AppendXmlNodeToXmlFile(filePath, parentNode, "Variable", "", attributes);
+                    filePath = TestFileHelper.AppendXmlNodeToXmlFile(filePath, parentNode, "Variable", "", attributes);
                 }
             }
 
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
 
             try
             {
@@ -75,11 +75,11 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
                     Assert.AreEqual(2, sqlVariables.Count);
                     var expectedSqlVariable = new SqlVariable { Name = "MessageId" };
                     var actualSqlVariable = sqlVariables["MessageId"];
-                    AssertObject(expectedSqlVariable, actualSqlVariable);
+                    AssertHelper.AssertObject(expectedSqlVariable, actualSqlVariable);
 
                     expectedSqlVariable = new SqlVariable { Name = "PrinterId" };
                     actualSqlVariable = sqlVariables["PrinterId"];
-                    AssertObject(expectedSqlVariable, actualSqlVariable);
+                    AssertHelper.AssertObject(expectedSqlVariable, actualSqlVariable);
                 }
             }
             catch (Exception ex)
@@ -100,7 +100,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
         {
             var filePath = @".\RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml";
 
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sql = new Sql();
 
             try
@@ -109,7 +109,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
                 Assert.IsTrue(isSuccess);
 
                 var cloned = sql.Clone();
-                AssertObject(sql, cloned);
+                AssertHelper.AssertObject(sql, cloned);
             }
             catch (Exception ex)
             {
@@ -148,7 +148,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
                 else if (operation == "ReplaceQuery")
                 {
                     var query = "WrongQuery";
-                    filePath = ReplaceInnerTextOfXmlFile(filePath, "Query", query);
+                    filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Query", query);
                     replaceFile = true;
                 }
                 else if (operation == "DeleteRes")
@@ -158,7 +158,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
                 else if (operation == "AddRes")
                 {
                     var query = "SELECT * FROM PrintReportMessage";
-                    filePath = ReplaceInnerTextOfXmlFile(filePath, "Query", query);
+                    filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Query", query);
                     replaceFile = true;
 
                     var tempMessage = CreateMessage(ReportTypeEnum.PDF);
@@ -167,7 +167,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
                 else if (operation == "ReplaceRes")
                 {
                     var query = "SELECT PRM_MessageId FROM PrintReportMessage";
-                    filePath = ReplaceInnerTextOfXmlFile(filePath, "Query", query);
+                    filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Query", query);
                     replaceFile = true;
                 }
             }
@@ -176,13 +176,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL
             if (hasExtraVariable)
             {
                 var query = "SELECT * FROM PrintReportMessage WHERE PRM_MessageId = '%%%MessageId%%%' AND PRM_TemplateId = '%%%TemplateId%%%'";
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "Query", query);
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Query", query);
                 replaceFile = true;
                 extraSqlVariable = new KeyValuePair<string, SqlVariable>("TemplateId", new SqlVariable { Name = "TemplateId", Value = message.TemplateId });
             }
 
             var sql = new Sql();
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var isSuccess = sql.ReadXml(node);
             Assert.IsTrue(isSuccess);
 

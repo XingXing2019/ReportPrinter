@@ -60,7 +60,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                 Assert.IsTrue(isSuccess);
 
                 var cloned = renderer.Clone();
-                AssertObject(renderer, cloned);
+                AssertHelper.AssertObject(renderer, cloned);
             }
             catch (Exception ex)
             {

@@ -19,7 +19,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             if (!expectedRes)
             {
                 var invalidLine = "%%%<SqlVariable Name=\"VariableName\" />%%%";
-                filePath = AppendLineToTxtFile(filePath, invalidLine);
+                filePath = TestFileHelper.AppendLineToTxtFile(filePath, invalidLine);
             }
 
             var id = "TestId";
@@ -74,7 +74,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
                 var referencePlaceHolder = new ReferencePlaceHolder(S_PLACE_HOLDER, labelStructure);
                 var cloned = referencePlaceHolder.Clone();
 
-                AssertObject(referencePlaceHolder, cloned);
+                AssertHelper.AssertObject(referencePlaceHolder, cloned);
             }
             catch (Exception ex)
             {

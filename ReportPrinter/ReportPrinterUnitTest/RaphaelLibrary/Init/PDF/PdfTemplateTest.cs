@@ -37,31 +37,31 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.PDF
             var replaceFile = !string.IsNullOrEmpty(operation);
 
             if (operation == "RemoveTemplateId")
-                filePath = RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "Id");
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "Id");
             else if (operation == "RemoveSavePath")
-                filePath = RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "SavePath");
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "SavePath");
             else if (operation == "RemoveFileNameSuffix")
-                filePath = RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "FileNameSuffix");
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "FileNameSuffix");
             else if (operation == "RemoveTimeout")
-                filePath = RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "Timeout");
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "PdfTemplate", "Timeout");
             else if (operation == "ReplaceTimeout")
-                filePath = ReplaceAttributeOfXmlFile(filePath, "PdfTemplate", "Timeout", "InvalidTimeout");
+                filePath = TestFileHelper.ReplaceAttributeOfXmlFile(filePath, "PdfTemplate", "Timeout", "InvalidTimeout");
             else if (operation == "RemoveTextType")
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "Type", "Text", "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Type", "Text", "");
             else if (operation == "RemoveBarcodeSqlTemplateId")
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "SqlTemplateId", "Barcode", "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "SqlTemplateId", "Barcode", "");
             else if (operation == "RemoveImageSource")
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "ImageSource", "Image", "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "ImageSource", "Image", "");
             else if (operation == "RemoveAnnotationType")
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "Type", "Annotation", "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Type", "Annotation", "");
             else if (operation == "RemoveTableSqlTemplateId")
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "SqlTemplateId", "Table", "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "SqlTemplateId", "Table", "");
             else if (operation == "RemoveWaterMarkType")
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "Type", "WaterMark", "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Type", "WaterMark", "");
             else if (operation == "RemoveReprintMarkText")
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "Text", "ReprintMark", "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "Text", "ReprintMark", "");
             
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var pdfTemplate = new PdfTemplate();
 
             try

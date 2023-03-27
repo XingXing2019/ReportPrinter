@@ -39,7 +39,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                     LabelStructureManager.Instance.TryGetLabelStructure("TestId", out var expectedStructure);
                     var actualStructure = GetPrivateField<IStructure>(placeHolder, "_labelStructure");
 
-                    AssertObject(expectedStructure, actualStructure);
+                    AssertHelper.AssertObject(expectedStructure, actualStructure);
                 }
             }
             catch (Exception ex)
@@ -63,7 +63,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                 Assert.IsTrue(isSuccess);
 
                 var cloned = renderer.Clone();
-                AssertObject(renderer, cloned);
+                AssertHelper.AssertObject(renderer, cloned);
             }
             catch (Exception ex)
             {

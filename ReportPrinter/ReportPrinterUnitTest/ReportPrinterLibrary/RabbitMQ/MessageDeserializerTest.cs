@@ -30,7 +30,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
 
                     if (isSuccess)
                     {
-                        AssetMessage(expectedMessage, actualMessage);
+                        AssertHelper.AssetMessage(expectedMessage, actualMessage);
                     }
                 }
                 else if (reportType == ReportTypeEnum.Label)
@@ -40,7 +40,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
 
                     if (isSuccess)
                     {
-                        AssetMessage(expectedMessage, actualMessage);
+                        AssertHelper.AssetMessage(expectedMessage, actualMessage);
                     }
                 }
             }
@@ -71,7 +71,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
 
                     if (isSuccess)
                     {
-                        AssetMessage(expectedMessage, actualMessage);
+                        AssertHelper.AssetMessage(expectedMessage, actualMessage);
                     }
                 }
                 else if (reportType == ReportTypeEnum.Label)
@@ -81,7 +81,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
 
                     if (isSuccess)
                     {
-                        AssetMessage(expectedMessage, actualMessage);
+                        AssertHelper.AssetMessage(expectedMessage, actualMessage);
                     }
                 }
             }

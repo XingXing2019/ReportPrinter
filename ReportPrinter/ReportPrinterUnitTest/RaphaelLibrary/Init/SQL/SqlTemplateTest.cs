@@ -21,15 +21,15 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
             var replaceFile = !string.IsNullOrEmpty(operation);
 
             if (operation == "RemoveTemplateId")
-                filePath = RemoveAttributeOfXmlFile(filePath, "SqlTemplate", "Id");
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "SqlTemplate", "Id");
             else if (operation == "RemoveSqls")
-                filePath = RemoveXmlNodeOfXmlFile(filePath, "Sql");
+                filePath = TestFileHelper.RemoveXmlNodeOfXmlFile(filePath, "Sql");
             else if (operation == "RemoveSqlId")
-                filePath = RemoveAttributeOfXmlFile(filePath, "Sql", "Id");
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "Sql", "Id");
             else if (operation == "DuplicateSqlId")
-                filePath = ReplaceAttributeOfXmlFile(filePath, "Sql", "Id", "DuplicateId");
+                filePath = TestFileHelper.ReplaceAttributeOfXmlFile(filePath, "Sql", "Id", "DuplicateId");
             
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
             try
@@ -63,7 +63,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         public void TestClone()
         {
             var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
             var isSuccess = sqlTemplate.ReadXml(node);
@@ -72,7 +72,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
             try
             {
                 var cloned = sqlTemplate.Clone();
-                AssertObject(sqlTemplate, cloned);
+                AssertHelper.AssertObject(sqlTemplate, cloned);
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         public void TestTryGetSql(bool expectedRes)
         {
             var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
             var isSuccess = sqlTemplate.ReadXml(node);

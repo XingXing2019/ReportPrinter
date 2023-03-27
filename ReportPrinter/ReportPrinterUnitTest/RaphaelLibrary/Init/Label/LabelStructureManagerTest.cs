@@ -30,18 +30,18 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 if (!expectedRes)
                 {
                     filePath = isReplace
-                        ? ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
-                        : RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
+                        ? TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
+                        : TestFileHelper.RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
 
                     if (isReplace)
                     {
                         var structureFile = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt";
-                        tempStructureFile = RemoveAttributeOfTxtFile(structureFile, "SqlId");
+                        tempStructureFile = TestFileHelper.RemoveAttributeOfTxtFile(structureFile, "SqlId");
                         SetupDummyLabelStructureManager("TestStructure");
                     }
                 }
                 
-                var node = GetXmlNode(filePath);
+                var node = TestFileHelper.GetXmlNode(filePath);
                 var actualRes = LabelStructureManager.Instance.ReadXml(node);
                 Assert.AreEqual(expectedRes, actualRes);
 

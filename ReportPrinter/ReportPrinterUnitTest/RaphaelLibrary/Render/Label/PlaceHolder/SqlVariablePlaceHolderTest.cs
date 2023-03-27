@@ -59,7 +59,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             try
             {
                 var cloned = sqlVariable.Clone();
-                AssertObject(sqlVariable, cloned);
+                AssertHelper.AssertObject(sqlVariable, cloned);
             }
             catch (Exception ex)
             {

@@ -53,7 +53,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         public void TestClone()
         {
             var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
             var isSuccess = sqlTemplate.ReadXml(node);
             Assert.IsTrue(isSuccess);
@@ -66,7 +66,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             try
             {
                 var cloned = sqlPlaceHolder.Clone();
-                AssertObject(sqlPlaceHolder, cloned);
+                AssertHelper.AssertObject(sqlPlaceHolder, cloned);
             }
             catch (Exception ex)
             {

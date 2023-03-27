@@ -59,10 +59,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                     Assert.AreEqual(validationModel.Comparator, actualComparator);
 
                     var actualSql = GetPrivateField<Sql>(placeHolder, "_sql");
-                    AssertObject(sql, actualSql);
+                    AssertHelper.AssertObject(sql, actualSql);
 
                     var actualSqlResColumn = GetPrivateField<SqlResColumn>(placeHolder, "_sqlResColumn");
-                    AssertObject(sqlResColumn, actualSqlResColumn);
+                    AssertHelper.AssertObject(sqlResColumn, actualSqlResColumn);
 
                     if (validationModel.ValidationType == ValidationType.Text)
                     {
@@ -75,10 +75,10 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                     else if (validationModel.ValidationType == ValidationType.Structure)
                     {
                         var actualTrueStructure = GetPrivateField<IStructure>(placeHolder, "_trueStructure");
-                        AssertObject(validationModel.TrueStructure, actualTrueStructure);
+                        AssertHelper.AssertObject(validationModel.TrueStructure, actualTrueStructure);
 
                         var actualFalseStructure = GetPrivateField<IStructure>(placeHolder, "_falseStructure");
-                        AssertObject(validationModel.FalseStructure, actualFalseStructure);
+                        AssertHelper.AssertObject(validationModel.FalseStructure, actualFalseStructure);
                     }
                 }
             }
@@ -109,7 +109,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
                 Assert.IsTrue(isSuccess);
 
                 var cloned = renderer.Clone();
-                AssertObject(renderer, cloned);
+                AssertHelper.AssertObject(renderer, cloned);
             }
             catch (Exception ex)
             {

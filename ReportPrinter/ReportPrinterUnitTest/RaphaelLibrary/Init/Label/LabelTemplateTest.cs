@@ -24,13 +24,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 
             if (!expectedRes)
             {
-                filePath = RemoveAttributeOfXmlFile(filePath, nodeName, attributeName);
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, nodeName, attributeName);
             }
 
             if (resetManager)
             {
                 LabelStructureManager.Instance.Reset();
-                filePath = ReplaceInnerTextOfXmlFile(filePath, nodeName, "");
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, nodeName, "");
 
                 if (nodeName == "LabelHeader" || nodeName == "LabelFooter")
                     SetupDummyLabelStructureManager("ValidationBody");
@@ -38,7 +38,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                     SetupDummyLabelStructureManager("ValidationHeader", "ValidationFooter");
             }
 
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var labelTemplate = new LabelTemplate();
 
             try
@@ -68,9 +68,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                     LabelStructureManager.Instance.TryGetLabelStructure("ValidationBody", out var body);
                     LabelStructureManager.Instance.TryGetLabelStructure("ValidationFooter", out var footer);
 
-                    AssertObject(header, labelStructures[0]);
-                    AssertObject(body, labelStructures[1]);
-                    AssertObject(footer, labelStructures[2]);
+                    AssertHelper.AssertObject(header, labelStructures[0]);
+                    AssertHelper.AssertObject(body, labelStructures[1]);
+                    AssertHelper.AssertObject(footer, labelStructures[2]);
                 }
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         public void TestClone()
         {
             var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml";
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var labelTemplate = new LabelTemplate();
 
             SetupDummyLabelStructureManager("ValidationHeader", "ValidationBody", "ValidationFooter");
@@ -100,7 +100,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 labelTemplate.ReadXml(node);
                 var cloned = labelTemplate.Clone();
 
-                AssertObject(labelTemplate, cloned);
+                AssertHelper.AssertObject(labelTemplate, cloned);
             }
             catch (Exception ex)
             {

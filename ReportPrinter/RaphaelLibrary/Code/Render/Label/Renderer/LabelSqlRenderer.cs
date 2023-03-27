@@ -17,13 +17,13 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
 
             foreach (var placeholder in placeholders)
             {
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_TEMPLATE_ID, out var sqlTemplateId))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_TEMPLATE_ID, out var sqlTemplateId) || string.IsNullOrEmpty(sqlTemplateId))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_TEMPLATE_ID, placeholder, procName);
                     return false;
                 }
 
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_ID, out var sqlId))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_ID, out var sqlId) || string.IsNullOrEmpty(sqlId))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_ID, placeholder, procName);
                     return false;
@@ -32,7 +32,7 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
                 if (!SqlTemplateManager.Instance.TryGetSql(sqlTemplateId, sqlId, out var sql))
                     return false;
 
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_RES_COLUMN, out var sqlResColumn))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_SQL_RES_COLUMN, out var sqlResColumn) || string.IsNullOrEmpty(sqlResColumn))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_SQL_RES_COLUMN, placeholder, procName);
                     return false;

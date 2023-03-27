@@ -37,7 +37,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common
 
                 var actualObj = RedisCacheHelper.ByteArrayToObject<AppConfig>(bytes);
 
-                AssertObject(expectedObj, actualObj);
+                AssertHelper.AssertObject(expectedObj, actualObj);
             }
             catch (Exception ex)
             {

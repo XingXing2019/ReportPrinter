@@ -52,7 +52,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Executor
             {
                 Assert.AreEqual(expectedMessage.SqlVariables.Count + 1, rows);
                 Assert.IsNotNull(actualMessage);
-                AssetMessage(expectedMessage, actualMessage);
+                AssertHelper.AssetMessage(expectedMessage, actualMessage);
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Executor
             try
             {
                 Assert.IsNotNull(actualMessage);
-                AssetMessage(expectedMessage, actualMessage);
+                AssertHelper.AssetMessage(expectedMessage, actualMessage);
             }
             catch (Exception ex)
             {

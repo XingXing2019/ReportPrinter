@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PdfTemplate Id="EmployeeReport" PageSize="A4" Orientation="Portrait" SavePath=".\Result\PDF\" FileNameSuffix="AccountNumber" Timeout="10">
+	<ReportHeader Height="1*" Rows="2" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
+
+		<Text Margin="10 5 10 5" Padding="5 5 5 5" HorizontalAlignment="Center" VerticalAlignment="Center" Position="Relative" Left="20"
+		      FontSize="25" FontFamily="Times New Roman" FontStyle="Bold" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Type>Text</Type>
+			<Row>0</Row>
+			<Column>1</Column>
+			<RowSpan>1</RowSpan>
+			<ColumnSpan>2</ColumnSpan>
+			<Content>Employee Report</Content>
+		</Text>
+
+		<Text Margin="0 0 10 0" Padding="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Type>Timestamp</Type>
+			<Row>1</Row>
+			<Column>0</Column>
+			<RowSpan>1</RowSpan>
+			<ColumnSpan>1</ColumnSpan>
+		</Text>
+
+		<Barcode Margin="0 0 0 0" FontSize="9" FontFamily="Calibri" Position="Relative" Top="10"
+		         FontStyle="Regular" BrushColor="Navy" Opacity="1">
+			<Row>0</Row>
+			<Column>0</Column>
+			<RowSpan>1</RowSpan>
+			<ColumnSpan>1</ColumnSpan>
+			<Format>CODE_128</Format>
+			<ShowBarcodeText>true</ShowBarcodeText>
+			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+			<SqlId>Version</SqlId>
+			<SqlResColumn Id="Database Version" />
+		</Barcode>
+
+		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" VerticalAlignment="Center" BackgroundColor="">
+			<Row>0</Row>
+			<Column>3</Column>
+			<RowSpan>2</RowSpan>
+			<ColumnSpan>1</ColumnSpan>
+			<SourceType>Local</SourceType>
+			<ImageSource>.\Image\Logo.png</ImageSource>
+		</Image>
+
+
+		<Annotation Margin="10 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"
+		            BrushColor="Yellow" BackgroundColor="" Opacity="0.5">
+			<Type>Text</Type>
+			<Row>0</Row>
+			<Column>3</Column>
+			<RowSpan>1</RowSpan>
+			<ColumnSpan>1</ColumnSpan>
+			<Icon>Note</Icon>
+			<Content>Report of employee and associate department</Content>
+		</Annotation>
+
+	</ReportHeader>
+	<PageHeader Height="0.5*" Rows="1" Columns="3" Margin="0 20 0 20" Padding="0 10 0 10">
+
+		<Image Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right" VerticalAlignment="Center" BackgroundColor="">
+			<Row>0</Row>
+			<Column>2</Column>
+			<RowSpan>1</RowSpan>
+			<ColumnSpan>1</ColumnSpan>
+			<SourceType>Local</SourceType>
+			<ImageSource>.\Image\Logo.png</ImageSource>
+		</Image>
+
+	</PageHeader>
+
+	<PageBody Height="8*" Margin="0 20 0 20" Padding="0 10 0 10">
+
+		<Table Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
+		       FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black">
+			<BoardThickness>1</BoardThickness>
+			<LineSpace>1</LineSpace>
+			<TitleHorizontalAlignment>Left</TitleHorizontalAlignment>
+			<HideTitle>false</HideTitle>
+			<TitleColor>Yellow</TitleColor>
+			<TitleColorOpacity>0.8</TitleColorOpacity>
+			<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+			<SqlId>EmployeeByGender</SqlId>
+			<SqlResColumn Id="BusinessEntityID" Title="Business Entity ID" Width="1*" />
+			<SqlResColumn Id="JobTitle" Title="Job Title" Width="2*" />
+			<SqlResColumn Id="BirthDate" Title="Birth Date" Width="1*" />
+			<SqlResColumn Id="MaritalStatus" Title="Marital Status" Width="1*" />
+			<SqlResColumn Id="Gender" Title="Gender" Width="1*" />
+			<SqlResColumn Id="HireDate" Title="Hire Date" Width="1*" />
+
+
+			<Table Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
+			       FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black">
+				<Space>0.7</Space>
+				<BoardThickness>1</BoardThickness>
+				<LineSpace>0.5</LineSpace>
+				<TitleColor>Yellow</TitleColor>
+				<TitleColorOpacity>0.8</TitleColorOpacity>
+				<TitleHorizontalAlignment>Left</TitleHorizontalAlignment>
+				<HideTitle>false</HideTitle>
+				<SqlTemplateId>PrintPdfQuery</SqlTemplateId>
+				<SqlId>EmployeeDepartment</SqlId>
+				<SqlVariable>BusinessEntityID</SqlVariable>
+				<SqlResColumn Id="Name" Title="Department Name" Width="1.5*" Position="Relative" Left="20"/>
+				<SqlResColumn Id="GroupName" Title="Group Name" Width="2*" Position="Relative" Left="20"/>
+				<SqlResColumn Id="StartDate" Title="Start Date" Width="1*" />
+				<SqlResColumn Id="EndDate" Title="End Date" Width="1*" />
+			</Table>
+
+		</Table>
+		<WaterMark Margin="5 5 5 5" Padding="5 5 5 5"
+		           FontSize="40" FontFamily="Times New Roman" BackgroundColor="" FontStyle="Regular" BrushColor="Red" Opacity="0.5">
+			<Type>Text</Type>
+			<Content>Employee Report</Content>
+			<StartPage>1</StartPage>
+			<EndPage>-2</EndPage>
+			<Rotate>315</Rotate>
+		</WaterMark>
+		<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Center"
+		            FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Location>Footer</Location>
+			<StartPage>1</StartPage>
+			<EndPage>-1</EndPage>
+		</PageNumber>
+
+		<ReprintMark Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Right"
+		             FontSize="12" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Red" BackgroundColor="" Opacity="1">
+			<Text>REPRINT</Text>
+			<BoardThickness>3</BoardThickness>
+			<Location>Footer</Location>
+		</ReprintMark>
+	</PageBody>
+
+	<PageFooter Height="0.5*" Rows="1" Columns="4" Margin="0 20 0 20" Padding="0 10 0 10">
+
+
+	</PageFooter>
+	<ReportFooter Height="1*" Rows="1" Columns="2" Margin="0 20 0 20" Padding="0 10 0 10">
+
+		<Text Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"
+		      FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+			<Type>Text</Type>
+			<Row>0</Row>
+			<Column>0</Column>
+			<RowSpan>1</RowSpan>
+			<ColumnSpan>1</ColumnSpan>
+			<Content>Created By________________________________________</Content>
+		</Text>
+	</ReportFooter>
+</PdfTemplate>

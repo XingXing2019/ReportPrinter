@@ -13,10 +13,12 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
     public class LabelStructureTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt";
+
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt";
+            var filePath = S_FILE_PATH;
             var id = "TestId";
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
             var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);
@@ -34,7 +36,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 Assert.IsTrue(isSuccess);
 
                 var cloned = labelStructure.Clone();
-                AssertObject(labelStructure, cloned);
+                AssertHelper.AssertObject(labelStructure, cloned);
             }
             catch (Exception ex)
             {
@@ -78,8 +80,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 if (!expectedRes)
                 {
                     filePath = isRemove
-                        ? RemoveAttributeOfTxtFile(filePath, name)
-                        : ReplaceAttributeOfTxtFile(filePath, name, value);
+                        ? TestFileHelper.RemoveAttributeOfTxtFile(filePath, name)
+                        : TestFileHelper.ReplaceAttributeOfTxtFile(filePath, name, value);
                 }
 
                 var actualRes = labelStructure.ReadFile(filePath);
@@ -149,7 +151,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
             foreach (var name in expectedValues.Keys)
             {
                 var actualValue = GetPrivateField<object>(placeHolder, name);
-                AssertObject(expectedValues[name], actualValue);
+                AssertHelper.AssertObject(expectedValues[name], actualValue);
             }
         }
 

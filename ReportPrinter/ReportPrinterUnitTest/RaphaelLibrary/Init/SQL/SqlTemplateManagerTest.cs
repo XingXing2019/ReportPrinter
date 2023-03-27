@@ -9,6 +9,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 {
     public class SqlTemplateManagerTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "RemoveTemplate")]
@@ -17,33 +19,28 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false, "WrongFilePath")]
         public void TestReadXml(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             var replaceFile = !string.IsNullOrEmpty(operation);
 
             var tempSqlTemplate = "";
             if (operation == "RemoveTemplate")
-            {
-                filePath = RemoveXmlNodeOfXmlFile(filePath, "SqlTemplate");
-            }
+                filePath = TestFileHelper.RemoveXmlNodeOfXmlFile(filePath, "SqlTemplate");
             else if (operation == "ReplaceSqlTemplate")
             {
                 var sqlTemplatePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
-                tempSqlTemplate = RemoveAttributeOfXmlFile(sqlTemplatePath, "Sql", "Id");
+                tempSqlTemplate = TestFileHelper.RemoveAttributeOfXmlFile(sqlTemplatePath, "Sql", "Id");
 
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "SqlTemplate", tempSqlTemplate);
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "SqlTemplate", tempSqlTemplate);
             }
             else if (operation == "DuplicateSqlTemplate")
             {
                 var innerText = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
-                filePath = AppendXmlNodeToXmlFile(filePath, "SqlTemplateList", "SqlTemplate", innerText);
+                filePath = TestFileHelper.AppendXmlNodeToXmlFile(filePath, "SqlTemplateList", "SqlTemplate", innerText);
             }
             else if (operation == "WrongFilePath")
-            {
-                var innerText = "WrongFilePath";
-                filePath = ReplaceInnerTextOfXmlFile(filePath, "SqlTemplate", "WrongFilePath");
-            }
+                filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "SqlTemplate", "WrongFilePath");
             
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
 
             try
             {
@@ -73,8 +70,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false)]
         public void TestTryGetSql(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
-            var node = GetXmlNode(filePath);
+            var filePath = S_FILE_PATH;
+            var node = TestFileHelper.GetXmlNode(filePath);
             var isSuccess = SqlTemplateManager.Instance.ReadXml(node);
             Assert.IsTrue(isSuccess);
 
@@ -101,8 +98,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [Test]
         public void TestReset()
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml";
-            var node = GetXmlNode(filePath);
+            var filePath = S_FILE_PATH;
+            var node = TestFileHelper.GetXmlNode(filePath);
             var isSuccess = SqlTemplateManager.Instance.ReadXml(node);
             Assert.IsTrue(isSuccess);
 

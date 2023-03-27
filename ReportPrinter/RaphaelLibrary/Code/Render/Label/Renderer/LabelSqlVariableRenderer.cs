@@ -15,7 +15,7 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
 
             foreach (var placeholder in placeholders)
             {
-                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_NAME, out var name))
+                if (!deserializer.TryGetValue(placeholder, LabelElementHelper.S_NAME, out var name) || string.IsNullOrEmpty(name))
                 {
                     Logger.LogMissingFieldLog(LabelElementHelper.S_NAME, placeholder, procName);
                     return false;

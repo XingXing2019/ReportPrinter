@@ -9,17 +9,19 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 {
     public class ReferencePlaceHolderTest : PlaceHolderTestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
+
         [Test]
         [TestCase(true)]
         [TestCase(false)]
         public void TestTryReplacePlaceHolder(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
+            var filePath = S_FILE_PATH;
 
             if (!expectedRes)
             {
                 var invalidLine = "%%%<SqlVariable Name=\"VariableName\" />%%%";
-                filePath = AppendLineToTxtFile(filePath, invalidLine);
+                filePath = TestFileHelper.AppendLineToTxtFile(filePath, invalidLine);
             }
 
             var id = "TestId";
@@ -60,7 +62,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\TrueLabelStructure.txt";
+            var filePath = S_FILE_PATH;
             var id = "TestId";
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
             var labelStructure = new LabelStructure(id, deserializer, LabelElementHelper.LABEL_RENDERER);
@@ -74,7 +76,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
                 var referencePlaceHolder = new ReferencePlaceHolder(S_PLACE_HOLDER, labelStructure);
                 var cloned = referencePlaceHolder.Clone();
 
-                AssertObject(referencePlaceHolder, cloned);
+                AssertHelper.AssertObject(referencePlaceHolder, cloned);
             }
             catch (Exception ex)
             {

@@ -7,6 +7,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Helper
 {
     public class LabelDeserializeHelperTest
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Render\Label\Helper\TestFile\ValidStructure.txt";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "AddStartSign")]
@@ -17,7 +19,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Helper
         [TestCase(false, "RemoveEndSign")]
         public void TestTryGetLines(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\Helper\TestFile\ValidStructure.txt";
+            var filePath = S_FILE_PATH;
             var input = File.ReadAllLines(filePath);
             var deserializer = new LabelDeserializeHelper(LabelElementHelper.S_DOUBLE_QUOTE, LabelElementHelper.LABEL_RENDERER);
 

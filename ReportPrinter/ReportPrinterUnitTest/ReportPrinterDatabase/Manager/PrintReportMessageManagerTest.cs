@@ -36,7 +36,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
                 var actualMessage = await mgr.Get(expectedMessage.MessageId);
                 Assert.NotNull(actualMessage);
-                AssetMessage(expectedMessage, actualMessage);
+                AssertHelper.AssetMessage(expectedMessage, actualMessage);
                 Assert.AreEqual(MessageStatus.Publish.ToString(), actualMessage.Status);
 
                 await mgr.PatchStatus(expectedMessage.MessageId, MessageStatus.Receive);
@@ -76,7 +76,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 foreach (var message in messages)
                 {
                     var expectedMessage = expectedMessages.FirstOrDefault(x => x.MessageId == message.MessageId);
-                    AssetMessage(expectedMessage, message);
+                    AssertHelper.AssetMessage(expectedMessage, message);
                 }
 
                 await mgr.DeleteAll();

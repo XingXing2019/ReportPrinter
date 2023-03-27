@@ -9,6 +9,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
 {
     public class SqlTemplateTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "RemoveTemplateId")]
@@ -17,27 +19,11 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false, "DuplicateSqlId")]
         public void TestReadXml(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
+            var filePath = S_FILE_PATH;
             var replaceFile = !string.IsNullOrEmpty(operation);
 
-            if (operation == "RemoveTemplateId")
-            {
-                filePath = RemoveAttributeOfXmlFile(filePath, "SqlTemplate", "Id");
-            }
-            else if (operation == "RemoveSqls")
-            {
-                filePath = RemoveXmlNodeOfXmlFile(filePath, "Sql");
-            }
-            else if (operation == "RemoveSqlId")
-            {
-                filePath = RemoveAttributeOfXmlFile(filePath, "Sql", "Id");
-            }
-            else if (operation == "DuplicateSqlId")
-            {
-                filePath = ReplaceAttributeOfXmlFile(filePath, "Sql", "Id", "DuplicateId");
-            }
-
-            var node = GetXmlNode(filePath);
+            filePath = ModifyTestFile(filePath, operation);
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
             try
@@ -70,8 +56,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [Test]
         public void TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
-            var node = GetXmlNode(filePath);
+            var filePath = S_FILE_PATH;
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
             var isSuccess = sqlTemplate.ReadXml(node);
@@ -80,7 +66,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
             try
             {
                 var cloned = sqlTemplate.Clone();
-                AssertObject(sqlTemplate, cloned);
+                AssertHelper.AssertObject(sqlTemplate, cloned);
             }
             catch (Exception ex)
             {
@@ -93,8 +79,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
         [TestCase(false)]
         public void TestTryGetSql(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Init\SQL\TestFile\SqlTemplate\ValidTemplate.xml";
-            var node = GetXmlNode(filePath);
+            var filePath = S_FILE_PATH;
+            var node = TestFileHelper.GetXmlNode(filePath);
             var sqlTemplate = new SqlTemplate();
 
             var isSuccess = sqlTemplate.ReadXml(node);
@@ -119,5 +105,24 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.SQL
                 Assert.Fail(ex.Message);
             }
         }
+
+
+        #region Helper
+
+        private string ModifyTestFile(string filePath, string operation)
+        {
+            if (operation == "RemoveTemplateId")
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "SqlTemplate", "Id");
+            else if (operation == "RemoveSqls")
+                filePath = TestFileHelper.RemoveXmlNodeOfXmlFile(filePath, "Sql");
+            else if (operation == "RemoveSqlId")
+                filePath = TestFileHelper.RemoveAttributeOfXmlFile(filePath, "Sql", "Id");
+            else if (operation == "DuplicateSqlId")
+                filePath = TestFileHelper.ReplaceAttributeOfXmlFile(filePath, "Sql", "Id", "DuplicateId");
+
+            return filePath;
+        }
+
+        #endregion
     }
 }

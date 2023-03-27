@@ -39,13 +39,13 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
                 Thread.Sleep(1000 * 1);
                 var actualMessage = await Manager.Get(expectedMessage.MessageId);
                 Assert.NotNull(actualMessage);
-                AssetMessage(expectedMessage, actualMessage);
+                AssertHelper.AssetMessage(expectedMessage, actualMessage);
                 Assert.AreEqual(MessageStatus.Publish.ToString(), actualMessage.Status);
 
                 var messages = GetMessages(queueName, messageType);
                 Assert.AreEqual(1, messages.Count);
 
-                AssetMessage(expectedMessage, (IPrintReport)messages[0]);
+                AssertHelper.AssetMessage(expectedMessage, (IPrintReport)messages[0]);
             }
             catch (Exception ex)
             {

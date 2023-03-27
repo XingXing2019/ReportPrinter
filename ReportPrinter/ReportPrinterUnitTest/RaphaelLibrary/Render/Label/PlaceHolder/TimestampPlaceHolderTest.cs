@@ -40,7 +40,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
             try
             {
                 var cloned = timestamp.Clone();
-                AssertObject(timestamp, cloned);
+                AssertHelper.AssertObject(timestamp, cloned);
             }
             catch (Exception ex)
             {

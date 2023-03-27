@@ -43,7 +43,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.Config
                     new ServicePathConfig { Id = "TestService", Path = "TestServicePath" }
                 };
 
-                AssertObject(expectedConfig, actualConfig);
+                AssertHelper.AssertObject(expectedConfig, actualConfig);
             }
             catch (IOException ex)
             {

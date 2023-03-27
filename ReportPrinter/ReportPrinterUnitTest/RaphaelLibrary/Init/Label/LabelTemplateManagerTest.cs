@@ -11,6 +11,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
     public class LabelTemplateManagerTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "RemoveXmlNode")]
@@ -19,33 +21,33 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [TestCase(false, "ReplaceInnerText")]
         public void TestReadXml(bool expectedRes, string operation = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             SetupDummyLabelStructureManager("ValidationHeader", "ValidationBody", "ValidationFooter");
 
             var tempLabelTemplate = "";
             if (!expectedRes)
             {
                 if (operation == "RemoveXmlNode")
-                    filePath = RemoveXmlNodeOfXmlFile(filePath, "LabelTemplate");
+                    filePath = TestFileHelper.RemoveXmlNodeOfXmlFile(filePath, "LabelTemplate");
                 else if (operation == "ReplaceLabelTemplate")
                 {
                     var labelTemplate = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml";
-                    tempLabelTemplate = RemoveAttributeOfXmlFile(labelTemplate, "LabelTemplate", "Id");
+                    tempLabelTemplate = TestFileHelper.RemoveAttributeOfXmlFile(labelTemplate, "LabelTemplate", "Id");
 
-                    filePath = ReplaceInnerTextOfXmlFile(filePath, "LabelTemplate", tempLabelTemplate);
+                    filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "LabelTemplate", tempLabelTemplate);
                 }
                 else if (operation == "ReplaceInnerText")
-                    filePath = ReplaceInnerTextOfXmlFile(filePath, "LabelTemplate", "WrongPath");
+                    filePath = TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "LabelTemplate", "WrongPath");
                 else if (operation == "AppendXmlNode")
                 {
                     var parentName = "LabelTemplateList";
                     var nodeName = "LabelTemplate";
                     var innerText = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml";
-                    filePath = AppendXmlNodeToXmlFile(filePath, parentName, nodeName, innerText);
+                    filePath = TestFileHelper.AppendXmlNodeToXmlFile(filePath, parentName, nodeName, innerText);
                 }
             }
 
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
 
             try
             {
@@ -78,16 +80,16 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [TestCase(false)]
         public void TestTryGetReportTemplate(bool expectedRes)
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelTemplateManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
             var labelStructureIds = new[] { "ValidationHeader", "ValidationBody", "ValidationFooter" };
             SetupDummyLabelStructureManager(labelStructureIds);
 
             if (!expectedRes)
             {
-                filePath = RemoveXmlNodeOfXmlFile(filePath, "LabelTemplate");
+                filePath = TestFileHelper.RemoveXmlNodeOfXmlFile(filePath, "LabelTemplate");
             }
 
-            var node = GetXmlNode(filePath);
+            var node = TestFileHelper.GetXmlNode(filePath);
             LabelTemplateManager.Instance.ReadXml(node);
 
             try
@@ -124,7 +126,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                         var prop = expectedLabelStructure.GetType().GetField("_lines", BindingFlags.NonPublic | BindingFlags.Instance);
                         prop?.SetValue(expectedLabelStructure, Array.Empty<string>());
 
-                        AssertObject(expectedLabelStructure, labelStructures[i]);
+                        AssertHelper.AssertObject(expectedLabelStructure, labelStructures[i]);
                     }
                 }
             }

@@ -8,6 +8,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
 {
     public class LabelStructureManagerTest : TestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\ValidConfig.xml";
+
         [Test]
         [TestCase(true)]
         [TestCase(false, "Id", false)]
@@ -15,7 +17,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
         [TestCase(false, "", true, @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\ValidStructure.txt")]
         public void TestReadXml(bool expectedRes, string name = "", bool isReplace = true, string value = "")
         {
-            var filePath = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructureManager\ValidConfig.xml";
+            var filePath = S_FILE_PATH;
 
             SetupDummySqlTemplateManager(new Dictionary<string, List<string>>
             {
@@ -30,18 +32,18 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Init.Label
                 if (!expectedRes)
                 {
                     filePath = isReplace
-                        ? ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
-                        : RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
+                        ? TestFileHelper.ReplaceInnerTextOfXmlFile(filePath, "LabelStructure", value)
+                        : TestFileHelper.RemoveAttributeOfXmlFile(filePath, "LabelStructure", name);
 
                     if (isReplace)
                     {
                         var structureFile = @".\RaphaelLibrary\Init\Label\TestFile\LabelStructure\InvalidStructure_Sql.txt";
-                        tempStructureFile = RemoveAttributeOfTxtFile(structureFile, "SqlId");
+                        tempStructureFile = TestFileHelper.RemoveAttributeOfTxtFile(structureFile, "SqlId");
                         SetupDummyLabelStructureManager("TestStructure");
                     }
                 }
                 
-                var node = GetXmlNode(filePath);
+                var node = TestFileHelper.GetXmlNode(filePath);
                 var actualRes = LabelStructureManager.Instance.ReadXml(node);
                 Assert.AreEqual(expectedRes, actualRes);
 

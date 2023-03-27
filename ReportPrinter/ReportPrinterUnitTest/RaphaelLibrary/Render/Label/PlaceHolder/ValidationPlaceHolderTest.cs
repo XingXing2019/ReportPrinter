@@ -15,11 +15,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
 {
     public class ValidationPlaceHolderTest : PlaceHolderTestBase
     {
+        private const string S_FILE_PATH = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
+
         [Test]
         [TestCaseSource(nameof(TryReplacePlaceHolderTestCases))]
         public async Task TestTryReplacePlaceHolder(bool expectedRes, string expectedValue, string resColumn, ValidationModel model)
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
+            var filePath = S_FILE_PATH;
             var message = CreateMessage(ReportTypeEnum.PDF);
             var manager = CreateLabelManager(S_PLACE_HOLDER, message.MessageId);
 
@@ -54,7 +56,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
         [Test]
         public async Task TestClone()
         {
-            var filePath = @".\RaphaelLibrary\Render\Label\PlaceHolder\TestFile\SqlTemplate.xml";
+            var filePath = S_FILE_PATH;
             var message = CreateMessage(ReportTypeEnum.PDF);
 
             var sqlTemplate = await SetupSqlTest(filePath, message, false);
@@ -71,7 +73,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder
                 var validationPlaceHolder = new ValidationPlaceHolder(S_PLACE_HOLDER, sql, sqlResColumn, model);
 
                 var cloned = validationPlaceHolder.Clone();
-                AssertObject(validationPlaceHolder, cloned);
+                AssertHelper.AssertObject(validationPlaceHolder, cloned);
             }
             catch (Exception ex)
             {

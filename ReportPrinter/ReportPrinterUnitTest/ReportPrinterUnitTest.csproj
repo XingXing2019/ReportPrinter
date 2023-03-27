@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Helper\" />
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
     <Folder Include="RaphaelLibrary\Print\" />
-    <Folder Include="RaphaelLibrary\Render\Label\Renderer\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,6 +65,12 @@
     <None Update="RaphaelLibrary\Init\Label\TestFile\LabelTemplate\ValidTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RaphaelLibrary\Init\PDF\TestFile\PdfTemplateManager\ValidConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Init\PDF\TestFile\PdfTemplate\ValidTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RaphaelLibrary\Init\SQL\TestFile\SqlTemplateManager\ValidConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -78,6 +84,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Render\Label\PlaceHolder\TestFile\FalseLabelStructure.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\FalseLabelStructure.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\SqlTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\TrueLabelStructure.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\ValidStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RaphaelLibrary\Render\SQL\TestFile\ValidSql.xml">

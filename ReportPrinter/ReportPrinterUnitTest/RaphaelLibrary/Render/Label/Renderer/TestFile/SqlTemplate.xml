@@ -1,0 +1,23 @@
+﻿<SqlTemplate Id="TestLabelRenderer">
+	<Sql Id="TestLabelRenderer" DatabaseId="ReportPrinterTest">
+		<Query>
+			SELECT
+				PRM_MessageId,
+				PRM_CorrelationId,
+				PRM_ReportType,
+				PRM_TemplateId,
+				PRM_PrinterId,
+				PRM_NumberOfCopy,
+				PRM_HasReprintFlag,
+				PRM_PublishTime,
+				PRM_ReceiveTime,
+				PRM_CompleteTime,
+				PRM_Status
+			FROM
+				PrintReportMessage
+			WHERE
+				PRM_MessageId = '%%%MessageId%%%'
+		</Query>
+		<Variable Name="MessageId" />
+	</Sql>
+</SqlTemplate>

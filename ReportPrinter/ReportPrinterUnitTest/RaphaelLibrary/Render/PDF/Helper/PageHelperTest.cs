@@ -49,13 +49,13 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.PDF.Helper
         [TestCase("Statement", true, PageSize.Statement)]
         [TestCase("Size10x14", true, PageSize.Size10x14)]
         [TestCase("InvalidSize", false, -1)]
-        public void TestTryGetPageSize(string pageSize, bool expectedRes, PageSize expectedSize)
+        public void TestTryGetPageSize(string pageSize, bool expectedRes, PageSize expectedSizeEnum)
         {
             try
             {
                 var actualRes = PageHelper.TryGetPageSize(pageSize, out var actualSize);
                 Assert.AreEqual(expectedRes, actualRes);
-                Assert.AreEqual(actualSize, expectedRes ? PageSizeConverter.ToSize(expectedSize) : XSize.Empty);
+                Assert.AreEqual(actualSize, expectedRes ? PageSizeConverter.ToSize(expectedSizeEnum) : XSize.Empty);
             }
             catch (Exception ex)
             {

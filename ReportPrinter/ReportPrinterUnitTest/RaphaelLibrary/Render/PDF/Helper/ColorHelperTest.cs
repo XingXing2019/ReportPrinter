@@ -9,6 +9,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.PDF.Helper
     public class ColorHelperTest : TestBase
     {
         [Test]
+
+        #region Test Cases
+        
         [TestCase("AliceBlue", true, XKnownColor.AliceBlue)]
         [TestCase("AntiqueWhite", true, XKnownColor.AntiqueWhite)]
         [TestCase("Aqua", true, XKnownColor.Aqua)]
@@ -151,6 +154,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.PDF.Helper
         [TestCase("Yellow", true, XKnownColor.Yellow)]
         [TestCase("YellowGreen", true, XKnownColor.YellowGreen)]
         [TestCase("InvalidColor", false, -1)]
+
+        #endregion
         public void TestTryGenerateColor(string color, bool expectedRes, XKnownColor expectedColorEnum)
         {
             try

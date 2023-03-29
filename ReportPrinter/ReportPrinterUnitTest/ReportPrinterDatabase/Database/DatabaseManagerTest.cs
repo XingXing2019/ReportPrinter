@@ -24,7 +24,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Database
             }
 
             var dummyDbConnectionList = new DatabaseConnectionList(databaseConnections);
-            SetPrivateField<DatabaseConnectionList>(DatabaseManager.Instance, "_databaseConnectionList", dummyDbConnectionList);
+            SetPrivateField(typeof(DatabaseManager), DatabaseManager.Instance, "_databaseConnectionList", dummyDbConnectionList);
 
             try
             {

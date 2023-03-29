@@ -99,15 +99,21 @@ namespace ReportPrinterUnitTest
             return field;
         }
 
-        protected void SetPrivateField<T>(object instance, string fieldName, object value)
+        protected void SetPrivateField(Type type, object instance, string fieldName, object value)
         {
-            var type = instance.GetType();
             var fieldInfo = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            fieldInfo.SetValue(instance, value);
+            fieldInfo?.SetValue(instance, value);
         }
-        
+
+        protected void SetPrivateProperty(Type type, object instance, string propertyName, object value)
+        {
+            var backingFieldName = $"<{propertyName}>k__BackingField";
+            var fieldInfo = type.GetField(backingFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            fieldInfo?.SetValue(instance, value);
+        }
+
         #endregion
-        
+
 
         #region Setup
 

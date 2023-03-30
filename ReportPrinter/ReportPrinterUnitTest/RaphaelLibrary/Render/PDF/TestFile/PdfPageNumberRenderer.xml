@@ -1,0 +1,6 @@
+﻿<PageNumber Margin="5 5 5 5" Padding="5 5 5 5" HorizontalAlignment="Center"
+			FontSize="9" FontFamily="Times New Roman" FontStyle="Regular" BrushColor="Black" BackgroundColor="" Opacity="1">
+	<Location>Footer</Location>
+	<StartPage>1</StartPage>
+	<EndPage>-1</EndPage>
+</PageNumber>

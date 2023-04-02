@@ -1,0 +1,9 @@
+﻿<Text Margin="10 5 10 5" Padding="5 5 5 5" HorizontalAlignment="Center" VerticalAlignment="Center" Position="Relative" Left="20"
+	  FontSize="25" FontFamily="Times New Roman" FontStyle="Bold" BrushColor="Black" BackgroundColor="" Opacity="1">
+	<Type>Text</Type>
+	<Row>0</Row>
+	<Column>1</Column>
+	<RowSpan>1</RowSpan>
+	<ColumnSpan>2</ColumnSpan>
+	<Content>Employee Report</Content>
+</Text>

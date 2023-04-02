@@ -11,6 +11,9 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.PDF.Helper
 {
     public class LayoutHelperTest : TestBase
     {
+        private const string S_PAGE_RENDERER_FILE_PATH = @".\RaphaelLibrary\Render\PDF\TestFile\PdfPageNumberRenderer.xml";
+        private const string S_TEXT_RENDERER_FILE_PATH = @".\RaphaelLibrary\Render\PDF\TestFile\PdfTextRenderer.xml";
+
         private static readonly object[] TryCreateContentBoxTextSizeTestCases =
         {
             new object[] {new BoxModel(0, 0, 100, 50), HorizontalAlignment.Left, true, new BoxModel(10, 20, 50, 10)},
@@ -25,7 +28,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.PDF.Helper
         public void TestTryCreateContentBox(BoxModel container, HorizontalAlignment horizontalAlignment, bool expectedRes, BoxModel expectedModel)
         {
             var textSize = new XSize(50, 10);
-            var pdfRender = CreatePdfRenderer();
+            var pdfRender = CreatePdfRenderer(S_PAGE_RENDERER_FILE_PATH);
 
             try
             {
@@ -264,9 +267,8 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Render.PDF.Helper
             return pdfStructureList;
         }
 
-        private PdfRendererBase CreatePdfRenderer()
+        private PdfRendererBase CreatePdfRenderer(string filePath)
         {
-            var filePath = @".\RaphaelLibrary\Render\PDF\TestFile\PdfPageNumberRenderer.xml";
             var node = TestFileHelper.GetXmlNode(filePath);
 
             var pdfRenderer = new PdfPageNumberRenderer(PdfStructure.PdfPageFooter);

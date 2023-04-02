@@ -99,6 +99,9 @@
     <None Update="RaphaelLibrary\Render\Label\Renderer\TestFile\ValidStructure.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RaphaelLibrary\Render\PDF\TestFile\PdfTextRenderer.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RaphaelLibrary\Render\PDF\TestFile\template.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

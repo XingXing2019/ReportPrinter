@@ -12,7 +12,7 @@ namespace ReportPrinterDatabase.Code.Entity
             SqlVariableConfigs = new HashSet<SqlVariableConfig>();
         }
 
-        public Guid SqlId { get; set; }
+        public Guid SqlConfigId { get; set; }
         public string Id { get; set; }
         public string DatabaseId { get; set; }
         public string Query { get; set; }

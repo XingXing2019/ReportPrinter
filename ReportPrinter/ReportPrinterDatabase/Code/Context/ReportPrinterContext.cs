@@ -133,14 +133,14 @@ namespace ReportPrinterDatabase.Code.Context
 
             modelBuilder.Entity<SqlConfig>(entity =>
             {
-                entity.HasKey(e => e.SqlId)
+                entity.HasKey(e => e.SqlConfigId)
                     .HasName("PK_dbo.SqlConfig");
 
                 entity.ToTable("SqlConfig");
 
-                entity.Property(e => e.SqlId)
+                entity.Property(e => e.SqlConfigId)
                     .ValueGeneratedNever()
-                    .HasColumnName("SC_SqlId");
+                    .HasColumnName("SC_SqlConfigId");
 
                 entity.Property(e => e.DatabaseId)
                     .IsRequired()
@@ -161,14 +161,14 @@ namespace ReportPrinterDatabase.Code.Context
 
             modelBuilder.Entity<SqlVariableConfig>(entity =>
             {
-                entity.HasKey(e => e.SqlVariableId)
+                entity.HasKey(e => e.SqlVariableConfigId)
                     .HasName("PK_dbo.SqlVariableConfig");
 
                 entity.ToTable("SqlVariableConfig");
 
-                entity.Property(e => e.SqlVariableId)
+                entity.Property(e => e.SqlVariableConfigId)
                     .ValueGeneratedNever()
-                    .HasColumnName("SVC_SqlVariableId");
+                    .HasColumnName("SVC_SqlVariableConfigId");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -176,11 +176,11 @@ namespace ReportPrinterDatabase.Code.Context
                     .IsUnicode(false)
                     .HasColumnName("SVC_Name");
 
-                entity.Property(e => e.SqlId).HasColumnName("SVC_SqlId");
+                entity.Property(e => e.SqlConfigId).HasColumnName("SVC_SqlConfigId");
 
-                entity.HasOne(d => d.Sql)
+                entity.HasOne(d => d.SqlConfig)
                     .WithMany(p => p.SqlVariableConfigs)
-                    .HasForeignKey(d => d.SqlId)
+                    .HasForeignKey(d => d.SqlConfigId)
                     .HasConstraintName("FK_dbo.SqlConfig_dbo.SqlVariableConfig_SqlId");
             });
 

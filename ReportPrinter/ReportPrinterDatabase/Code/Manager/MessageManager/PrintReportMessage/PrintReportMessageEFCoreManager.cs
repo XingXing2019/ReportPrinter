@@ -19,7 +19,7 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                using var context = new ReportPrinterContext();
+                await using var context = new ReportPrinterContext();
                 var printReportMessage = new Code.Entity.PrintReportMessage
                 {
                     MessageId = message.MessageId,
@@ -60,13 +60,16 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                using var context = new ReportPrinterContext();
+                await using var context = new ReportPrinterContext();
                 var message = await context.PrintReportMessages
                     .Include(x => x.PrintReportSqlVariables)
                     .FirstOrDefaultAsync(x => x.MessageId == messageId);
 
                 if (message == null)
+                {
+                    Logger.Debug($"Message: {messageId} does not exist", procName);
                     return null;
+                }
 
                 var res = CreateMessage(message);
 
@@ -86,7 +89,7 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                using var context = new ReportPrinterContext();
+                await using var context = new ReportPrinterContext();
                 var messages = await context.PrintReportMessages
                     .Include(x => x.PrintReportSqlVariables)
                     .ToListAsync();
@@ -114,7 +117,7 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                using var context = new ReportPrinterContext();
+                await using var context = new ReportPrinterContext();
                 var entity = await context.PrintReportMessages.FindAsync(messageId);
 
                 if (entity == null)
@@ -142,7 +145,7 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                using var context = new ReportPrinterContext();
+                await using var context = new ReportPrinterContext();
                 context.PrintReportMessages.RemoveRange(context.PrintReportMessages);
                 var rows = await context.SaveChangesAsync();
                 Logger.Debug($"Delete all messages, {rows} rows affected", procName);
@@ -160,7 +163,7 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                using var context = new ReportPrinterContext();
+                await using var context = new ReportPrinterContext();
                 var entity = await context.PrintReportMessages.FindAsync(messageId);
 
                 if (entity == null)

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Code\Database\" />
+    <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
   </ItemGroup>
 
   <ItemGroup>

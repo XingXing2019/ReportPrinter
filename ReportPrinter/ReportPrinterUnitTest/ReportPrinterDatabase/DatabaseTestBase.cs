@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
@@ -30,6 +31,24 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase
             message.SqlVariables = sqlVariables.Select(x => new SqlVariable { Name = x.Name, Value = x.Value }).ToList();
 
             return message;
+        }
+
+        protected SqlConfig CreateSqlConfig(string id)
+        {
+            var sqlConfigId = Guid.NewGuid();
+            return new SqlConfig
+            {
+                SqlConfigId = sqlConfigId,
+                Id = id,
+                DatabaseId = "Test DB",
+                Query = $"SELECT * FROM SqlConfig WHERE SC_ID = {id}",
+                SqlVariableConfigs = new List<SqlVariableConfig>
+                {
+                    new SqlVariableConfig { SqlVariableConfigId = Guid.NewGuid(), SqlConfigId = sqlConfigId, Name = "Test Name 1" },
+                    new SqlVariableConfig { SqlVariableConfigId = Guid.NewGuid(), SqlConfigId = sqlConfigId, Name = "Test Name 2" },
+                    new SqlVariableConfig { SqlVariableConfigId = Guid.NewGuid(), SqlConfigId = sqlConfigId, Name = "Test Name 3" }
+                }
+            };
         }
     }
 }

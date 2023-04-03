@@ -2,44 +2,39 @@
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Executor;
+using ReportPrinterDatabase.Code.StoredProcedures;
+using ReportPrinterDatabase.Code.StoredProcedures.SqlConfig;
+using ReportPrinterDatabase.Code.StoredProcedures.SqlVariableConfig;
 using ReportPrinterLibrary.Code.Log;
-using static MassTransit.Monitoring.Performance.BuiltInCounters;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 {
-    public class SqlConfigEFCoreManager : ISqlConfigManager
+    public class SqlConfigSPManager : ISqlConfigManager
     {
+        private readonly StoredProcedureExecutor _executor;
+
+        public SqlConfigSPManager()
+        {
+            _executor = new StoredProcedureExecutor();
+        }
+
         public async Task Post(SqlConfig config)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                
-                var sqlConfig = new SqlConfig
-                {
-                    SqlConfigId = config.SqlConfigId,
-                    Id = config.Id,
-                    DatabaseId = config.DatabaseId,
-                    Query = config.Query,
-                };
+                var sp = new PostSqlConfig(config.SqlConfigId, config.Id, config.DatabaseId, config.Query);
 
-                var sqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfig
-                {
-                    SqlVariableConfigId = x.SqlVariableConfigId,
-                    SqlConfigId = config.SqlConfigId,
-                    Name = x.Name,
-                }).ToList();
+                var spList = new List<StoredProcedureBase> { sp };
+                spList.AddRange(config.SqlVariableConfigs.Select(x => new PostSqlVariableConfig(x.SqlVariableConfigId, x.SqlConfigId, x.Name)));
 
-                sqlConfig.SqlVariableConfigs = sqlVariableConfigs;
-                context.SqlConfigs.Add(sqlConfig);
-                var rows = await context.SaveChangesAsync();
+                var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Record Sql config: {config.SqlConfigId}, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -55,15 +50,12 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var sqlConfig = await context.SqlConfigs
-                    .Include(x => x.SqlVariableConfigs)
-                    .FirstOrDefaultAsync(x => x.SqlConfigId == sqlConfigId);
-                
-                if (sqlConfig == null)
+                var sqlConfig = await _executor.ExecuteQueryOneAsync<SqlConfig>(new GetSqlConfig(sqlConfigId));
+                var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetSqlVariableConfig(sqlConfigId));
+
+                if (sqlConfig != null)
                 {
-                    Logger.Debug($"Sql config: {sqlConfigId} does not exist", procName);
-                    return null;
+                    sqlConfig.SqlVariableConfigs = sqlVariableConfigs;
                 }
 
                 Logger.Debug($"Retrieve Sql config: {sqlConfigId}", procName);
@@ -82,10 +74,13 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var sqlConfigs = await context.SqlConfigs
-                    .Include(x => x.SqlVariableConfigs)
-                    .ToListAsync();
+                var sqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlConfig>(new GetAllSqlConfig());
+                var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetAllSqlVariableConfig());
+
+                foreach (var sqlConfig in sqlConfigs)
+                {
+                    sqlConfig.SqlVariableConfigs = sqlVariableConfigs.Where(x => x.SqlConfigId == sqlConfig.SqlConfigId).ToList();
+                }
 
                 Logger.Debug($"Retrieve all sql configs", procName);
                 return sqlConfigs;
@@ -103,19 +98,8 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var sqlConfig = await context.SqlConfigs.FindAsync(sqlConfigId);
-
-                if (sqlConfig == null)
-                {
-                    Logger.Debug($"Sql config: {sqlConfigId} does not exist", procName);
-                }
-                else
-                {
-                    context.SqlConfigs.Remove(sqlConfig);
-                    var rows = await context.SaveChangesAsync();
-                    Logger.Debug($"Delete Sql config: {sqlConfigId}, {rows} row affected", procName);
-                }
+                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfig(sqlConfigId));
+                Logger.Debug($"Delete Sql config: {sqlConfigId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
@@ -130,9 +114,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                context.SqlConfigs.RemoveRange(context.SqlConfigs);
-                var rows = await context.SaveChangesAsync();
+                var rows = await _executor.ExecuteNonQueryAsync(new DeleteAllSqlConfig());
                 Logger.Debug($"Delete all Sql configs, {rows} row affected", procName);
             }
             catch (Exception ex)

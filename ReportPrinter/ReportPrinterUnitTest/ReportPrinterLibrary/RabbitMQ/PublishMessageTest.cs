@@ -30,7 +30,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
         {
             try
             {
-                var mgr = new PrintReportMessageManager();
+                var mgr = new PrintReportMessageSPManager();
                 var producer = PrintReportProducerFactory.CreatePrintReportProducer(queueName, mgr);
                 var expectedMessage = CreateMessage(reportType);
 

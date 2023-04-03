@@ -26,6 +26,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
         [Test]
         [TestCase(typeof(SqlConfigEFCoreManager))]
+        [TestCase(typeof(SqlConfigSPManager))]
         public async Task TestSqlConfigManager_Get(Type managerType)
         {
             try
@@ -50,6 +51,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
         [Test]
         [TestCase(typeof(SqlConfigEFCoreManager))]
+        [TestCase(typeof(SqlConfigSPManager))]
         public async Task TestSqlConfigManager_GetAll(Type managerType)
         {
             try

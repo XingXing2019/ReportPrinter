@@ -23,7 +23,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
-        [TestCase(typeof(PrintReportMessageManager))]
+        [TestCase(typeof(PrintReportMessageSPManager))]
         [TestCase(typeof(PrintReportMessageEFCoreManager))]
         public async Task TestPrintReportMessageManager_Get(Type managerType)
         {
@@ -54,7 +54,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
-        [TestCase(typeof(PrintReportMessageManager))]
+        [TestCase(typeof(PrintReportMessageSPManager))]
         [TestCase(typeof(PrintReportMessageEFCoreManager))]
         public async Task TestPrintReportMessageManager_GetAll(Type managerType)
         {

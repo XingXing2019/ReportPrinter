@@ -9,15 +9,14 @@ using ReportPrinterDatabase.Code.StoredProcedures.PrintReportSqlVariable;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
-using static MassTransit.Monitoring.Performance.BuiltInCounters;
 
 namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 {
-    public class PrintReportMessageManager : IPrintReportMessageManager<IPrintReport>
+    public class PrintReportMessageSPManager : IPrintReportMessageManager<IPrintReport>
     {
         private readonly StoredProcedureExecutor _executor;
 
-        public PrintReportMessageManager()
+        public PrintReportMessageSPManager()
         {
             _executor = new StoredProcedureExecutor();
         }

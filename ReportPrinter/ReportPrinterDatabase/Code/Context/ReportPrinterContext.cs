@@ -25,6 +25,7 @@ namespace ReportPrinterDatabase.Code.Context
 
             _connectionString = connectionString;
             _loggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
+
         }
 
         public ReportPrinterContext(DbContextOptions<ReportPrinterContext> options)
@@ -32,6 +33,8 @@ namespace ReportPrinterDatabase.Code.Context
 
         public virtual DbSet<PrintReportMessage> PrintReportMessages { get; set; }
         public virtual DbSet<PrintReportSqlVariable> PrintReportSqlVariables { get; set; }
+        public virtual DbSet<SqlConfig> SqlConfigs { get; set; }
+        public virtual DbSet<SqlVariableConfig> SqlVariableConfigs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -126,6 +129,59 @@ namespace ReportPrinterDatabase.Code.Context
                     .WithMany(p => p.PrintReportSqlVariables)
                     .HasForeignKey(d => d.MessageId)
                     .HasConstraintName("FK_dbo.PrintReportMessage_dbo.PrintReportSqlVariable_MessageId");
+            });
+
+            modelBuilder.Entity<SqlConfig>(entity =>
+            {
+                entity.HasKey(e => e.SqlConfigId)
+                    .HasName("PK_dbo.SqlConfig");
+
+                entity.ToTable("SqlConfig");
+
+                entity.Property(e => e.SqlConfigId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("SC_SqlConfigId");
+
+                entity.Property(e => e.DatabaseId)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("SC_DatabaseId");
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("SC_Id");
+
+                entity.Property(e => e.Query)
+                    .IsRequired()
+                    .HasColumnName("SC_Query");
+            });
+
+            modelBuilder.Entity<SqlVariableConfig>(entity =>
+            {
+                entity.HasKey(e => e.SqlVariableConfigId)
+                    .HasName("PK_dbo.SqlVariableConfig");
+
+                entity.ToTable("SqlVariableConfig");
+
+                entity.Property(e => e.SqlVariableConfigId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("SVC_SqlVariableConfigId");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("SVC_Name");
+
+                entity.Property(e => e.SqlConfigId).HasColumnName("SVC_SqlConfigId");
+
+                entity.HasOne(d => d.SqlConfig)
+                    .WithMany(p => p.SqlVariableConfigs)
+                    .HasForeignKey(d => d.SqlConfigId)
+                    .HasConstraintName("FK_dbo.SqlConfig_dbo.SqlVariableConfig_SqlId");
             });
 
             OnModelCreatingPartial(modelBuilder);

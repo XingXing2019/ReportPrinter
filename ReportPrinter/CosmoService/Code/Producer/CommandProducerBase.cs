@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
+using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Log;
@@ -14,10 +15,10 @@ namespace CosmoService.Code.Producer
         protected readonly string QueueName;
         protected IBusControl Bus;
         
-        private readonly IMessageManager<T> _manager;
+        private readonly IManager<T> _manager;
         private readonly RabbitMQConfig _rabbitMqConfig;
 
-        protected CommandProducerBase(string queueName, IMessageManager<T> manager)
+        protected CommandProducerBase(string queueName, IManager<T> manager)
         {
             QueueName = queueName;
             _manager = manager;

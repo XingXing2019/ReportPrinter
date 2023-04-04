@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="Code\Form\frmPublishPrintReport.cs">
+    <Compile Update="Code\Forms\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Code\Forms\Message\frmPublishPrintReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Code\Forms\Configuration\frmSqlConfig.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Code\Form\frmPublishPrintReport.resx">
+    <EmbeddedResource Update="Code\Forms\Message\frmPublishPrintReport.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

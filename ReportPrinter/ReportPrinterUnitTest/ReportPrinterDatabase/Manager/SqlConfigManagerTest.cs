@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
-using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {

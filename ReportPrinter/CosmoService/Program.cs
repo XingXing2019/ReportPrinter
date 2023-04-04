@@ -1,6 +1,6 @@
 using System;
 using System.Windows.Forms;
-using CosmoService.Code.Form;
+using CosmoService.Code.Forms;
 using ReportPrinterLibrary.Code.Log;
 
 namespace CosmoService
@@ -18,7 +18,7 @@ namespace CosmoService
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmPublishPrintReport());
+            Application.Run(new frmMain());
 
             Logger.Info($"CosmoService start running", procName);
         }

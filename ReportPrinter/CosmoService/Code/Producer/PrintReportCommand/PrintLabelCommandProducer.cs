@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -7,7 +8,7 @@ namespace CosmoService.Code.Producer.PrintReportCommand
 {
     public class PrintLabelCommandProducer : CommandProducerBase<IPrintReport>
     {
-        public PrintLabelCommandProducer(string queueName, IMessageManager<IPrintReport> manager)
+        public PrintLabelCommandProducer(string queueName, IManager<IPrintReport> manager)
             : base(queueName, manager) { }
 
         protected override async Task SendMessageAsync(IPrintReport message)

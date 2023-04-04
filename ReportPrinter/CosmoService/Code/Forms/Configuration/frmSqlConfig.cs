@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MassTransit.Initializers;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Winform.Configuration;
 
 namespace CosmoService.Code.Forms.Configuration
 {
@@ -17,14 +21,14 @@ namespace CosmoService.Code.Forms.Configuration
             _manager = ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.ManagerType);
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnRefresh_Click(object sender, EventArgs e)
         {
-
+            await RefreshDataGridView();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -35,9 +39,17 @@ namespace CosmoService.Code.Forms.Configuration
 
         #region Helper
 
-        private void Refresh()
+        private async Task RefreshDataGridView()
         {
+            var sqlConfigs = await _manager.GetAll();
+            var data = sqlConfigs.Select(x => new SqlConfigData
+            {
+                Id = x.Id,
+                DatabaseId = x.DatabaseId,
+                Query = x.Query,
+            }).ToList();
 
+            dgvSqlConfigs.DataSource = data;
         }
 
         #endregion

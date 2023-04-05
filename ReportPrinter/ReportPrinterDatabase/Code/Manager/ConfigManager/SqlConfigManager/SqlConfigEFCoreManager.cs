@@ -32,7 +32,6 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
                 var sqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfig
                 {
-                    SqlVariableConfigId = x.SqlVariableConfigId,
                     SqlConfigId = config.SqlConfigId,
                     Name = x.Name,
                 }).ToList();
@@ -138,6 +137,45 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during deleting all Sql configs:. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task PutSqlConfig(SqlConfig config)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(DeleteAll)}";
+
+            try
+            {
+                await using var context = new ReportPrinterContext();
+                
+                var sqlConfigId = config.SqlConfigId;
+                var sqlConfig = await context.SqlConfigs.Include(x => x.SqlVariableConfigs).FirstOrDefaultAsync(x => x.SqlConfigId == sqlConfigId);
+
+                if (sqlConfig == null)
+                {
+                    Logger.Debug($"Sql config: {sqlConfigId} does not exist", procName);
+                }
+                else
+                {
+                    sqlConfig.Id = config.Id;
+                    sqlConfig.DatabaseId = config.DatabaseId;
+                    sqlConfig.Query = config.Query;
+
+                    sqlConfig.SqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfig
+                    {
+                        SqlVariableConfigId = x.SqlVariableConfigId,
+                        SqlConfigId = config.SqlConfigId,
+                        Name = x.Name,
+                    }).ToList();
+
+                    var rows = await context.SaveChangesAsync();
+                    Logger.Debug($"Update Sql config: {sqlConfigId}, {rows} row affected", procName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during updating all Sql configs:. Ex: {ex.Message}", procName);
                 throw;
             }
         }

@@ -30,15 +30,34 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             try
             {
                 var mgr = (ISqlConfigManager)Activator.CreateInstance(managerType);
-                var expectedSqlConfig = CreateSqlConfig("Test SQL Config");
+                
+                var sqlConfigId = Guid.NewGuid();
+                var id = "Test Sql Config 1";
+                var databaseId = "Test DB 1";
+                var query = "Test Query 1";
+                var sqlVariableNames = new List<string> { "Variable 1", "Variable 2", "Variable 3" };
+                var expectedSqlConfig = CreateSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
+                
                 await mgr.Post(expectedSqlConfig);
 
-                var actualSqlConfig = await mgr.Get(expectedSqlConfig.SqlConfigId);
+                var actualSqlConfig = await mgr.Get(sqlConfigId);
                 Assert.NotNull(actualSqlConfig);
                 AssertSqlConfig(expectedSqlConfig, actualSqlConfig);
 
-                await mgr.Delete(expectedSqlConfig.SqlConfigId);
-                actualSqlConfig = await mgr.Get(expectedSqlConfig.SqlConfigId);
+                id = "Test Sql Config 2";
+                databaseId = "Test DB 2";
+                query = "Test Query 2";
+                sqlVariableNames = new List<string> { "Variable A", "Variable B", "Variable C" };
+                expectedSqlConfig = CreateSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
+
+                await mgr.PutSqlConfig(expectedSqlConfig);
+
+                actualSqlConfig = await mgr.Get(sqlConfigId);
+                Assert.NotNull(actualSqlConfig);
+                AssertSqlConfig(expectedSqlConfig, actualSqlConfig);
+
+                await mgr.Delete(sqlConfigId);
+                actualSqlConfig = await mgr.Get(sqlConfigId);
                 Assert.IsNull(actualSqlConfig);
             }
             catch (Exception ex)
@@ -59,7 +78,13 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
                 for (int i = 0; i < 10; i++)
                 {
-                    var expectedSqlConfig = CreateSqlConfig($"Test SQL Config {i + 1}");
+                    var sqlConfigId = Guid.NewGuid();
+                    var id = $"Test Sql Config {i + 1}";
+                    var databaseId = $"Test DB {i + 1}";
+                    var query = $"Test Query {i + 1}";
+                    var sqlVariableNames = new List<string> { $"Variable {i + 1}" };
+
+                    var expectedSqlConfig = CreateSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
                     await mgr.Post(expectedSqlConfig);
                     expectedSqlConfigs.Add(expectedSqlConfig);
                 }
@@ -98,9 +123,8 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             Assert.AreEqual(expectedSqlVariableConfigs.Count, actualSqlVariableConfigs.Count);
             foreach (var expectedSqlVariableConfig in expectedSqlVariableConfigs)
             {
-                var actualSqlVariableConfig = actualSqlVariableConfigs.First(x => x.SqlVariableConfigId == expectedSqlVariableConfig.SqlVariableConfigId);
+                var actualSqlVariableConfig = actualSqlVariableConfigs.First(x => x.Name == expectedSqlVariableConfig.Name);
                 Assert.AreEqual(expectedSqlVariableConfig.SqlConfigId, actualSqlVariableConfig.SqlConfigId);
-                Assert.AreEqual(expectedSqlVariableConfig.Name, actualSqlVariableConfig.Name);
             }
         }
 

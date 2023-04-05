@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using ReportPrinterDatabase.Code.Database;
@@ -55,15 +56,15 @@ namespace ReportPrinterDatabase.Code.Context
                 entity.ToTable("PrintReportMessage");
 
                 entity.Property(e => e.MessageId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("PRM_MessageId");
+                    .HasColumnName("PRM_MessageId")
+                    .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.CompleteTime)
                     .HasColumnType("datetime")
                     .HasColumnName("PRM_CompleteTime");
 
                 entity.Property(e => e.CorrelationId).HasColumnName("PRM_CorrelationId");
-
+                
                 entity.Property(e => e.HasReprintFlag).HasColumnName("PRM_HasReprintFlag");
 
                 entity.Property(e => e.NumberOfCopy).HasColumnName("PRM_NumberOfCopy");
@@ -107,9 +108,11 @@ namespace ReportPrinterDatabase.Code.Context
 
                 entity.ToTable("PrintReportSqlVariable");
 
+                entity.HasIndex(e => e.MessageId, "IX_PrintReportSqlVariable_MessageId");
+
                 entity.Property(e => e.SqlVariableId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("PRSV_SqlVariableId");
+                    .HasColumnName("PRSV_SqlVariableId")
+                    .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.MessageId).HasColumnName("PRSV_MessageId");
 
@@ -139,8 +142,8 @@ namespace ReportPrinterDatabase.Code.Context
                 entity.ToTable("SqlConfig");
 
                 entity.Property(e => e.SqlConfigId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("SC_SqlConfigId");
+                    .HasColumnName("SC_SqlConfigId")
+                    .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.DatabaseId)
                     .IsRequired()
@@ -166,9 +169,11 @@ namespace ReportPrinterDatabase.Code.Context
 
                 entity.ToTable("SqlVariableConfig");
 
+                entity.HasIndex(e => e.SqlConfigId, "IX_SqlVariableConfig_SqlConfigId");
+
                 entity.Property(e => e.SqlVariableConfigId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("SVC_SqlVariableConfigId");
+                    .HasColumnName("SVC_SqlVariableConfigId")
+                    .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

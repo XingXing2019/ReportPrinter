@@ -13,12 +13,12 @@ namespace CosmoService.Code.Forms.Configuration
 {
     public partial class frmSqlConfig : Form
     {
-        private readonly IManager<SqlConfig> _manager;
+        private readonly ISqlConfigManager _manager;
 
         public frmSqlConfig()
         {
             InitializeComponent();
-            _manager = ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.ManagerType);
+            _manager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.ManagerType);
         }
 
         private async void btnRefresh_Click(object sender, EventArgs e)
@@ -28,7 +28,12 @@ namespace CosmoService.Code.Forms.Configuration
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

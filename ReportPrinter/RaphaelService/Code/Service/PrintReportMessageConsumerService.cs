@@ -2,6 +2,7 @@
 using System.Threading;
 using MassTransit;
 using RaphaelService.Code.Consumer;
+using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Log;
@@ -20,7 +21,7 @@ namespace RaphaelService.Code.Service
         public PrintReportMessageConsumerService()
         {
             _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
-            _manager = new PrintReportMessageEFCoreManager();
+            _manager = (IPrintReportMessageManager<IPrintReport>)ManagerFactory.CreateManager<IPrintReport>(typeof(IPrintReportMessageManager<IPrintReport>), AppConfig.Instance.ManagerType);
         }
 
         public bool Start(HostControl hostControl)

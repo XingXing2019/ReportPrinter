@@ -32,6 +32,7 @@
             btnRefresh = new System.Windows.Forms.Button();
             btnAdd = new System.Windows.Forms.Button();
             btnDelete = new System.Windows.Forms.Button();
+            btnModify = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)dgvSqlConfigs).BeginInit();
             SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new System.Drawing.Point(133, 32);
+            btnAdd.Location = new System.Drawing.Point(123, 32);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new System.Drawing.Size(96, 29);
             btnAdd.TabIndex = 2;
@@ -67,7 +68,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new System.Drawing.Point(245, 32);
+            btnDelete.Location = new System.Drawing.Point(327, 32);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new System.Drawing.Size(96, 29);
             btnDelete.TabIndex = 3;
@@ -75,11 +76,22 @@
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
+            // btnModify
+            // 
+            btnModify.Location = new System.Drawing.Point(225, 32);
+            btnModify.Name = "btnModify";
+            btnModify.Size = new System.Drawing.Size(96, 29);
+            btnModify.TabIndex = 4;
+            btnModify.Text = "Modify";
+            btnModify.UseVisualStyleBackColor = true;
+            btnModify.Click += btnModify_Click;
+            // 
             // frmSqlConfig
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(734, 641);
+            Controls.Add(btnModify);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(btnRefresh);
@@ -97,5 +109,6 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnModify;
     }
 }

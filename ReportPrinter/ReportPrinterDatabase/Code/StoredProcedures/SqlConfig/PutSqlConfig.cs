@@ -2,9 +2,9 @@
 
 namespace ReportPrinterDatabase.Code.StoredProcedures.SqlConfig
 {
-    public class PostSqlConfig : StoredProcedureBase
+    public class PutSqlConfig : StoredProcedureBase
     {
-        public PostSqlConfig(Guid sqlConfigId, string id, string databaseId, string query, string @sqlVariableNames)
+        public PutSqlConfig(Guid sqlConfigId, string id, string databaseId, string query, string sqlVariableNames)
         {
             Parameters.Add("@sqlConfigId", sqlConfigId);
             Parameters.Add("@id", id);

@@ -35,7 +35,6 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
                 var sqlVariables = message.SqlVariables.Select(x => new PrintReportSqlVariable
                 {
-                    SqlVariableId = Guid.NewGuid(),
                     Message = printReportMessage,
                     Name = x.Name,
                     Value = x.Value

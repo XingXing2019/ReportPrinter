@@ -21,7 +21,7 @@ namespace RaphaelService.Code.Service
         public PrintReportMessageConsumerService()
         {
             _rabbitMqConfig = AppConfig.Instance.RabbitMQConfig;
-            _manager = (IPrintReportMessageManager<IPrintReport>)ManagerFactory.CreateManager<IPrintReport>(typeof(IPrintReportMessageManager<IPrintReport>), AppConfig.Instance.ManagerType);
+            _manager = (IPrintReportMessageManager<IPrintReport>)ManagerFactory.CreateManager<IPrintReport>(typeof(IPrintReportMessageManager<IPrintReport>), AppConfig.Instance.DatabaseManagerType);
         }
 
         public bool Start(HostControl hostControl)

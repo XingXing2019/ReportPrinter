@@ -7,11 +7,11 @@ namespace ReportPrinterDatabase.Code.Manager
 {
     public class ManagerFactory
     {
-        public static IManager<T> CreateManager<T>(Type type, ManagerType managerType)
+        public static IManager<T> CreateManager<T>(Type type, DatabaseManagerType managerType)
         {
             var procName = $"ManagerFactory.{nameof(CreateManager)}";
             
-            if (managerType == ManagerType.EFCore || managerType == ManagerType.SP)
+            if (managerType == DatabaseManagerType.EFCore || managerType == DatabaseManagerType.SP)
             {
                 var assemblies = AppDomain.CurrentDomain.GetAssemblies();
                 var mgrType = assemblies.SelectMany(x => x.GetTypes())

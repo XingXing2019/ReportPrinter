@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MassTransit.Initializers;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
@@ -18,7 +17,7 @@ namespace CosmoService.Code.Forms.Configuration
         public frmSqlConfig()
         {
             InitializeComponent();
-            _manager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.ManagerType);
+            _manager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.DatabaseManagerType);
         }
 
         private async void btnRefresh_Click(object sender, EventArgs e)

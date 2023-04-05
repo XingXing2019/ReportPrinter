@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using ReportPrinterDatabase.Code.Manager;
-using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
@@ -17,7 +16,7 @@ namespace CosmoService.Code.Forms.Message
         public frmPublishPrintReport()
         {
             InitializeComponent();
-            _manager = ManagerFactory.CreateManager<IPrintReport>(typeof(IPrintReportMessageManager<IPrintReport>), AppConfig.Instance.ManagerType);
+            _manager = ManagerFactory.CreateManager<IPrintReport>(typeof(IPrintReportMessageManager<IPrintReport>), AppConfig.Instance.DatabaseManagerType);
         }
 
         private async void btnSend_Click(object sender, EventArgs e)

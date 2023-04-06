@@ -14,6 +14,7 @@ namespace ReportPrinterLibrary.Code.Winform.Configuration
 
         [XmlIgnore]
         [DisplayName(" ")]
+        [Browsable(false)]
         public Guid SqlConfigId { get; set; }
 
         [XmlAttribute("Id")]

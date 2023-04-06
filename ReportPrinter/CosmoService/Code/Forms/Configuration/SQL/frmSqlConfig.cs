@@ -47,7 +47,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             await RefreshDataGridView();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) == 0)
             {
@@ -55,8 +55,12 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                 return;
             }
 
-            var selectedConfigs = configs.Where(x => x.IsSelected).ToList();
-            _manager.Delete(selectedConfigs.Select(x => x.SqlConfigId).ToList());
+            if (MessageBox.Show("Do you want to delete selected sql configs?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                var selectedConfigs = configs.Where(x => x.IsSelected).ToList();
+                await _manager.Delete(selectedConfigs.Select(x => x.SqlConfigId).ToList());
+                await RefreshDataGridView();
+            }
         }
 
 

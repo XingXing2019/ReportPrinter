@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
+using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.Helper
@@ -24,6 +25,23 @@ namespace ReportPrinterUnitTest.Helper
             foreach (var variable in expected.SqlVariables)
             {
                 Assert.IsTrue(actual.SqlVariables.Any(x => x.Name == variable.Name && x.Value == variable.Value));
+            }
+        }
+
+        public void AssertSqlConfig(SqlConfig expectedSqlConfig, SqlConfig actualSqlConfig)
+        {
+            Assert.AreEqual(expectedSqlConfig.Id, actualSqlConfig.Id);
+            Assert.AreEqual(expectedSqlConfig.DatabaseId, actualSqlConfig.DatabaseId);
+            Assert.AreEqual(expectedSqlConfig.Query, actualSqlConfig.Query);
+
+            var expectedSqlVariableConfigs = expectedSqlConfig.SqlVariableConfigs.ToList();
+            var actualSqlVariableConfigs = actualSqlConfig.SqlVariableConfigs.ToList();
+
+            Assert.AreEqual(expectedSqlVariableConfigs.Count, actualSqlVariableConfigs.Count);
+            foreach (var expectedSqlVariableConfig in expectedSqlVariableConfigs)
+            {
+                var actualSqlVariableConfig = actualSqlVariableConfigs.First(x => x.Name == expectedSqlVariableConfig.Name);
+                Assert.AreEqual(expectedSqlVariableConfig.SqlConfigId, actualSqlVariableConfig.SqlConfigId);
             }
         }
 

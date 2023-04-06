@@ -8,6 +8,7 @@ using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using static MassTransit.Monitoring.Performance.BuiltInCounters;
 
 namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 {
@@ -60,17 +61,17 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
             try
             {
                 await using var context = new ReportPrinterContext();
-                var message = await context.PrintReportMessages
+                var entity = await context.PrintReportMessages
                     .Include(x => x.PrintReportSqlVariables)
                     .FirstOrDefaultAsync(x => x.MessageId == messageId);
 
-                if (message == null)
+                if (entity == null)
                 {
                     Logger.Debug($"Message: {messageId} does not exist", procName);
                     return null;
                 }
 
-                var res = CreateMessage(message);
+                var res = CreateMessage(entity);
 
                 Logger.Debug($"Retrieve message: {messageId}", procName);
                 return res;
@@ -89,12 +90,12 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
             try
             {
                 await using var context = new ReportPrinterContext();
-                var messages = await context.PrintReportMessages
+                var entities = await context.PrintReportMessages
                     .Include(x => x.PrintReportSqlVariables)
                     .ToListAsync();
 
                 var res = new List<IPrintReport>();
-                foreach (var entity in messages)
+                foreach (var entity in entities)
                 {
                     res.Add(CreateMessage(entity));
                 }
@@ -136,6 +137,33 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
                 throw;
             }
 
+        }
+
+        public async Task Delete(List<Guid> messageIds)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(Delete)}";
+
+            try
+            {
+                await using var context = new ReportPrinterContext();
+                var entities = context.PrintReportMessages.Where(x => messageIds.Contains(x.MessageId)).ToList();
+
+                if (entities.Count== 0)
+                {
+                    Logger.Debug($"Messages does not exist", procName);
+                }
+                else
+                {
+                    context.PrintReportMessages.RemoveRange(entities);
+                    var rows = await context.SaveChangesAsync();
+                    Logger.Debug($"Delete messages, {rows} row affected", procName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during deleting messages. Ex: {ex.Message}", procName);
+                throw;
+            }
         }
 
         public async Task DeleteAll()

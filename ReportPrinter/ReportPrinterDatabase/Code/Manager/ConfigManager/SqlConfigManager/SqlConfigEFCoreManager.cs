@@ -55,18 +55,18 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             try
             {
                 await using var context = new ReportPrinterContext();
-                var sqlConfig = await context.SqlConfigs
+                var entity = await context.SqlConfigs
                     .Include(x => x.SqlVariableConfigs)
                     .FirstOrDefaultAsync(x => x.SqlConfigId == sqlConfigId);
                 
-                if (sqlConfig == null)
+                if (entity == null)
                 {
                     Logger.Debug($"Sql config: {sqlConfigId} does not exist", procName);
                     return null;
                 }
 
                 Logger.Debug($"Retrieve Sql config: {sqlConfigId}", procName);
-                return sqlConfig;
+                return entity;
             }
             catch (Exception ex)
             {
@@ -82,12 +82,12 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             try
             {
                 await using var context = new ReportPrinterContext();
-                var sqlConfigs = await context.SqlConfigs
+                var entities = await context.SqlConfigs
                     .Include(x => x.SqlVariableConfigs)
                     .ToListAsync();
 
                 Logger.Debug($"Retrieve all sql configs", procName);
-                return sqlConfigs;
+                return entities;
             }
             catch (Exception ex)
             {
@@ -103,15 +103,15 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             try
             {
                 await using var context = new ReportPrinterContext();
-                var sqlConfig = await context.SqlConfigs.FindAsync(sqlConfigId);
+                var entity = await context.SqlConfigs.FindAsync(sqlConfigId);
 
-                if (sqlConfig == null)
+                if (entity == null)
                 {
                     Logger.Debug($"Sql config: {sqlConfigId} does not exist", procName);
                 }
                 else
                 {
-                    context.SqlConfigs.Remove(sqlConfig);
+                    context.SqlConfigs.Remove(entity);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Delete Sql config: {sqlConfigId}, {rows} row affected", procName);
                 }
@@ -119,6 +119,33 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during deleting Sql config: {sqlConfigId}. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task Delete(List<Guid> sqlConfigIds)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(Delete)}";
+
+            try
+            {
+                await using var context = new ReportPrinterContext();
+                var entities = context.SqlConfigs.Where(x => sqlConfigIds.Contains(x.SqlConfigId)).ToList();
+
+                if (entities.Count == 0)
+                {
+                    Logger.Debug($"Sql configs does not exist", procName);
+                }
+                else
+                {
+                    context.SqlConfigs.RemoveRange(entities);
+                    var rows = await context.SaveChangesAsync();
+                    Logger.Debug($"Delete Sql configs, {rows} row affected", procName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during deleting Sql configs. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -150,19 +177,19 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
                 await using var context = new ReportPrinterContext();
                 
                 var sqlConfigId = config.SqlConfigId;
-                var sqlConfig = await context.SqlConfigs.Include(x => x.SqlVariableConfigs).FirstOrDefaultAsync(x => x.SqlConfigId == sqlConfigId);
+                var entity = await context.SqlConfigs.Include(x => x.SqlVariableConfigs).FirstOrDefaultAsync(x => x.SqlConfigId == sqlConfigId);
 
-                if (sqlConfig == null)
+                if (entity == null)
                 {
                     Logger.Debug($"Sql config: {sqlConfigId} does not exist", procName);
                 }
                 else
                 {
-                    sqlConfig.Id = config.Id;
-                    sqlConfig.DatabaseId = config.DatabaseId;
-                    sqlConfig.Query = config.Query;
+                    entity.Id = config.Id;
+                    entity.DatabaseId = config.DatabaseId;
+                    entity.Query = config.Query;
 
-                    sqlConfig.SqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfig
+                    entity.SqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfig
                     {
                         SqlVariableConfigId = x.SqlVariableConfigId,
                         SqlConfigId = config.SqlConfigId,

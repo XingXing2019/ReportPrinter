@@ -9,19 +9,34 @@ using ReportPrinterLibrary.Code.Winform.Helper;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {
-    public partial class frmAddSqlConfig : Form
+    public partial class frmUpsertSqlConfig : Form
     {
         private readonly ISqlConfigManager _manager;
         private readonly BindingList<SqlVariableConfigData> _sqlVariableConfigs;
 
-        public frmAddSqlConfig(ISqlConfigManager manager)
+        public frmUpsertSqlConfig(ISqlConfigManager manager)
         {
             InitializeComponent();
+            Text = "Add SQL Config";
 
             _manager = manager;
             _sqlVariableConfigs = new BindingList<SqlVariableConfigData>();
             SetupDataGridView();
             ToggleDeleteButton();
+        }
+
+        public frmUpsertSqlConfig(ISqlConfigManager manager, SqlConfigData config)
+        {
+            InitializeComponent();
+            Text = "Edit SQL Config";
+
+            _manager = manager;
+            txtId.Text = config.Id;
+            txtDatabaseId.Text = config.DatabaseId;
+            txtQuery.Text = config.Query;
+
+            var sqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfigData { Name = x.Name, }).ToList();
+            _sqlVariableConfigs = new BindingList<SqlVariableConfigData>(sqlVariableConfigs);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -47,7 +62,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private void btnPreview_Click(object sender, EventArgs e)
         {
-            if (!ValidateInput(out var id, out var databaseId, out var query)) 
+            if (!ValidateInput(out var id, out var databaseId, out var query))
                 return;
 
             var sqlConfig = CreateSqlConfigData(id, databaseId, query);
@@ -58,7 +73,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!ValidateInput(out var id, out var databaseId, out var query)) 
+            if (!ValidateInput(out var id, out var databaseId, out var query))
                 return;
 
             var sqlConfig = CreateSqlConfig(id, databaseId, query);
@@ -116,7 +131,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             var sqlConfig = new SqlConfig
             {
                 SqlConfigId = Guid.NewGuid(),
-                Id = id, 
+                Id = id,
                 DatabaseId = databaseId,
                 Query = query,
             };

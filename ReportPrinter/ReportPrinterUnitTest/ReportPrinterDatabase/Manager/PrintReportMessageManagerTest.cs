@@ -62,26 +62,44 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             {
                 var mgr = (IPrintReportMessageManager<IPrintReport>)Activator.CreateInstance(managerType);
                 var expectedMessages = new List<IPrintReport>();
+                var messagesToDelete = new List<Guid>();
 
                 for (int i = 0; i < 10; i++)
                 {
                     var expectedMessage = CreateMessage(ReportTypeEnum.PDF);
                     expectedMessages.Add(expectedMessage);
                     await mgr.Post(expectedMessage);
+
+                    if (i < 5)
+                    {
+                        messagesToDelete.Add(expectedMessage.MessageId);
+                    }
                 }
 
-                var messages = await mgr.GetAll();
-                Assert.AreEqual(10, messages.Count);
+                var actualMessages = await mgr.GetAll();
+                Assert.AreEqual(10, actualMessages.Count);
 
-                foreach (var message in messages)
+                foreach (var expectedMessage in expectedMessages)
                 {
-                    var expectedMessage = expectedMessages.FirstOrDefault(x => x.MessageId == message.MessageId);
-                    AssertHelper.AssetMessage(expectedMessage, message);
+                    var actualMessage = actualMessages.Single(x => x.MessageId == expectedMessage.MessageId);
+                    AssertHelper.AssetMessage(expectedMessage, actualMessage);
+                }
+
+                await mgr.Delete(messagesToDelete);
+                actualMessages = await mgr.GetAll();
+
+                Assert.AreEqual(5, actualMessages.Count);
+                expectedMessages = expectedMessages.Where(x => !messagesToDelete.Contains(x.MessageId)).ToList();
+
+                foreach (var expectedMessage in expectedMessages)
+                {
+                    var actualMessage = actualMessages.Single(x => x.MessageId == expectedMessage.MessageId);
+                    AssertHelper.AssetMessage(expectedMessage, actualMessage);
                 }
 
                 await mgr.DeleteAll();
-                messages = await mgr.GetAll();
-                Assert.AreEqual(0, messages.Count);
+                actualMessages = await mgr.GetAll();
+                Assert.AreEqual(0, actualMessages.Count);
             }
             catch (Exception ex)
             {

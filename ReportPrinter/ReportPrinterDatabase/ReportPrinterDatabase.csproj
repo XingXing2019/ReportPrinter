@@ -12,7 +12,6 @@
     <Folder Include="Code\Database\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
     <Folder Include="Code\StoredProcedures\SqlVariableConfig\" />
-    <Folder Include="Code\StoredProcedures\SqlConfig\" />
   </ItemGroup>
 
   <ItemGroup>

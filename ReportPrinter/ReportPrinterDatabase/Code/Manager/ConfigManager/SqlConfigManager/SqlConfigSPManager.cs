@@ -101,12 +101,28 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfig(sqlConfigId));
+                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfigById(sqlConfigId));
                 Logger.Debug($"Delete Sql config: {sqlConfigId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during deleting Sql config: {sqlConfigId}. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task Delete(List<Guid> sqlConfigIds)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(Delete)}";
+
+            try
+            {
+                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfigByIds(string.Join(',', sqlConfigIds)));
+                Logger.Debug($"Delete Sql configs, {rows} row affected", procName);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during deleting Sql configs. Ex: {ex.Message}", procName);
                 throw;
             }
         }

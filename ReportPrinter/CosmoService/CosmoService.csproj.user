@@ -4,7 +4,7 @@
     <Compile Update="Code\Forms\Configuration\frmConfigPreview.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Code\Forms\Configuration\SQL\frmAddSqlConfig.cs">
+    <Compile Update="Code\Forms\Configuration\SQL\frmUpsertSqlConfig.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Code\Forms\Configuration\SQL\frmAddSqlVariableConfig.cs">

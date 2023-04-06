@@ -1,10 +1,10 @@
-IF OBJECT_ID('DeleteSqlConfig', 'P') IS NOT NULL
+IF OBJECT_ID('DeleteSqlConfigById', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE DeleteSqlConfig
+	DROP PROCEDURE DeleteSqlConfigById
 END
 GO
 
-CREATE PROCEDURE DeleteSqlConfig
+CREATE PROCEDURE DeleteSqlConfigById
 	@sqlConfigId UNIQUEIDENTIFIER
 AS
 BEGIN

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -10,6 +11,10 @@ namespace ReportPrinterLibrary.Code.Winform.Configuration
         [XmlIgnore]
         [DisplayName(" ")]
         public bool IsSelected { get; set; }
+
+        [XmlIgnore]
+        [DisplayName(" ")]
+        public Guid SqlConfigId { get; set; }
 
         [XmlAttribute("Id")]
         [DisplayName("Id")]

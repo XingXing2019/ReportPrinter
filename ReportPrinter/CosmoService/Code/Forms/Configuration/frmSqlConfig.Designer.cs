@@ -96,6 +96,7 @@
             Controls.Add(btnAdd);
             Controls.Add(btnRefresh);
             Controls.Add(dgvSqlConfigs);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             Name = "frmSqlConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "SQL Config";

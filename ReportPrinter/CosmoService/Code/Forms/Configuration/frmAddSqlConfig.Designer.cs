@@ -28,97 +28,100 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             groupBox2 = new System.Windows.Forms.GroupBox();
-            label3 = new System.Windows.Forms.Label();
-            textBox3 = new System.Windows.Forms.TextBox();
-            label2 = new System.Windows.Forms.Label();
-            textBox2 = new System.Windows.Forms.TextBox();
-            label1 = new System.Windows.Forms.Label();
-            textBox1 = new System.Windows.Forms.TextBox();
+            lblQuery = new System.Windows.Forms.Label();
+            txtQuery = new System.Windows.Forms.TextBox();
+            lblDatabaseId = new System.Windows.Forms.Label();
+            txtDatabaseId = new System.Windows.Forms.TextBox();
+            lblId = new System.Windows.Forms.Label();
+            txtId = new System.Windows.Forms.TextBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
             btnDelete = new System.Windows.Forms.Button();
             btnAdd = new System.Windows.Forms.Button();
-            dataGridView1 = new System.Windows.Forms.DataGridView();
+            dgvSqlVariables = new System.Windows.Forms.DataGridView();
             btnPreview = new System.Windows.Forms.Button();
             btnSave = new System.Windows.Forms.Button();
+            epAddSqlConfig = new System.Windows.Forms.ErrorProvider(components);
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSqlVariables).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)epAddSqlConfig).BeginInit();
             SuspendLayout();
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(label3);
-            groupBox2.Controls.Add(textBox3);
-            groupBox2.Controls.Add(label2);
-            groupBox2.Controls.Add(textBox2);
-            groupBox2.Controls.Add(label1);
-            groupBox2.Controls.Add(textBox1);
+            groupBox2.Controls.Add(lblQuery);
+            groupBox2.Controls.Add(txtQuery);
+            groupBox2.Controls.Add(lblDatabaseId);
+            groupBox2.Controls.Add(txtDatabaseId);
+            groupBox2.Controls.Add(lblId);
+            groupBox2.Controls.Add(txtId);
             groupBox2.Location = new System.Drawing.Point(17, 24);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(533, 388);
+            groupBox2.Size = new System.Drawing.Size(563, 388);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
             groupBox2.Text = "Parameters";
             // 
-            // label3
+            // lblQuery
             // 
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(8, 75);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(51, 20);
-            label3.TabIndex = 13;
-            label3.Text = "Query:";
+            lblQuery.AutoSize = true;
+            lblQuery.Location = new System.Drawing.Point(8, 75);
+            lblQuery.Name = "lblQuery";
+            lblQuery.Size = new System.Drawing.Size(51, 20);
+            lblQuery.TabIndex = 13;
+            lblQuery.Text = "Query:";
             // 
-            // textBox3
+            // txtQuery
             // 
-            textBox3.Location = new System.Drawing.Point(74, 72);
-            textBox3.Multiline = true;
-            textBox3.Name = "textBox3";
-            textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBox3.Size = new System.Drawing.Size(445, 298);
-            textBox3.TabIndex = 12;
+            txtQuery.Location = new System.Drawing.Point(85, 72);
+            txtQuery.Multiline = true;
+            txtQuery.Name = "txtQuery";
+            txtQuery.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            txtQuery.Size = new System.Drawing.Size(459, 298);
+            txtQuery.TabIndex = 12;
             // 
-            // label2
+            // lblDatabaseId
             // 
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(253, 37);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(92, 20);
-            label2.TabIndex = 11;
-            label2.Text = "Database Id:";
+            lblDatabaseId.AutoSize = true;
+            lblDatabaseId.Location = new System.Drawing.Point(264, 37);
+            lblDatabaseId.Name = "lblDatabaseId";
+            lblDatabaseId.Size = new System.Drawing.Size(92, 20);
+            lblDatabaseId.TabIndex = 11;
+            lblDatabaseId.Text = "Database Id:";
             // 
-            // textBox2
+            // txtDatabaseId
             // 
-            textBox2.Location = new System.Drawing.Point(359, 34);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new System.Drawing.Size(160, 27);
-            textBox2.TabIndex = 10;
+            txtDatabaseId.Location = new System.Drawing.Point(378, 34);
+            txtDatabaseId.Name = "txtDatabaseId";
+            txtDatabaseId.Size = new System.Drawing.Size(166, 27);
+            txtDatabaseId.TabIndex = 10;
             // 
-            // label1
+            // lblId
             // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(8, 37);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(25, 20);
-            label1.TabIndex = 9;
-            label1.Text = "Id:";
+            lblId.AutoSize = true;
+            lblId.Location = new System.Drawing.Point(8, 37);
+            lblId.Name = "lblId";
+            lblId.Size = new System.Drawing.Size(25, 20);
+            lblId.TabIndex = 9;
+            lblId.Text = "Id:";
             // 
-            // textBox1
+            // txtId
             // 
-            textBox1.Location = new System.Drawing.Point(74, 34);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(160, 27);
-            textBox1.TabIndex = 8;
+            txtId.Location = new System.Drawing.Point(85, 34);
+            txtId.Name = "txtId";
+            txtId.Size = new System.Drawing.Size(166, 27);
+            txtId.TabIndex = 8;
             // 
             // groupBox1
             // 
             groupBox1.Controls.Add(btnDelete);
             groupBox1.Controls.Add(btnAdd);
-            groupBox1.Controls.Add(dataGridView1);
-            groupBox1.Location = new System.Drawing.Point(556, 24);
+            groupBox1.Controls.Add(dgvSqlVariables);
+            groupBox1.Location = new System.Drawing.Point(586, 24);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(251, 388);
+            groupBox1.Size = new System.Drawing.Size(276, 388);
             groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
             groupBox1.Text = "Variables";
@@ -143,15 +146,20 @@
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             // 
-            // dataGridView1
+            // dgvSqlVariables
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new System.Drawing.Point(16, 72);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new System.Drawing.Size(221, 298);
-            dataGridView1.TabIndex = 0;
+            dgvSqlVariables.AllowUserToAddRows = false;
+            dgvSqlVariables.AllowUserToDeleteRows = false;
+            dgvSqlVariables.AllowUserToResizeColumns = false;
+            dgvSqlVariables.AllowUserToResizeRows = false;
+            dgvSqlVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSqlVariables.Location = new System.Drawing.Point(16, 72);
+            dgvSqlVariables.Name = "dgvSqlVariables";
+            dgvSqlVariables.RowHeadersVisible = false;
+            dgvSqlVariables.RowHeadersWidth = 51;
+            dgvSqlVariables.RowTemplate.Height = 29;
+            dgvSqlVariables.Size = new System.Drawing.Size(245, 298);
+            dgvSqlVariables.TabIndex = 0;
             // 
             // btnPreview
             // 
@@ -173,38 +181,45 @@
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
+            // epAddSqlConfig
+            // 
+            epAddSqlConfig.ContainerControl = this;
+            // 
             // frmAddSqlConfig
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(823, 467);
+            ClientSize = new System.Drawing.Size(876, 467);
             Controls.Add(btnSave);
             Controls.Add(btnPreview);
             Controls.Add(groupBox1);
             Controls.Add(groupBox2);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             Name = "frmAddSqlConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "frmAddSqlConfig";
+            Text = "Add SQL Config";
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSqlVariables).EndInit();
+            ((System.ComponentModel.ISupportInitialize)epAddSqlConfig).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lblQuery;
+        private System.Windows.Forms.TextBox txtQuery;
+        private System.Windows.Forms.Label lblDatabaseId;
+        private System.Windows.Forms.TextBox txtDatabaseId;
+        private System.Windows.Forms.Label lblId;
+        private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvSqlVariables;
         private System.Windows.Forms.Button btnPreview;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.ErrorProvider epAddSqlConfig;
     }
 }

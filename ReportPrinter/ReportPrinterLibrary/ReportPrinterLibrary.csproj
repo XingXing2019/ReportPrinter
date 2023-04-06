@@ -9,8 +9,4 @@
     <PackageReference Include="NLog" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Code\Winform\Configuration\" />
-  </ItemGroup>
-
 </Project>

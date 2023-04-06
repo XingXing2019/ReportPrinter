@@ -5,7 +5,7 @@ namespace ReportPrinterLibrary.Code.Winform.Configuration
     public class SqlConfigData
     {
         [DisplayName(" ")]
-        public bool IsChecked { get; set; }
+        public bool IsSelected { get; set; }
 
         [DisplayName("Id")]
         public string Id { get; set; }

@@ -27,7 +27,7 @@ namespace CosmoService.Code.Forms.Configuration
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
-            var frm = new frmAddSqlConfig();
+            var frm = new frmAddSqlConfig(_manager);
             frm.ShowDialog();
             await RefreshDataGridView();
         }

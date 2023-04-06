@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using CosmoService.Code.Forms.Configuration;
+using CosmoService.Code.Forms.Configuration.SQL;
 using CosmoService.Code.Forms.Message;
 using ReportPrinterLibrary.Code.Config.Configuration;
 

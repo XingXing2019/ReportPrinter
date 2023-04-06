@@ -1,4 +1,4 @@
-﻿namespace CosmoService.Code.Forms.Configuration
+﻿namespace CosmoService.Code.Forms.Configuration.SQL
 {
     partial class frmAddSqlVariableConfig
     {

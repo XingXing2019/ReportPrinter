@@ -8,7 +8,7 @@ using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Winform.Configuration;
 
-namespace CosmoService.Code.Forms.Configuration
+namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmSqlConfig : Form
     {

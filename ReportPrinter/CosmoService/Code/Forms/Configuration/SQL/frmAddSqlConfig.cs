@@ -5,8 +5,9 @@ using System.Windows.Forms;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterLibrary.Code.Winform.Configuration;
+using ReportPrinterLibrary.Code.Winform.Helper;
 
-namespace CosmoService.Code.Forms.Configuration
+namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmAddSqlConfig : Form
     {
@@ -46,35 +47,18 @@ namespace CosmoService.Code.Forms.Configuration
 
         private void btnPreview_Click(object sender, EventArgs e)
         {
+            if (!ValidateInput(out var id, out var databaseId, out var query)) 
+                return;
 
+            var sqlConfig = CreateSqlConfigData(id, databaseId, query);
+            var preview = ConfigPreviewHelper.GeneratePreview(sqlConfig);
+            var frm = new frmConfigPreview(preview);
+            frm.ShowDialog();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var isValidInput = true;
-
-            var id = txtId.Text.Trim();
-            if (string.IsNullOrEmpty(id))
-            {
-                epAddSqlConfig.SetError(lblId, "Id is required");
-                isValidInput = false;
-            }
-
-            var databaseId = txtDatabaseId.Text.Trim();
-            if (string.IsNullOrEmpty(databaseId))
-            {
-                epAddSqlConfig.SetError(lblDatabaseId, "Database Id is required");
-                isValidInput = false;
-            }
-
-            var query = txtQuery.Text.Trim();
-            if (string.IsNullOrEmpty(query))
-            {
-                epAddSqlConfig.SetError(lblQuery, "Query is required");
-                isValidInput = false;
-            }
-
-            if (!isValidInput)
+            if (!ValidateInput(out var id, out var databaseId, out var query)) 
                 return;
 
             var sqlConfig = CreateSqlConfig(id, databaseId, query);
@@ -98,6 +82,35 @@ namespace CosmoService.Code.Forms.Configuration
             btnDelete.Enabled = _sqlVariableConfigs.Count > 0;
         }
 
+        private bool ValidateInput(out string id, out string databaseId, out string query)
+        {
+            var isValidInput = true;
+
+            id = txtId.Text.Trim();
+            if (string.IsNullOrEmpty(id))
+            {
+                epAddSqlConfig.SetError(lblId, "Id is required");
+                isValidInput = false;
+            }
+
+            databaseId = txtDatabaseId.Text.Trim();
+            if (string.IsNullOrEmpty(databaseId))
+            {
+                epAddSqlConfig.SetError(lblDatabaseId, "Database Id is required");
+                isValidInput = false;
+            }
+
+            query = txtQuery.Text.Trim();
+            if (string.IsNullOrEmpty(query))
+            {
+                epAddSqlConfig.SetError(lblQuery, "Query is required");
+                isValidInput = false;
+            }
+
+            return isValidInput;
+        }
+
+
         private SqlConfig CreateSqlConfig(string id, string databaseId, string query)
         {
             var sqlConfig = new SqlConfig
@@ -115,6 +128,23 @@ namespace CosmoService.Code.Forms.Configuration
                     SqlConfigId = sqlConfig.SqlConfigId,
                     Name = config.Name
                 });
+            }
+
+            return sqlConfig;
+        }
+
+        private SqlConfigData CreateSqlConfigData(string id, string databaseId, string query)
+        {
+            var sqlConfig = new SqlConfigData
+            {
+                Id = id,
+                DatabaseId = databaseId,
+                Query = query
+            };
+
+            foreach (var config in _sqlVariableConfigs)
+            {
+                sqlConfig.SqlVariableConfigs.Add(new SqlVariableConfigData { Name = config.Name });
             }
 
             return sqlConfig;

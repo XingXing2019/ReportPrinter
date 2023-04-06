@@ -1,19 +1,35 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace ReportPrinterLibrary.Code.Winform.Configuration
 {
+    [XmlRoot("Sql")]
     public class SqlConfigData
     {
+        [XmlIgnore]
         [DisplayName(" ")]
         public bool IsSelected { get; set; }
 
+        [XmlAttribute("Id")]
         [DisplayName("Id")]
         public string Id { get; set; }
 
+        [XmlAttribute("DatabaseId")]
         [DisplayName("Database Id")]
         public string DatabaseId { get; set; }
-        
+
+        [XmlElement("Query")]
         [DisplayName("Query")]
         public string Query { get; set; }
+
+        [XmlElement("Variable")]
+        [Browsable(false)]
+        public List<SqlVariableConfigData> SqlVariableConfigs { get; set; }
+
+        public SqlConfigData()
+        {
+            SqlVariableConfigs = new List<SqlVariableConfigData>();
+        }
     }
 }

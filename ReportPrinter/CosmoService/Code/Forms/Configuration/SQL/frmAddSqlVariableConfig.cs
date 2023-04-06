@@ -1,9 +1,9 @@
-﻿using ReportPrinterLibrary.Code.Winform.Configuration;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using ReportPrinterLibrary.Code.Winform.Configuration;
 
-namespace CosmoService.Code.Forms.Configuration
+namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmAddSqlVariableConfig : Form
     {
@@ -16,7 +16,7 @@ namespace CosmoService.Code.Forms.Configuration
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var name = txtName.Text;
+            var name = txtName.Text.Trim();
 
             if (string.IsNullOrEmpty(name))
             {

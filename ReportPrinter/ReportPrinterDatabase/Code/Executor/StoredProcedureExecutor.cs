@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Data.SqlClient;
 using ReportPrinterDatabase.Code.Database;
 using ReportPrinterDatabase.Code.StoredProcedures;
 using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Executor
 {
@@ -41,7 +43,9 @@ namespace ReportPrinterDatabase.Code.Executor
                 {
                     cmd.Parameters.AddWithValue(parameter, storedProcedure.Parameters[parameter]);
                 }
+
                 rows += await cmd.ExecuteNonQueryAsync();
+                LogExecutedStoredProcedure(cmd);
             }
 
             scope.Complete();
@@ -63,6 +67,8 @@ namespace ReportPrinterDatabase.Code.Executor
             }
 
             var reader = await cmd.ExecuteReaderAsync();
+            LogExecutedStoredProcedure(cmd);
+
             var dataTable = new DataTable();
             dataTable.Load(reader);
 
@@ -100,6 +106,8 @@ namespace ReportPrinterDatabase.Code.Executor
             }
 
             var reader = await cmd.ExecuteReaderAsync();
+            LogExecutedStoredProcedure(cmd);
+
             var dataTable = new DataTable();
             dataTable.Load(reader);
 
@@ -134,6 +142,30 @@ namespace ReportPrinterDatabase.Code.Executor
             }
 
             return entity;
+        }
+
+        private void LogExecutedStoredProcedure(SqlCommand cmd)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(LogExecutedStoredProcedure)}";
+            
+            var storedProcedureName = cmd.CommandText;
+            var parameters = new List<string>();
+
+            foreach (SqlParameter parameter in cmd.Parameters)
+            {
+                var val = parameter.Value;
+                if (val == DBNull.Value)
+                    parameters.Add("NULL");
+                else if (val is string || val is DateTime || val is Guid)
+                    parameters.Add($"'{val}'");
+                else if (val is bool)
+                    parameters.Add((bool)val ? "1" : "0");
+                else 
+                    parameters.Add(val.ToString());
+            }
+
+            var script = $"EXEC [dbo].[{storedProcedureName}] {string.Join(", ", parameters)}";
+            Logger.Debug($"Execute script: {script}", procName);
         }
 
         #endregion

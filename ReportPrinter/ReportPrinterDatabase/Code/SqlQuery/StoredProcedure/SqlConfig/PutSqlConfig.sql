@@ -37,6 +37,7 @@ BEGIN
 			WHERE [SVC_SqlConfigId] = @sqlConfigId
 
 			-- Insert new SqlConfigVariables
+			DECLARE @sqlVariableName NVARCHAR(100)
 			DECLARE @temp TABLE (
 				SqlVariableName NVARCHAR(100)
 			);

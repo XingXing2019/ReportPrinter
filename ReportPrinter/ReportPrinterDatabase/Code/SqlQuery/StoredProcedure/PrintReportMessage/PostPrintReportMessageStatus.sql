@@ -9,7 +9,7 @@ CREATE PROCEDURE PostPrintReportMessage
 	@correlationId UNIQUEIDENTIFIER,
 	@reportType VARCHAR(10),
 	@templateId VARCHAR(100),
-	@printerId VARCHAR(100),
+	@printerId VARCHAR(100) = NULL,
 	@numberOfCopy INT,
 	@hasReprintFlag BIT
 AS

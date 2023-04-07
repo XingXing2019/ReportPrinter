@@ -9,6 +9,7 @@ using ReportPrinterDatabase.Code.StoredProcedures.PrintReportSqlVariable;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using static MassTransit.Monitoring.Performance.BuiltInCounters;
 
 namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 {
@@ -101,12 +102,28 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                var rows = await _executor.ExecuteNonQueryAsync(new DeletePrintReportMessage(messageId));
+                var rows = await _executor.ExecuteNonQueryAsync(new DeletePrintReportMessageById(messageId));
                 Logger.Debug($"Delete message: {messageId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during deleting message: {messageId}. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task Delete(List<Guid> messageIds)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(Delete)}";
+
+            try
+            {
+                var rows = await _executor.ExecuteNonQueryAsync(new DeletePrintReportMessageByIds(string.Join(',', messageIds)));
+                Logger.Debug($"Delete messages, {rows} row affected", procName);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during deleting messages. Ex: {ex.Message}", procName);
                 throw;
             }
         }

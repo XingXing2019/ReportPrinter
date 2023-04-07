@@ -33,21 +33,17 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase
             return message;
         }
 
-        protected SqlConfig CreateSqlConfig(string id)
+        protected SqlConfig CreateSqlConfig(Guid sqlConfigId, string id, string databaseId, string query, List<string> sqlVariableNames)
         {
-            var sqlConfigId = Guid.NewGuid();
+            var sqlVariableConfigs = sqlVariableNames.Select(x => new SqlVariableConfig { SqlConfigId = sqlConfigId, Name = x }).ToList();
+            
             return new SqlConfig
             {
                 SqlConfigId = sqlConfigId,
                 Id = id,
-                DatabaseId = "Test DB",
-                Query = $"SELECT * FROM SqlConfig WHERE SC_ID = {id}",
-                SqlVariableConfigs = new List<SqlVariableConfig>
-                {
-                    new SqlVariableConfig { SqlVariableConfigId = Guid.NewGuid(), SqlConfigId = sqlConfigId, Name = "Test Name 1" },
-                    new SqlVariableConfig { SqlVariableConfigId = Guid.NewGuid(), SqlConfigId = sqlConfigId, Name = "Test Name 2" },
-                    new SqlVariableConfig { SqlVariableConfigId = Guid.NewGuid(), SqlConfigId = sqlConfigId, Name = "Test Name 3" }
-                }
+                DatabaseId = databaseId,
+                Query = query,
+                SqlVariableConfigs = sqlVariableConfigs
             };
         }
     }

@@ -2,9 +2,9 @@
 
 namespace ReportPrinterDatabase.Code.StoredProcedures.SqlConfig
 {
-    public class DeleteSqlConfig : StoredProcedureBase
+    public class DeleteSqlConfigById : StoredProcedureBase
     {
-        public DeleteSqlConfig(Guid sqlConfigId)
+        public DeleteSqlConfigById(Guid sqlConfigId)
         {
             Parameters.Add("@sqlConfigId", sqlConfigId);
         }

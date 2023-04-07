@@ -10,6 +10,7 @@ namespace ReportPrinterDatabase.Code.Manager
         Task<T> Get(Guid id);
         Task<IList<T>> GetAll();
         Task Delete(Guid id);
+        Task Delete(List<Guid> ids);
         Task DeleteAll();
     }
 }

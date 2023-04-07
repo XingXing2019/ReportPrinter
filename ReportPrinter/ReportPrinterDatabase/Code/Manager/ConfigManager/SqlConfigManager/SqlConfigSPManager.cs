@@ -29,12 +29,15 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                var sp = new PostSqlConfig(config.SqlConfigId, config.Id, config.DatabaseId, config.Query);
+                var sqlConfigId = config.SqlConfigId;
+                var id = config.Id;
+                var databaseId = config.DatabaseId;
+                var query = config.Query;
+                var sqlVariableNames = string.Join(',', config.SqlVariableConfigs.Select(x => x.Name));
 
-                var spList = new List<StoredProcedureBase> { sp };
-                spList.AddRange(config.SqlVariableConfigs.Select(x => new PostSqlVariableConfig(x.SqlVariableConfigId, x.SqlConfigId, x.Name)));
+                var sp = new PostSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
+                var rows = await _executor.ExecuteNonQueryAsync(sp);
 
-                var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Record Sql config: {config.SqlConfigId}, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -98,12 +101,28 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfig(sqlConfigId));
+                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfigById(sqlConfigId));
                 Logger.Debug($"Delete Sql config: {sqlConfigId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during deleting Sql config: {sqlConfigId}. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task Delete(List<Guid> sqlConfigIds)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(Delete)}";
+
+            try
+            {
+                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfigByIds(string.Join(',', sqlConfigIds)));
+                Logger.Debug($"Delete Sql configs, {rows} row affected", procName);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during deleting Sql configs. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -120,6 +139,31 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during deleting all Sql configs:. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task PutSqlConfig(SqlConfig config)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(DeleteAll)}";
+
+            try
+            {
+                var sqlConfigId = config.SqlConfigId;
+                var id = config.Id;
+                var databaseId = config.DatabaseId;
+                var query = config.Query;
+                var sqlVariableNames = string.Join(',', config.SqlVariableConfigs.Select(x => x.Name));
+
+                var sp = new PutSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
+                var rows = await _executor.ExecuteNonQueryAsync(sp);
+
+                Logger.Debug($"Update Sql config: {sqlConfigId}, {rows} row affected", procName);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during updating all Sql configs:. Ex: {ex.Message}", procName);
                 throw;
             }
         }

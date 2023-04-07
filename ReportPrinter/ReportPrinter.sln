@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportPrinterLibrary", "Rep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaphaelService", "RaphaelService\RaphaelService.csproj", "{8204C298-F5F6-40D9-8F4D-6BF103170536}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaphaelLibrary", "RaphaelLibrary\RaphaelLibrary.csproj", "{2F7BC79A-6F33-4DD0-B243-2FA61D5935A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaphaelLibrary", "RaphaelLibrary\RaphaelLibrary.csproj", "{2F7BC79A-6F33-4DD0-B243-2FA61D5935A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

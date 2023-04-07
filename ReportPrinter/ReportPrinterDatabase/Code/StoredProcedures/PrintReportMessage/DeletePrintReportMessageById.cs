@@ -2,9 +2,9 @@
 
 namespace ReportPrinterDatabase.Code.StoredProcedures.PrintReportMessage
 {
-    public class DeletePrintReportMessage : StoredProcedureBase
+    public class DeletePrintReportMessageById : StoredProcedureBase
     {
-        public DeletePrintReportMessage(Guid messageId)
+        public DeletePrintReportMessageById(Guid messageId)
         {
             Parameters.Add("@messageId", messageId);
         }

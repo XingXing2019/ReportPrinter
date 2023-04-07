@@ -20,7 +20,7 @@ namespace ReportPrinterLibrary.Code.Winform.Helper
             {
                 OmitXmlDeclaration = true, 
                 Indent = true, 
-                IndentChars = "\t",
+                IndentChars = "  ",
             };
 
             using var stringWriter = new StringWriter();

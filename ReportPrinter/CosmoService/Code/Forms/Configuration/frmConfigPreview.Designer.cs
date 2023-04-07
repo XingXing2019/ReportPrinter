@@ -36,9 +36,10 @@
             // 
             btnPreview.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btnPreview.DialogResult = System.Windows.Forms.DialogResult.OK;
-            btnPreview.Location = new System.Drawing.Point(845, 653);
+            btnPreview.Location = new System.Drawing.Point(1268, 980);
+            btnPreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnPreview.Name = "btnPreview";
-            btnPreview.Size = new System.Drawing.Size(83, 27);
+            btnPreview.Size = new System.Drawing.Size(124, 40);
             btnPreview.TabIndex = 11;
             btnPreview.Text = "Close";
             btnPreview.UseVisualStyleBackColor = true;
@@ -46,23 +47,24 @@
             // txtPreview
             // 
             txtPreview.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            txtPreview.Location = new System.Drawing.Point(24, 25);
+            txtPreview.Location = new System.Drawing.Point(36, 38);
+            txtPreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             txtPreview.Multiline = true;
             txtPreview.Name = "txtPreview";
             txtPreview.ReadOnly = true;
-            txtPreview.Size = new System.Drawing.Size(904, 615);
+            txtPreview.Size = new System.Drawing.Size(1354, 920);
             txtPreview.TabIndex = 12;
             // 
             // frmConfigPreview
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(951, 697);
+            ClientSize = new System.Drawing.Size(1426, 1046);
             Controls.Add(txtPreview);
             Controls.Add(btnPreview);
+            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             Name = "frmConfigPreview";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "Config Preview";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -28,7 +28,7 @@ namespace ReportPrinterLibrary.Code.Winform.Configuration
         [XmlElement("Query")]
         [Browsable(false)]
         public string Query { get; set; }
-
+        
         [XmlElement("Variable")]
         [Browsable(false)]
         public List<SqlVariableConfigData> SqlVariableConfigs { get; set; }

@@ -7,29 +7,33 @@ using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterLibrary.Code.Winform.Configuration;
 using ReportPrinterLibrary.Code.Winform.Helper;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmUpsertSqlConfig : Form
     {
         private readonly ISqlConfigManager _manager;
+        private readonly bool _isEdit;
+        private readonly Guid? _sqlConfigId;
         private BindingList<SqlVariableConfigData> _sqlVariableConfigs;
 
         public frmUpsertSqlConfig(ISqlConfigManager manager)
         {
             InitializeComponent();
-            SetupScreen("Add SQL Config");
 
             _manager = manager;
+            _isEdit = false;
+            SetupScreen(_isEdit);
         }
 
         public frmUpsertSqlConfig(ISqlConfigManager manager, SqlConfigData config)
         {
             InitializeComponent();
-            SetupScreen("Edit SQL Config", config);
-            
+
             _manager = manager;
+            _isEdit = true;
+            _sqlConfigId = config.SqlConfigId;
+            SetupScreen(_isEdit, config);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -49,8 +53,11 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                 return;
             }
 
-            selectedConfigs.ForEach(x => _sqlVariableConfigs.Remove(x));
-            ToggleDeleteButton();
+            if (MessageBox.Show("Do you want to delete selected sql variable configs?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                selectedConfigs.ForEach(x => _sqlVariableConfigs.Remove(x));
+                ToggleDeleteButton();
+            }
         }
 
         private void btnPreview_Click(object sender, EventArgs e)
@@ -65,34 +72,36 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             btnSave.Enabled = true;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             if (!ValidateInput(out var id, out var databaseId, out var query))
                 return;
-
+            
             var sqlConfig = CreateSqlConfig(id, databaseId, query);
-            _manager.Post(sqlConfig);
+
+            if (_isEdit)
+                await _manager.PutSqlConfig(sqlConfig);
+            else
+                await _manager.Post(sqlConfig);
+            
             Close();
         }
 
 
         #region Helper
 
-        private void SetupScreen(string title, SqlConfigData config = null)
+        private void SetupScreen(bool isEdit, SqlConfigData config = null)
         {
-            Text = title;
-            
+            Text = isEdit ? "Edit SQL Config" : "Add SQL Config";
+
             txtId.Text = config == null ? string.Empty : config.Id;
             txtDatabaseId.Text = config == null ? string.Empty : config.DatabaseId;
             txtQuery.Text = config == null ? string.Empty : config.Query;
+
             var sqlVariableConfigs = config == null ? new List<SqlVariableConfigData>() : config.SqlVariableConfigs.Select(x => new SqlVariableConfigData { Name = x.Name, }).ToList();
             _sqlVariableConfigs = new BindingList<SqlVariableConfigData>(sqlVariableConfigs);
-
             dgvSqlVariables.DataSource = _sqlVariableConfigs;
-            var width = dgvSqlVariables.Width * 0.9;
-            dgvSqlVariables.Columns[0].Width = (int)(width * 0.2);
-            dgvSqlVariables.Columns[1].Width = (int)(width * 0.8);
-
+            
             btnSave.Enabled = false;
             ToggleDeleteButton();
         }
@@ -129,12 +138,12 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
             return isValidInput;
         }
-        
+
         private SqlConfig CreateSqlConfig(string id, string databaseId, string query)
         {
             var sqlConfig = new SqlConfig
             {
-                SqlConfigId = Guid.NewGuid(),
+                SqlConfigId = _sqlConfigId ?? Guid.NewGuid(),
                 Id = id,
                 DatabaseId = databaseId,
                 Query = query,

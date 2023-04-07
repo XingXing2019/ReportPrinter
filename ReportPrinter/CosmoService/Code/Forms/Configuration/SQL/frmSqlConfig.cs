@@ -75,7 +75,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             {
                 var row = e.RowIndex;
                 var query = ((SqlConfigData)dgvSqlConfigs.Rows[row].DataBoundItem).Query;
-                var frm = new frmConfigPreview(query);
+                var frm = new frmConfigPreview(query, "Query");
                 frm.ShowDialog();
             }
         }
@@ -84,9 +84,6 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private async Task RefreshDataGridView()
         {
-            var title = "Query";
-            var addLink = dgvSqlConfigs.Columns.Cast<DataGridViewColumn>().All(column => column.Name != title);
-
             var sqlConfigs = await _manager.GetAll();
             var data = sqlConfigs.Select(x => new SqlConfigData
             {
@@ -98,24 +95,6 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             }).ToList();
 
             dgvSqlConfigs.DataSource = data;
-
-            if (addLink)
-            {
-                var links = new DataGridViewLinkColumn
-                {
-                    UseColumnTextForLinkValue = true,
-                    HeaderText = title,
-                    ActiveLinkColor = Color.White,
-                    LinkBehavior = LinkBehavior.SystemDefault,
-                    LinkColor = Color.Blue,
-                    TrackVisitedState = true,
-                    VisitedLinkColor = Color.Gray,
-                    Text = "View",
-                    Name = title
-                };
-
-                dgvSqlConfigs.Columns.Add(links);
-            }
         }
 
         #endregion

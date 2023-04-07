@@ -27,7 +27,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.Winform.Helper
 
             try
             {
-                var xml = ConfigPreviewHelper.GeneratePreview(obj).Replace("\r\n\t", "").Replace("\r\n", "");
+                var xml = ConfigPreviewHelper.GeneratePreview(obj).Replace("\r\n  ", "").Replace("\r\n", "");
                 Assert.AreEqual(expectedXml, xml);
             }
             catch (Exception ex)

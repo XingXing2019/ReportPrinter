@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
@@ -64,11 +66,27 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             }
         }
 
+        private void dgvSqlConfigs_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+
+            if (dgvSqlConfigs.Columns[e.ColumnIndex] is DataGridViewLinkColumn)
+            {
+                var row = e.RowIndex;
+                var query = ((SqlConfigData)dgvSqlConfigs.Rows[row].DataBoundItem).Query;
+                var frm = new frmConfigPreview(query);
+                frm.ShowDialog();
+            }
+        }
 
         #region Helper
 
         private async Task RefreshDataGridView()
         {
+            var title = "Query";
+            var addLink = dgvSqlConfigs.Columns.Cast<DataGridViewColumn>().All(column => column.Name != title);
+
             var sqlConfigs = await _manager.GetAll();
             var data = sqlConfigs.Select(x => new SqlConfigData
             {
@@ -80,6 +98,24 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             }).ToList();
 
             dgvSqlConfigs.DataSource = data;
+
+            if (addLink)
+            {
+                var links = new DataGridViewLinkColumn
+                {
+                    UseColumnTextForLinkValue = true,
+                    HeaderText = title,
+                    ActiveLinkColor = Color.White,
+                    LinkBehavior = LinkBehavior.SystemDefault,
+                    LinkColor = Color.Blue,
+                    TrackVisitedState = true,
+                    VisitedLinkColor = Color.Gray,
+                    Text = "View",
+                    Name = title
+                };
+
+                dgvSqlConfigs.Columns.Add(links);
+            }
         }
 
         #endregion

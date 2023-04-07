@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
@@ -6,39 +7,29 @@ using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterLibrary.Code.Winform.Configuration;
 using ReportPrinterLibrary.Code.Winform.Helper;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmUpsertSqlConfig : Form
     {
         private readonly ISqlConfigManager _manager;
-        private readonly BindingList<SqlVariableConfigData> _sqlVariableConfigs;
+        private BindingList<SqlVariableConfigData> _sqlVariableConfigs;
 
         public frmUpsertSqlConfig(ISqlConfigManager manager)
         {
             InitializeComponent();
-            Text = "Add SQL Config";
+            SetupScreen("Add SQL Config");
 
             _manager = manager;
-            _sqlVariableConfigs = new BindingList<SqlVariableConfigData>();
-            SetupDataGridView();
-            ToggleDeleteButton();
         }
 
         public frmUpsertSqlConfig(ISqlConfigManager manager, SqlConfigData config)
         {
             InitializeComponent();
-            Text = "Edit SQL Config";
-
+            SetupScreen("Edit SQL Config", config);
+            
             _manager = manager;
-            txtId.Text = config.Id;
-            txtDatabaseId.Text = config.DatabaseId;
-            txtQuery.Text = config.Query;
-
-            var sqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfigData { Name = x.Name, }).ToList();
-            _sqlVariableConfigs = new BindingList<SqlVariableConfigData>(sqlVariableConfigs);
-            SetupDataGridView();
-            ToggleDeleteButton();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -71,6 +62,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             var preview = ConfigPreviewHelper.GeneratePreview(sqlConfig);
             var frm = new frmConfigPreview(preview);
             frm.ShowDialog();
+            btnSave.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -86,12 +78,23 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         #region Helper
 
-        private void SetupDataGridView()
+        private void SetupScreen(string title, SqlConfigData config = null)
         {
+            Text = title;
+            
+            txtId.Text = config == null ? string.Empty : config.Id;
+            txtDatabaseId.Text = config == null ? string.Empty : config.DatabaseId;
+            txtQuery.Text = config == null ? string.Empty : config.Query;
+            var sqlVariableConfigs = config == null ? new List<SqlVariableConfigData>() : config.SqlVariableConfigs.Select(x => new SqlVariableConfigData { Name = x.Name, }).ToList();
+            _sqlVariableConfigs = new BindingList<SqlVariableConfigData>(sqlVariableConfigs);
+
             dgvSqlVariables.DataSource = _sqlVariableConfigs;
             var width = dgvSqlVariables.Width * 0.9;
             dgvSqlVariables.Columns[0].Width = (int)(width * 0.2);
             dgvSqlVariables.Columns[1].Width = (int)(width * 0.8);
+
+            btnSave.Enabled = false;
+            ToggleDeleteButton();
         }
 
         private void ToggleDeleteButton()
@@ -126,8 +129,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
             return isValidInput;
         }
-
-
+        
         private SqlConfig CreateSqlConfig(string id, string databaseId, string query)
         {
             var sqlConfig = new SqlConfig

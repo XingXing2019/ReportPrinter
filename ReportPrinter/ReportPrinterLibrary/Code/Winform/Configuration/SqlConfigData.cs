@@ -26,7 +26,7 @@ namespace ReportPrinterLibrary.Code.Winform.Configuration
         public string DatabaseId { get; set; }
 
         [XmlElement("Query")]
-        [DisplayName("Query")]
+        [Browsable(false)]
         public string Query { get; set; }
 
         [XmlElement("Variable")]

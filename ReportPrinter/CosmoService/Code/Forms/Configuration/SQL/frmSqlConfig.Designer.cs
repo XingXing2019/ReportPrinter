@@ -39,18 +39,21 @@
             // dgvSqlConfigs
             // 
             dgvSqlConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSqlConfigs.Location = new System.Drawing.Point(22, 75);
+            dgvSqlConfigs.Location = new System.Drawing.Point(33, 112);
+            dgvSqlConfigs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             dgvSqlConfigs.Name = "dgvSqlConfigs";
             dgvSqlConfigs.RowHeadersWidth = 51;
             dgvSqlConfigs.RowTemplate.Height = 29;
-            dgvSqlConfigs.Size = new System.Drawing.Size(684, 554);
+            dgvSqlConfigs.Size = new System.Drawing.Size(1026, 831);
             dgvSqlConfigs.TabIndex = 0;
+            dgvSqlConfigs.CellContentClick += dgvSqlConfigs_CellContentClick;
             // 
             // btnRefresh
             // 
-            btnRefresh.Location = new System.Drawing.Point(22, 32);
+            btnRefresh.Location = new System.Drawing.Point(33, 48);
+            btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new System.Drawing.Size(95, 29);
+            btnRefresh.Size = new System.Drawing.Size(142, 44);
             btnRefresh.TabIndex = 1;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = true;
@@ -58,9 +61,10 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new System.Drawing.Point(123, 32);
+            btnAdd.Location = new System.Drawing.Point(184, 48);
+            btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new System.Drawing.Size(96, 29);
+            btnAdd.Size = new System.Drawing.Size(144, 44);
             btnAdd.TabIndex = 2;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
@@ -68,9 +72,10 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new System.Drawing.Point(327, 32);
+            btnDelete.Location = new System.Drawing.Point(490, 48);
+            btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new System.Drawing.Size(96, 29);
+            btnDelete.Size = new System.Drawing.Size(144, 44);
             btnDelete.TabIndex = 3;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -78,9 +83,10 @@
             // 
             // btnModify
             // 
-            btnModify.Location = new System.Drawing.Point(225, 32);
+            btnModify.Location = new System.Drawing.Point(338, 48);
+            btnModify.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnModify.Name = "btnModify";
-            btnModify.Size = new System.Drawing.Size(96, 29);
+            btnModify.Size = new System.Drawing.Size(144, 44);
             btnModify.TabIndex = 4;
             btnModify.Text = "Modify";
             btnModify.UseVisualStyleBackColor = true;
@@ -88,15 +94,16 @@
             // 
             // frmSqlConfig
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(734, 641);
+            ClientSize = new System.Drawing.Size(1101, 962);
             Controls.Add(btnModify);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(btnRefresh);
             Controls.Add(dgvSqlConfigs);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             Name = "frmSqlConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "SQL Config";

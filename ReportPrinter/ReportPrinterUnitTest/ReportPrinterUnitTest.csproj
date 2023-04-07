@@ -27,6 +27,7 @@
     <Folder Include="RaphaelLibrary\MessageHandler\PrintReportMessageHandler\" />
     <Folder Include="RaphaelLibrary\Print\" />
     <Folder Include="RaphaelLibrary\Render\PDF\Helper\" />
+    <Folder Include="ReportPrinterLibrary\Winform\Helper\" />
   </ItemGroup>
 
   <ItemGroup>

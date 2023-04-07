@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
+using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterLibrary.Code.Winform.Helper
 {
@@ -8,6 +11,8 @@ namespace ReportPrinterLibrary.Code.Winform.Helper
     {
         public static string GeneratePreview(object obj)
         {
+            var procName = $"ConfigPreviewHelper.{nameof(GeneratePreview)}";
+
             var type = obj.GetType();
             var serializer = new XmlSerializer(type);
 
@@ -15,8 +20,7 @@ namespace ReportPrinterLibrary.Code.Winform.Helper
             {
                 OmitXmlDeclaration = true, 
                 Indent = true, 
-                IndentChars = "  ",
-
+                IndentChars = "\t",
             };
 
             using var stringWriter = new StringWriter();
@@ -25,7 +29,8 @@ namespace ReportPrinterLibrary.Code.Winform.Helper
             var xmlns = new XmlSerializerNamespaces();
             xmlns.Add(string.Empty, string.Empty);
             serializer.Serialize(writer, obj, xmlns);
-            return stringWriter.ToString();
+            var xml = stringWriter.ToString();
+            return xml;
         }
     }
 }

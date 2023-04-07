@@ -19,6 +19,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
         {
             InitializeComponent();
             _manager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.DatabaseManagerType);
+            Task.Run(RefreshDataGridView).Wait();
         }
 
         private async void btnRefresh_Click(object sender, EventArgs e)
@@ -75,6 +76,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                 Id = x.Id,
                 DatabaseId = x.DatabaseId,
                 Query = x.Query,
+                SqlVariableConfigs = new List<SqlVariableConfigData>(x.SqlVariableConfigs.Select(y => new SqlVariableConfigData { Name = y.Name, })),
             }).ToList();
 
             dgvSqlConfigs.DataSource = data;

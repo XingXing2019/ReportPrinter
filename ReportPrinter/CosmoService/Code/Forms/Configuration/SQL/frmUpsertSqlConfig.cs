@@ -37,6 +37,8 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
             var sqlVariableConfigs = config.SqlVariableConfigs.Select(x => new SqlVariableConfigData { Name = x.Name, }).ToList();
             _sqlVariableConfigs = new BindingList<SqlVariableConfigData>(sqlVariableConfigs);
+            SetupDataGridView();
+            ToggleDeleteButton();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -154,7 +156,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             {
                 Id = id,
                 DatabaseId = databaseId,
-                Query = query
+                Query = $"\r\n{query}\r\n"
             };
 
             foreach (var config in _sqlVariableConfigs)

@@ -1,4 +1,3 @@
-USE ReportPrinter;
 IF OBJECT_ID('PrintReportSqlVariable', N'U') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[PrintReportSqlVariable] (

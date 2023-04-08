@@ -1,4 +1,3 @@
-USE ReportPrinter;
 IF OBJECT_ID('SqlConfig', N'U') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[SqlConfig] (

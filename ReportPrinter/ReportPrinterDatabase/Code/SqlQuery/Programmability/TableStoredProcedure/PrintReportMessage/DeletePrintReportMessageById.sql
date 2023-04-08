@@ -1,0 +1,34 @@
+IF OBJECT_ID('[dbo].[DeletePrintReportMessageById]', 'P') IS NOT NULL
+BEGIN
+	DROP PROCEDURE [dbo].[DeletePrintReportMessageById]
+END
+GO
+
+CREATE PROCEDURE [dbo].[DeletePrintReportMessageById]
+	@messageId UNIQUEIDENTIFIER
+AS
+BEGIN
+	IF @@TRANCOUNT = 0
+	BEGIN
+		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
+	END
+
+	BEGIN TRANSACTION
+
+	BEGIN TRY
+	
+		DELETE FROM [dbo].[PrintReportMessage]
+		WHERE [PRM_MessageId] = @messageId
+
+		COMMIT TRANSACTION
+
+	END TRY
+
+	BEGIN CATCH
+		
+		ROLLBACK TRANSACTION
+		DECLARE @errorMsg NVARCHAR(2048) = ERROR_MESSAGE()
+		RAISERROR(@errorMsg, 16, 1)
+
+	END CATCH
+END

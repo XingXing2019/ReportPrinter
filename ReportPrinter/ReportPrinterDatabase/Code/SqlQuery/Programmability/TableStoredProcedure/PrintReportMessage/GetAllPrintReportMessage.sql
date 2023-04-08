@@ -1,11 +1,10 @@
-IF OBJECT_ID('GetPrintReportMessage', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[GetAllPrintReportMessage]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE GetPrintReportMessage
+	DROP PROCEDURE [dbo].[GetAllPrintReportMessage]
 END
 GO
 
-CREATE PROCEDURE GetPrintReportMessage
-	@messageId UNIQUEIDENTIFIER
+CREATE PROCEDURE [dbo].[GetAllPrintReportMessage]
 AS
 BEGIN
 	SELECT 
@@ -22,6 +21,4 @@ BEGIN
 		[PRM_Status] AS Status
 	FROM 
 		[dbo].[PrintReportMessage]
-	WHERE 
-		[PRM_MessageId] = @messageId
 END

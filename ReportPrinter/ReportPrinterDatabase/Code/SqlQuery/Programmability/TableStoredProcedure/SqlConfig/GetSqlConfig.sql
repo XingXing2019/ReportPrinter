@@ -1,10 +1,10 @@
-IF OBJECT_ID('GetSqlConfig', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[GetSqlConfig]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE GetSqlConfig
+	DROP PROCEDURE [dbo].[GetSqlConfig]
 END
 GO
 
-CREATE PROCEDURE GetSqlConfig
+CREATE PROCEDURE [dbo].[GetSqlConfig]
 	@sqlConfigId UNIQUEIDENTIFIER
 AS
 BEGIN

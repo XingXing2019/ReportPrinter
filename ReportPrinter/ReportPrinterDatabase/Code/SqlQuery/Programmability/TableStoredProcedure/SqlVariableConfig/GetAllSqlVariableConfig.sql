@@ -1,10 +1,10 @@
-IF OBJECT_ID('GetAllSqlVariableConfig', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[GetAllSqlVariableConfig]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE GetAllSqlVariableConfig
+	DROP PROCEDURE [dbo].[GetAllSqlVariableConfig]
 END
 GO
 
-CREATE PROCEDURE GetAllSqlVariableConfig
+CREATE PROCEDURE [dbo].[GetAllSqlVariableConfig]
 AS
 BEGIN
 	SELECT 

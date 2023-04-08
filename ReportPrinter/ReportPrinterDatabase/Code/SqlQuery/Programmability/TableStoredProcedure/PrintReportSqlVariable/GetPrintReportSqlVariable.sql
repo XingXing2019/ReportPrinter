@@ -1,10 +1,10 @@
-IF OBJECT_ID('GetPrintReportSqlVariable', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[GetPrintReportSqlVariable]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE GetPrintReportSqlVariable
+	DROP PROCEDURE [dbo].[GetPrintReportSqlVariable]
 END
 GO
 
-CREATE PROCEDURE GetPrintReportSqlVariable
+CREATE PROCEDURE [dbo].[GetPrintReportSqlVariable]
 	@messageId UNIQUEIDENTIFIER
 AS
 BEGIN

@@ -1,16 +1,15 @@
-IF OBJECT_ID('PostPrintReportSqlVariable', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[PostPrintReportSqlVariable]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE PostPrintReportSqlVariable
+	DROP PROCEDURE [dbo].[PostPrintReportSqlVariable]
 END
 GO
 
-CREATE PROCEDURE PostPrintReportSqlVariable
+CREATE PROCEDURE [dbo].[PostPrintReportSqlVariable]
 	@messageId UNIQUEIDENTIFIER,
 	@name VARCHAR(100),
 	@value VARCHAR(100)
 AS
-BEGIN
-	
+BEGIN	
 	IF @@TRANCOUNT = 0
 	BEGIN
 		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -43,5 +42,4 @@ BEGIN
 		RAISERROR(@errorMsg, 16, 1)
 
 	END CATCH
-
 END

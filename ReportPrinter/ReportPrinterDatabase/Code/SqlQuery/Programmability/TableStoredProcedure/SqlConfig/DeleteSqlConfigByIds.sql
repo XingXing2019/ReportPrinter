@@ -1,14 +1,13 @@
-IF OBJECT_ID('DeleteSqlConfigByIds', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[DeleteSqlConfigByIds]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE DeleteSqlConfigByIds
+	DROP PROCEDURE [dbo].[DeleteSqlConfigByIds]
 END
 GO
 
-CREATE PROCEDURE DeleteSqlConfigByIds
+CREATE PROCEDURE [dbo].[DeleteSqlConfigByIds]
 	@sqlConfigIds NVARCHAR(MAX)
 AS
-BEGIN
-	
+BEGIN	
 	IF @@TRANCOUNT = 0
 	BEGIN
 		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -41,5 +40,4 @@ BEGIN
 		RAISERROR(@errorMsg, 16, 1)
 
 	END CATCH
-
 END

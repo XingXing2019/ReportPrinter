@@ -1,14 +1,13 @@
-IF OBJECT_ID('DeleteAllSqlConfig', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[DeleteAllPrintReportMessage]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE DeleteAllSqlConfig
+	DROP PROCEDURE [dbo].[DeleteAllPrintReportMessage]
 END
 GO
 
-CREATE PROCEDURE DeleteAllSqlConfig
+CREATE PROCEDURE [dbo].[DeleteAllPrintReportMessage]
 AS
-BEGIN
-	
-	IF @@TRANCOUNT = 0 
+BEGIN	
+	IF @@TRANCOUNT = 0
 	BEGIN
 		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
 	END
@@ -17,7 +16,7 @@ BEGIN
 
 	BEGIN TRY
 	
-		DELETE FROM [dbo].[SqlConfig]
+		DELETE FROM [dbo].[PrintReportMessage]
 
 		COMMIT TRANSACTION
 
@@ -29,6 +28,5 @@ BEGIN
 		DECLARE @errorMsg NVARCHAR(2048) = ERROR_MESSAGE()
 		RAISERROR(@errorMsg, 16, 1)
 
-	END CATCH
-	
+	END CATCH	
 END

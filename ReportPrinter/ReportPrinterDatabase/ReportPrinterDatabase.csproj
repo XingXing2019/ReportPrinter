@@ -5,12 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Code\SqlQuery\StoredProcedure\DeletePrintReportSqlVariable.sql" />
+    <None Remove="Code\SqlQuery\Programmability\TableStoredProcedure\DeletePrintReportSqlVariable.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Code\Database\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
+    <Folder Include="Code\SqlQuery\Programmability\TableFunction\" />
     <Folder Include="Code\StoredProcedures\SqlVariableConfig\" />
   </ItemGroup>
 

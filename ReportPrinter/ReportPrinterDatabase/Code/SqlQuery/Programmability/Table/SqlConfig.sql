@@ -1,4 +1,4 @@
-IF OBJECT_ID('SqlConfig', N'U') IS NULL
+IF OBJECT_ID('[dbo].[SqlConfig]', N'U') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[SqlConfig] (
 		[SC_SqlConfigId] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_SqlConfig_MessageId] DEFAULT(NEWID()),

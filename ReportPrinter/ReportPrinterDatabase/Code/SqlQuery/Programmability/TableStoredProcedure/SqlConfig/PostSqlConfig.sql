@@ -1,18 +1,17 @@
-IF OBJECT_ID('PostSqlConfig', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[PostSqlConfig]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE PostSqlConfig
+	DROP PROCEDURE [dbo].[PostSqlConfig]
 END
 GO
 
-CREATE PROCEDURE PostSqlConfig
+CREATE PROCEDURE [dbo].[PostSqlConfig]
 	@sqlConfigId UNIQUEIDENTIFIER,
 	@id VARCHAR(100),
 	@databaseId VARCHAR(100),
 	@query NVARCHAR(MAX),
 	@sqlVariableNames NVARCHAR(MAX)
 AS
-BEGIN	
-	
+BEGIN
 	IF @@TRANCOUNT = 0
 	BEGIN
 		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -75,7 +74,4 @@ BEGIN
 		RAISERROR(@errorMsg, 16, 1)
 
 	END CATCH
-
-
-	
 END

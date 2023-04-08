@@ -1,15 +1,14 @@
-IF OBJECT_ID('PatchPrintReportMessageStatus', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[PatchPrintReportMessageStatus]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE PatchPrintReportMessageStatus
+	DROP PROCEDURE [dbo].[PatchPrintReportMessageStatus]
 END
 GO
 
-CREATE PROCEDURE PatchPrintReportMessageStatus
+CREATE PROCEDURE [dbo].[PatchPrintReportMessageStatus]
 	@messageId UNIQUEIDENTIFIER,
 	@status VARCHAR(20)
 AS
 BEGIN
-
 	IF @@TRANCOUNT = 0
 	BEGIN
 		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -51,6 +50,5 @@ BEGIN
 		DECLARE @errorMsg NVARCHAR(2048) = ERROR_MESSAGE()
 		RAISERROR(@errorMsg, 16, 1)
 
-	END CATCH
-	
+	END CATCH	
 END

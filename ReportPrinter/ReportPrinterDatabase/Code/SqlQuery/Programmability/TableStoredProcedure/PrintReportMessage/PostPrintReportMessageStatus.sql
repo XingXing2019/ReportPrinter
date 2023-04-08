@@ -1,10 +1,10 @@
-IF OBJECT_ID('PostPrintReportMessage', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[PostPrintReportMessage]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE PostPrintReportMessage
+	DROP PROCEDURE [dbo].[PostPrintReportMessage]
 END
 GO
 
-CREATE PROCEDURE PostPrintReportMessage
+CREATE PROCEDURE [dbo].[PostPrintReportMessage]
 	@messageId UNIQUEIDENTIFIER,
 	@correlationId UNIQUEIDENTIFIER,
 	@reportType VARCHAR(10),
@@ -14,7 +14,6 @@ CREATE PROCEDURE PostPrintReportMessage
 	@hasReprintFlag BIT
 AS
 BEGIN
-
 	IF @@TRANCOUNT = 0
 	BEGIN
 		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -60,6 +59,5 @@ BEGIN
 		DECLARE @errorMsg NVARCHAR(2048) = ERROR_MESSAGE()
 		RAISERROR(@errorMsg, 16, 1)
 
-	END CATCH
-	
+	END CATCH	
 END

@@ -1,14 +1,13 @@
-IF OBJECT_ID('DeletePrintReportMessageById', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[DeletePrintReportMessageById]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE DeletePrintReportMessageById
+	DROP PROCEDURE [dbo].[DeletePrintReportMessageById]
 END
 GO
 
-CREATE PROCEDURE DeletePrintReportMessageById
+CREATE PROCEDURE [dbo].[DeletePrintReportMessageById]
 	@messageId UNIQUEIDENTIFIER
 AS
 BEGIN
-
 	IF @@TRANCOUNT = 0
 	BEGIN
 		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
@@ -32,5 +31,4 @@ BEGIN
 		RAISERROR(@errorMsg, 16, 1)
 
 	END CATCH
-	
 END

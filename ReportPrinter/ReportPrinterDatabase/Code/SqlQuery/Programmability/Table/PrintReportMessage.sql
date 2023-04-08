@@ -1,4 +1,4 @@
-IF OBJECT_ID('PrintReportMessage', N'U') IS NULL
+IF OBJECT_ID('[dbo].[PrintReportMessage]', N'U') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[PrintReportMessage] (
 		[PRM_MessageId] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_PrintReportMessage_MessageId] DEFAULT(NEWID()),

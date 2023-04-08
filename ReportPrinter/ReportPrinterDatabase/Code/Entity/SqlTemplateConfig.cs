@@ -5,20 +5,16 @@ using System.Collections.Generic;
 
 namespace ReportPrinterDatabase.Code.Entity
 {
-    public partial class SqlConfig
+    public partial class SqlTemplateConfig
     {
-        public SqlConfig()
+        public SqlTemplateConfig()
         {
             SqlTemplateConfigSqlConfigs = new HashSet<SqlTemplateConfigSqlConfig>();
-            SqlVariableConfigs = new HashSet<SqlVariableConfig>();
         }
 
-        public Guid SqlConfigId { get; set; }
+        public Guid SqlTemplateConfigId { get; set; }
         public string Id { get; set; }
-        public string DatabaseId { get; set; }
-        public string Query { get; set; }
 
         public virtual ICollection<SqlTemplateConfigSqlConfig> SqlTemplateConfigSqlConfigs { get; set; }
-        public virtual ICollection<SqlVariableConfig> SqlVariableConfigs { get; set; }
     }
 }

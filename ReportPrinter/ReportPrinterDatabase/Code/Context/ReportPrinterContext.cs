@@ -35,6 +35,8 @@ namespace ReportPrinterDatabase.Code.Context
         public virtual DbSet<PrintReportMessage> PrintReportMessages { get; set; }
         public virtual DbSet<PrintReportSqlVariable> PrintReportSqlVariables { get; set; }
         public virtual DbSet<SqlConfig> SqlConfigs { get; set; }
+        public virtual DbSet<SqlTemplateConfig> SqlTemplateConfigs { get; set; }
+        public virtual DbSet<SqlTemplateConfigSqlConfig> SqlTemplateConfigSqlConfigs { get; set; }
         public virtual DbSet<SqlVariableConfig> SqlVariableConfigs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -64,7 +66,7 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasColumnName("PRM_CompleteTime");
 
                 entity.Property(e => e.CorrelationId).HasColumnName("PRM_CorrelationId");
-                
+
                 entity.Property(e => e.HasReprintFlag).HasColumnName("PRM_HasReprintFlag");
 
                 entity.Property(e => e.NumberOfCopy).HasColumnName("PRM_NumberOfCopy");
@@ -131,7 +133,7 @@ namespace ReportPrinterDatabase.Code.Context
                 entity.HasOne(d => d.Message)
                     .WithMany(p => p.PrintReportSqlVariables)
                     .HasForeignKey(d => d.MessageId)
-                    .HasConstraintName("FK_dbo.PrintReportMessage_dbo.PrintReportSqlVariable_MessageId");
+                    .HasConstraintName("FK_PrintReportSqlVariable_PrintReportMessage_MessageId");
             });
 
             modelBuilder.Entity<SqlConfig>(entity =>
@@ -162,6 +164,46 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasColumnName("SC_Query");
             });
 
+            modelBuilder.Entity<SqlTemplateConfig>(entity =>
+            {
+                entity.HasKey(e => e.SqlTemplateConfigId)
+                    .HasName("PK_dbo.SqlTemplateConfig");
+
+                entity.ToTable("SqlTemplateConfig");
+
+                entity.Property(e => e.SqlTemplateConfigId)
+                    .HasColumnName("STC_SqlTemplateConfigId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("STC_Id");
+            });
+
+            modelBuilder.Entity<SqlTemplateConfigSqlConfig>(entity =>
+            {
+                entity.HasKey(e => new { StcscSqlTemplateConfigId = e.SqlTemplateConfigId, StcscSqlConfigId = e.SqlConfigId })
+                    .HasName("PK_dbo.SqlTemplateConfigSqlConfig");
+
+                entity.ToTable("SqlTemplateConfigSqlConfig");
+
+                entity.Property(e => e.SqlTemplateConfigId).HasColumnName("STCSC_SqlTemplateConfigId");
+
+                entity.Property(e => e.SqlConfigId).HasColumnName("STCSC_SqlConfigId");
+
+                entity.HasOne(d => d.SqlConfig)
+                    .WithMany(p => p.SqlTemplateConfigSqlConfigs)
+                    .HasForeignKey(d => d.SqlConfigId)
+                    .HasConstraintName("FK_SqlTemplateConfigSqlConfig_SqlConfig_SqlConfigId");
+
+                entity.HasOne(d => d.SqlTemplateConfig)
+                    .WithMany(p => p.SqlTemplateConfigSqlConfigs)
+                    .HasForeignKey(d => d.SqlTemplateConfigId)
+                    .HasConstraintName("FK_SqlTemplateConfigSqlConfig_SqlTemplateConfig_SqlTemplateConfigId");
+            });
+
             modelBuilder.Entity<SqlVariableConfig>(entity =>
             {
                 entity.HasKey(e => e.SqlVariableConfigId)
@@ -186,7 +228,7 @@ namespace ReportPrinterDatabase.Code.Context
                 entity.HasOne(d => d.SqlConfig)
                     .WithMany(p => p.SqlVariableConfigs)
                     .HasForeignKey(d => d.SqlConfigId)
-                    .HasConstraintName("FK_dbo.SqlConfig_dbo.SqlVariableConfig_SqlId");
+                    .HasConstraintName("FK_SqlVariableConfig_SqlConfig_SqlConfigId");
             });
 
             OnModelCreatingPartial(modelBuilder);

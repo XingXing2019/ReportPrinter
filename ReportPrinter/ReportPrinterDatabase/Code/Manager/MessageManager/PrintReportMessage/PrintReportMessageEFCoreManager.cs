@@ -146,7 +146,7 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entities = context.PrintReportMessages.Where(x => messageIds.Contains(x.MessageId)).ToList();
+                var entities = await context.PrintReportMessages.Where(x => messageIds.Contains(x.MessageId)).ToListAsync();
 
                 if (entities.Count== 0)
                 {

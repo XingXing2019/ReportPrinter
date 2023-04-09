@@ -46,5 +46,19 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase
                 SqlVariableConfigs = sqlVariableConfigs
             };
         }
+
+        protected SqlTemplateConfig CreateSqlTemplateConfig(Guid sqlTemplateConfigId, List<SqlConfig> sqlConfigs, string sqlTemplateId)
+        {
+            return new SqlTemplateConfig
+            {
+                SqlTemplateConfigId = sqlTemplateConfigId,
+                Id = sqlTemplateId,
+                SqlTemplateConfigSqlConfigs = sqlConfigs.Select(x => new SqlTemplateConfigSqlConfig
+                {
+                    SqlTemplateConfigId = sqlTemplateConfigId,
+                    SqlConfigId = x.SqlConfigId
+                }).ToList()
+            };
+        }
     }
 }

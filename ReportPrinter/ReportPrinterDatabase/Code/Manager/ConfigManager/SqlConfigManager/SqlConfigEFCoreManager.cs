@@ -130,7 +130,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entities = context.SqlConfigs.Where(x => sqlConfigIds.Contains(x.SqlConfigId)).ToList();
+                var entities = await context.SqlConfigs.Where(x => sqlConfigIds.Contains(x.SqlConfigId)).ToListAsync();
 
                 if (entities.Count == 0)
                 {
@@ -140,7 +140,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
                 {
                     context.SqlConfigs.RemoveRange(entities);
                     var rows = await context.SaveChangesAsync();
-                    Logger.Debug($"Delete Sql configs, {rows} row affected", procName);
+                    Logger.Debug($"Delete Sql configs, {rows} row affected", procName); 
                 }
             }
             catch (Exception ex)
@@ -202,7 +202,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating all Sql configs:. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating Sql configs:. Ex: {ex.Message}", procName);
                 throw;
             }
         }

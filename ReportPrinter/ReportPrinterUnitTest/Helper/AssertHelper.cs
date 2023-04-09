@@ -28,14 +28,14 @@ namespace ReportPrinterUnitTest.Helper
             }
         }
 
-        public void AssertSqlConfig(SqlConfig expectedSqlConfig, SqlConfig actualSqlConfig)
+        public void AssertSqlConfig(SqlConfig expected, SqlConfig actual)
         {
-            Assert.AreEqual(expectedSqlConfig.Id, actualSqlConfig.Id);
-            Assert.AreEqual(expectedSqlConfig.DatabaseId, actualSqlConfig.DatabaseId);
-            Assert.AreEqual(expectedSqlConfig.Query, actualSqlConfig.Query);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.DatabaseId, actual.DatabaseId);
+            Assert.AreEqual(expected.Query, actual.Query);
 
-            var expectedSqlVariableConfigs = expectedSqlConfig.SqlVariableConfigs.ToList();
-            var actualSqlVariableConfigs = actualSqlConfig.SqlVariableConfigs.ToList();
+            var expectedSqlVariableConfigs = expected.SqlVariableConfigs.ToList();
+            var actualSqlVariableConfigs = actual.SqlVariableConfigs.ToList();
 
             Assert.AreEqual(expectedSqlVariableConfigs.Count, actualSqlVariableConfigs.Count);
             foreach (var expectedSqlVariableConfig in expectedSqlVariableConfigs)
@@ -43,6 +43,12 @@ namespace ReportPrinterUnitTest.Helper
                 var actualSqlVariableConfig = actualSqlVariableConfigs.First(x => x.Name == expectedSqlVariableConfig.Name);
                 Assert.AreEqual(expectedSqlVariableConfig.SqlConfigId, actualSqlVariableConfig.SqlConfigId);
             }
+        }
+        
+        public void AssertSqlTemplateConfig(SqlTemplateConfig expected, SqlTemplateConfig actual)
+        {
+            Assert.AreEqual(expected.Id, actual.Id);
+            AssertList(typeof(List<SqlTemplateConfigSqlConfig>), expected.SqlTemplateConfigSqlConfigs.ToList(), expected.SqlTemplateConfigSqlConfigs.ToList());
         }
 
         public void AssertObject(object obj1, object obj2)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.Helper
@@ -45,10 +46,10 @@ namespace ReportPrinterUnitTest.Helper
             }
         }
         
-        public void AssertSqlTemplateConfig(SqlTemplateConfig expected, SqlTemplateConfig actual)
+        public void AssertSqlTemplateConfig(SqlTemplateConfigModel expected, SqlTemplateConfigModel actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
-            AssertList(typeof(List<SqlTemplateConfigSqlConfig>), expected.SqlTemplateConfigSqlConfigs.ToList(), expected.SqlTemplateConfigSqlConfigs.ToList());
+            AssertList(typeof(List<SqlConfig>), expected.SqlConfigs, expected.SqlConfigs);
         }
 
         public void AssertObject(object obj1, object obj2)

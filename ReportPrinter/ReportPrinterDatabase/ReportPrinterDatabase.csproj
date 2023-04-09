@@ -13,7 +13,6 @@
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
     <Folder Include="Code\SqlQuery\Programmability\TableFunction\" />
-    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\SqlTemplateConfig\" />
     <Folder Include="Code\StoredProcedures\SqlVariableConfig\" />
   </ItemGroup>
 

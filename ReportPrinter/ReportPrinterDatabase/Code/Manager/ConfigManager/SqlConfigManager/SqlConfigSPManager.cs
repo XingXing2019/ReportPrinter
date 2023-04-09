@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Executor;
-using ReportPrinterDatabase.Code.StoredProcedures;
 using ReportPrinterDatabase.Code.StoredProcedures.SqlConfig;
 using ReportPrinterDatabase.Code.StoredProcedures.SqlVariableConfig;
 using ReportPrinterLibrary.Code.Log;

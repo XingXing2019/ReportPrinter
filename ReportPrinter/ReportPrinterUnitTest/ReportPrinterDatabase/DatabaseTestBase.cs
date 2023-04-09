@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
+using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase
@@ -47,17 +48,13 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase
             };
         }
 
-        protected SqlTemplateConfig CreateSqlTemplateConfig(Guid sqlTemplateConfigId, List<SqlConfig> sqlConfigs, string sqlTemplateId)
+        protected SqlTemplateConfigModel CreateSqlTemplateConfig(Guid sqlTemplateConfigId, List<SqlConfig> sqlConfigs, string sqlTemplateId)
         {
-            return new SqlTemplateConfig
+            return new SqlTemplateConfigModel
             {
                 SqlTemplateConfigId = sqlTemplateConfigId,
                 Id = sqlTemplateId,
-                SqlTemplateConfigSqlConfigs = sqlConfigs.Select(x => new SqlTemplateConfigSqlConfig
-                {
-                    SqlTemplateConfigId = sqlTemplateConfigId,
-                    SqlConfigId = x.SqlConfigId
-                }).ToList()
+                SqlConfigs = sqlConfigs
             };
         }
     }

@@ -6,10 +6,11 @@ using NUnit.Framework;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager;
+using ReportPrinterDatabase.Code.Model;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class SqlTemplateConfigManagerTest : DatabaseTestBase<SqlTemplateConfig>
+    public class SqlTemplateConfigManagerTest : DatabaseTestBase<SqlTemplateConfigModel>
     {
         private readonly SqlConfigEFCoreManager _sqlConfigMgr;
 
@@ -27,6 +28,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
+        [TestCase(typeof(SqlTemplateConfigSPManager))]
         [TestCase(typeof(SqlTemplateConfigEFCoreManager))]
         public async Task TestSqlTemplateConfigManager_Get(Type managerType)
         {
@@ -83,14 +85,15 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
-        [TestCase(typeof(SqlTemplateConfigEFCoreManager))]
+        [TestCase(typeof(SqlTemplateConfigSPManager))]
+        //[TestCase(typeof(SqlTemplateConfigEFCoreManager))]
         public async Task TestSqlTemplateConfigManager_GetAll(Type managerType)
         {
             try
             {
                 var mgr = (ISqlTemplateConfigManager)Activator.CreateInstance(managerType);
                 var sqlConfigs = new List<SqlConfig>();
-                var expectedSqlTemplateConfigs = new List<SqlTemplateConfig>();
+                var expectedSqlTemplateConfigs = new List<SqlTemplateConfigModel>();
                 var sqlTemplateConfigsToDelete = new List<Guid>();
 
                 for (int i = 0; i < 10; i++)

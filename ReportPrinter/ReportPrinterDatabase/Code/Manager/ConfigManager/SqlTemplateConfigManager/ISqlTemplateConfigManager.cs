@@ -1,10 +1,10 @@
-﻿using ReportPrinterDatabase.Code.Entity;
+﻿using ReportPrinterDatabase.Code.Model;
 using System.Threading.Tasks;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager
 {
-    public interface ISqlTemplateConfigManager : IManager<SqlTemplateConfig>
+    public interface ISqlTemplateConfigManager : IManager<SqlTemplateConfigModel>
     {
-        Task PutSqlTemplateConfig(SqlTemplateConfig sqlTemplateConfig);
+        Task PutSqlTemplateConfig(SqlTemplateConfigModel sqlTemplateConfig);
     }
 }

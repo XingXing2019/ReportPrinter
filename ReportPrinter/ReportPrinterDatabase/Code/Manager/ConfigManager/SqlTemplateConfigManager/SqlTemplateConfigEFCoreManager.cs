@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager
 {
     public class SqlTemplateConfigEFCoreManager : ISqlTemplateConfigManager
     {
-        public async Task Post(SqlTemplateConfig config)
+        public async Task Post(SqlTemplateConfigModel config)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
@@ -25,7 +26,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                     Id = config.Id
                 };
 
-                var sqlTemplateConfigSqlConfigs = config.SqlTemplateConfigSqlConfigs
+                var sqlTemplateConfigSqlConfigs = config.SqlConfigs
                     .Select(x => new SqlTemplateConfigSqlConfig
                     {
                         SqlTemplateConfigId = config.SqlTemplateConfigId,
@@ -45,7 +46,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
             }
         }
 
-        public async Task<SqlTemplateConfig> Get(Guid sqlTemplateConfigId)
+        public async Task<SqlTemplateConfigModel> Get(Guid sqlTemplateConfigId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
@@ -64,7 +65,15 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                 }
 
                 Logger.Debug($"Retrieve Sql template config: {sqlTemplateConfigId}", procName);
-                return entity;
+
+                var sqlTemplateConfig = new SqlTemplateConfigModel
+                {
+                    SqlTemplateConfigId = entity.SqlTemplateConfigId,
+                    Id = entity.Id,
+                    SqlConfigs = entity.SqlTemplateConfigSqlConfigs.Select(x => x.SqlConfig).ToList()
+                };
+
+                return sqlTemplateConfig;
             }
             catch (Exception ex)
             {
@@ -73,7 +82,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
             }
         }
 
-        public async Task<IList<SqlTemplateConfig>> GetAll()
+        public async Task<IList<SqlTemplateConfigModel>> GetAll()
         {
             var procName = $"{this.GetType().Name}.{nameof(GetAll)}";
 
@@ -86,7 +95,15 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                     .ToListAsync();
 
                 Logger.Debug($"Retrieve all sql template configs", procName);
-                return entities;
+
+                var sqlTemplateConfigs = entities.Select(x => new SqlTemplateConfigModel
+                {
+                    SqlTemplateConfigId = x.SqlTemplateConfigId,
+                    Id = x.Id,
+                    SqlConfigs = x.SqlTemplateConfigSqlConfigs.Select(x => x.SqlConfig).ToList()
+                }).ToList();
+
+                return sqlTemplateConfigs;
             }
             catch (Exception ex)
             {
@@ -168,7 +185,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
             }
         }
 
-        public async Task PutSqlTemplateConfig(SqlTemplateConfig sqlTemplateConfig)
+        public async Task PutSqlTemplateConfig(SqlTemplateConfigModel sqlTemplateConfig)
         {
             var procName = $"{this.GetType().Name}.{nameof(DeleteAll)}";
 
@@ -189,7 +206,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                 else
                 {
                     entity.Id = sqlTemplateConfig.Id;
-                    var sqlTemplateConfigSqlConfigs = sqlTemplateConfig.SqlTemplateConfigSqlConfigs
+                    var sqlTemplateConfigSqlConfigs = sqlTemplateConfig.SqlConfigs
                         .Select(x => new SqlTemplateConfigSqlConfig
                         {
                             SqlTemplateConfigId = sqlTemplateConfigId,

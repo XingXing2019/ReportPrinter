@@ -66,7 +66,7 @@
             groupBox1.Controls.Add(dgvSqlConfigs);
             groupBox1.Location = new System.Drawing.Point(26, 21);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(673, 812);
+            groupBox1.Size = new System.Drawing.Size(704, 812);
             groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
             groupBox1.Text = "SQL Config";
@@ -146,7 +146,7 @@
             dgvSqlConfigs.RowHeadersVisible = false;
             dgvSqlConfigs.RowHeadersWidth = 51;
             dgvSqlConfigs.RowTemplate.Height = 29;
-            dgvSqlConfigs.Size = new System.Drawing.Size(631, 617);
+            dgvSqlConfigs.Size = new System.Drawing.Size(660, 617);
             dgvSqlConfigs.TabIndex = 1;
             dgvSqlConfigs.CellContentClick += dgvSqlConfigs_CellContentClick;
             // 
@@ -199,9 +199,9 @@
             // 
             // groupBox2
             // 
-            groupBox2.Location = new System.Drawing.Point(705, 21);
+            groupBox2.Location = new System.Drawing.Point(736, 21);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(618, 812);
+            groupBox2.Size = new System.Drawing.Size(587, 812);
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "SQL Template Config";

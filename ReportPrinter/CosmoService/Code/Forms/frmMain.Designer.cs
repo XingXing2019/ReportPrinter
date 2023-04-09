@@ -42,7 +42,8 @@
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiSqlConfig, publishMessageToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(1035, 28);
+            menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            menuStrip1.Size = new System.Drawing.Size(1552, 40);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -51,36 +52,37 @@
             tsmiSqlConfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { sQLConfigToolStripMenuItem });
             tsmiSqlConfig.MergeAction = System.Windows.Forms.MergeAction.Insert;
             tsmiSqlConfig.Name = "tsmiSqlConfig";
-            tsmiSqlConfig.Size = new System.Drawing.Size(114, 24);
+            tsmiSqlConfig.Size = new System.Drawing.Size(158, 34);
             tsmiSqlConfig.Text = "Configuration";
             // 
             // sQLConfigToolStripMenuItem
             // 
             sQLConfigToolStripMenuItem.Name = "sQLConfigToolStripMenuItem";
-            sQLConfigToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
-            sQLConfigToolStripMenuItem.Text = "SQL Config";
+            sQLConfigToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
+            sQLConfigToolStripMenuItem.Text = "SQL Template";
             sQLConfigToolStripMenuItem.Click += sQLConfigToolStripMenuItem_Click;
             // 
             // publishMessageToolStripMenuItem
             // 
             publishMessageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiPublishMessage });
             publishMessageToolStripMenuItem.Name = "publishMessageToolStripMenuItem";
-            publishMessageToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            publishMessageToolStripMenuItem.Size = new System.Drawing.Size(113, 34);
             publishMessageToolStripMenuItem.Text = "Message";
             // 
             // tsmiPublishMessage
             // 
             tsmiPublishMessage.Name = "tsmiPublishMessage";
-            tsmiPublishMessage.Size = new System.Drawing.Size(201, 26);
+            tsmiPublishMessage.Size = new System.Drawing.Size(286, 40);
             tsmiPublishMessage.Text = "Publish Message";
             tsmiPublishMessage.Click += tsmiPublishMessage_Click;
             // 
             // frmMain
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1035, 657);
+            ClientSize = new System.Drawing.Size(1552, 986);
             Controls.Add(menuStrip1);
+            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             Name = "frmMain";
             Text = "Report Printer";
             WindowState = System.Windows.Forms.FormWindowState.Maximized;

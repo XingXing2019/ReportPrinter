@@ -144,7 +144,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
 
         public async Task PutSqlTemplateConfig(SqlTemplateConfigModel sqlTemplateConfig)
         {
-            var procName = $"{this.GetType().Name}.{nameof(DeleteAll)}";
+            var procName = $"{this.GetType().Name}.{nameof(PutSqlTemplateConfig)}";
 
             try
             {

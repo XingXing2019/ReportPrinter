@@ -170,7 +170,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
         public async Task PutSqlConfig(SqlConfig config)
         {
-            var procName = $"{this.GetType().Name}.{nameof(DeleteAll)}";
+            var procName = $"{this.GetType().Name}.{nameof(PutSqlConfig)}";
 
             try
             {
@@ -203,6 +203,28 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during updating Sql configs:. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task<List<SqlConfig>> GetAllByDatabaseIdPrefix(string databaseIdPrefix)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(GetAllByDatabaseIdPrefix)}";
+
+            try
+            {
+                await using var context = new ReportPrinterContext();
+                var entities = await context.SqlConfigs
+                    .Include(x => x.SqlVariableConfigs)
+                    .Where(x => x.DatabaseId.StartsWith(databaseIdPrefix))
+                    .ToListAsync();
+
+                Logger.Debug($"Retrieve all sql configs by database id prefix: {databaseIdPrefix}", procName);
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during retrieving all Sql configs by database Id: {databaseIdPrefix}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

@@ -6,8 +6,8 @@ GO
 
 CREATE PROCEDURE [dbo].[PostSqlConfig]
 	@sqlConfigId UNIQUEIDENTIFIER,
-	@id VARCHAR(100),
-	@databaseId VARCHAR(100),
+	@id VARCHAR(50),
+	@databaseId VARCHAR(20),
 	@query NVARCHAR(MAX),
 	@sqlVariableNames NVARCHAR(MAX)
 AS

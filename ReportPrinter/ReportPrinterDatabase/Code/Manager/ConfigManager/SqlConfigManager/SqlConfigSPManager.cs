@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.StoredProcedures.SqlConfig;
@@ -141,7 +142,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
         public async Task PutSqlConfig(SqlConfig config)
         {
-            var procName = $"{this.GetType().Name}.{nameof(DeleteAll)}";
+            var procName = $"{this.GetType().Name}.{nameof(PutSqlConfig)}";
 
             try
             {
@@ -160,6 +161,31 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             catch (Exception ex)
             {
                 Logger.Error($"Exception happened during updating all Sql configs:. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+        public async Task<List<SqlConfig>> GetAllByDatabaseIdPrefix(string databaseIdPrefix)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(GetAllByDatabaseIdPrefix)}";
+
+            try
+            {
+                var sqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlConfig>(new GetAllByDatabaseIdPrefix(databaseIdPrefix));
+                var sqlConfigIds = string.Join(',', sqlConfigs.Select(x => x.SqlConfigId));
+                var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetAllSqlVariableConfigBySqlConfigIds(sqlConfigIds));
+
+                foreach (var sqlConfig in sqlConfigs)
+                {
+                    sqlConfig.SqlVariableConfigs = sqlVariableConfigs.Where(x => x.SqlConfigId == sqlConfig.SqlConfigId).ToList();
+                }
+
+                Logger.Debug($"Retrieve all sql configs by database id prefix: {databaseIdPrefix}", procName);
+                return sqlConfigs;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during retrieving all Sql configs by database Id: {databaseIdPrefix}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

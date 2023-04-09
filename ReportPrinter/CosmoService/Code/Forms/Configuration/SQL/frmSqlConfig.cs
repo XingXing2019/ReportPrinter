@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
@@ -24,7 +22,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             Task.Run(RefreshDataGridView).Wait();
         }
 
-        private async void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnRefreshSqlConfig_Click(object sender, EventArgs e)
         {
             await RefreshDataGridView();
         }
@@ -36,7 +34,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             await RefreshDataGridView();
         }
 
-        private async void btnModify_Click(object sender, EventArgs e)
+        private async void btnModifySqlConfig_Click(object sender, EventArgs e)
         {
             if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) != 1)
             {
@@ -50,7 +48,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             await RefreshDataGridView();
         }
 
-        private async void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDeleteSqlConfig_Click(object sender, EventArgs e)
         {
             if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) == 0)
             {

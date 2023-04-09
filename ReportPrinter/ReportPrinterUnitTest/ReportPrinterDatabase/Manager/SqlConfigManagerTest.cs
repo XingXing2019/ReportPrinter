@@ -178,11 +178,15 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 actualSqlConfigs = await mgr.GetAllByDatabaseIdPrefix(databaseIdPrefix);
                 Assert.AreEqual(5, actualSqlConfigs.Count);
 
-                foreach (var expectedSqlConfig in expectedTestDbSqlConfigs)
+                foreach (var expectedSqlConfig in expectedRealDbSqlConfigs)
                 {
                     var actualSqlConfig = actualSqlConfigs.Single(x => x.SqlConfigId == expectedSqlConfig.SqlConfigId);
                     AssertHelper.AssertSqlConfig(expectedSqlConfig, actualSqlConfig);
                 }
+
+                databaseIdPrefix = "Invalid DB";
+                actualSqlConfigs = await mgr.GetAllByDatabaseIdPrefix(databaseIdPrefix);
+                Assert.AreEqual(0, actualSqlConfigs.Count);
             }
             catch (Exception ex)
             {

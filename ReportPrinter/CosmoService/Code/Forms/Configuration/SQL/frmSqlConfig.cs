@@ -82,7 +82,8 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private async Task RefreshDataGridView()
         {
-            var sqlConfigs = await _manager.GetAll();
+            var databaseIdPrefix = txtDatabaseIdPrefix.Text.Trim();
+            var sqlConfigs = string.IsNullOrEmpty(databaseIdPrefix) ? await _manager.GetAll() : await _manager.GetAllByDatabaseIdPrefix(databaseIdPrefix);
             var data = sqlConfigs.Select(x => new SqlConfigData
             {
                 SqlConfigId = x.SqlConfigId,

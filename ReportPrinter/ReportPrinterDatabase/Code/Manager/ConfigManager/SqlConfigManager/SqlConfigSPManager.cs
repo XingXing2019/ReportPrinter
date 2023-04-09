@@ -114,8 +114,15 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
 
             try
             {
-                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfigByIds(string.Join(',', sqlConfigIds)));
-                Logger.Debug($"Delete Sql configs, {rows} row affected", procName);
+                if (sqlConfigIds == null || sqlConfigIds.Count == 0)
+                {
+                    Logger.Debug($"No sql config to delete", procName);
+                }
+                else
+                {
+                    var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlConfigByIds(string.Join(',', sqlConfigIds)));
+                    Logger.Debug($"Delete Sql configs, {rows} row affected", procName);
+                }
             }
             catch (Exception ex)
             {
@@ -172,16 +179,25 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             try
             {
                 var sqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlConfig>(new GetAllByDatabaseIdPrefix(databaseIdPrefix));
-                var sqlConfigIds = string.Join(',', sqlConfigs.Select(x => x.SqlConfigId));
-                var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetAllSqlVariableConfigBySqlConfigIds(sqlConfigIds));
 
-                foreach (var sqlConfig in sqlConfigs)
+                if (sqlConfigs == null || sqlConfigs.Count == 0)
                 {
-                    sqlConfig.SqlVariableConfigs = sqlVariableConfigs.Where(x => x.SqlConfigId == sqlConfig.SqlConfigId).ToList();
+                    Logger.Debug($"No sql config found by database id prefix: {databaseIdPrefix}", procName);
+                    return new List<SqlConfig>();
                 }
+                else
+                {
+                    var sqlConfigIds = string.Join(',', sqlConfigs.Select(x => x.SqlConfigId));
+                    var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetAllSqlVariableConfigBySqlConfigIds(sqlConfigIds));
 
-                Logger.Debug($"Retrieve all sql configs by database id prefix: {databaseIdPrefix}", procName);
-                return sqlConfigs;
+                    foreach (var sqlConfig in sqlConfigs)
+                    {
+                        sqlConfig.SqlVariableConfigs = sqlVariableConfigs.Where(x => x.SqlConfigId == sqlConfig.SqlConfigId).ToList();
+                    }
+
+                    Logger.Debug($"Retrieve all sql configs by database id prefix: {databaseIdPrefix}", procName);
+                    return sqlConfigs;
+                }
             }
             catch (Exception ex)
             {

@@ -17,4 +17,6 @@ BEGIN
 		[dbo].[SqlConfig]
 	WHERE
 		[SC_DatabaseId] LIKE @databaseIdPrefix + '%'
+	ORDER BY
+		[SC_DatabaseId]
 END

@@ -39,9 +39,12 @@ BEGIN
 		DECLARE @temp TABLE (
 			SqlVariableName NVARCHAR(100)
 		);
-		
-		INSERT INTO @temp
-		SELECT value FROM STRING_SPLIT(@sqlVariableNames, ','); 
+
+		IF @sqlVariableNames <> ''
+		BEGIN
+			INSERT INTO @temp
+			SELECT value FROM STRING_SPLIT(@sqlVariableNames, ',')
+		END		
 
 		DECLARE nameCursor CURSOR
 		FOR SELECT SqlVariableName FROM @temp

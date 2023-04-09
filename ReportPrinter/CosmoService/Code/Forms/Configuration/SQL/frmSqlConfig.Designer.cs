@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             sqlConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
             groupBox1 = new System.Windows.Forms.GroupBox();
             label1 = new System.Windows.Forms.Label();
-            txtDatabaseId = new System.Windows.Forms.TextBox();
+            txtDatabaseIdPrefix = new System.Windows.Forms.TextBox();
             btnModifySqlConfig = new System.Windows.Forms.Button();
             btnDeleteSqlConfig = new System.Windows.Forms.Button();
             btnAddSqlConfig = new System.Windows.Forms.Button();
@@ -58,7 +58,7 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(txtDatabaseId);
+            groupBox1.Controls.Add(txtDatabaseIdPrefix);
             groupBox1.Controls.Add(btnModifySqlConfig);
             groupBox1.Controls.Add(btnDeleteSqlConfig);
             groupBox1.Controls.Add(btnAddSqlConfig);
@@ -66,7 +66,7 @@
             groupBox1.Controls.Add(dgvSqlConfigs);
             groupBox1.Location = new System.Drawing.Point(26, 21);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(583, 812);
+            groupBox1.Size = new System.Drawing.Size(673, 812);
             groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
             groupBox1.Text = "SQL Config";
@@ -80,12 +80,12 @@
             label1.TabIndex = 10;
             label1.Text = "Database Id:";
             // 
-            // txtDatabaseId
+            // txtDatabaseIdPrefix
             // 
-            txtDatabaseId.Location = new System.Drawing.Point(166, 52);
-            txtDatabaseId.Name = "txtDatabaseId";
-            txtDatabaseId.Size = new System.Drawing.Size(224, 35);
-            txtDatabaseId.TabIndex = 9;
+            txtDatabaseIdPrefix.Location = new System.Drawing.Point(166, 52);
+            txtDatabaseIdPrefix.Name = "txtDatabaseIdPrefix";
+            txtDatabaseIdPrefix.Size = new System.Drawing.Size(224, 35);
+            txtDatabaseIdPrefix.TabIndex = 9;
             // 
             // btnModifySqlConfig
             // 
@@ -146,7 +146,7 @@
             dgvSqlConfigs.RowHeadersVisible = false;
             dgvSqlConfigs.RowHeadersWidth = 51;
             dgvSqlConfigs.RowTemplate.Height = 29;
-            dgvSqlConfigs.Size = new System.Drawing.Size(527, 617);
+            dgvSqlConfigs.Size = new System.Drawing.Size(631, 617);
             dgvSqlConfigs.TabIndex = 1;
             dgvSqlConfigs.CellContentClick += dgvSqlConfigs_CellContentClick;
             // 
@@ -162,9 +162,9 @@
             // 
             idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             idDataGridViewTextBoxColumn.HeaderText = "Id";
             idDataGridViewTextBoxColumn.MinimumWidth = 9;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
@@ -174,9 +174,9 @@
             // 
             databaseIdDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             databaseIdDataGridViewTextBoxColumn.DataPropertyName = "DatabaseId";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            databaseIdDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            databaseIdDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             databaseIdDataGridViewTextBoxColumn.HeaderText = "Database Id";
             databaseIdDataGridViewTextBoxColumn.MinimumWidth = 9;
             databaseIdDataGridViewTextBoxColumn.Name = "databaseIdDataGridViewTextBoxColumn";
@@ -186,9 +186,9 @@
             // 
             Query.ActiveLinkColor = System.Drawing.Color.White;
             Query.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            Query.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            Query.DefaultCellStyle = dataGridViewCellStyle3;
             Query.HeaderText = "Query";
             Query.MinimumWidth = 9;
             Query.Name = "Query";
@@ -199,9 +199,9 @@
             // 
             // groupBox2
             // 
-            groupBox2.Location = new System.Drawing.Point(638, 21);
+            groupBox2.Location = new System.Drawing.Point(705, 21);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(685, 812);
+            groupBox2.Size = new System.Drawing.Size(618, 812);
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "SQL Template Config";
@@ -229,7 +229,7 @@
         private System.Windows.Forms.BindingSource sqlConfigDataBindingSource;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtDatabaseId;
+        private System.Windows.Forms.TextBox txtDatabaseIdPrefix;
         private System.Windows.Forms.Button btnModifySqlConfig;
         private System.Windows.Forms.Button btnDeleteSqlConfig;
         private System.Windows.Forms.Button btnAddSqlConfig;

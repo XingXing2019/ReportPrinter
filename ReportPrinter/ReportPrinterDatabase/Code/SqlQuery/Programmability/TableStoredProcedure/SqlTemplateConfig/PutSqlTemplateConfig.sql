@@ -37,10 +37,13 @@ BEGIN
 			DECLARE @temp TABLE (
 				SqlConfigId UNIQUEIDENTIFIER
 			);
-			
-			INSERT INTO @temp
-			SELECT value FROM STRING_SPLIT(@sqlConfigIds, ','); 
 
+			IF @sqlConfigIds <> ''
+			BEGIN
+				INSERT INTO @temp
+				SELECT value FROM STRING_SPLIT(@sqlConfigIds, ',')
+			END
+			
 			DECLARE idCursor CURSOR
 			FOR SELECT SqlConfigId FROM @temp
 

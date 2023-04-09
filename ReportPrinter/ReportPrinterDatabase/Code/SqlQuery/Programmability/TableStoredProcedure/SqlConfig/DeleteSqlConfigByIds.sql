@@ -21,8 +21,11 @@ BEGIN
 			SqlConfigId UNIQUEIDENTIFIER
 		);
 		
-		INSERT INTO @temp
-		SELECT value FROM STRING_SPLIT(@sqlConfigIds, ','); 
+		IF @sqlConfigIds <> ''
+		BEGIN
+			INSERT INTO @temp
+			SELECT value FROM STRING_SPLIT(@sqlConfigIds, ',')
+		END
 
 		DELETE FROM SqlConfig
 		WHERE SC_SqlConfigId IN (

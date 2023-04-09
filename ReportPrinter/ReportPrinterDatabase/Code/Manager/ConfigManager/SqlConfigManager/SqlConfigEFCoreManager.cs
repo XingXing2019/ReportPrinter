@@ -84,6 +84,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
                 await using var context = new ReportPrinterContext();
                 var entities = await context.SqlConfigs
                     .Include(x => x.SqlVariableConfigs)
+                    .OrderBy(x => x.DatabaseId)
                     .ToListAsync();
 
                 Logger.Debug($"Retrieve all sql configs", procName);
@@ -217,6 +218,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
                 var entities = await context.SqlConfigs
                     .Include(x => x.SqlVariableConfigs)
                     .Where(x => x.DatabaseId.StartsWith(databaseIdPrefix))
+                    .OrderBy(x => x.DatabaseId)
                     .ToListAsync();
 
                 Logger.Debug($"Retrieve all sql configs by database id prefix: {databaseIdPrefix}", procName);

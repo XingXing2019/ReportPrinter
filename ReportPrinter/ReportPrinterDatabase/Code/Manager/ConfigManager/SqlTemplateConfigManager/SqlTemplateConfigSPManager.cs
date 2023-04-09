@@ -116,8 +116,15 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
 
             try
             {
-                var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlTemplateConfigByIds(string.Join(',', sqlTemplateConfigIds)));
-                Logger.Debug($"Delete Sql template configs, {rows} row affected", procName);
+                if (sqlTemplateConfigIds == null || sqlTemplateConfigIds.Count == 0)
+                {
+                    Logger.Debug($"No sql template config to delete", procName);
+                }
+                else
+                {
+                    var rows = await _executor.ExecuteNonQueryAsync(new DeleteSqlTemplateConfigByIds(string.Join(',', sqlTemplateConfigIds)));
+                    Logger.Debug($"Delete Sql template configs, {rows} row affected", procName);
+                }
             }
             catch (Exception ex)
             {

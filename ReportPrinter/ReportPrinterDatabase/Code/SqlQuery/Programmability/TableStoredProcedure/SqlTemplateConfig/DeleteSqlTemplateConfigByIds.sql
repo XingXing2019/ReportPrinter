@@ -21,8 +21,11 @@ BEGIN
 			SqlTemplateConfigId UNIQUEIDENTIFIER
 		);
 		
-		INSERT INTO @temp
-		SELECT value FROM STRING_SPLIT(@sqlTemplateConfigIds, ','); 
+		IF @sqlTemplateConfigIds <> ''
+		BEGIN
+			INSERT INTO @temp
+			SELECT value FROM STRING_SPLIT(@sqlTemplateConfigIds, ',')
+		END
 
 		DELETE FROM SqlTemplateConfig
 		WHERE STC_SqlTemplateConfigId IN (

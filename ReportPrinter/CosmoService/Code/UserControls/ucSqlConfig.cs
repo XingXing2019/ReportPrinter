@@ -20,7 +20,7 @@ namespace CosmoService.Code.UserControls
             InitializeComponent();
         }
 
-        public void Initialize(ISqlConfigManager sqlConfigManager, bool allowEdit)
+        public void Initialize(ISqlConfigManager sqlConfigManager, bool allowEdit, HashSet<Guid> selectedSqlConfigs)
         {
             _sqlConfigManager = sqlConfigManager;
 
@@ -32,9 +32,8 @@ namespace CosmoService.Code.UserControls
             {
                 gbSqlConfig.Height = 742;
             }
-
-
-            Task.Run(RefreshSqlConfigDataGridView).Wait();
+            
+            Task.Run(() => RefreshSqlConfigDataGridView(selectedSqlConfigs)).Wait();
         }
 
         public List<SqlConfigData> GetSelectedSqlConfigIds()
@@ -49,14 +48,14 @@ namespace CosmoService.Code.UserControls
 
         private async void btnRefreshSqlConfig_Click(object sender, EventArgs e)
         {
-            await RefreshSqlConfigDataGridView();
+            await RefreshSqlConfigDataGridView(new HashSet<Guid>());
         }
 
         private async void btnAddSqlConfig_Click(object sender, EventArgs e)
         {
             var frm = new frmUpsertSqlConfig(_sqlConfigManager);
             frm.ShowDialog();
-            await RefreshSqlConfigDataGridView();
+            await RefreshSqlConfigDataGridView(new HashSet<Guid>());
         }
 
         private async void btnModifySqlConfig_Click(object sender, EventArgs e)
@@ -70,7 +69,7 @@ namespace CosmoService.Code.UserControls
             var config = configs.Single(x => x.IsSelected);
             var frm = new frmUpsertSqlConfig(_sqlConfigManager, config);
             frm.ShowDialog();
-            await RefreshSqlConfigDataGridView();
+            await RefreshSqlConfigDataGridView(new HashSet<Guid>());
         }
 
         private async void btnDeleteSqlConfig_Click(object sender, EventArgs e)
@@ -85,7 +84,7 @@ namespace CosmoService.Code.UserControls
             {
                 var selectedConfigs = configs.Where(x => x.IsSelected).ToList();
                 await _sqlConfigManager.Delete(selectedConfigs.Select(x => x.SqlConfigId).ToList());
-                await RefreshSqlConfigDataGridView();
+                await RefreshSqlConfigDataGridView(new HashSet<Guid>());
             }
         }
 
@@ -106,12 +105,13 @@ namespace CosmoService.Code.UserControls
 
         #region Helper
 
-        private async Task RefreshSqlConfigDataGridView()
+        private async Task RefreshSqlConfigDataGridView(HashSet<Guid> selectedSqlConfigs)
         {
             var databaseIdPrefix = txtDatabaseIdPrefix.Text.Trim();
             var sqlConfigs = string.IsNullOrEmpty(databaseIdPrefix) ? await _sqlConfigManager.GetAll() : await _sqlConfigManager.GetAllByDatabaseIdPrefix(databaseIdPrefix);
             var data = sqlConfigs.Select(x => new SqlConfigData
             {
+                IsSelected = selectedSqlConfigs.Contains(x.SqlConfigId),
                 SqlConfigId = x.SqlConfigId,
                 Id = x.Id,
                 DatabaseId = x.DatabaseId,

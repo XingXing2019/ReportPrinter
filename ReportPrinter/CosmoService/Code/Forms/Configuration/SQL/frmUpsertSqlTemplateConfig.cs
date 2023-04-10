@@ -10,16 +10,32 @@ using ReportPrinterLibrary.Code.Winform.Configuration;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {
-    public partial class frmAddSqlTemplateConfig : Form
+    public partial class frmUpsertSqlTemplateConfig : Form
     {
         private readonly ISqlTemplateConfigManager _sqlTemplateConfigManager;
+        private readonly bool _isEdit;
+        private readonly Guid? _sqlTemplateConfigId;
 
-        public frmAddSqlTemplateConfig(ISqlTemplateConfigManager sqlTemplateConfigManager, ISqlConfigManager sqlConfigManager)
+        public frmUpsertSqlTemplateConfig(ISqlTemplateConfigManager sqlTemplateConfigManager, ISqlConfigManager sqlConfigManager)
         {
             InitializeComponent();
 
-            ucSqlConfig.Initialize(sqlConfigManager, false);
+            ucSqlConfig.Initialize(sqlConfigManager, false, new HashSet<Guid>());
             _sqlTemplateConfigManager = sqlTemplateConfigManager;
+            _isEdit = false;
+        }
+
+        public frmUpsertSqlTemplateConfig(ISqlTemplateConfigManager sqlTemplateConfigManager, ISqlConfigManager sqlConfigManager, SqlTemplateConfigModel config)
+        {
+            InitializeComponent();
+
+            var selectedSqlConfigs = new HashSet<Guid>(config.SqlConfigs.Select(x => x.SqlConfigId));
+            ucSqlConfig.Initialize(sqlConfigManager, false, selectedSqlConfigs);
+            _sqlTemplateConfigManager = sqlTemplateConfigManager;
+            _isEdit = true;
+            _sqlTemplateConfigId = config.SqlTemplateConfigId;
+
+            txtTemplateId.Text = config.Id;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -29,12 +45,15 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
             var config = new SqlTemplateConfigModel
             {
-                SqlTemplateConfigId = Guid.NewGuid(),
+                SqlTemplateConfigId = _sqlTemplateConfigId ?? Guid.NewGuid(),
                 Id = templateId,
                 SqlConfigs = selectedSqlConfigs.Select(x => new SqlConfig { SqlConfigId = x.SqlConfigId }).ToList()
             };
 
-            await _sqlTemplateConfigManager.Post(config);
+            if (_isEdit)
+                await _sqlTemplateConfigManager.PutSqlTemplateConfig(config);
+            else
+                await _sqlTemplateConfigManager.Post(config);
             Close();
         }
 

@@ -23,7 +23,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             InitializeComponent();
 
             _sqlConfigManager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.DatabaseManagerType);
-            ucSqlConfig.Initialize(_sqlConfigManager, true);
+            ucSqlConfig.Initialize(_sqlConfigManager, true, new HashSet<Guid>());
 
             _sqlTemplateConfigManager = (ISqlTemplateConfigManager)ManagerFactory.CreateManager<SqlTemplateConfigModel>(typeof(ISqlTemplateConfigManager), AppConfig.Instance.DatabaseManagerType);
 
@@ -37,14 +37,36 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private async void btnAddSqlTemplate_Click(object sender, EventArgs e)
         {
-            var frm = new frmAddSqlTemplateConfig(_sqlTemplateConfigManager, _sqlConfigManager);
+            var frm = new frmUpsertSqlTemplateConfig(_sqlTemplateConfigManager, _sqlConfigManager);
             frm.ShowDialog();
             await RefreshSqlTemplateConfigDataGridView();
         }
 
-        private void btnModifySqlTemplate_Click(object sender, EventArgs e)
+        private async void btnModifySqlTemplate_Click(object sender, EventArgs e)
         {
+            if (!(dgvSqlTemplateConfigs.DataSource is List<SqlTemplateConfigData> configs) || configs.Count(x => x.IsSelected) != 1)
+            {
+                MessageBox.Show("Please select at least one sql template config to modify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            var config = configs.Single(x => x.IsSelected);
+            var sqlTemplateConfig = new SqlTemplateConfigModel
+            {
+                SqlTemplateConfigId = config.SqlTemplateConfigId,
+                Id = config.Id,
+                SqlConfigs = config.SqlConfigs.Select(x => new SqlConfig
+                {
+                    SqlConfigId = x.SqlConfigId,
+                    Id = x.Id,
+                    DatabaseId = x.DatabaseId,
+                    Query = x.Query
+                }).ToList()
+            };
+
+            var frm = new frmUpsertSqlTemplateConfig(_sqlTemplateConfigManager, _sqlConfigManager, sqlTemplateConfig);
+            frm.ShowDialog();
+            await RefreshSqlTemplateConfigDataGridView();
         }
 
         private async void btnDeleteSqlTemplate_Click(object sender, EventArgs e)

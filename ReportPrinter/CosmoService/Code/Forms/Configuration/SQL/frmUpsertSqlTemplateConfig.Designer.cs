@@ -1,6 +1,6 @@
 ﻿namespace CosmoService.Code.Forms.Configuration.SQL
 {
-    partial class frmAddSqlTemplateConfig
+    partial class frmUpsertSqlTemplateConfig
     {
         /// <summary>
         /// Required designer variable.

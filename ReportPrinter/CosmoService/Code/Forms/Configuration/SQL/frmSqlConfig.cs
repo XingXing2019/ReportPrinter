@@ -26,6 +26,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             _sqlTemplateConfigManager = (ISqlTemplateConfigManager)ManagerFactory.CreateManager<SqlTemplateConfigModel>(typeof(ISqlTemplateConfigManager), AppConfig.Instance.DatabaseManagerType);
 
             Task.Run(RefreshSqlConfigDataGridView).Wait();
+            Task.Run(RefreshSqlTemplateConfigDataGridView).Wait();
         }
 
         #region Sql Config
@@ -46,7 +47,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
         {
             if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) != 1)
             {
-                MessageBox.Show("Please select one config to modify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select one sql config to modify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -60,11 +61,11 @@ namespace CosmoService.Code.Forms.Configuration.SQL
         {
             if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) == 0)
             {
-                MessageBox.Show("Please select at least one config to delete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select at least one sql config to delete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (MessageBox.Show("Do you want to delete selected sql configs?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want to delete selected sql config(s)?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 var selectedConfigs = configs.Where(x => x.IsSelected).ToList();
                 await _sqlConfigManager.Delete(selectedConfigs.Select(x => x.SqlConfigId).ToList());
@@ -115,9 +116,20 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         }
 
-        private void btnDeleteSqlTemplate_Click(object sender, EventArgs e)
+        private async void btnDeleteSqlTemplate_Click(object sender, EventArgs e)
         {
+            if (!(dgvSqlTemplateConfigs.DataSource is List<SqlTemplateConfigData> configs) || configs.Count(x => x.IsSelected) == 0)
+            {
+                MessageBox.Show("Please select at least one sql template config to delete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            if (MessageBox.Show("Do you want to delete selected sql template config(s)?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                var selectedConfigs = configs.Where(x => x.IsSelected).ToList();
+                await _sqlTemplateConfigManager.Delete(selectedConfigs.Select(x => x.SqlTemplateConfigId).ToList());
+                await RefreshSqlTemplateConfigDataGridView();
+            }
         }
 
         #endregion
@@ -136,16 +148,15 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                 Query = x.Query,
                 SqlVariableConfigs = new List<SqlVariableConfigData>(x.SqlVariableConfigs.Select(y => new SqlVariableConfigData { Name = y.Name, })),
             }).ToList();
-            
+
             dgvSqlConfigs.DataSource = data;
         }
 
         private async Task RefreshSqlTemplateConfigDataGridView()
         {
             var templateIdPrefix = txtTemplateIdPrefix.Text.Trim();
-            //var sqlTemplateConfigs = string.IsNullOrEmpty(templateIdPrefix) ? await _sqlTemplateConfigManager.GetAll() : await _sqlTemplateConfigManager.GetAllByTemplateIdPrefix(templateIdPrefix);
+            var sqlTemplateConfigs = string.IsNullOrEmpty(templateIdPrefix) ? await _sqlTemplateConfigManager.GetAll() : await _sqlTemplateConfigManager.GetAllBySqlTemplateIdPrefix(templateIdPrefix);
 
-            var sqlTemplateConfigs = await _sqlTemplateConfigManager.GetAll();
             var data = sqlTemplateConfigs.Select(x => new SqlTemplateConfigData
             {
                 SqlTemplateConfigId = x.SqlTemplateConfigId,
@@ -161,8 +172,8 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                         Name = z.Name
                     }).ToList()
                 }).ToList()
-            });
-            
+            }).ToList();
+
             dgvSqlTemplateConfigs.DataSource = data;
         }
 

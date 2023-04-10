@@ -51,20 +51,20 @@
             btnModifySqlTemplate = new System.Windows.Forms.Button();
             txtTemplateIdPrefix = new System.Windows.Forms.TextBox();
             dgvSqlTemplateConfigs = new System.Windows.Forms.DataGridView();
+            isSelectedDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            idDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            sqlTemplateConfigDataBindingSource1 = new System.Windows.Forms.BindingSource(components);
             btnRefreshSqlTemplate = new System.Windows.Forms.Button();
             btnDeleteSqlTemplate = new System.Windows.Forms.Button();
             btnAddSqlTemplate = new System.Windows.Forms.Button();
             sqlTemplateConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
-            sqlTemplateConfigDataBindingSource1 = new System.Windows.Forms.BindingSource(components);
-            isSelectedDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            idDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)sqlConfigDataBindingSource).BeginInit();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSqlConfigs).BeginInit();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSqlTemplateConfigs).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource).BeginInit();
             SuspendLayout();
             // 
             // sqlConfigDataBindingSource
@@ -105,10 +105,10 @@
             // 
             // btnModifySqlConfig
             // 
-            btnModifySqlConfig.Location = new System.Drawing.Point(161, 750);
+            btnModifySqlConfig.Location = new System.Drawing.Point(137, 750);
             btnModifySqlConfig.Margin = new System.Windows.Forms.Padding(4);
             btnModifySqlConfig.Name = "btnModifySqlConfig";
-            btnModifySqlConfig.Size = new System.Drawing.Size(130, 40);
+            btnModifySqlConfig.Size = new System.Drawing.Size(106, 40);
             btnModifySqlConfig.TabIndex = 8;
             btnModifySqlConfig.Text = "Modify";
             btnModifySqlConfig.UseVisualStyleBackColor = true;
@@ -116,10 +116,10 @@
             // 
             // btnDeleteSqlConfig
             // 
-            btnDeleteSqlConfig.Location = new System.Drawing.Point(308, 750);
+            btnDeleteSqlConfig.Location = new System.Drawing.Point(251, 750);
             btnDeleteSqlConfig.Margin = new System.Windows.Forms.Padding(4);
             btnDeleteSqlConfig.Name = "btnDeleteSqlConfig";
-            btnDeleteSqlConfig.Size = new System.Drawing.Size(130, 40);
+            btnDeleteSqlConfig.Size = new System.Drawing.Size(106, 40);
             btnDeleteSqlConfig.TabIndex = 7;
             btnDeleteSqlConfig.Text = "Delete";
             btnDeleteSqlConfig.UseVisualStyleBackColor = true;
@@ -130,7 +130,7 @@
             btnAddSqlConfig.Location = new System.Drawing.Point(23, 750);
             btnAddSqlConfig.Margin = new System.Windows.Forms.Padding(4);
             btnAddSqlConfig.Name = "btnAddSqlConfig";
-            btnAddSqlConfig.Size = new System.Drawing.Size(130, 40);
+            btnAddSqlConfig.Size = new System.Drawing.Size(106, 40);
             btnAddSqlConfig.TabIndex = 6;
             btnAddSqlConfig.Text = "Add";
             btnAddSqlConfig.UseVisualStyleBackColor = true;
@@ -240,10 +240,10 @@
             // 
             // btnModifySqlTemplate
             // 
-            btnModifySqlTemplate.Location = new System.Drawing.Point(159, 750);
+            btnModifySqlTemplate.Location = new System.Drawing.Point(135, 750);
             btnModifySqlTemplate.Margin = new System.Windows.Forms.Padding(4);
             btnModifySqlTemplate.Name = "btnModifySqlTemplate";
-            btnModifySqlTemplate.Size = new System.Drawing.Size(130, 40);
+            btnModifySqlTemplate.Size = new System.Drawing.Size(106, 40);
             btnModifySqlTemplate.TabIndex = 13;
             btnModifySqlTemplate.Text = "Modify";
             btnModifySqlTemplate.UseVisualStyleBackColor = true;
@@ -272,47 +272,6 @@
             dgvSqlTemplateConfigs.Size = new System.Drawing.Size(524, 617);
             dgvSqlTemplateConfigs.TabIndex = 0;
             // 
-            // btnRefreshSqlTemplate
-            // 
-            btnRefreshSqlTemplate.Location = new System.Drawing.Point(417, 61);
-            btnRefreshSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
-            btnRefreshSqlTemplate.Name = "btnRefreshSqlTemplate";
-            btnRefreshSqlTemplate.Size = new System.Drawing.Size(128, 40);
-            btnRefreshSqlTemplate.TabIndex = 11;
-            btnRefreshSqlTemplate.Text = "Refresh";
-            btnRefreshSqlTemplate.UseVisualStyleBackColor = true;
-            btnRefreshSqlTemplate.Click += btnRefreshSqlTemplate_Click;
-            // 
-            // btnDeleteSqlTemplate
-            // 
-            btnDeleteSqlTemplate.Location = new System.Drawing.Point(306, 750);
-            btnDeleteSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
-            btnDeleteSqlTemplate.Name = "btnDeleteSqlTemplate";
-            btnDeleteSqlTemplate.Size = new System.Drawing.Size(130, 40);
-            btnDeleteSqlTemplate.TabIndex = 12;
-            btnDeleteSqlTemplate.Text = "Delete";
-            btnDeleteSqlTemplate.UseVisualStyleBackColor = true;
-            btnDeleteSqlTemplate.Click += btnDeleteSqlTemplate_Click;
-            // 
-            // btnAddSqlTemplate
-            // 
-            btnAddSqlTemplate.Location = new System.Drawing.Point(21, 750);
-            btnAddSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
-            btnAddSqlTemplate.Name = "btnAddSqlTemplate";
-            btnAddSqlTemplate.Size = new System.Drawing.Size(130, 40);
-            btnAddSqlTemplate.TabIndex = 11;
-            btnAddSqlTemplate.Text = "Add";
-            btnAddSqlTemplate.UseVisualStyleBackColor = true;
-            btnAddSqlTemplate.Click += btnAddSqlTemplate_Click;
-            // 
-            // sqlTemplateConfigDataBindingSource
-            // 
-            sqlTemplateConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
-            // 
-            // sqlTemplateConfigDataBindingSource1
-            // 
-            sqlTemplateConfigDataBindingSource1.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
-            // 
             // isSelectedDataGridViewCheckBoxColumn1
             // 
             isSelectedDataGridViewCheckBoxColumn1.DataPropertyName = "IsSelected";
@@ -331,6 +290,47 @@
             idDataGridViewTextBoxColumn1.HeaderText = "Template Id";
             idDataGridViewTextBoxColumn1.MinimumWidth = 9;
             idDataGridViewTextBoxColumn1.Name = "idDataGridViewTextBoxColumn1";
+            // 
+            // sqlTemplateConfigDataBindingSource1
+            // 
+            sqlTemplateConfigDataBindingSource1.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
+            // 
+            // btnRefreshSqlTemplate
+            // 
+            btnRefreshSqlTemplate.Location = new System.Drawing.Point(417, 61);
+            btnRefreshSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
+            btnRefreshSqlTemplate.Name = "btnRefreshSqlTemplate";
+            btnRefreshSqlTemplate.Size = new System.Drawing.Size(128, 40);
+            btnRefreshSqlTemplate.TabIndex = 11;
+            btnRefreshSqlTemplate.Text = "Refresh";
+            btnRefreshSqlTemplate.UseVisualStyleBackColor = true;
+            btnRefreshSqlTemplate.Click += btnRefreshSqlTemplate_Click;
+            // 
+            // btnDeleteSqlTemplate
+            // 
+            btnDeleteSqlTemplate.Location = new System.Drawing.Point(249, 750);
+            btnDeleteSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
+            btnDeleteSqlTemplate.Name = "btnDeleteSqlTemplate";
+            btnDeleteSqlTemplate.Size = new System.Drawing.Size(106, 40);
+            btnDeleteSqlTemplate.TabIndex = 12;
+            btnDeleteSqlTemplate.Text = "Delete";
+            btnDeleteSqlTemplate.UseVisualStyleBackColor = true;
+            btnDeleteSqlTemplate.Click += btnDeleteSqlTemplate_Click;
+            // 
+            // btnAddSqlTemplate
+            // 
+            btnAddSqlTemplate.Location = new System.Drawing.Point(21, 750);
+            btnAddSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
+            btnAddSqlTemplate.Name = "btnAddSqlTemplate";
+            btnAddSqlTemplate.Size = new System.Drawing.Size(106, 40);
+            btnAddSqlTemplate.TabIndex = 11;
+            btnAddSqlTemplate.Text = "Add";
+            btnAddSqlTemplate.UseVisualStyleBackColor = true;
+            btnAddSqlTemplate.Click += btnAddSqlTemplate_Click;
+            // 
+            // sqlTemplateConfigDataBindingSource
+            // 
+            sqlTemplateConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
             // 
             // frmSqlConfig
             // 
@@ -351,8 +351,8 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSqlTemplateConfigs).EndInit();
-            ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource).EndInit();
             ResumeLayout(false);
         }
 

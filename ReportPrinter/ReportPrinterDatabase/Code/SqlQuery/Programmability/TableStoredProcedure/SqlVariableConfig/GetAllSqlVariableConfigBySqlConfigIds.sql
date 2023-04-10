@@ -16,7 +16,7 @@ BEGIN
 	BEGIN
 		INSERT INTO @temp
 		SELECT value FROM STRING_SPLIT(@sqlConfigIds, ',')
-	END	
+	END
 
 	SELECT 
 		[SVC_SqlVariableConfigId] AS SqlVariableConfigId,

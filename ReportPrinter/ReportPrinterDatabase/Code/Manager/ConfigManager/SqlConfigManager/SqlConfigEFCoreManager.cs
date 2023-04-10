@@ -226,7 +226,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during retrieving all Sql configs by database Id: {databaseIdPrefix}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during retrieving all Sql configs by database Id prefix: {databaseIdPrefix}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

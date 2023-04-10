@@ -19,7 +19,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             Manager = new SqlTemplateConfigEFCoreManager();
             _sqlConfigMgr = new SqlConfigEFCoreManager();
         }
-        
+
         [TearDown]
         public new void TearDown()
         {
@@ -86,7 +86,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
         [Test]
         [TestCase(typeof(SqlTemplateConfigSPManager))]
-        //[TestCase(typeof(SqlTemplateConfigEFCoreManager))]
+        [TestCase(typeof(SqlTemplateConfigEFCoreManager))]
         public async Task TestSqlTemplateConfigManager_GetAll(Type managerType)
         {
             try
@@ -113,7 +113,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 {
                     var sqlTemplateConfigId = Guid.NewGuid();
                     var id = $"Test Sql Template Config {i + 1}";
-                    
+
                     var sqlTemplateConfig = CreateSqlTemplateConfig(sqlTemplateConfigId, sqlConfigs, id);
                     await mgr.Post(sqlTemplateConfig);
                     expectedSqlTemplateConfigs.Add(sqlTemplateConfig);
@@ -151,6 +151,70 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        [TestCase(typeof(SqlTemplateConfigSPManager))]
+        [TestCase(typeof(SqlTemplateConfigEFCoreManager))]
+        public async Task TestSqlConfigManager_GetAllBySqlTemplateIdPrefix(Type managerType)
+        {
+            var mgr = (ISqlTemplateConfigManager)Activator.CreateInstance(managerType);
+            var sqlConfigs = new List<SqlConfig>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                var sqlConfigId = Guid.NewGuid();
+                var id = $"Test Sql Config {i + 1}";
+                var databaseId = $"Test DB {i + 1}";
+                var query = $"Test Query {i + 1}";
+                var sqlVariableNames = new List<string> { $"Variable {i + 1}" };
+
+                var sqlConfig = CreateSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
+                await _sqlConfigMgr.Post(sqlConfig);
+                sqlConfigs.Add(sqlConfig);
+            }
+
+            var expectedTestDbSqlTemplateConfigs = new List<SqlTemplateConfigModel>();
+            var expectedRealDbSqlTemplateConfigs = new List<SqlTemplateConfigModel>();
+            
+            for (int i = 0; i < 10; i++)
+            {
+                var sqlTemplateConfigId = Guid.NewGuid();
+                var id = $"Test Sql Template Config {i + 1}";
+
+                var sqlTemplateConfig = CreateSqlTemplateConfig(sqlTemplateConfigId, sqlConfigs, id);
+                await mgr.Post(sqlTemplateConfig);
+                expectedTestDbSqlTemplateConfigs.Add(sqlTemplateConfig);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                var sqlTemplateConfigId = Guid.NewGuid();
+                var id = $"Real Sql Template Config {i + 1}";
+                var sqlTemplateConfig = CreateSqlTemplateConfig(sqlTemplateConfigId, sqlConfigs, id);
+                await mgr.Post(sqlTemplateConfig);
+                expectedRealDbSqlTemplateConfigs.Add(sqlTemplateConfig);
+            }
+
+            var templateIdPrefix = "Test Sql Template Config";
+            var actualSqlTemplateConfigs = await mgr.GetAllBySqlTemplateIdPrefix(templateIdPrefix);
+            Assert.AreEqual(10, actualSqlTemplateConfigs.Count);
+
+            foreach (var expectedSqlTemplateConfig in expectedTestDbSqlTemplateConfigs)
+            {
+                var actualSqlTemplateConfig = actualSqlTemplateConfigs.Single(x => x.Id == expectedSqlTemplateConfig.Id);
+                AssertHelper.AssertSqlTemplateConfig(expectedSqlTemplateConfig, actualSqlTemplateConfig);
+            }
+
+            templateIdPrefix = "Real Sql Template Config";
+            actualSqlTemplateConfigs = await mgr.GetAllBySqlTemplateIdPrefix(templateIdPrefix);
+            Assert.AreEqual(5, actualSqlTemplateConfigs.Count);
+
+            foreach (var expectedSqlTemplateConfig in expectedRealDbSqlTemplateConfigs)
+            {
+                var actualSqlTemplateConfig = actualSqlTemplateConfigs.Single(x => x.Id == expectedSqlTemplateConfig.Id);
+                AssertHelper.AssertSqlTemplateConfig(expectedSqlTemplateConfig, actualSqlTemplateConfig);
             }
         }
     }

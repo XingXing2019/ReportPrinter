@@ -7,6 +7,7 @@ using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterDatabase.Code.StoredProcedures.SqlConfig;
 using ReportPrinterDatabase.Code.StoredProcedures.SqlTemplateConfig;
+using ReportPrinterDatabase.Code.StoredProcedures.SqlVariableConfig;
 using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager
@@ -50,6 +51,14 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
             {
                 var sqlTemplateConfig = await _executor.ExecuteQueryOneAsync<SqlTemplateConfigModel>(new GetSqlTemplateConfig(sqlTemplateConfigId));
                 var sqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlConfig>(new GetSqlConfigsBySqlTemplateConfigId(sqlTemplateConfigId));
+                
+                var sqlConfigIds = string.Join(',', sqlConfigs.Select(x => x.SqlConfigId));
+                var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetAllSqlVariableConfigBySqlConfigIds(sqlConfigIds));
+
+                foreach (var sqlConfig in sqlConfigs)
+                {
+                    sqlConfig.SqlVariableConfigs = sqlVariableConfigs.Where(x => x.SqlConfigId == sqlConfig.SqlConfigId).ToList();
+                }
 
                 if (sqlTemplateConfig != null)
                 {
@@ -74,14 +83,12 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
             {
                 var sqlTemplateConfigs = await _executor.ExecuteQueryBatchAsync<SqlTemplateConfigModel>(new GetAllSqlTemplateConfig());
                 var sqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlConfig>(new GetAllSqlConfig());
-                var sqlTemplateConfigSqlConfig = await _executor.ExecuteQueryBatchAsync<SqlTemplateConfigSqlConfig>(new GetAllSqlTemplateConfigSqlConfig());
+                var sqlTemplateConfigSqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlTemplateConfigSqlConfig>(new GetAllSqlTemplateConfigSqlConfig());
 
-                var dict = sqlTemplateConfigSqlConfig.GroupBy(x => x.SqlTemplateConfigId).ToDictionary(x => x.Key, x => x.Select(y => sqlConfigs.Single(z => z.SqlConfigId == y.SqlConfigId)));
+                var sqlConfigIds = string.Join(',', sqlConfigs.Select(x => x.SqlConfigId));
+                var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetAllSqlVariableConfigBySqlConfigIds(sqlConfigIds));
 
-                foreach (var sqlTemplateConfig in sqlTemplateConfigs)
-                {
-                    sqlTemplateConfig.SqlConfigs = dict[sqlTemplateConfig.SqlTemplateConfigId].ToList();
-                }
+                sqlTemplateConfigs = CreateDataModels(sqlTemplateConfigs, sqlConfigs, sqlTemplateConfigSqlConfigs, sqlVariableConfigs);
 
                 Logger.Debug($"Retrieve all sql template configs", procName);
                 return sqlTemplateConfigs;
@@ -168,5 +175,54 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                 throw;
             }
         }
+
+        public async Task<List<SqlTemplateConfigModel>> GetAllBySqlTemplateIdPrefix(string templateIdPrefix)
+        {
+            var procName = $"{this.GetType().Name}.{nameof(GetAllBySqlTemplateIdPrefix)}";
+
+            try
+            {
+                var sqlTemplateConfigs = await _executor.ExecuteQueryBatchAsync<SqlTemplateConfigModel>(new GetAllBySqlTemplateIdPrefix(templateIdPrefix));
+
+                var sqlTemplateConfigIds = string.Join(",", sqlTemplateConfigs.Select(x => x.SqlTemplateConfigId));
+                var sqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlConfig>(new GetAllSqlConfigBySqlTemplateConfigIds(sqlTemplateConfigIds));
+                var sqlTemplateConfigSqlConfigs = await _executor.ExecuteQueryBatchAsync<SqlTemplateConfigSqlConfig>(new GetAllSqlTemplateConfigSqlConfigBySqlTemplateConfigIds(sqlTemplateConfigIds));
+
+                var sqlConfigIds = string.Join(',', sqlConfigs.Select(x => x.SqlConfigId));
+                var sqlVariableConfigs = await _executor.ExecuteQueryBatchAsync<SqlVariableConfig>(new GetAllSqlVariableConfigBySqlConfigIds(sqlConfigIds));
+
+                sqlTemplateConfigs = CreateDataModels(sqlTemplateConfigs, sqlConfigs, sqlTemplateConfigSqlConfigs, sqlVariableConfigs);
+                Logger.Debug($"Retrieve all sql configs by database id prefix: {templateIdPrefix}", procName);
+
+                return sqlTemplateConfigs;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during retrieving all Sql template configs by template id prefix: {templateIdPrefix}. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+
+        #region Helper
+
+        private List<SqlTemplateConfigModel> CreateDataModels(List<SqlTemplateConfigModel> sqlTemplateConfigs, List<SqlConfig> sqlConfigs, List<SqlTemplateConfigSqlConfig> sqlTemplateConfigSqlConfigs, List<SqlVariableConfig> sqlVariableConfigs)
+        {
+            foreach (var sqlConfig in sqlConfigs)
+            {
+                sqlConfig.SqlVariableConfigs = sqlVariableConfigs.Where(x => x.SqlConfigId == sqlConfig.SqlConfigId).ToList();
+            }
+
+            var dict = sqlTemplateConfigSqlConfigs.GroupBy(x => x.SqlTemplateConfigId).ToDictionary(x => x.Key, x => x.Select(y => sqlConfigs.First(z => z.SqlConfigId == y.SqlConfigId)).ToList());
+
+            foreach (var sqlTemplateConfig in sqlTemplateConfigs)
+            {
+                sqlTemplateConfig.SqlConfigs = dict[sqlTemplateConfig.SqlTemplateConfigId].ToList();
+            }
+
+            return sqlTemplateConfigs;
+        }
+
+        #endregion
     }
 }

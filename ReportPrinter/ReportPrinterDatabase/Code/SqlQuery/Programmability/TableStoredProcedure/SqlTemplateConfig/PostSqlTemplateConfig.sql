@@ -6,7 +6,7 @@ GO
 
 CREATE PROCEDURE [dbo].[PostSqlTemplateConfig]
 	@sqlTemplateConfigId UNIQUEIDENTIFIER,
-	@id VARCHAR(100),
+	@id VARCHAR(50),
 	@sqlConfigIds NVARCHAR(MAX)
 AS
 BEGIN

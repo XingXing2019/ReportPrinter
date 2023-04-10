@@ -56,6 +56,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                 var entity = await context.SqlTemplateConfigs
                     .Include(x => x.SqlTemplateConfigSqlConfigs)
                     .ThenInclude(x => x.SqlConfig)
+                    .ThenInclude(x => x.SqlVariableConfigs)
                     .FirstOrDefaultAsync(x => x.SqlTemplateConfigId == sqlTemplateConfigId);
 
                 if (entity == null)
@@ -66,13 +67,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
 
                 Logger.Debug($"Retrieve Sql template config: {sqlTemplateConfigId}", procName);
 
-                var sqlTemplateConfig = new SqlTemplateConfigModel
-                {
-                    SqlTemplateConfigId = entity.SqlTemplateConfigId,
-                    Id = entity.Id,
-                    SqlConfigs = entity.SqlTemplateConfigSqlConfigs.Select(x => x.SqlConfig).ToList()
-                };
-
+                var sqlTemplateConfig = CreateDataModel(entity);
                 return sqlTemplateConfig;
             }
             catch (Exception ex)
@@ -92,17 +87,13 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                 var entities = await context.SqlTemplateConfigs
                     .Include(x => x.SqlTemplateConfigSqlConfigs)
                     .ThenInclude(x => x.SqlConfig)
+                    .ThenInclude(x => x.SqlVariableConfigs)
+                    .OrderBy(x => x.Id)
                     .ToListAsync();
 
                 Logger.Debug($"Retrieve all sql template configs", procName);
 
-                var sqlTemplateConfigs = entities.Select(x => new SqlTemplateConfigModel
-                {
-                    SqlTemplateConfigId = x.SqlTemplateConfigId,
-                    Id = x.Id,
-                    SqlConfigs = x.SqlTemplateConfigSqlConfigs.Select(x => x.SqlConfig).ToList()
-                }).ToList();
-
+                var sqlTemplateConfigs = entities.Select(CreateDataModel).ToList();
                 return sqlTemplateConfigs;
             }
             catch (Exception ex)
@@ -212,7 +203,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                             SqlTemplateConfigId = sqlTemplateConfigId,
                             SqlConfigId = x.SqlConfigId
                         }).ToList();
-                    
+
                     entity.SqlTemplateConfigSqlConfigs = sqlTemplateConfigSqlConfigs;
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update Sql template config: {sqlTemplateConfig}, {rows} row affected", procName);
@@ -224,5 +215,48 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                 throw;
             }
         }
+
+        public async Task<List<SqlTemplateConfigModel>> GetAllBySqlTemplateIdPrefix(string templateIdPrefix)
+        {
+            var procName = $"{this.GetType()}.{nameof(GetAllBySqlTemplateIdPrefix)}";
+
+            try
+            {
+                await using var context = new ReportPrinterContext();
+                var entities = await context.SqlTemplateConfigs
+                    .Include(x => x.SqlTemplateConfigSqlConfigs)
+                    .ThenInclude(x => x.SqlConfig)
+                    .ThenInclude(x => x.SqlVariableConfigs)
+                    .Where(x => x.Id.StartsWith(templateIdPrefix))
+                    .ToListAsync();
+
+                Logger.Debug($"Retrieve all sql configs by database id prefix: {templateIdPrefix}", procName);
+
+                var sqlTemplateConfigs = entities.Select(CreateDataModel).ToList();
+                return sqlTemplateConfigs;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Exception happened during retrieving all Sql template configs by template id prefix: {templateIdPrefix}. Ex: {ex.Message}", procName);
+                throw;
+            }
+        }
+
+
+        #region Helper
+
+        private SqlTemplateConfigModel CreateDataModel(SqlTemplateConfig entity)
+        {
+            var sqlTemplateConfig = new SqlTemplateConfigModel
+            {
+                SqlTemplateConfigId = entity.SqlTemplateConfigId,
+                Id = entity.Id,
+                SqlConfigs = entity.SqlTemplateConfigSqlConfigs.Select(sqlTemplateConfigSqlConfig => sqlTemplateConfigSqlConfig.SqlConfig).ToList()
+            };
+
+            return sqlTemplateConfig;
+        }
+
+        #endregion
     }
 }

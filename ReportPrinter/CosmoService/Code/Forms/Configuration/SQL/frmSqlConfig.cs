@@ -136,9 +136,8 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                 Query = x.Query,
                 SqlVariableConfigs = new List<SqlVariableConfigData>(x.SqlVariableConfigs.Select(y => new SqlVariableConfigData { Name = y.Name, })),
             }).ToList();
-
-            var source = new BindingSource { DataSource = data };
-            dgvSqlConfigs.DataSource = source;
+            
+            dgvSqlConfigs.DataSource = data;
         }
 
         private async Task RefreshSqlTemplateConfigDataGridView()
@@ -163,9 +162,8 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                     }).ToList()
                 }).ToList()
             });
-
-            var source = new BindingSource { DataSource = data };
-            dgvSqlTemplateConfigs.DataSource = source;
+            
+            dgvSqlTemplateConfigs.DataSource = data;
         }
 
         #endregion

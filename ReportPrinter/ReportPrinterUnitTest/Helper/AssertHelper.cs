@@ -49,7 +49,14 @@ namespace ReportPrinterUnitTest.Helper
         public void AssertSqlTemplateConfig(SqlTemplateConfigModel expected, SqlTemplateConfigModel actual)
         {
             Assert.AreEqual(expected.Id, actual.Id);
-            AssertList(typeof(List<SqlConfig>), expected.SqlConfigs, expected.SqlConfigs);
+            var expectedSqlConfigs = expected.SqlConfigs.OrderBy(x => x.SqlConfigId).ToList();
+            var actualSqlConfigs = actual.SqlConfigs.OrderBy(x => x.SqlConfigId).ToList();
+            for (int i = 0; i < expectedSqlConfigs.Count; i++)
+            {
+                var expectedSqlConfig = expectedSqlConfigs[i];
+                var actualSqlConfig = actualSqlConfigs[i];
+                AssertSqlConfig(expectedSqlConfig, actualSqlConfig);
+            }
         }
 
         public void AssertObject(object obj1, object obj2)

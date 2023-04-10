@@ -36,7 +36,7 @@ namespace CosmoService.Code.UserControls
             Task.Run(() => RefreshSqlConfigDataGridView(selectedSqlConfigs)).Wait();
         }
 
-        public List<SqlConfigData> GetSelectedSqlConfigIds()
+        public List<SqlConfigData> GetSelectedSqlConfigs()
         {
             if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs))
             {
@@ -116,7 +116,10 @@ namespace CosmoService.Code.UserControls
                 Id = x.Id,
                 DatabaseId = x.DatabaseId,
                 Query = x.Query,
-                SqlVariableConfigs = new List<SqlVariableConfigData>(x.SqlVariableConfigs.Select(y => new SqlVariableConfigData { Name = y.Name, })),
+                SqlVariableConfigs = x.SqlVariableConfigs.Select(y => new SqlVariableConfigData
+                {
+                    Name = y.Name
+                }).ToList(),
             }).ToList();
 
             dgvSqlConfigs.DataSource = data;

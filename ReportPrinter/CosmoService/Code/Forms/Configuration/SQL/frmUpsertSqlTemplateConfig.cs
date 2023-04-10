@@ -47,7 +47,17 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             {
                 SqlTemplateConfigId = _sqlTemplateConfigId ?? Guid.NewGuid(),
                 Id = templateId,
-                SqlConfigs = selectedSqlConfigs.Select(x => new SqlConfig { SqlConfigId = x.SqlConfigId }).ToList()
+                SqlConfigs = selectedSqlConfigs.Select(x => new SqlConfig
+                {
+                    SqlConfigId = x.SqlConfigId,
+                    Id = x.Id,
+                    DatabaseId = x.DatabaseId,
+                    Query = x.Query,
+                    SqlVariableConfigs = x.SqlVariableConfigs.Select(y => new SqlVariableConfig
+                    {
+                        Name = y.Name
+                    }).ToList()
+                }).ToList()
             };
 
             if (_isEdit)
@@ -57,6 +67,10 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             Close();
         }
 
+        private void btnPreview_Click(object sender, EventArgs e)
+        {
+
+        }
 
         #region Helper
 
@@ -72,7 +86,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                 isValid = false;
             }
 
-            selectedSqlConfigs = ucSqlConfig.GetSelectedSqlConfigIds();
+            selectedSqlConfigs = ucSqlConfig.GetSelectedSqlConfigs();
             if (selectedSqlConfigs.Count == 0)
             {
                 epAddSqlTemplateConfig.SetError(lblSqlConfigError, "Please select at least one sql configs");

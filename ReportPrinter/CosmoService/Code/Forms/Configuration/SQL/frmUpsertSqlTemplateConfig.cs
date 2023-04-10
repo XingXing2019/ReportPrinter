@@ -7,6 +7,7 @@ using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Winform.Configuration;
+using ReportPrinterLibrary.Code.Winform.Helper;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {
@@ -43,33 +44,24 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             if (!ValidateInput(out var templateId, out var selectedSqlConfigs))
                 return;
 
-            var config = new SqlTemplateConfigModel
-            {
-                SqlTemplateConfigId = _sqlTemplateConfigId ?? Guid.NewGuid(),
-                Id = templateId,
-                SqlConfigs = selectedSqlConfigs.Select(x => new SqlConfig
-                {
-                    SqlConfigId = x.SqlConfigId,
-                    Id = x.Id,
-                    DatabaseId = x.DatabaseId,
-                    Query = x.Query,
-                    SqlVariableConfigs = x.SqlVariableConfigs.Select(y => new SqlVariableConfig
-                    {
-                        Name = y.Name
-                    }).ToList()
-                }).ToList()
-            };
+            var sqlTemplateConfig = CreateSqlTemplateConfigModel(templateId, selectedSqlConfigs);
 
             if (_isEdit)
-                await _sqlTemplateConfigManager.PutSqlTemplateConfig(config);
+                await _sqlTemplateConfigManager.PutSqlTemplateConfig(sqlTemplateConfig);
             else
-                await _sqlTemplateConfigManager.Post(config);
+                await _sqlTemplateConfigManager.Post(sqlTemplateConfig);
             Close();
         }
 
         private void btnPreview_Click(object sender, EventArgs e)
         {
+            if (!ValidateInput(out var templateId, out var selectedSqlConfigs))
+                return;
 
+            var sqlTemplateConfig = CreateSqlTemplateConfigData(templateId, selectedSqlConfigs);
+            var preview = ConfigPreviewHelper.GeneratePreview(sqlTemplateConfig);
+            var frm = new frmConfigPreview(preview);
+            frm.ShowDialog();
         }
 
         #region Helper
@@ -94,6 +86,37 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             }
 
             return isValid;
+        }
+
+        private SqlTemplateConfigModel CreateSqlTemplateConfigModel(string templateId, List<SqlConfigData> selectedSqlConfigs)
+        {
+            var sqlTemplateConfigModel = new SqlTemplateConfigModel
+            {
+                SqlTemplateConfigId = _sqlTemplateConfigId ?? Guid.NewGuid(),
+                Id = templateId,
+                SqlConfigs = selectedSqlConfigs.Select(x => new SqlConfig
+                {
+                    SqlConfigId = x.SqlConfigId,
+                    Id = x.Id,
+                    DatabaseId = x.DatabaseId,
+                    Query = x.Query,
+                    SqlVariableConfigs = x.SqlVariableConfigs.Select(y => new SqlVariableConfig
+                    {
+                        Name = y.Name
+                    }).ToList()
+                }).ToList()
+            };
+
+            return sqlTemplateConfigModel;
+        }
+
+        private SqlTemplateConfigData CreateSqlTemplateConfigData(string templateId, List<SqlConfigData> selectedSqlConfigs)
+        {
+            return new SqlTemplateConfigData
+            {
+                Id = templateId,
+                SqlConfigs = selectedSqlConfigs
+            };
         }
 
         #endregion

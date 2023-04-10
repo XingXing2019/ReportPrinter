@@ -33,12 +33,14 @@
             txtTemplateId = new System.Windows.Forms.TextBox();
             lblTemplateId = new System.Windows.Forms.Label();
             epAddSqlTemplateConfig = new System.Windows.Forms.ErrorProvider(components);
+            ucSqlConfig = new UserControls.ucSqlConfig();
+            lblSqlConfigError = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)epAddSqlTemplateConfig).BeginInit();
             SuspendLayout();
             // 
             // btnSave
             // 
-            btnSave.Location = new System.Drawing.Point(413, 76);
+            btnSave.Location = new System.Drawing.Point(556, 22);
             btnSave.Margin = new System.Windows.Forms.Padding(4);
             btnSave.Name = "btnSave";
             btnSave.Size = new System.Drawing.Size(106, 42);
@@ -49,10 +51,10 @@
             // 
             // txtTemplateId
             // 
-            txtTemplateId.Location = new System.Drawing.Point(166, 27);
+            txtTemplateId.Location = new System.Drawing.Point(194, 27);
             txtTemplateId.Margin = new System.Windows.Forms.Padding(4);
             txtTemplateId.Name = "txtTemplateId";
-            txtTemplateId.Size = new System.Drawing.Size(351, 35);
+            txtTemplateId.Size = new System.Drawing.Size(323, 35);
             txtTemplateId.TabIndex = 4;
             // 
             // lblTemplateId
@@ -69,11 +71,28 @@
             // 
             epAddSqlTemplateConfig.ContainerControl = this;
             // 
+            // ucSqlConfig
+            // 
+            ucSqlConfig.Location = new System.Drawing.Point(24, 81);
+            ucSqlConfig.Name = "ucSqlConfig";
+            ucSqlConfig.Size = new System.Drawing.Size(717, 828);
+            ucSqlConfig.TabIndex = 6;
+            // 
+            // lblSqlConfigError
+            // 
+            lblSqlConfigError.AutoSize = true;
+            lblSqlConfigError.Location = new System.Drawing.Point(152, 85);
+            lblSqlConfigError.Name = "lblSqlConfigError";
+            lblSqlConfigError.Size = new System.Drawing.Size(0, 30);
+            lblSqlConfigError.TabIndex = 7;
+            // 
             // frmAddSqlTemplateConfig
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(550, 144);
+            ClientSize = new System.Drawing.Size(764, 847);
+            Controls.Add(lblSqlConfigError);
+            Controls.Add(ucSqlConfig);
             Controls.Add(btnSave);
             Controls.Add(txtTemplateId);
             Controls.Add(lblTemplateId);
@@ -91,5 +110,7 @@
         private System.Windows.Forms.TextBox txtTemplateId;
         private System.Windows.Forms.Label lblTemplateId;
         private System.Windows.Forms.ErrorProvider epAddSqlTemplateConfig;
+        private UserControls.ucSqlConfig ucSqlConfig;
+        private System.Windows.Forms.Label lblSqlConfigError;
     }
 }

@@ -15,14 +15,15 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmSqlConfig : Form
     {
+        private readonly ISqlConfigManager _sqlConfigManager;
         private readonly ISqlTemplateConfigManager _sqlTemplateConfigManager;
 
         public frmSqlConfig()
         {
             InitializeComponent();
 
-            var sqlConfigManager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.DatabaseManagerType);
-            ucSqlConfig.Initialize(sqlConfigManager, true);
+            _sqlConfigManager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.DatabaseManagerType);
+            ucSqlConfig.Initialize(_sqlConfigManager, true);
 
             _sqlTemplateConfigManager = (ISqlTemplateConfigManager)ManagerFactory.CreateManager<SqlTemplateConfigModel>(typeof(ISqlTemplateConfigManager), AppConfig.Instance.DatabaseManagerType);
 
@@ -36,15 +37,8 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private async void btnAddSqlTemplate_Click(object sender, EventArgs e)
         {
-            //if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) == 0)
-            //{
-            //    MessageBox.Show("Please select at least one sql config to create sql template", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-
-            //var selectedSqlConfigs = configs.Where(x => x.IsSelected).ToList();
-            //var frm = new frmAddSqlTemplateConfig(selectedSqlConfigs, _sqlTemplateConfigManager);
-            //frm.ShowDialog();
+            var frm = new frmAddSqlTemplateConfig(_sqlTemplateConfigManager, _sqlConfigManager);
+            frm.ShowDialog();
             await RefreshSqlTemplateConfigDataGridView();
         }
 

@@ -113,6 +113,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private bool ValidateInput(out string id, out string databaseId, out string query)
         {
+            epAddSqlConfig.Clear();
             var isValidInput = true;
 
             id = txtId.Text.Trim();

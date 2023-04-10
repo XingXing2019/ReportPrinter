@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ReportPrinterDatabase.Code.Entity;
 
 namespace CosmoService.Code.UserControls
 {
@@ -27,7 +28,23 @@ namespace CosmoService.Code.UserControls
             btnModifySqlConfig.Visible = allowEdit;
             btnDeleteSqlConfig.Visible = allowEdit;
 
+            if (!allowEdit)
+            {
+                gbSqlConfig.Height = 742;
+            }
+
+
             Task.Run(RefreshSqlConfigDataGridView).Wait();
+        }
+
+        public List<SqlConfigData> GetSelectedSqlConfigIds()
+        {
+            if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs))
+            {
+                return new List<SqlConfigData>();
+            }
+
+            return configs.Where(x => x.IsSelected).ToList();
         }
 
         private async void btnRefreshSqlConfig_Click(object sender, EventArgs e)

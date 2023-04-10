@@ -4,6 +4,9 @@
     <Compile Update="Code\Forms\Configuration\frmConfigPreview.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Code\Forms\Configuration\SQL\frmAddSqlTemplateConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Code\Forms\Configuration\SQL\frmUpsertSqlConfig.cs">
       <SubType>Form</SubType>
     </Compile>

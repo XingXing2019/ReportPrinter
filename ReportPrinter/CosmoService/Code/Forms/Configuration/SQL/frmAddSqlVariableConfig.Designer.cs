@@ -39,24 +39,27 @@
             // lblName
             // 
             lblName.AutoSize = true;
-            lblName.Location = new System.Drawing.Point(22, 24);
+            lblName.Location = new System.Drawing.Point(33, 33);
+            lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblName.Name = "lblName";
-            lblName.Size = new System.Drawing.Size(49, 20);
+            lblName.Size = new System.Drawing.Size(74, 30);
             lblName.TabIndex = 0;
-            lblName.Text = "Name";
+            lblName.Text = "Name:";
             // 
             // txtName
             // 
-            txtName.Location = new System.Drawing.Point(95, 21);
+            txtName.Location = new System.Drawing.Point(115, 32);
+            txtName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             txtName.Name = "txtName";
-            txtName.Size = new System.Drawing.Size(252, 27);
+            txtName.Size = new System.Drawing.Size(403, 35);
             txtName.TabIndex = 1;
             // 
             // btnSave
             // 
-            btnSave.Location = new System.Drawing.Point(276, 54);
+            btnSave.Location = new System.Drawing.Point(414, 81);
+            btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnSave.Name = "btnSave";
-            btnSave.Size = new System.Drawing.Size(71, 28);
+            btnSave.Size = new System.Drawing.Size(106, 42);
             btnSave.TabIndex = 2;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
@@ -68,13 +71,14 @@
             // 
             // frmAddSqlVariableConfig
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(364, 93);
+            ClientSize = new System.Drawing.Size(546, 140);
             Controls.Add(btnSave);
             Controls.Add(txtName);
             Controls.Add(lblName);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             Name = "frmAddSqlVariableConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "Add SQL Variable Config";

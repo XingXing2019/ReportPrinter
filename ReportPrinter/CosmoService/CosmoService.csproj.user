@@ -4,6 +4,9 @@
     <Compile Update="Code\Forms\Configuration\frmConfigPreview.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Code\Forms\Configuration\SQL\frmGenerateSqlTemplateConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Code\Forms\Configuration\SQL\frmUpsertSqlTemplateConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -27,6 +30,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Code\Forms\Configuration\SQL\frmUpsertSqlConfig.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Code\Forms\Message\frmPublishPrintReport.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

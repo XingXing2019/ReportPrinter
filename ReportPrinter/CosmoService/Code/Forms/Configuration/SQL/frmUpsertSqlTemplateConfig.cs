@@ -24,11 +24,13 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             ucSqlConfig.Initialize(sqlConfigManager, false, new HashSet<Guid>());
             _sqlTemplateConfigManager = sqlTemplateConfigManager;
             _isEdit = false;
+            Text = "Add Sql Template Config";
         }
 
         public frmUpsertSqlTemplateConfig(ISqlTemplateConfigManager sqlTemplateConfigManager, ISqlConfigManager sqlConfigManager, SqlTemplateConfigModel config)
         {
             InitializeComponent();
+            Text = "Edit Sql Template Config";
 
             var selectedSqlConfigs = new HashSet<Guid>(config.SqlConfigs.Select(x => x.SqlConfigId));
             ucSqlConfig.Initialize(sqlConfigManager, false, selectedSqlConfigs);
@@ -61,6 +63,18 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             var sqlTemplateConfig = CreateSqlTemplateConfigData(templateId, selectedSqlConfigs);
             var preview = ConfigPreviewHelper.GeneratePreview(sqlTemplateConfig);
             var frm = new frmConfigPreview(preview);
+            frm.ShowDialog();
+            btnSave.Enabled = true;
+            btnGenerate.Enabled = true;
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            if (!ValidateInput(out var templateId, out var selectedSqlConfigs))
+                return;
+
+            var sqlTemplateConfig = CreateSqlTemplateConfigData(templateId, selectedSqlConfigs);
+            var frm = new frmGenerateSqlTemplateConfig(sqlTemplateConfig);
             frm.ShowDialog();
         }
 

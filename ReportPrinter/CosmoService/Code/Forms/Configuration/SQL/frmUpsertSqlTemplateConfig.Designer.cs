@@ -36,12 +36,14 @@
             ucSqlConfig = new UserControls.ucSqlConfig();
             lblSqlConfigError = new System.Windows.Forms.Label();
             btnPreview = new System.Windows.Forms.Button();
+            btnGenerate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)epAddSqlTemplateConfig).BeginInit();
             SuspendLayout();
             // 
             // btnSave
             // 
-            btnSave.Location = new System.Drawing.Point(437, 561);
+            btnSave.Enabled = false;
+            btnSave.Location = new System.Drawing.Point(437, 559);
             btnSave.Name = "btnSave";
             btnSave.Size = new System.Drawing.Size(83, 27);
             btnSave.TabIndex = 5;
@@ -72,9 +74,9 @@
             // ucSqlConfig
             // 
             ucSqlConfig.Location = new System.Drawing.Point(16, 54);
-            ucSqlConfig.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucSqlConfig.Margin = new System.Windows.Forms.Padding(1);
             ucSqlConfig.Name = "ucSqlConfig";
-            ucSqlConfig.Size = new System.Drawing.Size(529, 503);
+            ucSqlConfig.Size = new System.Drawing.Size(529, 500);
             ucSqlConfig.TabIndex = 6;
             // 
             // lblSqlConfigError
@@ -88,7 +90,7 @@
             // 
             // btnPreview
             // 
-            btnPreview.Location = new System.Drawing.Point(343, 561);
+            btnPreview.Location = new System.Drawing.Point(259, 559);
             btnPreview.Name = "btnPreview";
             btnPreview.Size = new System.Drawing.Size(83, 27);
             btnPreview.TabIndex = 11;
@@ -96,21 +98,32 @@
             btnPreview.UseVisualStyleBackColor = true;
             btnPreview.Click += btnPreview_Click;
             // 
+            // btnGenerate
+            // 
+            btnGenerate.Enabled = false;
+            btnGenerate.Location = new System.Drawing.Point(348, 559);
+            btnGenerate.Name = "btnGenerate";
+            btnGenerate.Size = new System.Drawing.Size(83, 27);
+            btnGenerate.TabIndex = 12;
+            btnGenerate.Text = "Generate";
+            btnGenerate.UseVisualStyleBackColor = true;
+            btnGenerate.Click += btnGenerate_Click;
+            // 
             // frmUpsertSqlTemplateConfig
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(548, 607);
+            ClientSize = new System.Drawing.Size(548, 604);
+            Controls.Add(btnGenerate);
             Controls.Add(btnPreview);
             Controls.Add(lblSqlConfigError);
             Controls.Add(ucSqlConfig);
             Controls.Add(btnSave);
             Controls.Add(txtTemplateId);
             Controls.Add(lblTemplateId);
-            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            Margin = new System.Windows.Forms.Padding(2);
             Name = "frmUpsertSqlTemplateConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "Add Sql Template Config";
             ((System.ComponentModel.ISupportInitialize)epAddSqlTemplateConfig).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -125,5 +138,6 @@
         private UserControls.ucSqlConfig ucSqlConfig;
         private System.Windows.Forms.Label lblSqlConfigError;
         private System.Windows.Forms.Button btnPreview;
+        private System.Windows.Forms.Button btnGenerate;
     }
 }

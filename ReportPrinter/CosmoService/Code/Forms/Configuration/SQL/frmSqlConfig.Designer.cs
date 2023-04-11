@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             sqlConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
             groupBox2 = new System.Windows.Forms.GroupBox();
+            dgvSqlTemplateConfigs = new System.Windows.Forms.DataGridView();
+            sqlTemplateConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
             label2 = new System.Windows.Forms.Label();
             btnModifySqlTemplate = new System.Windows.Forms.Button();
             txtTemplateIdPrefix = new System.Windows.Forms.TextBox();
@@ -38,8 +41,6 @@
             btnDeleteSqlTemplate = new System.Windows.Forms.Button();
             btnAddSqlTemplate = new System.Windows.Forms.Button();
             ucSqlConfig = new UserControls.ucSqlConfig();
-            dgvSqlTemplateConfigs = new System.Windows.Forms.DataGridView();
-            sqlTemplateConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
             isSelectedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)sqlConfigDataBindingSource).BeginInit();
@@ -69,6 +70,26 @@
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "SQL Template Config";
+            // 
+            // dgvSqlTemplateConfigs
+            // 
+            dgvSqlTemplateConfigs.AllowUserToAddRows = false;
+            dgvSqlTemplateConfigs.AllowUserToDeleteRows = false;
+            dgvSqlTemplateConfigs.AutoGenerateColumns = false;
+            dgvSqlTemplateConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSqlTemplateConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn });
+            dgvSqlTemplateConfigs.DataSource = sqlTemplateConfigDataBindingSource;
+            dgvSqlTemplateConfigs.Location = new System.Drawing.Point(12, 73);
+            dgvSqlTemplateConfigs.Name = "dgvSqlTemplateConfigs";
+            dgvSqlTemplateConfigs.RowHeadersVisible = false;
+            dgvSqlTemplateConfigs.RowHeadersWidth = 51;
+            dgvSqlTemplateConfigs.RowTemplate.Height = 29;
+            dgvSqlTemplateConfigs.Size = new System.Drawing.Size(327, 410);
+            dgvSqlTemplateConfigs.TabIndex = 14;
+            // 
+            // sqlTemplateConfigDataBindingSource
+            // 
+            sqlTemplateConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
             // 
             // label2
             // 
@@ -136,26 +157,6 @@
             ucSqlConfig.Size = new System.Drawing.Size(524, 554);
             ucSqlConfig.TabIndex = 7;
             // 
-            // dgvSqlTemplateConfigs
-            // 
-            dgvSqlTemplateConfigs.AllowUserToAddRows = false;
-            dgvSqlTemplateConfigs.AllowUserToDeleteRows = false;
-            dgvSqlTemplateConfigs.AutoGenerateColumns = false;
-            dgvSqlTemplateConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSqlTemplateConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn });
-            dgvSqlTemplateConfigs.DataSource = sqlTemplateConfigDataBindingSource;
-            dgvSqlTemplateConfigs.Location = new System.Drawing.Point(12, 73);
-            dgvSqlTemplateConfigs.Name = "dgvSqlTemplateConfigs";
-            dgvSqlTemplateConfigs.RowHeadersVisible = false;
-            dgvSqlTemplateConfigs.RowHeadersWidth = 51;
-            dgvSqlTemplateConfigs.RowTemplate.Height = 29;
-            dgvSqlTemplateConfigs.Size = new System.Drawing.Size(327, 410);
-            dgvSqlTemplateConfigs.TabIndex = 14;
-            // 
-            // sqlTemplateConfigDataBindingSource
-            // 
-            sqlTemplateConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
-            // 
             // isSelectedDataGridViewCheckBoxColumn
             // 
             isSelectedDataGridViewCheckBoxColumn.DataPropertyName = "IsSelected";
@@ -168,6 +169,8 @@
             // 
             idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             idDataGridViewTextBoxColumn.HeaderText = "Template Id";
             idDataGridViewTextBoxColumn.MinimumWidth = 6;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
@@ -202,8 +205,8 @@
         private System.Windows.Forms.Button btnRefreshSqlTemplate;
         private UserControls.ucSqlConfig ucSqlConfig;
         private System.Windows.Forms.DataGridView dgvSqlTemplateConfigs;
+        private System.Windows.Forms.BindingSource sqlTemplateConfigDataBindingSource;
         private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource sqlTemplateConfigDataBindingSource;
     }
 }

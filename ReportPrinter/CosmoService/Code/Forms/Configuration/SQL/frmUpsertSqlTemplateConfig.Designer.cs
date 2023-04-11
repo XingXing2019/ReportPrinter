@@ -41,10 +41,9 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new System.Drawing.Point(607, 844);
-            btnSave.Margin = new System.Windows.Forms.Padding(4);
+            btnSave.Location = new System.Drawing.Point(437, 561);
             btnSave.Name = "btnSave";
-            btnSave.Size = new System.Drawing.Size(125, 40);
+            btnSave.Size = new System.Drawing.Size(83, 27);
             btnSave.TabIndex = 5;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
@@ -52,19 +51,17 @@
             // 
             // txtTemplateId
             // 
-            txtTemplateId.Location = new System.Drawing.Point(194, 27);
-            txtTemplateId.Margin = new System.Windows.Forms.Padding(4);
+            txtTemplateId.Location = new System.Drawing.Point(129, 18);
             txtTemplateId.Name = "txtTemplateId";
-            txtTemplateId.Size = new System.Drawing.Size(323, 35);
+            txtTemplateId.Size = new System.Drawing.Size(217, 27);
             txtTemplateId.TabIndex = 4;
             // 
             // lblTemplateId
             // 
             lblTemplateId.AutoSize = true;
-            lblTemplateId.Location = new System.Drawing.Point(32, 28);
-            lblTemplateId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblTemplateId.Location = new System.Drawing.Point(21, 19);
             lblTemplateId.Name = "lblTemplateId";
-            lblTemplateId.Size = new System.Drawing.Size(126, 30);
+            lblTemplateId.Size = new System.Drawing.Size(91, 20);
             lblTemplateId.TabIndex = 3;
             lblTemplateId.Text = "Template Id:";
             // 
@@ -74,25 +71,26 @@
             // 
             // ucSqlConfig
             // 
-            ucSqlConfig.Location = new System.Drawing.Point(24, 81);
+            ucSqlConfig.Location = new System.Drawing.Point(16, 54);
+            ucSqlConfig.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             ucSqlConfig.Name = "ucSqlConfig";
-            ucSqlConfig.Size = new System.Drawing.Size(717, 754);
+            ucSqlConfig.Size = new System.Drawing.Size(529, 503);
             ucSqlConfig.TabIndex = 6;
             // 
             // lblSqlConfigError
             // 
             lblSqlConfigError.AutoSize = true;
-            lblSqlConfigError.Location = new System.Drawing.Point(152, 85);
+            lblSqlConfigError.Location = new System.Drawing.Point(101, 57);
+            lblSqlConfigError.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             lblSqlConfigError.Name = "lblSqlConfigError";
-            lblSqlConfigError.Size = new System.Drawing.Size(0, 30);
+            lblSqlConfigError.Size = new System.Drawing.Size(0, 20);
             lblSqlConfigError.TabIndex = 7;
             // 
             // btnPreview
             // 
-            btnPreview.Location = new System.Drawing.Point(466, 844);
-            btnPreview.Margin = new System.Windows.Forms.Padding(4);
+            btnPreview.Location = new System.Drawing.Point(343, 561);
             btnPreview.Name = "btnPreview";
-            btnPreview.Size = new System.Drawing.Size(124, 40);
+            btnPreview.Size = new System.Drawing.Size(83, 27);
             btnPreview.TabIndex = 11;
             btnPreview.Text = "Preview";
             btnPreview.UseVisualStyleBackColor = true;
@@ -100,15 +98,16 @@
             // 
             // frmUpsertSqlTemplateConfig
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(764, 911);
+            ClientSize = new System.Drawing.Size(548, 607);
             Controls.Add(btnPreview);
             Controls.Add(lblSqlConfigError);
             Controls.Add(ucSqlConfig);
             Controls.Add(btnSave);
             Controls.Add(txtTemplateId);
             Controls.Add(lblTemplateId);
+            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             Name = "frmUpsertSqlTemplateConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "Add Sql Template Config";

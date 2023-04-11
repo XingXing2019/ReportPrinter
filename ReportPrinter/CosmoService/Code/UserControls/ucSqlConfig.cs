@@ -32,7 +32,7 @@ namespace CosmoService.Code.UserControls
             {
                 gbSqlConfig.Height = 742;
             }
-            
+
             Task.Run(() => RefreshSqlConfigDataGridView(selectedSqlConfigs)).Wait();
         }
 

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             gbSqlConfig = new System.Windows.Forms.GroupBox();
             label1 = new System.Windows.Forms.Label();
             txtDatabaseIdPrefix = new System.Windows.Forms.TextBox();
@@ -59,9 +59,11 @@
             gbSqlConfig.Controls.Add(btnAddSqlConfig);
             gbSqlConfig.Controls.Add(btnRefreshSqlConfig);
             gbSqlConfig.Controls.Add(dgvSqlConfigs);
-            gbSqlConfig.Location = new System.Drawing.Point(3, 3);
+            gbSqlConfig.Location = new System.Drawing.Point(2, 2);
+            gbSqlConfig.Margin = new System.Windows.Forms.Padding(2);
             gbSqlConfig.Name = "gbSqlConfig";
-            gbSqlConfig.Size = new System.Drawing.Size(704, 812);
+            gbSqlConfig.Padding = new System.Windows.Forms.Padding(2);
+            gbSqlConfig.Size = new System.Drawing.Size(514, 541);
             gbSqlConfig.TabIndex = 6;
             gbSqlConfig.TabStop = false;
             gbSqlConfig.Text = "SQL Config";
@@ -69,25 +71,26 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(23, 52);
+            label1.Location = new System.Drawing.Point(15, 35);
+            label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(129, 30);
+            label1.Size = new System.Drawing.Size(92, 20);
             label1.TabIndex = 10;
             label1.Text = "Database Id:";
             // 
             // txtDatabaseIdPrefix
             // 
-            txtDatabaseIdPrefix.Location = new System.Drawing.Point(166, 52);
+            txtDatabaseIdPrefix.Location = new System.Drawing.Point(111, 35);
+            txtDatabaseIdPrefix.Margin = new System.Windows.Forms.Padding(2);
             txtDatabaseIdPrefix.Name = "txtDatabaseIdPrefix";
-            txtDatabaseIdPrefix.Size = new System.Drawing.Size(224, 35);
+            txtDatabaseIdPrefix.Size = new System.Drawing.Size(151, 27);
             txtDatabaseIdPrefix.TabIndex = 9;
             // 
             // btnModifySqlConfig
             // 
-            btnModifySqlConfig.Location = new System.Drawing.Point(137, 750);
-            btnModifySqlConfig.Margin = new System.Windows.Forms.Padding(4);
+            btnModifySqlConfig.Location = new System.Drawing.Point(91, 500);
             btnModifySqlConfig.Name = "btnModifySqlConfig";
-            btnModifySqlConfig.Size = new System.Drawing.Size(106, 40);
+            btnModifySqlConfig.Size = new System.Drawing.Size(71, 27);
             btnModifySqlConfig.TabIndex = 8;
             btnModifySqlConfig.Text = "Modify";
             btnModifySqlConfig.UseVisualStyleBackColor = true;
@@ -95,10 +98,9 @@
             // 
             // btnDeleteSqlConfig
             // 
-            btnDeleteSqlConfig.Location = new System.Drawing.Point(251, 750);
-            btnDeleteSqlConfig.Margin = new System.Windows.Forms.Padding(4);
+            btnDeleteSqlConfig.Location = new System.Drawing.Point(167, 500);
             btnDeleteSqlConfig.Name = "btnDeleteSqlConfig";
-            btnDeleteSqlConfig.Size = new System.Drawing.Size(106, 40);
+            btnDeleteSqlConfig.Size = new System.Drawing.Size(71, 27);
             btnDeleteSqlConfig.TabIndex = 7;
             btnDeleteSqlConfig.Text = "Delete";
             btnDeleteSqlConfig.UseVisualStyleBackColor = true;
@@ -106,10 +108,9 @@
             // 
             // btnAddSqlConfig
             // 
-            btnAddSqlConfig.Location = new System.Drawing.Point(23, 750);
-            btnAddSqlConfig.Margin = new System.Windows.Forms.Padding(4);
+            btnAddSqlConfig.Location = new System.Drawing.Point(15, 500);
             btnAddSqlConfig.Name = "btnAddSqlConfig";
-            btnAddSqlConfig.Size = new System.Drawing.Size(106, 40);
+            btnAddSqlConfig.Size = new System.Drawing.Size(71, 27);
             btnAddSqlConfig.TabIndex = 6;
             btnAddSqlConfig.Text = "Add";
             btnAddSqlConfig.UseVisualStyleBackColor = true;
@@ -117,10 +118,9 @@
             // 
             // btnRefreshSqlConfig
             // 
-            btnRefreshSqlConfig.Location = new System.Drawing.Point(422, 52);
-            btnRefreshSqlConfig.Margin = new System.Windows.Forms.Padding(4);
+            btnRefreshSqlConfig.Location = new System.Drawing.Point(281, 35);
             btnRefreshSqlConfig.Name = "btnRefreshSqlConfig";
-            btnRefreshSqlConfig.Size = new System.Drawing.Size(128, 40);
+            btnRefreshSqlConfig.Size = new System.Drawing.Size(85, 27);
             btnRefreshSqlConfig.TabIndex = 5;
             btnRefreshSqlConfig.Text = "Refresh";
             btnRefreshSqlConfig.UseVisualStyleBackColor = true;
@@ -135,13 +135,12 @@
             dgvSqlConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvSqlConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn, databaseIdDataGridViewTextBoxColumn, Query });
             dgvSqlConfigs.DataSource = sqlConfigDataBindingSource;
-            dgvSqlConfigs.Location = new System.Drawing.Point(23, 108);
-            dgvSqlConfigs.Margin = new System.Windows.Forms.Padding(4);
+            dgvSqlConfigs.Location = new System.Drawing.Point(15, 72);
             dgvSqlConfigs.Name = "dgvSqlConfigs";
             dgvSqlConfigs.RowHeadersVisible = false;
             dgvSqlConfigs.RowHeadersWidth = 51;
             dgvSqlConfigs.RowTemplate.Height = 29;
-            dgvSqlConfigs.Size = new System.Drawing.Size(660, 617);
+            dgvSqlConfigs.Size = new System.Drawing.Size(486, 411);
             dgvSqlConfigs.TabIndex = 1;
             dgvSqlConfigs.CellContentClick += dgvSqlConfigs_CellContentClick;
             // 
@@ -151,39 +150,39 @@
             isSelectedDataGridViewCheckBoxColumn.HeaderText = " ";
             isSelectedDataGridViewCheckBoxColumn.MinimumWidth = 9;
             isSelectedDataGridViewCheckBoxColumn.Name = "isSelectedDataGridViewCheckBoxColumn";
-            isSelectedDataGridViewCheckBoxColumn.Width = 60;
+            isSelectedDataGridViewCheckBoxColumn.Width = 40;
             // 
             // idDataGridViewTextBoxColumn
             // 
             idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             idDataGridViewTextBoxColumn.HeaderText = "Id";
             idDataGridViewTextBoxColumn.MinimumWidth = 9;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.Width = 72;
+            idDataGridViewTextBoxColumn.Width = 51;
             // 
             // databaseIdDataGridViewTextBoxColumn
             // 
             databaseIdDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             databaseIdDataGridViewTextBoxColumn.DataPropertyName = "DatabaseId";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            databaseIdDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            databaseIdDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             databaseIdDataGridViewTextBoxColumn.HeaderText = "Database Id";
             databaseIdDataGridViewTextBoxColumn.MinimumWidth = 9;
             databaseIdDataGridViewTextBoxColumn.Name = "databaseIdDataGridViewTextBoxColumn";
-            databaseIdDataGridViewTextBoxColumn.Width = 165;
+            databaseIdDataGridViewTextBoxColumn.Width = 118;
             // 
             // Query
             // 
             Query.ActiveLinkColor = System.Drawing.Color.White;
             Query.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            Query.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            Query.DefaultCellStyle = dataGridViewCellStyle3;
             Query.HeaderText = "Query";
             Query.MinimumWidth = 9;
             Query.Name = "Query";
@@ -198,11 +197,12 @@
             // 
             // ucSqlConfig
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbSqlConfig);
+            Margin = new System.Windows.Forms.Padding(2);
             Name = "ucSqlConfig";
-            Size = new System.Drawing.Size(712, 817);
+            Size = new System.Drawing.Size(520, 545);
             gbSqlConfig.ResumeLayout(false);
             gbSqlConfig.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSqlConfigs).EndInit();

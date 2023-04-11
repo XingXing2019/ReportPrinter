@@ -76,14 +76,14 @@ namespace CosmoService.Code.Forms.Configuration.SQL
         {
             if (!ValidateInput(out var id, out var databaseId, out var query))
                 return;
-            
+
             var sqlConfig = CreateSqlConfig(id, databaseId, query);
 
             if (_isEdit)
                 await _manager.PutSqlConfig(sqlConfig);
             else
                 await _manager.Post(sqlConfig);
-            
+
             Close();
         }
 
@@ -101,7 +101,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             var sqlVariableConfigs = config == null ? new List<SqlVariableConfigData>() : config.SqlVariableConfigs.Select(x => new SqlVariableConfigData { Name = x.Name, }).ToList();
             _sqlVariableConfigs = new BindingList<SqlVariableConfigData>(sqlVariableConfigs);
             dgvSqlVariables.DataSource = _sqlVariableConfigs;
-            
+
             btnSave.Enabled = false;
             ToggleDeleteButton();
         }
@@ -113,6 +113,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 
         private bool ValidateInput(out string id, out string databaseId, out string query)
         {
+            epAddSqlConfig.Clear();
             var isValidInput = true;
 
             id = txtId.Text.Trim();
@@ -135,6 +136,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
                 epAddSqlConfig.SetError(lblQuery, "Query is required");
                 isValidInput = false;
             }
+            query = $"\r\n{query}\r\n";
 
             return isValidInput;
         }
@@ -167,7 +169,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             {
                 Id = id,
                 DatabaseId = databaseId,
-                Query = $"\r\n{query}\r\n"
+                Query = query
             };
 
             foreach (var config in _sqlVariableConfigs)

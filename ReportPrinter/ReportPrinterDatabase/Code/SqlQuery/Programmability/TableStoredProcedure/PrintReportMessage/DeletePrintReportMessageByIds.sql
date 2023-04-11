@@ -21,9 +21,12 @@ BEGIN
 			MessageId UNIQUEIDENTIFIER
 		);
 		
-		INSERT INTO @temp
-		SELECT value FROM STRING_SPLIT(@messageIds, ','); 
-
+		IF @messageIds <> ''
+		BEGIN
+			INSERT INTO @temp
+			SELECT value FROM STRING_SPLIT(@messageIds, ',')
+		END
+		
 		DELETE FROM PrintReportMessage
 		WHERE PRM_MessageId IN (
 			SELECT * FROM @temp

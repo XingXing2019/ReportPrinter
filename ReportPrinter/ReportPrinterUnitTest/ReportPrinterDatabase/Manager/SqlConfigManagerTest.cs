@@ -127,10 +127,71 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
 
-        #region Helper
+        [Test]
+        [TestCase(typeof(SqlConfigSPManager))]
+        [TestCase(typeof(SqlConfigEFCoreManager))]
+        public async Task TestSqlConfigManager_GetAllByDatabaseIdPrefix(Type managerType)
+        {
+            try
+            {
+                var mgr = (ISqlConfigManager)Activator.CreateInstance(managerType);
+                var expectedTestDbSqlConfigs = new List<SqlConfig>();
+                var expectedRealDbSqlConfigs = new List<SqlConfig>();
 
-        
+                for (int i = 0; i < 10; i++)
+                {
+                    var sqlConfigId = Guid.NewGuid();
+                    var id = $"Test Sql Config {i + 1}";
+                    var databaseId = $"Test DB {i + 1}";
+                    var query = $"Test Query {i + 1}";
+                    var sqlVariableNames = new List<string> { $"Variable {i + 1}" };
 
-        #endregion
+                    var expectedSqlConfig = CreateSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
+                    await mgr.Post(expectedSqlConfig);
+                    expectedTestDbSqlConfigs.Add(expectedSqlConfig);
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    var sqlConfigId = Guid.NewGuid();
+                    var id = $"Test Sql Config {i + 1}";
+                    var databaseId = $"Real DB {i + 1}";
+                    var query = $"Test Query {i + 1}";
+                    var sqlVariableNames = new List<string> { $"Variable {i + 1}" };
+
+                    var expectedSqlConfig = CreateSqlConfig(sqlConfigId, id, databaseId, query, sqlVariableNames);
+                    await mgr.Post(expectedSqlConfig);
+                    expectedRealDbSqlConfigs.Add(expectedSqlConfig);
+                }
+
+                var databaseIdPrefix = "Test DB";
+                var actualSqlConfigs = await mgr.GetAllByDatabaseIdPrefix(databaseIdPrefix);
+                Assert.AreEqual(10, actualSqlConfigs.Count);
+
+                foreach (var expectedSqlConfig in expectedTestDbSqlConfigs)
+                {
+                    var actualSqlConfig = actualSqlConfigs.Single(x => x.SqlConfigId == expectedSqlConfig.SqlConfigId);
+                    AssertHelper.AssertSqlConfig(expectedSqlConfig, actualSqlConfig);
+                }
+
+                databaseIdPrefix = "Real DB";
+                actualSqlConfigs = await mgr.GetAllByDatabaseIdPrefix(databaseIdPrefix);
+                Assert.AreEqual(5, actualSqlConfigs.Count);
+
+                foreach (var expectedSqlConfig in expectedRealDbSqlConfigs)
+                {
+                    var actualSqlConfig = actualSqlConfigs.Single(x => x.SqlConfigId == expectedSqlConfig.SqlConfigId);
+                    AssertHelper.AssertSqlConfig(expectedSqlConfig, actualSqlConfig);
+                }
+
+                databaseIdPrefix = "Invalid DB";
+                actualSqlConfigs = await mgr.GetAllByDatabaseIdPrefix(databaseIdPrefix);
+                Assert.AreEqual(0, actualSqlConfigs.Count);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

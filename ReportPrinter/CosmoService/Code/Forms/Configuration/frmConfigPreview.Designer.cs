@@ -37,7 +37,7 @@
             btnPreview.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btnPreview.DialogResult = System.Windows.Forms.DialogResult.OK;
             btnPreview.Location = new System.Drawing.Point(1268, 980);
-            btnPreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            btnPreview.Margin = new System.Windows.Forms.Padding(4);
             btnPreview.Name = "btnPreview";
             btnPreview.Size = new System.Drawing.Size(124, 40);
             btnPreview.TabIndex = 11;
@@ -48,10 +48,11 @@
             // 
             txtPreview.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             txtPreview.Location = new System.Drawing.Point(36, 38);
-            txtPreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            txtPreview.Margin = new System.Windows.Forms.Padding(4);
             txtPreview.Multiline = true;
             txtPreview.Name = "txtPreview";
             txtPreview.ReadOnly = true;
+            txtPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             txtPreview.Size = new System.Drawing.Size(1354, 920);
             txtPreview.TabIndex = 12;
             // 
@@ -62,7 +63,7 @@
             ClientSize = new System.Drawing.Size(1426, 1046);
             Controls.Add(txtPreview);
             Controls.Add(btnPreview);
-            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            Margin = new System.Windows.Forms.Padding(4);
             Name = "frmConfigPreview";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             ResumeLayout(false);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.Helper
@@ -28,20 +29,33 @@ namespace ReportPrinterUnitTest.Helper
             }
         }
 
-        public void AssertSqlConfig(SqlConfig expectedSqlConfig, SqlConfig actualSqlConfig)
+        public void AssertSqlConfig(SqlConfig expected, SqlConfig actual)
         {
-            Assert.AreEqual(expectedSqlConfig.Id, actualSqlConfig.Id);
-            Assert.AreEqual(expectedSqlConfig.DatabaseId, actualSqlConfig.DatabaseId);
-            Assert.AreEqual(expectedSqlConfig.Query, actualSqlConfig.Query);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.DatabaseId, actual.DatabaseId);
+            Assert.AreEqual(expected.Query, actual.Query);
 
-            var expectedSqlVariableConfigs = expectedSqlConfig.SqlVariableConfigs.ToList();
-            var actualSqlVariableConfigs = actualSqlConfig.SqlVariableConfigs.ToList();
+            var expectedSqlVariableConfigs = expected.SqlVariableConfigs.ToList();
+            var actualSqlVariableConfigs = actual.SqlVariableConfigs.ToList();
 
             Assert.AreEqual(expectedSqlVariableConfigs.Count, actualSqlVariableConfigs.Count);
             foreach (var expectedSqlVariableConfig in expectedSqlVariableConfigs)
             {
                 var actualSqlVariableConfig = actualSqlVariableConfigs.First(x => x.Name == expectedSqlVariableConfig.Name);
                 Assert.AreEqual(expectedSqlVariableConfig.SqlConfigId, actualSqlVariableConfig.SqlConfigId);
+            }
+        }
+        
+        public void AssertSqlTemplateConfig(SqlTemplateConfigModel expected, SqlTemplateConfigModel actual)
+        {
+            Assert.AreEqual(expected.Id, actual.Id);
+            var expectedSqlConfigs = expected.SqlConfigs.OrderBy(x => x.SqlConfigId).ToList();
+            var actualSqlConfigs = actual.SqlConfigs.OrderBy(x => x.SqlConfigId).ToList();
+            for (int i = 0; i < expectedSqlConfigs.Count; i++)
+            {
+                var expectedSqlConfig = expectedSqlConfigs[i];
+                var actualSqlConfig = actualSqlConfigs[i];
+                AssertSqlConfig(expectedSqlConfig, actualSqlConfig);
             }
         }
 

@@ -30,167 +30,183 @@
         {
             components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            dgvSqlConfigs = new System.Windows.Forms.DataGridView();
             sqlConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
-            btnRefresh = new System.Windows.Forms.Button();
-            btnAdd = new System.Windows.Forms.Button();
-            btnDelete = new System.Windows.Forms.Button();
-            btnModify = new System.Windows.Forms.Button();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            dgvSqlTemplateConfigs = new System.Windows.Forms.DataGridView();
+            sqlTemplateConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
+            label2 = new System.Windows.Forms.Label();
+            btnModifySqlTemplate = new System.Windows.Forms.Button();
+            txtTemplateIdPrefix = new System.Windows.Forms.TextBox();
+            btnRefreshSqlTemplate = new System.Windows.Forms.Button();
+            btnDeleteSqlTemplate = new System.Windows.Forms.Button();
+            btnAddSqlTemplate = new System.Windows.Forms.Button();
+            ucSqlConfig = new UserControls.ucSqlConfig();
             isSelectedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            databaseIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Query = new System.Windows.Forms.DataGridViewLinkColumn();
-            ((System.ComponentModel.ISupportInitialize)dgvSqlConfigs).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sqlConfigDataBindingSource).BeginInit();
+            groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvSqlTemplateConfigs).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource).BeginInit();
             SuspendLayout();
-            // 
-            // dgvSqlConfigs
-            // 
-            dgvSqlConfigs.AllowUserToAddRows = false;
-            dgvSqlConfigs.AllowUserToDeleteRows = false;
-            dgvSqlConfigs.AutoGenerateColumns = false;
-            dgvSqlConfigs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dgvSqlConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSqlConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn, databaseIdDataGridViewTextBoxColumn, Query });
-            dgvSqlConfigs.DataSource = sqlConfigDataBindingSource;
-            dgvSqlConfigs.Location = new System.Drawing.Point(33, 93);
-            dgvSqlConfigs.Margin = new System.Windows.Forms.Padding(4);
-            dgvSqlConfigs.Name = "dgvSqlConfigs";
-            dgvSqlConfigs.RowHeadersVisible = false;
-            dgvSqlConfigs.RowHeadersWidth = 51;
-            dgvSqlConfigs.RowTemplate.Height = 29;
-            dgvSqlConfigs.Size = new System.Drawing.Size(648, 629);
-            dgvSqlConfigs.TabIndex = 0;
-            dgvSqlConfigs.CellContentClick += dgvSqlConfigs_CellContentClick;
             // 
             // sqlConfigDataBindingSource
             // 
             sqlConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlConfigData);
             // 
-            // btnRefresh
+            // groupBox2
             // 
-            btnRefresh.Location = new System.Drawing.Point(33, 33);
-            btnRefresh.Margin = new System.Windows.Forms.Padding(4);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new System.Drawing.Size(128, 40);
-            btnRefresh.TabIndex = 1;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.UseVisualStyleBackColor = true;
-            btnRefresh.Click += btnRefresh_Click;
+            groupBox2.Controls.Add(dgvSqlTemplateConfigs);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(btnModifySqlTemplate);
+            groupBox2.Controls.Add(txtTemplateIdPrefix);
+            groupBox2.Controls.Add(btnRefreshSqlTemplate);
+            groupBox2.Controls.Add(btnDeleteSqlTemplate);
+            groupBox2.Controls.Add(btnAddSqlTemplate);
+            groupBox2.Location = new System.Drawing.Point(531, 14);
+            groupBox2.Margin = new System.Windows.Forms.Padding(2);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            groupBox2.Size = new System.Drawing.Size(350, 541);
+            groupBox2.TabIndex = 6;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "SQL Template Config";
             // 
-            // btnAdd
+            // dgvSqlTemplateConfigs
             // 
-            btnAdd.Location = new System.Drawing.Point(184, 33);
-            btnAdd.Margin = new System.Windows.Forms.Padding(4);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new System.Drawing.Size(130, 40);
-            btnAdd.TabIndex = 2;
-            btnAdd.Text = "Add";
-            btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += btnAdd_Click;
+            dgvSqlTemplateConfigs.AllowUserToAddRows = false;
+            dgvSqlTemplateConfigs.AllowUserToDeleteRows = false;
+            dgvSqlTemplateConfigs.AutoGenerateColumns = false;
+            dgvSqlTemplateConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSqlTemplateConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn });
+            dgvSqlTemplateConfigs.DataSource = sqlTemplateConfigDataBindingSource;
+            dgvSqlTemplateConfigs.Location = new System.Drawing.Point(12, 73);
+            dgvSqlTemplateConfigs.Name = "dgvSqlTemplateConfigs";
+            dgvSqlTemplateConfigs.RowHeadersVisible = false;
+            dgvSqlTemplateConfigs.RowHeadersWidth = 51;
+            dgvSqlTemplateConfigs.RowTemplate.Height = 29;
+            dgvSqlTemplateConfigs.Size = new System.Drawing.Size(327, 410);
+            dgvSqlTemplateConfigs.TabIndex = 14;
             // 
-            // btnDelete
+            // sqlTemplateConfigDataBindingSource
             // 
-            btnDelete.Location = new System.Drawing.Point(490, 33);
-            btnDelete.Margin = new System.Windows.Forms.Padding(4);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new System.Drawing.Size(130, 40);
-            btnDelete.TabIndex = 3;
-            btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click;
+            sqlTemplateConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
             // 
-            // btnModify
+            // label2
             // 
-            btnModify.Location = new System.Drawing.Point(338, 33);
-            btnModify.Margin = new System.Windows.Forms.Padding(4);
-            btnModify.Name = "btnModify";
-            btnModify.Size = new System.Drawing.Size(130, 40);
-            btnModify.TabIndex = 4;
-            btnModify.Text = "Modify";
-            btnModify.UseVisualStyleBackColor = true;
-            btnModify.Click += btnModify_Click;
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(12, 41);
+            label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(91, 20);
+            label2.TabIndex = 13;
+            label2.Text = "Template Id:";
+            // 
+            // btnModifySqlTemplate
+            // 
+            btnModifySqlTemplate.Location = new System.Drawing.Point(90, 500);
+            btnModifySqlTemplate.Name = "btnModifySqlTemplate";
+            btnModifySqlTemplate.Size = new System.Drawing.Size(71, 27);
+            btnModifySqlTemplate.TabIndex = 13;
+            btnModifySqlTemplate.Text = "Modify";
+            btnModifySqlTemplate.UseVisualStyleBackColor = true;
+            btnModifySqlTemplate.Click += btnModifySqlTemplate_Click;
+            // 
+            // txtTemplateIdPrefix
+            // 
+            txtTemplateIdPrefix.Location = new System.Drawing.Point(107, 41);
+            txtTemplateIdPrefix.Margin = new System.Windows.Forms.Padding(2);
+            txtTemplateIdPrefix.Name = "txtTemplateIdPrefix";
+            txtTemplateIdPrefix.Size = new System.Drawing.Size(142, 27);
+            txtTemplateIdPrefix.TabIndex = 12;
+            // 
+            // btnRefreshSqlTemplate
+            // 
+            btnRefreshSqlTemplate.Location = new System.Drawing.Point(254, 41);
+            btnRefreshSqlTemplate.Name = "btnRefreshSqlTemplate";
+            btnRefreshSqlTemplate.Size = new System.Drawing.Size(85, 27);
+            btnRefreshSqlTemplate.TabIndex = 11;
+            btnRefreshSqlTemplate.Text = "Refresh";
+            btnRefreshSqlTemplate.UseVisualStyleBackColor = true;
+            btnRefreshSqlTemplate.Click += btnRefreshSqlTemplate_Click;
+            // 
+            // btnDeleteSqlTemplate
+            // 
+            btnDeleteSqlTemplate.Location = new System.Drawing.Point(166, 500);
+            btnDeleteSqlTemplate.Name = "btnDeleteSqlTemplate";
+            btnDeleteSqlTemplate.Size = new System.Drawing.Size(71, 27);
+            btnDeleteSqlTemplate.TabIndex = 12;
+            btnDeleteSqlTemplate.Text = "Delete";
+            btnDeleteSqlTemplate.UseVisualStyleBackColor = true;
+            btnDeleteSqlTemplate.Click += btnDeleteSqlTemplate_Click;
+            // 
+            // btnAddSqlTemplate
+            // 
+            btnAddSqlTemplate.Location = new System.Drawing.Point(14, 500);
+            btnAddSqlTemplate.Name = "btnAddSqlTemplate";
+            btnAddSqlTemplate.Size = new System.Drawing.Size(71, 27);
+            btnAddSqlTemplate.TabIndex = 11;
+            btnAddSqlTemplate.Text = "Add";
+            btnAddSqlTemplate.UseVisualStyleBackColor = true;
+            btnAddSqlTemplate.Click += btnAddSqlTemplate_Click;
+            // 
+            // ucSqlConfig
+            // 
+            ucSqlConfig.Location = new System.Drawing.Point(4, 12);
+            ucSqlConfig.Margin = new System.Windows.Forms.Padding(1);
+            ucSqlConfig.Name = "ucSqlConfig";
+            ucSqlConfig.Size = new System.Drawing.Size(524, 554);
+            ucSqlConfig.TabIndex = 7;
             // 
             // isSelectedDataGridViewCheckBoxColumn
             // 
             isSelectedDataGridViewCheckBoxColumn.DataPropertyName = "IsSelected";
             isSelectedDataGridViewCheckBoxColumn.HeaderText = " ";
-            isSelectedDataGridViewCheckBoxColumn.MinimumWidth = 9;
+            isSelectedDataGridViewCheckBoxColumn.MinimumWidth = 6;
             isSelectedDataGridViewCheckBoxColumn.Name = "isSelectedDataGridViewCheckBoxColumn";
-            isSelectedDataGridViewCheckBoxColumn.Width = 60;
+            isSelectedDataGridViewCheckBoxColumn.Width = 40;
             // 
             // idDataGridViewTextBoxColumn
             // 
-            idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
             idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            idDataGridViewTextBoxColumn.HeaderText = "Id";
-            idDataGridViewTextBoxColumn.MinimumWidth = 9;
+            idDataGridViewTextBoxColumn.HeaderText = "Template Id";
+            idDataGridViewTextBoxColumn.MinimumWidth = 6;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.Width = 72;
-            // 
-            // databaseIdDataGridViewTextBoxColumn
-            // 
-            databaseIdDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            databaseIdDataGridViewTextBoxColumn.DataPropertyName = "DatabaseId";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            databaseIdDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            databaseIdDataGridViewTextBoxColumn.HeaderText = "Database Id";
-            databaseIdDataGridViewTextBoxColumn.MinimumWidth = 9;
-            databaseIdDataGridViewTextBoxColumn.Name = "databaseIdDataGridViewTextBoxColumn";
-            databaseIdDataGridViewTextBoxColumn.Width = 165;
-            // 
-            // Query
-            // 
-            Query.ActiveLinkColor = System.Drawing.Color.White;
-            Query.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            Query.DefaultCellStyle = dataGridViewCellStyle3;
-            Query.HeaderText = "Query";
-            Query.MinimumWidth = 9;
-            Query.Name = "Query";
-            Query.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            Query.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            Query.Text = "View";
-            Query.UseColumnTextForLinkValue = true;
             // 
             // frmSqlConfig
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(710, 743);
-            Controls.Add(btnModify);
-            Controls.Add(btnDelete);
-            Controls.Add(btnAdd);
-            Controls.Add(btnRefresh);
-            Controls.Add(dgvSqlConfigs);
+            ClientSize = new System.Drawing.Size(890, 573);
+            Controls.Add(ucSqlConfig);
+            Controls.Add(groupBox2);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            Margin = new System.Windows.Forms.Padding(4);
             Name = "frmSqlConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "SQL Config";
-            ((System.ComponentModel.ISupportInitialize)dgvSqlConfigs).EndInit();
+            Text = "Config SQL Template";
             ((System.ComponentModel.ISupportInitialize)sqlConfigDataBindingSource).EndInit();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvSqlTemplateConfigs).EndInit();
+            ((System.ComponentModel.ISupportInitialize)sqlTemplateConfigDataBindingSource).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dgvSqlConfigs;
-        private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnModify;
         private System.Windows.Forms.BindingSource sqlConfigDataBindingSource;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnModifySqlTemplate;
+        private System.Windows.Forms.Button btnDeleteSqlTemplate;
+        private System.Windows.Forms.Button btnAddSqlTemplate;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtTemplateIdPrefix;
+        private System.Windows.Forms.Button btnRefreshSqlTemplate;
+        private UserControls.ucSqlConfig ucSqlConfig;
+        private System.Windows.Forms.DataGridView dgvSqlTemplateConfigs;
+        private System.Windows.Forms.BindingSource sqlTemplateConfigDataBindingSource;
         private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn databaseIdDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewLinkColumn Query;
     }
 }

@@ -9,6 +9,7 @@ namespace ReportPrinterDatabase.Code.Entity
     {
         public SqlConfig()
         {
+            SqlTemplateConfigSqlConfigs = new HashSet<SqlTemplateConfigSqlConfig>();
             SqlVariableConfigs = new HashSet<SqlVariableConfig>();
         }
 
@@ -17,6 +18,7 @@ namespace ReportPrinterDatabase.Code.Entity
         public string DatabaseId { get; set; }
         public string Query { get; set; }
 
+        public virtual ICollection<SqlTemplateConfigSqlConfig> SqlTemplateConfigSqlConfigs { get; set; }
         public virtual ICollection<SqlVariableConfig> SqlVariableConfigs { get; set; }
     }
 }

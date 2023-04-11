@@ -118,8 +118,15 @@ namespace ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage
 
             try
             {
-                var rows = await _executor.ExecuteNonQueryAsync(new DeletePrintReportMessageByIds(string.Join(',', messageIds)));
-                Logger.Debug($"Delete messages, {rows} row affected", procName);
+                if (messageIds == null || !messageIds.Any())
+                {
+                    Logger.Debug("No message to delete", procName);
+                }
+                else
+                {
+                    var rows = await _executor.ExecuteNonQueryAsync(new DeletePrintReportMessageByIds(string.Join(',', messageIds)));
+                    Logger.Debug($"Delete messages, {rows} row affected", procName);
+                }
             }
             catch (Exception ex)
             {

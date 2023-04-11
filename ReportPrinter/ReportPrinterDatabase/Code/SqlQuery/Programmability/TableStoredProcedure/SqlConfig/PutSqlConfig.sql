@@ -6,8 +6,8 @@ GO
 
 CREATE PROCEDURE [dbo].[PutSqlConfig]
 	@sqlConfigId UNIQUEIDENTIFIER,
-	@id VARCHAR(100),
-	@databaseId VARCHAR(100),
+	@id VARCHAR(50),
+	@databaseId VARCHAR(20),
 	@query NVARCHAR(MAX),
 	@sqlVariableNames NVARCHAR(MAX)
 AS
@@ -42,8 +42,11 @@ BEGIN
 				SqlVariableName NVARCHAR(100)
 			);
 			
-			INSERT INTO @temp
-			SELECT value FROM STRING_SPLIT(@sqlVariableNames, ','); 
+			IF @sqlVariableNames <> ''
+			BEGIN
+				INSERT INTO @temp
+				SELECT value FROM STRING_SPLIT(@sqlVariableNames, ',')
+			END
 
 			DECLARE nameCursor CURSOR
 			FOR SELECT SqlVariableName FROM @temp

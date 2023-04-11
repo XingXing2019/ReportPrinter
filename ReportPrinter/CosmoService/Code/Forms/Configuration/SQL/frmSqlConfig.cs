@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
+using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager;
+using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Winform.Configuration;
 
@@ -15,86 +15,102 @@ namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmSqlConfig : Form
     {
-        private readonly ISqlConfigManager _manager;
+        private readonly ISqlConfigManager _sqlConfigManager;
+        private readonly ISqlTemplateConfigManager _sqlTemplateConfigManager;
 
         public frmSqlConfig()
         {
             InitializeComponent();
-            _manager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.DatabaseManagerType);
-            Task.Run(RefreshDataGridView).Wait();
+
+            _sqlConfigManager = (ISqlConfigManager)ManagerFactory.CreateManager<SqlConfig>(typeof(ISqlConfigManager), AppConfig.Instance.DatabaseManagerType);
+            ucSqlConfig.Initialize(_sqlConfigManager, true, new HashSet<Guid>());
+
+            _sqlTemplateConfigManager = (ISqlTemplateConfigManager)ManagerFactory.CreateManager<SqlTemplateConfigModel>(typeof(ISqlTemplateConfigManager), AppConfig.Instance.DatabaseManagerType);
+
+            Task.Run(RefreshSqlTemplateConfigDataGridView).Wait();
         }
 
-        private async void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnRefreshSqlTemplate_Click(object sender, EventArgs e)
         {
-            await RefreshDataGridView();
+            await RefreshSqlTemplateConfigDataGridView();
         }
 
-        private async void btnAdd_Click(object sender, EventArgs e)
+        private async void btnAddSqlTemplate_Click(object sender, EventArgs e)
         {
-            var frm = new frmUpsertSqlConfig(_manager);
+            var frm = new frmUpsertSqlTemplateConfig(_sqlTemplateConfigManager, _sqlConfigManager);
             frm.ShowDialog();
-            await RefreshDataGridView();
+            await RefreshSqlTemplateConfigDataGridView();
         }
 
-        private async void btnModify_Click(object sender, EventArgs e)
+        private async void btnModifySqlTemplate_Click(object sender, EventArgs e)
         {
-            if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) != 1)
+            if (!(dgvSqlTemplateConfigs.DataSource is List<SqlTemplateConfigData> configs) || configs.Count(x => x.IsSelected) != 1)
             {
-                MessageBox.Show("Please select one config to modify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select at least one sql template config to modify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             var config = configs.Single(x => x.IsSelected);
-            var frm = new frmUpsertSqlConfig(_manager, config);
+            var sqlTemplateConfig = new SqlTemplateConfigModel
+            {
+                SqlTemplateConfigId = config.SqlTemplateConfigId,
+                Id = config.Id,
+                SqlConfigs = config.SqlConfigs.Select(x => new SqlConfig
+                {
+                    SqlConfigId = x.SqlConfigId,
+                    Id = x.Id,
+                    DatabaseId = x.DatabaseId,
+                    Query = x.Query
+                }).ToList()
+            };
+
+            var frm = new frmUpsertSqlTemplateConfig(_sqlTemplateConfigManager, _sqlConfigManager, sqlTemplateConfig);
             frm.ShowDialog();
-            await RefreshDataGridView();
+            await RefreshSqlTemplateConfigDataGridView();
         }
 
-        private async void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDeleteSqlTemplate_Click(object sender, EventArgs e)
         {
-            if (!(dgvSqlConfigs.DataSource is List<SqlConfigData> configs) || configs.Count(x => x.IsSelected) == 0)
+            if (!(dgvSqlTemplateConfigs.DataSource is List<SqlTemplateConfigData> configs) || configs.Count(x => x.IsSelected) == 0)
             {
-                MessageBox.Show("Please select at least one config to delete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select at least one sql template config to delete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (MessageBox.Show("Do you want to delete selected sql configs?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want to delete selected sql template config(s)?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 var selectedConfigs = configs.Where(x => x.IsSelected).ToList();
-                await _manager.Delete(selectedConfigs.Select(x => x.SqlConfigId).ToList());
-                await RefreshDataGridView();
+                await _sqlTemplateConfigManager.Delete(selectedConfigs.Select(x => x.SqlTemplateConfigId).ToList());
+                await RefreshSqlTemplateConfigDataGridView();
             }
         }
 
-        private void dgvSqlConfigs_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1)
-                return;
-
-            if (dgvSqlConfigs.Columns[e.ColumnIndex] is DataGridViewLinkColumn)
-            {
-                var row = e.RowIndex;
-                var query = ((SqlConfigData)dgvSqlConfigs.Rows[row].DataBoundItem).Query;
-                var frm = new frmConfigPreview(query, "Query");
-                frm.ShowDialog();
-            }
-        }
 
         #region Helper
 
-        private async Task RefreshDataGridView()
+        private async Task RefreshSqlTemplateConfigDataGridView()
         {
-            var sqlConfigs = await _manager.GetAll();
-            var data = sqlConfigs.Select(x => new SqlConfigData
+            var templateIdPrefix = txtTemplateIdPrefix.Text.Trim();
+            var sqlTemplateConfigs = string.IsNullOrEmpty(templateIdPrefix) ? await _sqlTemplateConfigManager.GetAll() : await _sqlTemplateConfigManager.GetAllBySqlTemplateIdPrefix(templateIdPrefix);
+
+            var data = sqlTemplateConfigs.Select(x => new SqlTemplateConfigData
             {
-                SqlConfigId = x.SqlConfigId,
+                SqlTemplateConfigId = x.SqlTemplateConfigId,
                 Id = x.Id,
-                DatabaseId = x.DatabaseId,
-                Query = x.Query,
-                SqlVariableConfigs = new List<SqlVariableConfigData>(x.SqlVariableConfigs.Select(y => new SqlVariableConfigData { Name = y.Name, })),
+                SqlConfigs = x.SqlConfigs.Select(y => new SqlConfigData
+                {
+                    SqlConfigId = y.SqlConfigId,
+                    Id = y.Id,
+                    DatabaseId = y.DatabaseId,
+                    Query = y.Query,
+                    SqlVariableConfigs = y.SqlVariableConfigs.Select(z => new SqlVariableConfigData
+                    {
+                        Name = z.Name
+                    }).ToList()
+                }).ToList()
             }).ToList();
 
-            dgvSqlConfigs.DataSource = data;
+            dgvSqlTemplateConfigs.DataSource = data;
         }
 
         #endregion

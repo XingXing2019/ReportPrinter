@@ -14,4 +14,6 @@ BEGIN
 		[SC_Query] AS Query
 	FROM 
 		[dbo].[SqlConfig]
+	ORDER BY
+		[SC_DatabaseId]
 END

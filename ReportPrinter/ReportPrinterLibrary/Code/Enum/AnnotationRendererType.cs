@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum AnnotationRendererType
+    public enum AnnotationRendererType : byte
     {
-        Text,
-        Sql
+        Text = 0,
+        Sql = 1
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum CacheManagerType
+    public enum CacheManagerType : byte
     {
-        Redis,
-        Memory
+        Redis = 0,
+        Memory = 1
     }
 }

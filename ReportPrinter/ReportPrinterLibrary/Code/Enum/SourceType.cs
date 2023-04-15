@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum SourceType
+    public enum SourceType : byte
     {
-        Local,
-        Online
+        Local = 0,
+        Online = 1
     }
 }

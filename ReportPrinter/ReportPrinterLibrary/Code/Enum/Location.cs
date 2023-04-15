@@ -1,9 +1,9 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum Location
+    public enum Location : byte
     {
-        Header,
-        Body,
-        Footer
+        Header = 0,
+        Body = 1,
+        Footer = 2
     }
 }

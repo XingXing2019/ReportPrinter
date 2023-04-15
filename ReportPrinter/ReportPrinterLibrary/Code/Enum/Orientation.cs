@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum Orientation
+    public enum Orientation : byte
     {
-        Portrait,
-        Landscape
+        Portrait = 0,
+        Landscape = 1
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum DatabaseManagerType
+    public enum DatabaseManagerType : byte
     {
-        EFCore,
-        SP
+        EFCore = 0,
+        SP = 1
     }
 }

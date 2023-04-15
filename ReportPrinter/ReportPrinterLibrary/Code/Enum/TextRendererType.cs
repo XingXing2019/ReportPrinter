@@ -1,9 +1,9 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum TextRendererType
+    public enum TextRendererType : byte
     {
-        Text,
-        Sql,
-        Timestamp
+        Text = 0,
+        Sql = 1,
+        Timestamp = 2
     }
 }

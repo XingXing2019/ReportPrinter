@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum ReportTypeEnum
+    public enum ReportTypeEnum : byte
     {
-        PDF,
-        Label
+        PDF = 0,
+        Label = 1
     }
 }

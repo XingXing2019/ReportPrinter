@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum WaterMarkRendererType
+    public enum WaterMarkRendererType : byte
     {
-        Text,
-        Sql
+        Text = 0,
+        Sql = 1
     }
 }

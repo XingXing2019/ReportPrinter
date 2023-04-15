@@ -1,9 +1,9 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum HorizontalAlignment
+    public enum HorizontalAlignment : byte
     {
-        Left,
-        Center,
-        Right
+        Left = 0,
+        Center = 1,
+        Right = 2
     }
 }

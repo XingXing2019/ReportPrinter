@@ -1,10 +1,10 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum MessageStatus
+    public enum MessageStatus : byte
     {
-        Publish,
-        Receive,
-        Complete,
-        Error
+        Publish = 0,
+        Receive = 1,
+        Complete = 2,
+        Error = 3
     }
 }

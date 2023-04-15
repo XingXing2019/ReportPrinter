@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum ValidationType
+    public enum ValidationType : byte
     {
-        Text,
-        Structure
+        Text = 0,
+        Structure = 1
     }
 }

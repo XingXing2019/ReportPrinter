@@ -1,8 +1,8 @@
 ﻿namespace ReportPrinterLibrary.Code.Enum
 {
-    public enum Position
+    public enum Position : byte
     {
-        Static,
-        Relative
+        Static = 0,
+        Relative = 1
     }
 }

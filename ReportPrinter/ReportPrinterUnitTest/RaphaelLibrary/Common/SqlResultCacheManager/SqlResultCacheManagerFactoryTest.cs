@@ -1,9 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Common.SqlResultCacheManager;
-using RaphaelLibrary.Code.Print;
-using ReportPrinterLibrary.Code.Config.Configuration;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
 {

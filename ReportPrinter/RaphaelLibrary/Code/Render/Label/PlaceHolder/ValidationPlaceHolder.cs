@@ -5,6 +5,7 @@ using RaphaelLibrary.Code.Render.Label.Model;
 using RaphaelLibrary.Code.Render.Label.Renderer;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.Label.PlaceHolder

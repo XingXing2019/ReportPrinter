@@ -8,6 +8,7 @@ using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
@@ -120,12 +121,5 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         }
 
         #endregion
-    }
-
-
-    public enum SourceType
-    {
-        Local,
-        Online
     }
 }

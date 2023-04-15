@@ -1,6 +1,6 @@
-﻿using ReportPrinterLibrary.Code.Config.Configuration;
-using System;
+﻿using System;
 using ReportPrinterLibrary.Code.Log;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace RaphaelLibrary.Code.Common.SqlVariableCacheManager
 {

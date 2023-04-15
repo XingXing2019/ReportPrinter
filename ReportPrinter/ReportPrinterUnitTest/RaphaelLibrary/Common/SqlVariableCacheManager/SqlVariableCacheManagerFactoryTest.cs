@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using RaphaelLibrary.Code.Common.SqlResultCacheManager;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
-using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Enum;
 using System;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager

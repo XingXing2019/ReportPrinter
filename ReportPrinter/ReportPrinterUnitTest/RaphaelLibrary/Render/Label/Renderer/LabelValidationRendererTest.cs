@@ -13,6 +13,7 @@ using RaphaelLibrary.Code.Render.Label.Renderer;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.Renderer
 {

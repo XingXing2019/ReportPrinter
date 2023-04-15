@@ -6,6 +6,7 @@ using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Renderer;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.PDF.Structure
@@ -162,14 +163,5 @@ namespace RaphaelLibrary.Code.Render.PDF.Structure
         }
 
         public abstract bool TryRenderPdfStructure(PdfDocumentManager manager);
-    }
-
-    public enum PdfStructure
-    {
-        PdfReportHeader,
-        PdfPageHeader,
-        PdfPageBody,
-        PdfPageFooter,
-        PdfReportFooter
     }
 }

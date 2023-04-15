@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.MessageHandler.PrintReportMessageHandler

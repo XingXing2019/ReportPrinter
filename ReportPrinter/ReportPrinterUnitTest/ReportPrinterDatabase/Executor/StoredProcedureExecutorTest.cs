@@ -9,6 +9,7 @@ using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterDatabase.Code.StoredProcedures;
 using ReportPrinterDatabase.Code.StoredProcedures.PrintReportMessage;
 using ReportPrinterDatabase.Code.StoredProcedures.PrintReportSqlVariable;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Executor

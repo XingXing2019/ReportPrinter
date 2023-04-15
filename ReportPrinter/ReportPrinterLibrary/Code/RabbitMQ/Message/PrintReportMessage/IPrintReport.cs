@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
 {
@@ -30,11 +31,5 @@ namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
         {
             return this.MemberwiseClone() as SqlVariable;
         }
-    }
-
-    public enum ReportTypeEnum
-    {
-        PDF,
-        Label
     }
 }

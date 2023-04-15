@@ -128,7 +128,6 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigMana
                 Logger.Error($"Exception happened during deleting Sql template config: {sqlTemplateConfigId}. Ex: {ex.Message}", procName);
                 throw;
             }
-
         }
 
         public async Task Delete(List<Guid> sqlTemplateConfigIds)

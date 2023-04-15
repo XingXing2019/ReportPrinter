@@ -1,4 +1,4 @@
-﻿namespace ReportPrinterLibrary.Code.Config.Configuration
+﻿namespace ReportPrinterLibrary.Code.Enum
 {
     public enum CacheManagerType
     {

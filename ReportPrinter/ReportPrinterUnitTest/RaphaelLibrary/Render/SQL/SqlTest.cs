@@ -10,6 +10,7 @@ using RaphaelLibrary.Code.Render.SQL;
 using ReportPrinterDatabase.Code.Manager.MessageManager;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Render.SQL

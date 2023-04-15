@@ -6,6 +6,7 @@ using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Renderer;
 using RaphaelLibrary.Code.Render.PDF.Structure;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Render.PDF.Helper
 {

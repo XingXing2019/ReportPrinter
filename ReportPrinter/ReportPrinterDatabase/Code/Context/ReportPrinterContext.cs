@@ -41,7 +41,7 @@ namespace ReportPrinterDatabase.Code.Context
         public virtual DbSet<PdfRendererBase> PdfRendererBases { get; set; }
         public virtual DbSet<PdfAnnotationRenderer> PdfAnnotationRenderers { get; set; }
         public virtual DbSet<PdfBarcodeRenderer> PdfBarcodeRenderers { get; set; }
-        
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -60,6 +60,8 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasName("PK_dbo.PdfAnnotationRenderer");
 
                 entity.ToTable("PdfAnnotationRenderer");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfAnnotationRenderer_PdfRendererBaseId");
 
                 entity.Property(e => e.PdfAnnotationRendererId)
                     .HasColumnName("PAR_PdfAnnotationRendererId")
@@ -107,6 +109,8 @@ namespace ReportPrinterDatabase.Code.Context
 
                 entity.ToTable("PdfBarcodeRenderer");
 
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfBarcodeRenderer_PdfRendererBaseId");
+
                 entity.Property(e => e.PdfBarcodeRendererId)
                     .HasColumnName("PBR_PdfBarcodeRendererId")
                     .HasDefaultValueSql("(newid())");
@@ -144,6 +148,8 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasName("PK_dbo.PdfRendererBase");
 
                 entity.ToTable("PdfRendererBase");
+
+                entity.HasIndex(e => e.Id, "IX_PdfRendererBase_Id");
 
                 entity.Property(e => e.PdfRendererBaseId)
                     .HasColumnName("PRB_PdfRendererBaseId")

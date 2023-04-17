@@ -10,7 +10,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
         [Test]
         [TestCase(CacheManagerType.Memory, typeof(SqlResultMemoryCacheManager))]
         [TestCase(CacheManagerType.Redis, typeof(SqlResultRedisCacheManager))]
-        [TestCase(2, null)]
+        [TestCase((byte)2, null)]
         public void TestCreateSqlResultCacheManager(CacheManagerType managerType, Type expectedType)
         {
             try

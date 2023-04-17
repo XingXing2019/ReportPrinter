@@ -21,7 +21,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
         [TearDown]
         public void TearDown()
         {
-            Manager.DeleteAll();
+            Manager.DeleteAll().Wait();
         }
 
         [Test]

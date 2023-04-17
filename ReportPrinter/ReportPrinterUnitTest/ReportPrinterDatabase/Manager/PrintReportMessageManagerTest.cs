@@ -20,7 +20,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TearDown]
         public new void TearDown()
         {
-            Manager.DeleteAll();
+            Manager.DeleteAll().Wait();
         }
 
         [Test]

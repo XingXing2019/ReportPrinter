@@ -11,7 +11,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.MessageHandler.PrintReportMessage
         [Test]
         [TestCase(ReportTypeEnum.PDF, typeof(PrintPdfMessageHandler))]
         [TestCase(ReportTypeEnum.Label, typeof(PrintLabelMessageHandler))]
-        [TestCase(-1, null)]
+        [TestCase((byte)2, null)]
         public void TestCreatePrintReportMessageHandler(ReportTypeEnum reportType, Type expectedHandleType)
         {
             try

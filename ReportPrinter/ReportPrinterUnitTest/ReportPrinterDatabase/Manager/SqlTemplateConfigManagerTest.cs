@@ -25,7 +25,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         public new void TearDown()
         {
             _sqlConfigMgr.DeleteAll().Wait();
-            Manager.DeleteAll();
+            Manager.DeleteAll().Wait();
         }
 
         [Test]

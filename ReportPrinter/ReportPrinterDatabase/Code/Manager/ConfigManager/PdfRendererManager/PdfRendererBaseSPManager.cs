@@ -1,37 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ReportPrinterDatabase.Code.Context;
-using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
 using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {
-    public class PdfRendererBaseEFCoreManager : IPdfRendererBaseManager
+    public class PdfRendererBaseSPManager : IPdfRendererBaseManager
     {
+        private readonly StoredProcedureExecutor _executor;
+
+        public PdfRendererBaseSPManager()
+        {
+            _executor = new StoredProcedureExecutor();
+        }
+
+
         public async Task Post(PdfRendererBaseModel pdfRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
             try
             {
-                await using var context = new ReportPrinterContext();
+                var pdfRendererBaseId = pdfRenderer.PdfRendererBaseId;
+                var id = pdfRenderer.Id;
+                var rendererType = (byte)pdfRenderer.RendererType;
+                var row = pdfRenderer.Row;
+                var column = pdfRenderer.Column;
 
-                var pdfRendererBase = new PdfRendererBase
-                {
-                    PdfRendererBaseId = pdfRenderer.PdfRendererBaseId,
-                    Id = pdfRenderer.Id,
-                    RendererType = (byte)pdfRenderer.RendererType,
-                    Row = pdfRenderer.Row,
-                    Column = pdfRenderer.Column
-                };
-
-                context.PdfRendererBases.Add(pdfRendererBase);
-                var rows = await context.SaveChangesAsync();
+                var sp = new PostPdfRendererBase(pdfRendererBaseId, id, rendererType, row, column);
+                var rows = await _executor.ExecuteNonQueryAsync(sp);
                 Logger.Debug($"Record PDF renderer: {pdfRenderer.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -47,8 +48,8 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var entity = await context.PdfRendererBases.FindAsync(pdfRendererId);
+                var sp = new GetPdfRendererBase(pdfRendererId);
+                var entity = await _executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(sp);
 
                 if (entity == null)
                 {
@@ -57,8 +58,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
                 }
 
                 Logger.Debug($"Retrieve PDF renderer: {pdfRendererId}", procName);
-
-                return CreateDataModel(entity);
+                return entity;
             }
             catch (Exception ex)
             {
@@ -73,11 +73,11 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var entities = await context.PdfRendererBases.ToListAsync();
+                var sp = new GetAllPdfRendererBase();
+                var entities = await _executor.ExecuteQueryBatchAsync<PdfRendererBaseModel>(sp);
 
                 Logger.Debug($"Retrieve all PDF renderers", procName);
-                return entities.Select(CreateDataModel).ToList();
+                return entities;
             }
             catch (Exception ex)
             {
@@ -92,19 +92,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var entity = await context.PdfRendererBases.FindAsync(pdfRendererId);
-
-                if (entity == null)
-                {
-                    Logger.Debug($"PDF renderer: {pdfRendererId} does not exist", procName);
-                }
-                else
-                {
-                    context.PdfRendererBases.Remove(entity);
-                    var rows = await context.SaveChangesAsync();
-                    Logger.Debug($"Delete PDF renderer: {pdfRendererId}, {rows} row affected", procName);
-                }
+                var sp = new DeletePdfRendererBaseById(pdfRendererId);
+                var rows = await _executor.ExecuteNonQueryAsync(sp);
+                Logger.Debug($"Delete PDF renderer: {pdfRendererId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
@@ -119,17 +109,14 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var entities = await context.PdfRendererBases.Where(x => pdfRendererIds.Contains(x.PdfRendererBaseId)).ToListAsync();
-
-                if (entities.Count == 0)
+                if (pdfRendererIds == null || pdfRendererIds.Count == 0)
                 {
                     Logger.Debug($"PDF renderers does not exist", procName);
                 }
                 else
                 {
-                    context.PdfRendererBases.RemoveRange(entities);
-                    var rows = await context.SaveChangesAsync();
+                    var sp = new DeletePdfRendererBaseByIds(string.Join(',', pdfRendererIds));
+                    var rows = await _executor.ExecuteNonQueryAsync(sp);
                     Logger.Debug($"Delete PDF renderers, {rows} row affected", procName);
                 }
             }
@@ -146,9 +133,8 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                context.PdfRendererBases.RemoveRange(context.PdfRendererBases);
-                var rows = await context.SaveChangesAsync();
+                var sp = new DeleteAllPdfRendererBase();
+                var rows = await _executor.ExecuteNonQueryAsync(sp);
                 Logger.Debug($"Delete PDF renderers, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -164,11 +150,10 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var entities = await context.PdfRendererBases.Where(x => x.RendererType == (byte)rendererType).ToListAsync();
-
+                var sp = new GetAllByRendererType((byte)rendererType);
+                var entities = await _executor.ExecuteQueryBatchAsync<PdfRendererBaseModel>(sp);
                 Logger.Debug($"Retrieve all PDF renderers by with type: {rendererType}", procName);
-                return entities.Select(CreateDataModel).ToList();
+                return entities;
             }
             catch (Exception ex)
             {
@@ -183,11 +168,11 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                await using var context = new ReportPrinterContext();
-                var entities = await context.PdfRendererBases.Where(x => x.Id.StartsWith(rendererIdPrefix)).ToListAsync();
+                var sp = new GetAllByRendererIdPrefix(rendererIdPrefix);
+                var entities = await _executor.ExecuteQueryBatchAsync<PdfRendererBaseModel>(sp);
 
                 Logger.Debug($"Retrieve all PDF renderers by renderer id prefix: {rendererIdPrefix}", procName);
-                return entities.Select(CreateDataModel).ToList();
+                return entities;
             }
             catch (Exception ex)
             {
@@ -195,22 +180,5 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
                 throw;
             }
         }
-
-
-        #region
-
-        private PdfRendererBaseModel CreateDataModel(PdfRendererBase entity)
-        {
-            return new PdfRendererBaseModel
-            {
-                PdfRendererBaseId = entity.PdfRendererBaseId,
-                Id = entity.Id,
-                RendererType = (PdfRendererType)entity.RendererType,
-                Row = entity.Row,
-                Column = entity.Column,
-            };
-        }
-
-        #endregion
     }
 }

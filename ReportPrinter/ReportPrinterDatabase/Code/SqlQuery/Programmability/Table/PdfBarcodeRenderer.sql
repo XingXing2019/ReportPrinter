@@ -3,7 +3,7 @@ BEGIN
 	CREATE TABLE [dbo].[PdfBarcodeRenderer] (
 		[PBR_PdfBarcodeRendererId] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_PdfBarcodeRenderer_PdfBarcodeRendererId] DEFAULT(NEWID()),
 		[PBR_PdfRendererBaseId] UNIQUEIDENTIFIER NOT NULL,
-		[PBR_BarcodeFormat] TINYINT NULL,
+		[PBR_BarcodeFormat] INT NULL,
 		[PBR_ShowBarcodeText] BIT NOT NULL CONSTRAINT [DF_PdfBarcodeRenderer_ShowBarcodeText] DEFAULT(0),
 		[PBR_SqlTemplateId] VARCHAR(50) NULL,
 		[PBR_SqlId] VARCHAR(50) NULL,

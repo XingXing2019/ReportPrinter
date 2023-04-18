@@ -34,6 +34,9 @@
     <Reference Include="PdfSharp">
       <HintPath>..\RaphaelLibrary\Code\Plugin\PdfSharp.dll</HintPath>
     </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\RaphaelLibrary\Code\Plugin\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

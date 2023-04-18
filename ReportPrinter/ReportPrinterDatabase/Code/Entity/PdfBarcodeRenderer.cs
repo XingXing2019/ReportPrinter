@@ -9,7 +9,7 @@ namespace ReportPrinterDatabase.Code.Entity
     {
         public Guid PdfBarcodeRendererId { get; set; }
         public Guid PdfRendererBaseId { get; set; }
-        public byte? BarcodeFormat { get; set; }
+        public int? BarcodeFormat { get; set; }
         public bool ShowBarcodeText { get; set; }
         public string SqlTemplateId { get; set; }
         public string SqlId { get; set; }

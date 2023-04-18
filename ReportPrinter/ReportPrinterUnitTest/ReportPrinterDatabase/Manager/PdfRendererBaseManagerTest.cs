@@ -25,7 +25,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [Test]
         [TestCase(typeof(PdfRendererBaseEFCoreManager))]
         [TestCase(typeof(PdfRendererBaseSPManager))]
-        public async Task PdfRendererBaseManager_Get(Type managerType)
+        public async Task TestPdfRendererBaseManager_Get(Type managerType)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [Test]
         [TestCase(typeof(PdfRendererBaseEFCoreManager))]
         [TestCase(typeof(PdfRendererBaseSPManager))]
-        public async Task PdfRendererBaseManager_GetAll(Type managerType)
+        public async Task TestPdfRendererBaseManager_GetAll(Type managerType)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [Test]
         [TestCase(typeof(PdfRendererBaseEFCoreManager))]
         [TestCase(typeof(PdfRendererBaseSPManager))]
-        public async Task PdfRendererBaseManager_GetAllByRendererType(Type managerType)
+        public async Task TestPdfRendererBaseManager_GetAllByRendererType(Type managerType)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [Test]
         [TestCase(typeof(PdfRendererBaseEFCoreManager))]
         [TestCase(typeof(PdfRendererBaseSPManager))]
-        public async Task PdfRendererBaseManager_GetAlByRendererIdPrefix(Type managerType)
+        public async Task TestPdfRendererBaseManager_GetAlByRendererIdPrefix(Type managerType)
         {
             try
             {

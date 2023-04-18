@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Code\Database\" />
-    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfBarcodeRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
     <Folder Include="Code\SqlQuery\Programmability\TableFunction\" />
@@ -28,6 +28,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ReportPrinterLibrary\ReportPrinterLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PdfSharp">
+      <HintPath>..\RaphaelLibrary\Code\Plugin\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\RaphaelLibrary\Code\Plugin\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

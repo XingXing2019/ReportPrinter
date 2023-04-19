@@ -3,18 +3,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PdfSharp.Drawing;
+using PdfSharp.Pdf.Annotations;
 using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterDatabase.Code.StoredProcedures.PdfBarcodeRenderer;
 using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
-using ZXing;
+using ZXing.Rendering;
 
-namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer
+namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer
 {
-    public class PdfBarcodeRendererEFCoreManager : IPdfBarcodeRendererManager
+    public class PdfAnnotationRendererEFCoreManager : IPdfAnnotationRendererManager
     {
-        public async Task Post(PdfBarcodeRendererModel barcodeRenderer)
+        public async Task Post(PdfAnnotationRendererModel annotationRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
@@ -23,48 +25,48 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 await using var context = new ReportPrinterContext();
 
                 var pdfRendererBase = new PdfRendererBase();
-                pdfRendererBase.PdfBarcodeRenderers.Add(new Entity.PdfBarcodeRenderer());
-                pdfRendererBase = CreateEntity(barcodeRenderer, pdfRendererBase);
+                pdfRendererBase.PdfAnnotationRenderers.Add(new Entity.PdfAnnotationRenderer());
+                pdfRendererBase = CreateEntity(annotationRenderer, pdfRendererBase);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
-                Logger.Debug($"Record pdf barcode renderer: {pdfRendererBase.PdfRendererBaseId}, {rows} row affected", procName);
+                Logger.Debug($"Record pdf annotation renderer: {pdfRendererBase.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during recording PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during recording PDF annotation renderer: {annotationRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
 
-        public async Task<PdfBarcodeRendererModel> Get(Guid pdfRendererBaseId)
+        public async Task<PdfAnnotationRendererModel> Get(Guid pdfRendererBaseId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entity = await context.PdfBarcodeRenderers
+                var entity = await context.PdfAnnotationRenderers
                     .Include(x => x.PdfRendererBase)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
 
                 if (entity == null)
                 {
-                    Logger.Debug($"PDF barcode renderer: {pdfRendererBaseId} does not exist", procName);
+                    Logger.Debug($"PDF annotation renderer: {pdfRendererBaseId} does not exist", procName);
                     return null;
                 }
 
-                Logger.Debug($"Retrieve PDF barcode renderer: {pdfRendererBaseId}", procName);
+                Logger.Debug($"Retrieve PDF annotation renderer: {pdfRendererBaseId}", procName);
                 return CreateDataModel(entity);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during retrieving PDF barcode renderer: {pdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during retrieving PDF annotation renderer: {pdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
 
-        public async Task PutPdfBarcodeRenderer(PdfBarcodeRendererModel barcodeRenderer)
+        public async Task PutPdfAnnotationRenderer(PdfAnnotationRendererModel annotationRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(PutPdfBarcodeRenderer)}";
 
@@ -72,23 +74,23 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             {
                 await using var context = new ReportPrinterContext();
                 var entity = await context.PdfRendererBases
-                    .Include(x => x.PdfBarcodeRenderers)
-                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == barcodeRenderer.RendererBase.PdfRendererBaseId);
+                    .Include(x => x.PdfAnnotationRenderers)
+                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == annotationRenderer.RendererBase.PdfRendererBaseId);
 
                 if (entity == null)
                 {
-                    Logger.Debug($"PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId} does not exist", procName);
+                    Logger.Debug($"PDF annotation renderer: {annotationRenderer.RendererBase.PdfRendererBaseId} does not exist", procName);
                 }
                 else
                 {
-                    entity = CreateEntity(barcodeRenderer, entity);
+                    entity = CreateEntity(annotationRenderer, entity);
                     var rows = await context.SaveChangesAsync();
-                    Logger.Debug($"Update pdf barcode renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
+                    Logger.Debug($"Update pdf annotation renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating PDF annotation renderer: {annotationRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -96,9 +98,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        private PdfBarcodeRendererModel CreateDataModel(Entity.PdfBarcodeRenderer entity)
+        private PdfAnnotationRendererModel CreateDataModel(Entity.PdfAnnotationRenderer entity)
         {
-            var model = new PdfBarcodeRendererModel
+            var model = new PdfAnnotationRendererModel
             {
                 RendererBase = new PdfRendererBaseModel
                 {
@@ -119,7 +121,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     RowSpan = entity.PdfRendererBase.RowSpan,
                     ColumnSpan = entity.PdfRendererBase.ColumnSpan,
                 },
-                ShowBarcodeText = entity.ShowBarcodeText,
+                AnnotationRendererType = (AnnotationRendererType)entity.AnnotationRendererType,
+                Title = entity.Title,
+                Content = entity.Content,
                 SqlTemplateId = entity.SqlTemplateId,
                 SqlId = entity.SqlId,
                 SqlResColumn = entity.SqlResColumn,
@@ -143,22 +147,24 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             if (entity.PdfRendererBase.BackgroundColor.HasValue)
                 model.RendererBase.BackgroundColor = (XKnownColor)entity.PdfRendererBase.BackgroundColor.Value;
 
-            if (entity.BarcodeFormat.HasValue)
-                model.BarcodeFormat = (BarcodeFormat)entity.BarcodeFormat.Value;
+            if (entity.Icon.HasValue)
+                model.Icon = (PdfTextAnnotationIcon)entity.Icon.Value;
 
             return model;
         }
 
-        private PdfRendererBase CreateEntity(PdfBarcodeRendererModel model, PdfRendererBase pdfRendererBase)
+        private PdfRendererBase CreateEntity(PdfAnnotationRendererModel model, PdfRendererBase pdfRendererBase)
         {
-            var pdfBarcodeRenderer = pdfRendererBase.PdfBarcodeRenderers.Single();
+            var pdfAnnotationRenderer = pdfRendererBase.PdfAnnotationRenderers.Single();
 
-            pdfBarcodeRenderer.PdfRendererBaseId = model.RendererBase.PdfRendererBaseId;
-            pdfBarcodeRenderer.BarcodeFormat = model.BarcodeFormat.HasValue ? (int?)model.BarcodeFormat.Value : null;
-            pdfBarcodeRenderer.ShowBarcodeText = model.ShowBarcodeText;
-            pdfBarcodeRenderer.SqlTemplateId = model.SqlTemplateId;
-            pdfBarcodeRenderer.SqlId = model.SqlId;
-            pdfBarcodeRenderer.SqlResColumn = model.SqlResColumn;
+            pdfAnnotationRenderer.PdfRendererBaseId = model.RendererBase.PdfRendererBaseId;
+            pdfAnnotationRenderer.AnnotationRendererType = (byte)model.AnnotationRendererType;
+            pdfAnnotationRenderer.Title = model.Title;
+            pdfAnnotationRenderer.Icon = model.Icon.HasValue ? (byte?)model.Icon : null;
+            pdfAnnotationRenderer.Content = model.Content;
+            pdfAnnotationRenderer.SqlTemplateId = model.SqlTemplateId;
+            pdfAnnotationRenderer.SqlId = model.SqlId;
+            pdfAnnotationRenderer.SqlResColumn = model.SqlResColumn;
 
             pdfRendererBase.PdfRendererBaseId = model.RendererBase.PdfRendererBaseId;
             pdfRendererBase.Id = model.RendererBase.Id;

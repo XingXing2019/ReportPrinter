@@ -1,11 +1,11 @@
-﻿using ZXing;
+﻿using System;
+using ZXing;
 
 namespace ReportPrinterDatabase.Code.Model
 {
     public class PdfBarcodeRendererModel
     {
         public PdfRendererBaseModel RendererBase { get; set; }
-
         public BarcodeFormat? BarcodeFormat { get; set; }
         public bool ShowBarcodeText { get; set; }
         public string SqlTemplateId { get; set; }

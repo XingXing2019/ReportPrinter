@@ -1,18 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
+using System.Threading.Tasks;
+using System;
+using PdfSharp.Pdf.Annotations;
+using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer;
 using ZXing;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfBarcodeRendererManagerTest : DatabaseTestBase<PdfRendererBaseModel>
+    public class PdfAnnotationRendererEFCoreManagerTest : DatabaseTestBase<PdfRendererBaseModel>
     {
-        public PdfBarcodeRendererManagerTest()
+        public PdfAnnotationRendererEFCoreManagerTest()
         {
             Manager = new PdfRendererBaseEFCoreManager();
         }
@@ -24,17 +26,16 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
-        [TestCase(typeof(PdfBarcodeRendererEFCoreManager))]
-        [TestCase(typeof(PdfBarcodeRendererSPManager))]
+        [TestCase(typeof(PdfAnnotationRendererEFCoreManager))]
         public async Task TestPdfBarcodeRendererManager_Get(Type managerType)
         {
             try
             {
-                var mgr = (IPdfBarcodeRendererManager)Activator.CreateInstance(managerType);
-                
+                var mgr = (IPdfAnnotationRendererManager)Activator.CreateInstance(managerType);
+
                 var rendererBaseId = Guid.NewGuid();
 
-                var expectedRenderer = new PdfBarcodeRendererModel
+                var expectedRenderer = new PdfAnnotationRendererModel
                 {
                     RendererBase = new PdfRendererBaseModel
                     {
@@ -61,8 +62,9 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                         RowSpan = 5,
                         ColumnSpan = 9,
                     },
-                    BarcodeFormat = BarcodeFormat.PHARMA_CODE,
-                    ShowBarcodeText = true,
+                    AnnotationRendererType = AnnotationRendererType.Text,
+                    Title = "Test Title 1",
+                    Icon = PdfTextAnnotationIcon.Insert,
                     SqlTemplateId = "Test Sql Template 1",
                     SqlId = "Test Sql 1",
                     SqlResColumn = "Test Res Column 1"
@@ -95,13 +97,14 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 expectedRenderer.RendererBase.Column = 1;
                 expectedRenderer.RendererBase.RowSpan = null;
                 expectedRenderer.RendererBase.ColumnSpan = null;
-                expectedRenderer.BarcodeFormat = null;
-                expectedRenderer.ShowBarcodeText = false;
+                expectedRenderer.AnnotationRendererType = AnnotationRendererType.Sql;
+                expectedRenderer.Title = null;
+                expectedRenderer.Icon = null;
                 expectedRenderer.SqlTemplateId = "Test Sql Template 2";
                 expectedRenderer.SqlId = "Test Sql 2";
                 expectedRenderer.SqlResColumn = "Test Res Column 2";
 
-                await mgr.PutPdfBarcodeRenderer(expectedRenderer);
+                await mgr.PutPdfAnnotationRenderer(expectedRenderer);
 
                 actualRenderer = await mgr.Get(rendererBaseId);
                 Assert.IsNotNull(actualRenderer);
@@ -114,17 +117,16 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
-        [TestCase(typeof(PdfBarcodeRendererEFCoreManager))]
-        [TestCase(typeof(PdfBarcodeRendererSPManager))]
+        [TestCase(typeof(PdfAnnotationRendererEFCoreManager))]
         public async Task TestPdfBarcodeRendererManager_Post(Type managerType)
         {
             try
             {
-                var mgr = (IPdfBarcodeRendererManager)Activator.CreateInstance(managerType);
-                
+                var mgr = (IPdfAnnotationRendererManager)Activator.CreateInstance(managerType);
+
                 var rendererBaseId = Guid.NewGuid();
 
-                var expectedRenderer = new PdfBarcodeRendererModel
+                var expectedRenderer = new PdfAnnotationRendererModel
                 {
                     RendererBase = new PdfRendererBaseModel
                     {
@@ -150,8 +152,9 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                         RowSpan = null,
                         ColumnSpan = null,
                     },
-                    BarcodeFormat = null,
-                    ShowBarcodeText = false,
+                    AnnotationRendererType = AnnotationRendererType.Text,
+                    Title = "Test Title 1",
+                    Icon = PdfTextAnnotationIcon.Paragraph,
                     SqlTemplateId = "Test Sql Template 1",
                     SqlId = "Test Sql 1",
                     SqlResColumn = "Test Res Column 1"
@@ -170,4 +173,3 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
     }
 }
-

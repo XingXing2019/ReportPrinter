@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
@@ -25,6 +26,59 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [Test]
         [TestCase(typeof(PdfRendererBaseEFCoreManager))]
         [TestCase(typeof(PdfRendererBaseSPManager))]
+        public async Task TestPdfRendererBaseManager_Post(Type managerType)
+        {
+            try
+            {
+                var mgr = (IPdfRendererBaseManager)Activator.CreateInstance(managerType);
+
+                var pdfRendererId = Guid.NewGuid();
+                var expectedPdfRenderer = new PdfRendererBaseModel
+                {
+                    PdfRendererBaseId = pdfRendererId,
+                    Id = "Test Pdf Barcode Renderer 1",
+                    RendererType = PdfRendererType.Barcode,
+                    Margin = null,
+                    Padding = null,
+                    HorizontalAlignment = null,
+                    VerticalAlignment = null,
+                    Position = null,
+                    Left = null,
+                    Right = null,
+                    Top = null,
+                    Bottom = null,
+                    FontSize = null,
+                    FontFamily = null,
+                    FontStyle = null,
+                    Opacity = null,
+                    BrushColor = null,
+                    BackgroundColor = null,
+                    Row = 2,
+                    Column = 4,
+                    RowSpan = null,
+                    ColumnSpan = null,
+                };
+
+                await mgr.Post(expectedPdfRenderer);
+
+                var actualPdfRenderer = await mgr.Get(pdfRendererId);
+                Assert.IsNotNull(actualPdfRenderer);
+                AssertHelper.AssertObject(expectedPdfRenderer, actualPdfRenderer);
+
+                await mgr.Delete(pdfRendererId);
+                actualPdfRenderer = await mgr.Get(pdfRendererId);
+
+                Assert.IsNull(actualPdfRenderer);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        [TestCase(typeof(PdfRendererBaseEFCoreManager))]
+        [TestCase(typeof(PdfRendererBaseSPManager))]
         public async Task TestPdfRendererBaseManager_Get(Type managerType)
         {
             try
@@ -35,10 +89,27 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 var expectedPdfRenderer = new PdfRendererBaseModel
                 {
                     PdfRendererBaseId = pdfRendererId,
-                    Id = "Test PDF Renderer 1",
-                    RendererType = PdfRendererType.Text,
-                    Row = 1,
-                    Column = 2
+                    Id = "Test Pdf Barcode Renderer 1",
+                    RendererType = PdfRendererType.Barcode,
+                    Margin = "10, 5, 10, 5",
+                    Padding = "5, 10, 5, 10",
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Position = Position.Static,
+                    Left = 10.5,
+                    Right = 5.5,
+                    Top = 20.5,
+                    Bottom = 15.5,
+                    FontSize = 6.5,
+                    FontFamily = "Time New Roman",
+                    FontStyle = XFontStyle.Strikeout,
+                    Opacity = 0.9,
+                    BrushColor = XKnownColor.YellowGreen,
+                    BackgroundColor = XKnownColor.Brown,
+                    Row = 2,
+                    Column = 4,
+                    RowSpan = 5,
+                    ColumnSpan = 9,
                 };
 
                 await mgr.Post(expectedPdfRenderer);
@@ -77,8 +148,25 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                         PdfRendererBaseId = pdfRendererId,
                         Id = $"Test PDF Renderer {i + 1}",
                         RendererType = PdfRendererType.Text,
-                        Row = i,
-                        Column = i + 1
+                        Margin = "10, 5, 10, 5",
+                        Padding = "5, 10, 5, 10",
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Position = Position.Static,
+                        Left = 10.5,
+                        Right = 5.5,
+                        Top = 20.5,
+                        Bottom = 15.5,
+                        FontSize = 6.5,
+                        FontFamily = "Time New Roman",
+                        FontStyle = XFontStyle.Strikeout,
+                        Opacity = 0.9,
+                        BrushColor = XKnownColor.YellowGreen,
+                        BackgroundColor = XKnownColor.Brown,
+                        Row = 2,
+                        Column = 4,
+                        RowSpan = 5,
+                        ColumnSpan = 9,
                     };
 
                     await mgr.Post(expectedPdfRenderer);
@@ -139,8 +227,25 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                         PdfRendererBaseId = pdfRendererId,
                         Id = $"PDF Text Renderer {i + 1}",
                         RendererType = PdfRendererType.Text,
-                        Row = i,
-                        Column = i + 1
+                        Margin = "10, 5, 10, 5",
+                        Padding = "5, 10, 5, 10",
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Position = Position.Static,
+                        Left = 10.5,
+                        Right = 5.5,
+                        Top = 20.5,
+                        Bottom = 15.5,
+                        FontSize = 6.5,
+                        FontFamily = "Time New Roman",
+                        FontStyle = XFontStyle.Strikeout,
+                        Opacity = 0.9,
+                        BrushColor = XKnownColor.YellowGreen,
+                        BackgroundColor = XKnownColor.Brown,
+                        Row = 2,
+                        Column = 4,
+                        RowSpan = 5,
+                        ColumnSpan = 9,
                     };
 
                     await mgr.Post(textRender);
@@ -155,8 +260,25 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                         PdfRendererBaseId = pdfRendererId,
                         Id = $"PDF Image Renderer {i + 1}",
                         RendererType = PdfRendererType.Image,
-                        Row = i,
-                        Column = i + 1
+                        Margin = "10, 5, 10, 5",
+                        Padding = "5, 10, 5, 10",
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Position = Position.Static,
+                        Left = 10.5,
+                        Right = 5.5,
+                        Top = 20.5,
+                        Bottom = 15.5,
+                        FontSize = 6.5,
+                        FontFamily = "Time New Roman",
+                        FontStyle = XFontStyle.Strikeout,
+                        Opacity = 0.9,
+                        BrushColor = XKnownColor.YellowGreen,
+                        BackgroundColor = XKnownColor.Brown,
+                        Row = 2,
+                        Column = 4,
+                        RowSpan = 5,
+                        ColumnSpan = 9,
                     };
 
                     await mgr.Post(imageRender);
@@ -196,8 +318,25 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                         PdfRendererBaseId = pdfRendererId,
                         Id = $"Test Renderer {i + 1}",
                         RendererType = PdfRendererType.Text,
-                        Row = i,
-                        Column = i + 1
+                        Margin = "10, 5, 10, 5",
+                        Padding = "5, 10, 5, 10",
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Position = Position.Static,
+                        Left = 10.5,
+                        Right = 5.5,
+                        Top = 20.5,
+                        Bottom = 15.5,
+                        FontSize = 6.5,
+                        FontFamily = "Time New Roman",
+                        FontStyle = XFontStyle.Strikeout,
+                        Opacity = 0.9,
+                        BrushColor = XKnownColor.YellowGreen,
+                        BackgroundColor = XKnownColor.Brown,
+                        Row = 2,
+                        Column = 4,
+                        RowSpan = 5,
+                        ColumnSpan = 9,
                     };
 
                     await mgr.Post(testRender);
@@ -212,8 +351,25 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                         PdfRendererBaseId = pdfRendererId,
                         Id = $"Real Renderer {i + 1}",
                         RendererType = PdfRendererType.Text,
-                        Row = i,
-                        Column = i + 1
+                        Margin = "10, 5, 10, 5",
+                        Padding = "5, 10, 5, 10",
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Position = Position.Static,
+                        Left = 10.5,
+                        Right = 5.5,
+                        Top = 20.5,
+                        Bottom = 15.5,
+                        FontSize = 6.5,
+                        FontFamily = "Time New Roman",
+                        FontStyle = XFontStyle.Strikeout,
+                        Opacity = 0.9,
+                        BrushColor = XKnownColor.YellowGreen,
+                        BackgroundColor = XKnownColor.Brown,
+                        Row = 2,
+                        Column = 4,
+                        RowSpan = 5,
+                        ColumnSpan = 9,
                     };
 
                     await mgr.Post(realRender);

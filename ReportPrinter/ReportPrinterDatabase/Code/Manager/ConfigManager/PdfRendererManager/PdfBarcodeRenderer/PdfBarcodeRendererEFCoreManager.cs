@@ -32,7 +32,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during recording PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during recording PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -74,11 +74,11 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 await using var context = new ReportPrinterContext();
                 var entity = await context.PdfRendererBases
                     .Include(x => x.PdfBarcodeRenderers)
-                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == barcodeRenderer.PdfRendererBaseId);
+                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == barcodeRenderer.RendererBase.PdfRendererBaseId);
 
                 if (entity == null)
                 {
-                    Logger.Debug($"PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId} does not exist", procName);
+                    Logger.Debug($"PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId} does not exist", procName);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -101,22 +101,25 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
         {
             var model = new PdfBarcodeRendererModel
             {
-                PdfRendererBaseId = entity.PdfRendererBaseId,
-                Id = entity.PdfRendererBase.Id,
-                RendererType = (PdfRendererType)entity.PdfRendererBase.RendererType,
-                Margin = entity.PdfRendererBase.Margin,
-                Padding = entity.PdfRendererBase.Padding,
-                Left = entity.PdfRendererBase.Left,
-                Right = entity.PdfRendererBase.Right,
-                Top = entity.PdfRendererBase.Top,
-                Bottom = entity.PdfRendererBase.Bottom,
-                FontSize = entity.PdfRendererBase.FontSize,
-                FontFamily = entity.PdfRendererBase.FontFamily,
-                Opacity = entity.PdfRendererBase.Opacity,
-                Row = entity.PdfRendererBase.Row,
-                Column = entity.PdfRendererBase.Column,
-                RowSpan = entity.PdfRendererBase.RowSpan,
-                ColumnSpan = entity.PdfRendererBase.ColumnSpan,
+                RendererBase = new PdfRendererBaseModel
+                {
+                    PdfRendererBaseId = entity.PdfRendererBaseId,
+                    Id = entity.PdfRendererBase.Id,
+                    RendererType = (PdfRendererType)entity.PdfRendererBase.RendererType,
+                    Margin = entity.PdfRendererBase.Margin,
+                    Padding = entity.PdfRendererBase.Padding,
+                    Left = entity.PdfRendererBase.Left,
+                    Right = entity.PdfRendererBase.Right,
+                    Top = entity.PdfRendererBase.Top,
+                    Bottom = entity.PdfRendererBase.Bottom,
+                    FontSize = entity.PdfRendererBase.FontSize,
+                    FontFamily = entity.PdfRendererBase.FontFamily,
+                    Opacity = entity.PdfRendererBase.Opacity,
+                    Row = entity.PdfRendererBase.Row,
+                    Column = entity.PdfRendererBase.Column,
+                    RowSpan = entity.PdfRendererBase.RowSpan,
+                    ColumnSpan = entity.PdfRendererBase.ColumnSpan,
+                },
                 ShowBarcodeText = entity.ShowBarcodeText,
                 SqlTemplateId = entity.SqlTemplateId,
                 SqlId = entity.SqlId,
@@ -124,62 +127,62 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             };
 
             if (entity.PdfRendererBase.HorizontalAlignment.HasValue)
-                model.HorizontalAlignment = (HorizontalAlignment)entity.PdfRendererBase.HorizontalAlignment.Value;
+                model.RendererBase.HorizontalAlignment = (HorizontalAlignment)entity.PdfRendererBase.HorizontalAlignment.Value;
 
             if (entity.PdfRendererBase.VerticalAlignment.HasValue)
-                model.VerticalAlignment = (VerticalAlignment)entity.PdfRendererBase.VerticalAlignment.Value;
+                model.RendererBase.VerticalAlignment = (VerticalAlignment)entity.PdfRendererBase.VerticalAlignment.Value;
 
             if (entity.PdfRendererBase.Position.HasValue)
-                model.Position = (Position)entity.PdfRendererBase.Position.Value;
-            
+                model.RendererBase.Position = (Position)entity.PdfRendererBase.Position.Value;
+
             if (entity.PdfRendererBase.FontStyle.HasValue)
-                model.FontStyle = (XFontStyle)entity.PdfRendererBase.FontStyle.Value;
+                model.RendererBase.FontStyle = (XFontStyle)entity.PdfRendererBase.FontStyle.Value;
 
             if (entity.PdfRendererBase.BrushColor.HasValue)
-                model.BrushColor = (XKnownColor)entity.PdfRendererBase.BrushColor.Value;
+                model.RendererBase.BrushColor = (XKnownColor)entity.PdfRendererBase.BrushColor.Value;
 
             if (entity.PdfRendererBase.BackgroundColor.HasValue)
-                model.BackgroundColor = (XKnownColor)entity.PdfRendererBase.BackgroundColor.Value;
+                model.RendererBase.BackgroundColor = (XKnownColor)entity.PdfRendererBase.BackgroundColor.Value;
 
-            if(entity.BarcodeFormat.HasValue)
+            if (entity.BarcodeFormat.HasValue)
                 model.BarcodeFormat = (BarcodeFormat)entity.BarcodeFormat.Value;
-            
+
             return model;
         }
 
         private PdfRendererBase CreateEntity(PdfBarcodeRendererModel model, PdfRendererBase pdfRendererBase)
         {
             var pdfBarcodeRenderer = pdfRendererBase.PdfBarcodeRenderers.Single();
-            
-            pdfBarcodeRenderer.PdfRendererBaseId = model.PdfRendererBaseId;
+
+            pdfBarcodeRenderer.PdfRendererBaseId = model.RendererBase.PdfRendererBaseId;
             pdfBarcodeRenderer.BarcodeFormat = model.BarcodeFormat.HasValue ? (int?)model.BarcodeFormat.Value : null;
             pdfBarcodeRenderer.ShowBarcodeText = model.ShowBarcodeText;
             pdfBarcodeRenderer.SqlTemplateId = model.SqlTemplateId;
             pdfBarcodeRenderer.SqlId = model.SqlId;
             pdfBarcodeRenderer.SqlResColumn = model.SqlResColumn;
-            
-            pdfRendererBase.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfRendererBase.Id = model.Id;
-            pdfRendererBase.RendererType = (byte)model.RendererType;
-            pdfRendererBase.Margin = model.Margin;
-            pdfRendererBase.Padding = model.Padding;
-            pdfRendererBase.HorizontalAlignment = model.HorizontalAlignment.HasValue ? (byte?)model.HorizontalAlignment.Value : null;
-            pdfRendererBase.VerticalAlignment = model.VerticalAlignment.HasValue ? (byte?)model.VerticalAlignment.Value : null;
-            pdfRendererBase.Position = model.Position.HasValue ? (byte?)model.Position.Value : null;
-            pdfRendererBase.Left = model.Left;
-            pdfRendererBase.Right = model.Right;
-            pdfRendererBase.Top = model.Top;
-            pdfRendererBase.Bottom = model.Bottom;
-            pdfRendererBase.FontSize = model.FontSize;
-            pdfRendererBase.FontFamily = model.FontFamily;
-            pdfRendererBase.FontStyle = model.FontStyle.HasValue ? (byte?)model.FontStyle.Value : null;
-            pdfRendererBase.Opacity = model.Opacity;
-            pdfRendererBase.BrushColor = model.BrushColor.HasValue ? (byte?)model.BrushColor.Value : null;
-            pdfRendererBase.BackgroundColor = model.BackgroundColor.HasValue ? (byte?)model.BackgroundColor.Value : null;
-            pdfRendererBase.Row = model.Row;
-            pdfRendererBase.Column = model.Column;
-            pdfRendererBase.RowSpan = model.RowSpan;
-            pdfRendererBase.ColumnSpan = model.ColumnSpan;
+
+            pdfRendererBase.PdfRendererBaseId = model.RendererBase.PdfRendererBaseId;
+            pdfRendererBase.Id = model.RendererBase.Id;
+            pdfRendererBase.RendererType = (byte)model.RendererBase.RendererType;
+            pdfRendererBase.Margin = model.RendererBase.Margin;
+            pdfRendererBase.Padding = model.RendererBase.Padding;
+            pdfRendererBase.HorizontalAlignment = model.RendererBase.HorizontalAlignment.HasValue ? (byte?)model.RendererBase.HorizontalAlignment.Value : null;
+            pdfRendererBase.VerticalAlignment = model.RendererBase.VerticalAlignment.HasValue ? (byte?)model.RendererBase.VerticalAlignment.Value : null;
+            pdfRendererBase.Position = model.RendererBase.Position.HasValue ? (byte?)model.RendererBase.Position.Value : null;
+            pdfRendererBase.Left = model.RendererBase.Left;
+            pdfRendererBase.Right = model.RendererBase.Right;
+            pdfRendererBase.Top = model.RendererBase.Top;
+            pdfRendererBase.Bottom = model.RendererBase.Bottom;
+            pdfRendererBase.FontSize = model.RendererBase.FontSize;
+            pdfRendererBase.FontFamily = model.RendererBase.FontFamily;
+            pdfRendererBase.FontStyle = model.RendererBase.FontStyle.HasValue ? (byte?)model.RendererBase.FontStyle.Value : null;
+            pdfRendererBase.Opacity = model.RendererBase.Opacity;
+            pdfRendererBase.BrushColor = model.RendererBase.BrushColor.HasValue ? (byte?)model.RendererBase.BrushColor.Value : null;
+            pdfRendererBase.BackgroundColor = model.RendererBase.BackgroundColor.HasValue ? (byte?)model.RendererBase.BackgroundColor.Value : null;
+            pdfRendererBase.Row = model.RendererBase.Row;
+            pdfRendererBase.Column = model.RendererBase.Column;
+            pdfRendererBase.RowSpan = model.RendererBase.RowSpan;
+            pdfRendererBase.ColumnSpan = model.RendererBase.ColumnSpan;
 
             return pdfRendererBase;
         }

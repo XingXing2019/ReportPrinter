@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Model;
@@ -26,8 +27,25 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
                     PdfRendererBaseId = pdfRenderer.PdfRendererBaseId,
                     Id = pdfRenderer.Id,
                     RendererType = (byte)pdfRenderer.RendererType,
+                    Margin = pdfRenderer.Margin,
+                    Padding = pdfRenderer.Padding,
+                    HorizontalAlignment = pdfRenderer.HorizontalAlignment.HasValue ? (byte?)pdfRenderer.HorizontalAlignment.Value : null,
+                    VerticalAlignment = pdfRenderer.VerticalAlignment.HasValue ? (byte?)pdfRenderer.VerticalAlignment.Value : null,
+                    Position = pdfRenderer.Position.HasValue ? (byte?)pdfRenderer.Position.Value : null,
+                    Left = pdfRenderer.Left,
+                    Right = pdfRenderer.Right,
+                    Top = pdfRenderer.Top,
+                    Bottom = pdfRenderer.Bottom,
+                    FontSize = pdfRenderer.FontSize,
+                    FontFamily = pdfRenderer.FontFamily,
+                    FontStyle = pdfRenderer.FontStyle.HasValue ? (byte?)pdfRenderer.FontStyle.Value : null,
+                    Opacity = pdfRenderer.Opacity,
+                    BrushColor = pdfRenderer.BrushColor.HasValue ? (byte?)pdfRenderer.BrushColor.Value : null,
+                    BackgroundColor = pdfRenderer.BackgroundColor.HasValue ? (byte?)pdfRenderer.BackgroundColor.Value : null,
                     Row = pdfRenderer.Row,
-                    Column = pdfRenderer.Column
+                    Column = pdfRenderer.Column,
+                    RowSpan = pdfRenderer.RowSpan,
+                    ColumnSpan = pdfRenderer.ColumnSpan
                 };
 
                 context.PdfRendererBases.Add(pdfRendererBase);
@@ -206,8 +224,25 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
                 PdfRendererBaseId = entity.PdfRendererBaseId,
                 Id = entity.Id,
                 RendererType = (PdfRendererType)entity.RendererType,
+                Margin = entity.Margin,
+                Padding = entity.Padding,
+                HorizontalAlignment = entity.HorizontalAlignment.HasValue ? (HorizontalAlignment?)entity.HorizontalAlignment : null,
+                VerticalAlignment = entity.VerticalAlignment.HasValue ? (VerticalAlignment?)entity.VerticalAlignment : null,
+                Position = entity.Position.HasValue ? (Position?)entity.Position : null,
+                Left = entity.Left,
+                Right = entity.Right,
+                Top = entity.Top,
+                Bottom = entity.Bottom,
+                FontSize = entity.FontSize,
+                FontFamily = entity.FontFamily,
+                FontStyle = entity.FontStyle.HasValue ? (XFontStyle?)entity.FontStyle : null,
+                Opacity = entity.Opacity,
+                BrushColor = entity.BrushColor.HasValue ? (XKnownColor?)entity.BrushColor : null,
+                BackgroundColor = entity.BackgroundColor.HasValue ? (XKnownColor?)entity.BackgroundColor : null,
                 Row = entity.Row,
                 Column = entity.Column,
+                RowSpan = entity.RowSpan,
+                ColumnSpan = entity.ColumnSpan,
             };
         }
 

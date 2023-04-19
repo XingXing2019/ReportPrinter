@@ -116,22 +116,25 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.BarcodeFormat).HasColumnName("PBR_BarcodeFormat");
-
+                
                 entity.Property(e => e.PdfRendererBaseId).HasColumnName("PBR_PdfRendererBaseId");
 
                 entity.Property(e => e.ShowBarcodeText).HasColumnName("PBR_ShowBarcodeText");
 
                 entity.Property(e => e.SqlId)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("PBR_SqlId");
 
                 entity.Property(e => e.SqlResColumn)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("PBR_SqlResColumn");
 
                 entity.Property(e => e.SqlTemplateId)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("PBR_SqlTemplateId");

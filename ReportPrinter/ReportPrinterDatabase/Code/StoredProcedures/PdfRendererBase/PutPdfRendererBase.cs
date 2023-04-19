@@ -2,9 +2,9 @@
 
 namespace ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase
 {
-    public class PostPdfRendererBase : StoredProcedureBase
+    public class PutPdfRendererBase : StoredProcedureBase
     {
-        public PostPdfRendererBase(Guid pdfRendererBaseId, string id, byte rendererType, string margin, string padding, byte? horizontalAlignment,
+        public PutPdfRendererBase(Guid pdfRendererBaseId, string id, byte rendererType, string margin, string padding, byte? horizontalAlignment,
             byte? verticalAlignment, byte? position, double? left, double? right, double? top, double? bottom, double? fontSize, string fontFamily, byte? fontStyle,
             double? opacity, byte? brushColor, byte? backgroundColor, int row, int column, int? rowSpan, int? columnSpan)
         {

@@ -6,6 +6,7 @@ using ReportPrinterDatabase.Code.Model;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
 using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
+using ZXing.Rendering;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {
@@ -25,13 +26,30 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 
             try
             {
-                var pdfRendererBaseId = pdfRenderer.PdfRendererBaseId;
-                var id = pdfRenderer.Id;
-                var rendererType = (byte)pdfRenderer.RendererType;
-                var row = pdfRenderer.Row;
-                var column = pdfRenderer.Column;
-
-                var sp = new PostPdfRendererBase(pdfRendererBaseId, id, rendererType, row, column);
+                var sp = new PostPdfRendererBase(
+                    pdfRenderer.PdfRendererBaseId,
+                    pdfRenderer.Id,
+                    (byte)pdfRenderer.RendererType,
+                    pdfRenderer.Margin,
+                    pdfRenderer.Padding,
+                    (byte?)pdfRenderer.HorizontalAlignment,
+                    (byte?)pdfRenderer.VerticalAlignment,
+                    (byte?)pdfRenderer.Position,
+                    pdfRenderer.Left,
+                    pdfRenderer.Right,
+                    pdfRenderer.Top,
+                    pdfRenderer.Bottom,
+                    pdfRenderer.FontSize,
+                    pdfRenderer.FontFamily,
+                    (byte?)pdfRenderer.FontStyle,
+                    pdfRenderer.Opacity,
+                    (byte?)pdfRenderer.BrushColor,
+                    (byte?)pdfRenderer.BackgroundColor,
+                    pdfRenderer.Row,
+                    pdfRenderer.Column,
+                    pdfRenderer.RowSpan,
+                    pdfRenderer.ColumnSpan
+                );
                 var rows = await _executor.ExecuteNonQueryAsync(sp);
                 Logger.Debug($"Record PDF renderer: {pdfRenderer.PdfRendererBaseId}, {rows} row affected", procName);
             }

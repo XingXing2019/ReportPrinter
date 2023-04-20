@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterDatabase.Code.StoredProcedures;
+using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
 using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {
     public class PdfRendererManagerBase<T> where T : PdfRendererBaseModel
     {
-        protected void AssignRendererBaseModelProperties(PdfRendererBaseModel from, PdfBarcodeRendererModel to)
+        protected void AssignRendererBaseModelProperties(PdfRendererBaseModel from, T to)
         {
             to.PdfRendererBaseId = from.PdfRendererBaseId;
             to.Id = from.Id;
@@ -101,6 +104,72 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
             pdfRendererBase.Column = model.Column;
             pdfRendererBase.RowSpan = model.RowSpan;
             pdfRendererBase.ColumnSpan = model.ColumnSpan;
+        }
+
+        protected List<StoredProcedureBase> CreatePostStoreProcedures(T model)
+        {
+            var spList = new List<StoredProcedureBase>
+            {
+                new PostPdfRendererBase(
+                    model.PdfRendererBaseId,
+                    model.Id,
+                    (byte)model.RendererType,
+                    model.Margin,
+                    model.Padding,
+                    (byte?)model.HorizontalAlignment,
+                    (byte?)model.VerticalAlignment,
+                    (byte?)model.Position,
+                    model.Left,
+                    model.Right,
+                    model.Top,
+                    model.Bottom,
+                    model.FontSize,
+                    model.FontFamily,
+                    (byte?)model.FontStyle,
+                    model.Opacity,
+                    (byte?)model.BrushColor,
+                    (byte?)model.BackgroundColor,
+                    model.Row,
+                    model.Column,
+                    model.RowSpan,
+                    model.ColumnSpan
+                )
+            };
+
+            return spList;
+        }
+
+        protected List<StoredProcedureBase> CreatePutStoreProcedures(T model)
+        {
+            var spList = new List<StoredProcedureBase>
+            {
+                new PutPdfRendererBase(
+                    model.PdfRendererBaseId,
+                    model.Id,
+                    (byte)model.RendererType,
+                    model.Margin,
+                    model.Padding,
+                    (byte?)model.HorizontalAlignment,
+                    (byte?)model.VerticalAlignment,
+                    (byte?)model.Position,
+                    model.Left,
+                    model.Right,
+                    model.Top,
+                    model.Bottom,
+                    model.FontSize,
+                    model.FontFamily,
+                    (byte?)model.FontStyle,
+                    model.Opacity,
+                    (byte?)model.BrushColor,
+                    (byte?)model.BackgroundColor,
+                    model.Row,
+                    model.Column,
+                    model.RowSpan,
+                    model.ColumnSpan
+                )
+            };
+
+            return spList;
         }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.Model;
-using ReportPrinterDatabase.Code.StoredProcedures;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfBarcodeRenderer;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
 using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer
 {
-    public class PdfBarcodeRendererSPManager : PdfRendererManagerBase<PdfAnnotationRendererModel>, IPdfBarcodeRendererManager
+    public class PdfBarcodeRendererSPManager : PdfRendererManagerBase<PdfBarcodeRendererModel>, IPdfBarcodeRendererManager
     {
         private readonly StoredProcedureExecutor _executor;
 
@@ -25,41 +23,16 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
             try
             {
-                var spList = new List<StoredProcedureBase>
-                {
-                    new PostPdfRendererBase(
-                        barcodeRenderer.PdfRendererBaseId,
-                        barcodeRenderer.Id,
-                        (byte)barcodeRenderer.RendererType,
-                        barcodeRenderer.Margin,
-                        barcodeRenderer.Padding,
-                        (byte?)barcodeRenderer.HorizontalAlignment,
-                        (byte?)barcodeRenderer.VerticalAlignment,
-                        (byte?)barcodeRenderer.Position,
-                        barcodeRenderer.Left,
-                        barcodeRenderer.Right,
-                        barcodeRenderer.Top,
-                        barcodeRenderer.Bottom,
-                        barcodeRenderer.FontSize,
-                        barcodeRenderer.FontFamily,
-                        (byte?)barcodeRenderer.FontStyle,
-                        barcodeRenderer.Opacity,
-                        (byte?)barcodeRenderer.BrushColor,
-                        (byte?)barcodeRenderer.BackgroundColor,
-                        barcodeRenderer.Row,
-                        barcodeRenderer.Column,
-                        barcodeRenderer.RowSpan,
-                        barcodeRenderer.ColumnSpan
-                    ),
-                    new PostPdfBarcodeRenderer(
-                        barcodeRenderer.PdfRendererBaseId,
-                        (int?)barcodeRenderer.BarcodeFormat,
-                        barcodeRenderer.ShowBarcodeText,
-                        barcodeRenderer.SqlTemplateId,
-                        barcodeRenderer.SqlId,
-                        barcodeRenderer.SqlResColumn
-                    )
-                };
+                var spList = CreatePostStoreProcedures(barcodeRenderer);
+
+                spList.Add(new PostPdfBarcodeRenderer(
+                    barcodeRenderer.PdfRendererBaseId,
+                    (int?)barcodeRenderer.BarcodeFormat,
+                    barcodeRenderer.ShowBarcodeText,
+                    barcodeRenderer.SqlTemplateId,
+                    barcodeRenderer.SqlId,
+                    barcodeRenderer.SqlResColumn
+                ));
 
                 var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Record pdf barcode renderer: {barcodeRenderer.PdfRendererBaseId}, {rows} row affected", procName);
@@ -82,7 +55,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
                 if (pdfRendererBase == null || pdfBarcodeRenderer == null)
                 {
-                    Logger.Debug($"PDF renderer: {pdfRendererBaseId} does not exist", procName);
+                    Logger.Debug($"PDF barcode renderer: {pdfRendererBaseId} does not exist", procName);
                     return null;
                 }
 
@@ -104,42 +77,15 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
             try
             {
-                var spList = new List<StoredProcedureBase>
-                {
-                    new PutPdfRendererBase(
-                        barcodeRenderer.PdfRendererBaseId,
-                        barcodeRenderer.Id,
-                        (byte)barcodeRenderer.RendererType,
-                        barcodeRenderer.Margin,
-                        barcodeRenderer.Padding,
-                        (byte?)barcodeRenderer.HorizontalAlignment,
-                        (byte?)barcodeRenderer.VerticalAlignment,
-                        (byte?)barcodeRenderer.Position,
-                        barcodeRenderer.Left,
-                        barcodeRenderer.Right,
-                        barcodeRenderer.Top,
-                        barcodeRenderer.Bottom,
-                        barcodeRenderer.FontSize,
-                        barcodeRenderer.FontFamily,
-                        (byte?)barcodeRenderer.FontStyle,
-                        barcodeRenderer.Opacity,
-                        (byte?)barcodeRenderer.BrushColor,
-                        (byte?)barcodeRenderer.BackgroundColor,
-                        barcodeRenderer.Row,
-                        barcodeRenderer.Column,
-                        barcodeRenderer.RowSpan,
-                        barcodeRenderer.ColumnSpan
-
-                    ),
-                    new PutPdfBarcodeRenderer(
-                        barcodeRenderer.PdfRendererBaseId,
-                        (int?)barcodeRenderer.BarcodeFormat,
-                        barcodeRenderer.ShowBarcodeText,
-                        barcodeRenderer.SqlTemplateId,
-                        barcodeRenderer.SqlId,
-                        barcodeRenderer.SqlResColumn
-                    )
-                };
+                var spList = CreatePutStoreProcedures(barcodeRenderer);
+                spList.Add(new PutPdfBarcodeRenderer(
+                    barcodeRenderer.PdfRendererBaseId,
+                    (int?)barcodeRenderer.BarcodeFormat,
+                    barcodeRenderer.ShowBarcodeText,
+                    barcodeRenderer.SqlTemplateId,
+                    barcodeRenderer.SqlId,
+                    barcodeRenderer.SqlResColumn
+                ));
 
                 var rows = _executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Update pdf barcode renderer: {barcodeRenderer.PdfRendererBaseId}, {rows} row affected", procName);

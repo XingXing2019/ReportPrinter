@@ -24,8 +24,9 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
-        [TestCase(typeof(PdfAnnotationRendererEFCoreManager))]
-        public async Task TestPdfBarcodeRendererManager_Get(Type managerType)
+        //[TestCase(typeof(PdfAnnotationRendererEFCoreManager))]
+        [TestCase(typeof(PdfAnnotationRendererSPManager))]
+        public async Task TesPdfAnnotationRendererEFCoreManager_Get(Type managerType)
         {
             try
             {
@@ -113,7 +114,8 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
         [Test]
         [TestCase(typeof(PdfAnnotationRendererEFCoreManager))]
-        public async Task TestPdfBarcodeRendererManager_Post(Type managerType)
+        [TestCase(typeof(PdfAnnotationRendererSPManager))]
+        public async Task TestPdfAnnotationRendererEFCoreManager_Post(Type managerType)
         {
             try
             {

@@ -10,7 +10,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer
 {
-    public class PdfBarcodeRendererSPManager : IPdfBarcodeRendererManager
+    public class PdfBarcodeRendererSPManager : PdfRendererManagerBase<PdfAnnotationRendererModel>, IPdfBarcodeRendererManager
     {
         private readonly StoredProcedureExecutor _executor;
 
@@ -28,31 +28,31 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 var spList = new List<StoredProcedureBase>
                 {
                     new PostPdfRendererBase(
-                        barcodeRenderer.RendererBase.PdfRendererBaseId,
-                        barcodeRenderer.RendererBase.Id,
-                        (byte)barcodeRenderer.RendererBase.RendererType,
-                        barcodeRenderer.RendererBase.Margin,
-                        barcodeRenderer.RendererBase.Padding,
-                        (byte?)barcodeRenderer.RendererBase.HorizontalAlignment,
-                        (byte?)barcodeRenderer.RendererBase.VerticalAlignment,
-                        (byte?)barcodeRenderer.RendererBase.Position,
-                        barcodeRenderer.RendererBase.Left,
-                        barcodeRenderer.RendererBase.Right,
-                        barcodeRenderer.RendererBase.Top,
-                        barcodeRenderer.RendererBase.Bottom,
-                        barcodeRenderer.RendererBase.FontSize,
-                        barcodeRenderer.RendererBase.FontFamily,
-                        (byte?)barcodeRenderer.RendererBase.FontStyle,
-                        barcodeRenderer.RendererBase.Opacity,
-                        (byte?)barcodeRenderer.RendererBase.BrushColor,
-                        (byte?)barcodeRenderer.RendererBase.BackgroundColor,
-                        barcodeRenderer.RendererBase.Row,
-                        barcodeRenderer.RendererBase.Column,
-                        barcodeRenderer.RendererBase.RowSpan,
-                        barcodeRenderer.RendererBase.ColumnSpan
+                        barcodeRenderer.PdfRendererBaseId,
+                        barcodeRenderer.Id,
+                        (byte)barcodeRenderer.RendererType,
+                        barcodeRenderer.Margin,
+                        barcodeRenderer.Padding,
+                        (byte?)barcodeRenderer.HorizontalAlignment,
+                        (byte?)barcodeRenderer.VerticalAlignment,
+                        (byte?)barcodeRenderer.Position,
+                        barcodeRenderer.Left,
+                        barcodeRenderer.Right,
+                        barcodeRenderer.Top,
+                        barcodeRenderer.Bottom,
+                        barcodeRenderer.FontSize,
+                        barcodeRenderer.FontFamily,
+                        (byte?)barcodeRenderer.FontStyle,
+                        barcodeRenderer.Opacity,
+                        (byte?)barcodeRenderer.BrushColor,
+                        (byte?)barcodeRenderer.BackgroundColor,
+                        barcodeRenderer.Row,
+                        barcodeRenderer.Column,
+                        barcodeRenderer.RowSpan,
+                        barcodeRenderer.ColumnSpan
                     ),
                     new PostPdfBarcodeRenderer(
-                        barcodeRenderer.RendererBase.PdfRendererBaseId,
+                        barcodeRenderer.PdfRendererBaseId,
                         (int?)barcodeRenderer.BarcodeFormat,
                         barcodeRenderer.ShowBarcodeText,
                         barcodeRenderer.SqlTemplateId,
@@ -62,11 +62,11 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 };
 
                 var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
-                Logger.Debug($"Record pdf barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}, {rows} row affected", procName);
+                Logger.Debug($"Record pdf barcode renderer: {barcodeRenderer.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during recording PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during recording PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -79,14 +79,14 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             {
                 var pdfRendererBase = await _executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
                 var pdfBarcodeRenderer = await _executor.ExecuteQueryOneAsync<PdfBarcodeRendererModel>(new GetPdfBarcodeRenderer(pdfRendererBaseId));
-                
+
                 if (pdfRendererBase == null || pdfBarcodeRenderer == null)
                 {
                     Logger.Debug($"PDF renderer: {pdfRendererBaseId} does not exist", procName);
                     return null;
                 }
 
-                pdfBarcodeRenderer.RendererBase = pdfRendererBase;
+                AssignRendererBaseModelProperties(pdfRendererBase, pdfBarcodeRenderer);
                 Logger.Debug($"Retrieve PDF barcode renderer: {pdfRendererBaseId}", procName);
 
                 return pdfBarcodeRenderer;
@@ -107,32 +107,32 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 var spList = new List<StoredProcedureBase>
                 {
                     new PutPdfRendererBase(
-                        barcodeRenderer.RendererBase.PdfRendererBaseId,
-                        barcodeRenderer.RendererBase.Id,
-                        (byte)barcodeRenderer.RendererBase.RendererType,
-                        barcodeRenderer.RendererBase.Margin,
-                        barcodeRenderer.RendererBase.Padding,
-                        (byte?)barcodeRenderer.RendererBase.HorizontalAlignment,
-                        (byte?)barcodeRenderer.RendererBase.VerticalAlignment,
-                        (byte?)barcodeRenderer.RendererBase.Position,
-                        barcodeRenderer.RendererBase.Left,
-                        barcodeRenderer.RendererBase.Right,
-                        barcodeRenderer.RendererBase.Top,
-                        barcodeRenderer.RendererBase.Bottom,
-                        barcodeRenderer.RendererBase.FontSize,
-                        barcodeRenderer.RendererBase.FontFamily,
-                        (byte?)barcodeRenderer.RendererBase.FontStyle,
-                        barcodeRenderer.RendererBase.Opacity,
-                        (byte?)barcodeRenderer.RendererBase.BrushColor,
-                        (byte?)barcodeRenderer.RendererBase.BackgroundColor,
-                        barcodeRenderer.RendererBase.Row,
-                        barcodeRenderer.RendererBase.Column,
-                        barcodeRenderer.RendererBase.RowSpan,
-                        barcodeRenderer.RendererBase.ColumnSpan
+                        barcodeRenderer.PdfRendererBaseId,
+                        barcodeRenderer.Id,
+                        (byte)barcodeRenderer.RendererType,
+                        barcodeRenderer.Margin,
+                        barcodeRenderer.Padding,
+                        (byte?)barcodeRenderer.HorizontalAlignment,
+                        (byte?)barcodeRenderer.VerticalAlignment,
+                        (byte?)barcodeRenderer.Position,
+                        barcodeRenderer.Left,
+                        barcodeRenderer.Right,
+                        barcodeRenderer.Top,
+                        barcodeRenderer.Bottom,
+                        barcodeRenderer.FontSize,
+                        barcodeRenderer.FontFamily,
+                        (byte?)barcodeRenderer.FontStyle,
+                        barcodeRenderer.Opacity,
+                        (byte?)barcodeRenderer.BrushColor,
+                        (byte?)barcodeRenderer.BackgroundColor,
+                        barcodeRenderer.Row,
+                        barcodeRenderer.Column,
+                        barcodeRenderer.RowSpan,
+                        barcodeRenderer.ColumnSpan
 
                     ),
                     new PutPdfBarcodeRenderer(
-                        barcodeRenderer.RendererBase.PdfRendererBaseId,
+                        barcodeRenderer.PdfRendererBaseId,
                         (int?)barcodeRenderer.BarcodeFormat,
                         barcodeRenderer.ShowBarcodeText,
                         barcodeRenderer.SqlTemplateId,
@@ -142,11 +142,11 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 };
 
                 var rows = _executor.ExecuteNonQueryAsync(spList.ToArray());
-                Logger.Debug($"Update pdf barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}, {rows} row affected", procName);
+                Logger.Debug($"Update pdf barcode renderer: {barcodeRenderer.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating PDF barcode renderer: {barcodeRenderer.RendererBase.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

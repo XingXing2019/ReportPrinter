@@ -4,9 +4,8 @@ using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterDatabase.Code.Model
 {
-    public class PdfAnnotationRendererModel
+    public class PdfAnnotationRendererModel : PdfRendererBaseModel
     {
-        public PdfRendererBaseModel RendererBase { get; set; }
         public AnnotationRendererType AnnotationRendererType { get; set; }
         public string Title { get; set; }
         public PdfTextAnnotationIcon? Icon { get; set; }
@@ -14,10 +13,5 @@ namespace ReportPrinterDatabase.Code.Model
         public string SqlTemplateId { get; set; }
         public string SqlId { get; set; }
         public string SqlResColumn { get; set; }
-
-        public PdfAnnotationRendererModel()
-        {
-            RendererBase = new PdfRendererBaseModel();
-        }
     }
 }

@@ -1,14 +1,12 @@
 ﻿using NUnit.Framework;
 using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
 using System.Threading.Tasks;
 using System;
 using PdfSharp.Pdf.Annotations;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer;
-using ZXing;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
@@ -37,31 +35,28 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
                 var expectedRenderer = new PdfAnnotationRendererModel
                 {
-                    RendererBase = new PdfRendererBaseModel
-                    {
-                        PdfRendererBaseId = rendererBaseId,
-                        Id = "Test Pdf Barcode Renderer 1",
-                        RendererType = PdfRendererType.Barcode,
-                        Margin = "10, 5, 10, 5",
-                        Padding = "5, 10, 5, 10",
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        Position = Position.Static,
-                        Left = 10.5,
-                        Right = 5.5,
-                        Top = 20.5,
-                        Bottom = 15.5,
-                        FontSize = 6.5,
-                        FontFamily = "Time New Roman",
-                        FontStyle = XFontStyle.Strikeout,
-                        Opacity = 0.9,
-                        BrushColor = XKnownColor.YellowGreen,
-                        BackgroundColor = XKnownColor.Brown,
-                        Row = 2,
-                        Column = 4,
-                        RowSpan = 5,
-                        ColumnSpan = 9,
-                    },
+                    PdfRendererBaseId = rendererBaseId,
+                    Id = "Test Pdf Barcode Renderer 1",
+                    RendererType = PdfRendererType.Barcode,
+                    Margin = "10, 5, 10, 5",
+                    Padding = "5, 10, 5, 10",
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Position = Position.Static,
+                    Left = 10.5,
+                    Right = 5.5,
+                    Top = 20.5,
+                    Bottom = 15.5,
+                    FontSize = 6.5,
+                    FontFamily = "Time New Roman",
+                    FontStyle = XFontStyle.Strikeout,
+                    Opacity = 0.9,
+                    BrushColor = XKnownColor.YellowGreen,
+                    BackgroundColor = XKnownColor.Brown,
+                    Row = 2,
+                    Column = 4,
+                    RowSpan = 5,
+                    ColumnSpan = 9,
                     AnnotationRendererType = AnnotationRendererType.Text,
                     Title = "Test Title 1",
                     Icon = PdfTextAnnotationIcon.Insert,
@@ -76,27 +71,27 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 Assert.IsNotNull(actualRenderer);
                 AssertHelper.AssertObject(expectedRenderer, actualRenderer);
 
-                expectedRenderer.RendererBase.Id = "Test Pdf Barcode Renderer 2";
-                expectedRenderer.RendererBase.RendererType = PdfRendererType.Watermark;
-                expectedRenderer.RendererBase.Margin = null;
-                expectedRenderer.RendererBase.Padding = null;
-                expectedRenderer.RendererBase.HorizontalAlignment = null;
-                expectedRenderer.RendererBase.VerticalAlignment = null;
-                expectedRenderer.RendererBase.Position = null;
-                expectedRenderer.RendererBase.Left = null;
-                expectedRenderer.RendererBase.Right = null;
-                expectedRenderer.RendererBase.Top = null;
-                expectedRenderer.RendererBase.Bottom = null;
-                expectedRenderer.RendererBase.FontSize = null;
-                expectedRenderer.RendererBase.FontFamily = null;
-                expectedRenderer.RendererBase.FontStyle = null;
-                expectedRenderer.RendererBase.Opacity = null;
-                expectedRenderer.RendererBase.BrushColor = null;
-                expectedRenderer.RendererBase.BackgroundColor = null;
-                expectedRenderer.RendererBase.Row = 5;
-                expectedRenderer.RendererBase.Column = 1;
-                expectedRenderer.RendererBase.RowSpan = null;
-                expectedRenderer.RendererBase.ColumnSpan = null;
+                expectedRenderer.Id = "Test Pdf Barcode Renderer 2";
+                expectedRenderer.RendererType = PdfRendererType.Watermark;
+                expectedRenderer.Margin = null;
+                expectedRenderer.Padding = null;
+                expectedRenderer.HorizontalAlignment = null;
+                expectedRenderer.VerticalAlignment = null;
+                expectedRenderer.Position = null;
+                expectedRenderer.Left = null;
+                expectedRenderer.Right = null;
+                expectedRenderer.Top = null;
+                expectedRenderer.Bottom = null;
+                expectedRenderer.FontSize = null;
+                expectedRenderer.FontFamily = null;
+                expectedRenderer.FontStyle = null;
+                expectedRenderer.Opacity = null;
+                expectedRenderer.BrushColor = null;
+                expectedRenderer.BackgroundColor = null;
+                expectedRenderer.Row = 5;
+                expectedRenderer.Column = 1;
+                expectedRenderer.RowSpan = null;
+                expectedRenderer.ColumnSpan = null;
                 expectedRenderer.AnnotationRendererType = AnnotationRendererType.Sql;
                 expectedRenderer.Title = null;
                 expectedRenderer.Icon = null;
@@ -128,30 +123,27 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
                 var expectedRenderer = new PdfAnnotationRendererModel
                 {
-                    RendererBase = new PdfRendererBaseModel
-                    {
-                        PdfRendererBaseId = rendererBaseId,
-                        Id = "Test Pdf Barcode Renderer 1",
-                        RendererType = PdfRendererType.Barcode,
-                        Margin = null,
-                        Padding = null,
-                        HorizontalAlignment = null,
-                        VerticalAlignment = null,
-                        Position = null,
-                        Left = null,
-                        Right = null,
-                        Bottom = null,
-                        FontSize = null,
-                        FontFamily = null,
-                        FontStyle = null,
-                        Opacity = null,
-                        BrushColor = null,
-                        BackgroundColor = null,
-                        Row = 2,
-                        Column = 4,
-                        RowSpan = null,
-                        ColumnSpan = null,
-                    },
+                    PdfRendererBaseId = rendererBaseId,
+                    Id = "Test Pdf Barcode Renderer 1",
+                    RendererType = PdfRendererType.Barcode,
+                    Margin = null,
+                    Padding = null,
+                    HorizontalAlignment = null,
+                    VerticalAlignment = null,
+                    Position = null,
+                    Left = null,
+                    Right = null,
+                    Bottom = null,
+                    FontSize = null,
+                    FontFamily = null,
+                    FontStyle = null,
+                    Opacity = null,
+                    BrushColor = null,
+                    BackgroundColor = null,
+                    Row = 2,
+                    Column = 4,
+                    RowSpan = null,
+                    ColumnSpan = null,
                     AnnotationRendererType = AnnotationRendererType.Text,
                     Title = "Test Title 1",
                     Icon = PdfTextAnnotationIcon.Paragraph,

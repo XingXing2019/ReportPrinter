@@ -16,6 +16,7 @@
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
     <Folder Include="Code\SqlQuery\Programmability\TableFunction\" />
+    <Folder Include="Code\StoredProcedures\PdfImageRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfAnnotationRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfBarcodeRenderer\" />
     <Folder Include="Code\StoredProcedures\SqlVariableConfig\" />

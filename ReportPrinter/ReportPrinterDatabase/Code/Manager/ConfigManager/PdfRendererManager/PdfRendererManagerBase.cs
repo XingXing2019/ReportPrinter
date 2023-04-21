@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterDatabase.Code.StoredProcedures;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
@@ -12,6 +13,13 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {
     public abstract class PdfRendererManagerBase<T> where T : PdfRendererBaseModel
     {
+        protected readonly StoredProcedureExecutor Executor;
+
+        protected PdfRendererManagerBase()
+        {
+            Executor = new StoredProcedureExecutor();
+        }
+
         public abstract Task Post(T model);
         public abstract Task<T> Get(Guid pdfRendererBaseId);
         public abstract Task Put(T model);

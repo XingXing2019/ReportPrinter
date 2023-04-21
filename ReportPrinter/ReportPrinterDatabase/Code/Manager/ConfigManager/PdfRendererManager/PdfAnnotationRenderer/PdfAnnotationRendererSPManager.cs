@@ -12,13 +12,6 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 {
     public class PdfAnnotationRendererSPManager : PdfRendererManagerBase<PdfAnnotationRendererModel>
     {
-        private readonly StoredProcedureExecutor _executor;
-
-        public PdfAnnotationRendererSPManager()
-        {
-            _executor = new StoredProcedureExecutor();
-        }
-
         public override async Task Post(PdfAnnotationRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
@@ -38,7 +31,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.SqlResColumn
                 ));
 
-                var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
+                var rows = await Executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Record pdf annotation renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -54,8 +47,8 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
             try
             {
-                var pdfRendererBase = await _executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
-                var pdfAnnotationRenderer = await _executor.ExecuteQueryOneAsync<PdfAnnotationRendererModel>(new GetPdfAnnotationRenderer(pdfRendererBaseId));
+                var pdfRendererBase = await Executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
+                var pdfAnnotationRenderer = await Executor.ExecuteQueryOneAsync<PdfAnnotationRendererModel>(new GetPdfAnnotationRenderer(pdfRendererBaseId));
 
                 if (pdfRendererBase == null || pdfAnnotationRenderer == null)
                 {
@@ -93,7 +86,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.SqlResColumn
                 ));
 
-                var rows = _executor.ExecuteNonQueryAsync(spList.ToArray());
+                var rows = await Executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Update pdf annotation renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)

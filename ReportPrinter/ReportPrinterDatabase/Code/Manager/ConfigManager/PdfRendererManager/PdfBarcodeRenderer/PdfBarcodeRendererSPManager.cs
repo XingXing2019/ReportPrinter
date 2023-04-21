@@ -10,13 +10,6 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 {
     public class PdfBarcodeRendererSPManager : PdfRendererManagerBase<PdfBarcodeRendererModel>
     {
-        private readonly StoredProcedureExecutor _executor;
-
-        public PdfBarcodeRendererSPManager()
-        {
-            _executor = new StoredProcedureExecutor();
-        }
-
         public override async Task Post(PdfBarcodeRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
@@ -34,7 +27,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.SqlResColumn
                 ));
 
-                var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
+                var rows = await Executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Record pdf barcode renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
@@ -50,8 +43,8 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
             try
             {
-                var pdfRendererBase = await _executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
-                var pdfBarcodeRenderer = await _executor.ExecuteQueryOneAsync<PdfBarcodeRendererModel>(new GetPdfBarcodeRenderer(pdfRendererBaseId));
+                var pdfRendererBase = await Executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
+                var pdfBarcodeRenderer = await Executor.ExecuteQueryOneAsync<PdfBarcodeRendererModel>(new GetPdfBarcodeRenderer(pdfRendererBaseId));
 
                 if (pdfRendererBase == null || pdfBarcodeRenderer == null)
                 {
@@ -87,7 +80,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.SqlResColumn
                 ));
 
-                var rows = _executor.ExecuteNonQueryAsync(spList.ToArray());
+                var rows = await Executor.ExecuteNonQueryAsync(spList.ToArray());
                 Logger.Debug($"Update pdf barcode renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)

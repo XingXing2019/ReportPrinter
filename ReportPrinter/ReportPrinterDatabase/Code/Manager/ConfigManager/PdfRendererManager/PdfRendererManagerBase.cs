@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Model;
@@ -9,8 +10,12 @@ using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {
-    public class PdfRendererManagerBase<T> where T : PdfRendererBaseModel
+    public abstract class PdfRendererManagerBase<T> where T : PdfRendererBaseModel
     {
+        public abstract Task Post(T model);
+        public abstract Task<T> Get(Guid pdfRendererBaseId);
+        public abstract Task Put(T model);
+
         protected void AssignRendererBaseModelProperties(PdfRendererBaseModel from, T to)
         {
             to.PdfRendererBaseId = from.PdfRendererBaseId;

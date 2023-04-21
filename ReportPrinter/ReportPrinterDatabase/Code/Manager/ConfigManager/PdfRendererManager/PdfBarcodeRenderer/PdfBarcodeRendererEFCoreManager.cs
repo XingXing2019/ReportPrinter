@@ -10,9 +10,9 @@ using ZXing;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer
 {
-    public class PdfBarcodeRendererEFCoreManager : PdfRendererManagerBase<PdfBarcodeRendererModel>, IPdfBarcodeRendererManager
+    public class PdfBarcodeRendererEFCoreManager : PdfRendererManagerBase<PdfBarcodeRendererModel>
     {
-        public async Task Post(PdfBarcodeRendererModel barcodeRenderer)
+        public override async Task Post(PdfBarcodeRendererModel barcodeRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
@@ -35,7 +35,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public async Task<PdfBarcodeRendererModel> Get(Guid pdfRendererBaseId)
+        public override async Task<PdfBarcodeRendererModel> Get(Guid pdfRendererBaseId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
@@ -62,9 +62,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public async Task PutPdfBarcodeRenderer(PdfBarcodeRendererModel barcodeRenderer)
+        public override async Task Put(PdfBarcodeRendererModel barcodeRenderer)
         {
-            var procName = $"{this.GetType().Name}.{nameof(PutPdfBarcodeRenderer)}";
+            var procName = $"{this.GetType().Name}.{nameof(Put)}";
 
             try
             {

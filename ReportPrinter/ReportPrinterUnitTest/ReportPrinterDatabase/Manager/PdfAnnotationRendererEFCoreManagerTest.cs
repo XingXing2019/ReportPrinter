@@ -24,13 +24,13 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         }
 
         [Test]
-        //[TestCase(typeof(PdfAnnotationRendererEFCoreManager))]
+        [TestCase(typeof(PdfAnnotationRendererEFCoreManager))]
         [TestCase(typeof(PdfAnnotationRendererSPManager))]
         public async Task TesPdfAnnotationRendererEFCoreManager_Get(Type managerType)
         {
             try
             {
-                var mgr = (IPdfAnnotationRendererManager)Activator.CreateInstance(managerType);
+                var mgr = (PdfRendererManagerBase<PdfAnnotationRendererModel>)Activator.CreateInstance(managerType);
 
                 var rendererBaseId = Guid.NewGuid();
 
@@ -100,7 +100,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 expectedRenderer.SqlId = "Test Sql 2";
                 expectedRenderer.SqlResColumn = "Test Res Column 2";
 
-                await mgr.PutPdfAnnotationRenderer(expectedRenderer);
+                await mgr.Put(expectedRenderer);
 
                 actualRenderer = await mgr.Get(rendererBaseId);
                 Assert.IsNotNull(actualRenderer);
@@ -119,7 +119,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             try
             {
-                var mgr = (IPdfAnnotationRendererManager)Activator.CreateInstance(managerType);
+                var mgr = (PdfRendererManagerBase<PdfAnnotationRendererModel>)Activator.CreateInstance(managerType);
 
                 var rendererBaseId = Guid.NewGuid();
 

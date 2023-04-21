@@ -12,9 +12,9 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer
 {
-    public class PdfAnnotationRendererEFCoreManager : PdfRendererManagerBase<PdfAnnotationRendererModel>, IPdfAnnotationRendererManager
+    public class PdfAnnotationRendererEFCoreManager : PdfRendererManagerBase<PdfAnnotationRendererModel>
     {
-        public async Task Post(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Post(PdfAnnotationRendererModel annotationRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
@@ -37,7 +37,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public async Task<PdfAnnotationRendererModel> Get(Guid pdfRendererBaseId)
+        public override async Task<PdfAnnotationRendererModel> Get(Guid pdfRendererBaseId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
@@ -64,7 +64,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public async Task PutPdfAnnotationRenderer(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Put(PdfAnnotationRendererModel annotationRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(PutPdfBarcodeRenderer)}";
 

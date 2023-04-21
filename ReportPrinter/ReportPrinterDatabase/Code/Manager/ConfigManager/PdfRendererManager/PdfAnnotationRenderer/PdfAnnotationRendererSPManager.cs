@@ -10,7 +10,7 @@ using ZXing.Rendering;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer
 {
-    public class PdfAnnotationRendererSPManager : PdfRendererManagerBase<PdfAnnotationRendererModel>, IPdfAnnotationRendererManager
+    public class PdfAnnotationRendererSPManager : PdfRendererManagerBase<PdfAnnotationRendererModel>
     {
         private readonly StoredProcedureExecutor _executor;
 
@@ -19,7 +19,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             _executor = new StoredProcedureExecutor();
         }
 
-        public async Task Post(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Post(PdfAnnotationRendererModel annotationRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
@@ -48,7 +48,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public async Task<PdfAnnotationRendererModel> Get(Guid pdfRendererBaseId)
+        public override async Task<PdfAnnotationRendererModel> Get(Guid pdfRendererBaseId)
         {
             var procName = $"{this.GetType().Name}.{nameof(Get)}";
 
@@ -75,7 +75,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public async Task PutPdfAnnotationRenderer(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Put(PdfAnnotationRendererModel annotationRenderer)
         {
             var procName = $"{this.GetType().Name}.{nameof(PutPdfBarcodeRenderer)}";
 

@@ -12,7 +12,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 {
     public class PdfBarcodeRendererEFCoreManager : PdfRendererManagerBase<PdfBarcodeRendererModel>
     {
-        public override async Task Post(PdfBarcodeRendererModel barcodeRenderer)
+        public override async Task Post(PdfBarcodeRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
@@ -22,7 +22,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
                 var pdfRendererBase = new PdfRendererBase();
                 pdfRendererBase.PdfBarcodeRenderers.Add(new Entity.PdfBarcodeRenderer());
-                pdfRendererBase = CreateEntity(barcodeRenderer, pdfRendererBase);
+                pdfRendererBase = CreateEntity(model, pdfRendererBase);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -30,7 +30,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during recording PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during recording PDF barcode renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -62,7 +62,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public override async Task Put(PdfBarcodeRendererModel barcodeRenderer)
+        public override async Task Put(PdfBarcodeRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Put)}";
 
@@ -71,22 +71,22 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 await using var context = new ReportPrinterContext();
                 var entity = await context.PdfRendererBases
                     .Include(x => x.PdfBarcodeRenderers)
-                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == barcodeRenderer.PdfRendererBaseId);
+                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == model.PdfRendererBaseId);
 
                 if (entity == null)
                 {
-                    Logger.Debug($"PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId} does not exist", procName);
+                    Logger.Debug($"PDF barcode renderer: {model.PdfRendererBaseId} does not exist", procName);
                 }
                 else
                 {
-                    entity = CreateEntity(barcodeRenderer, entity);
+                    entity = CreateEntity(model, entity);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf barcode renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating PDF barcode renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

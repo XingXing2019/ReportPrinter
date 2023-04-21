@@ -14,7 +14,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 {
     public class PdfAnnotationRendererEFCoreManager : PdfRendererManagerBase<PdfAnnotationRendererModel>
     {
-        public override async Task Post(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Post(PdfAnnotationRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
@@ -24,7 +24,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
                 var pdfRendererBase = new PdfRendererBase();
                 pdfRendererBase.PdfAnnotationRenderers.Add(new Entity.PdfAnnotationRenderer());
-                pdfRendererBase = CreateEntity(annotationRenderer, pdfRendererBase);
+                pdfRendererBase = CreateEntity(model, pdfRendererBase);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -32,7 +32,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during recording PDF annotation renderer: {annotationRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during recording PDF annotation renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -64,7 +64,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public override async Task Put(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Put(PdfAnnotationRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(PutPdfBarcodeRenderer)}";
 
@@ -73,22 +73,22 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 await using var context = new ReportPrinterContext();
                 var entity = await context.PdfRendererBases
                     .Include(x => x.PdfAnnotationRenderers)
-                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == annotationRenderer.PdfRendererBaseId);
+                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == model.PdfRendererBaseId);
 
                 if (entity == null)
                 {
-                    Logger.Debug($"PDF annotation renderer: {annotationRenderer.PdfRendererBaseId} does not exist", procName);
+                    Logger.Debug($"PDF annotation renderer: {model.PdfRendererBaseId} does not exist", procName);
                 }
                 else
                 {
-                    entity = CreateEntity(annotationRenderer, entity);
+                    entity = CreateEntity(model, entity);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf annotation renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating PDF annotation renderer: {annotationRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating PDF annotation renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

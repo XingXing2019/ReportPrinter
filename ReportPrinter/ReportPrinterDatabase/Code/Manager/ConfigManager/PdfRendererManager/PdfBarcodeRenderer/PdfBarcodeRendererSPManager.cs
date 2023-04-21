@@ -17,29 +17,29 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             _executor = new StoredProcedureExecutor();
         }
 
-        public override async Task Post(PdfBarcodeRendererModel barcodeRenderer)
+        public override async Task Post(PdfBarcodeRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
             try
             {
-                var spList = CreatePostStoreProcedures(barcodeRenderer);
+                var spList = CreatePostStoreProcedures(model);
 
                 spList.Add(new PostPdfBarcodeRenderer(
-                    barcodeRenderer.PdfRendererBaseId,
-                    (int?)barcodeRenderer.BarcodeFormat,
-                    barcodeRenderer.ShowBarcodeText,
-                    barcodeRenderer.SqlTemplateId,
-                    barcodeRenderer.SqlId,
-                    barcodeRenderer.SqlResColumn
+                    model.PdfRendererBaseId,
+                    (int?)model.BarcodeFormat,
+                    model.ShowBarcodeText,
+                    model.SqlTemplateId,
+                    model.SqlId,
+                    model.SqlResColumn
                 ));
 
                 var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
-                Logger.Debug($"Record pdf barcode renderer: {barcodeRenderer.PdfRendererBaseId}, {rows} row affected", procName);
+                Logger.Debug($"Record pdf barcode renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during recording PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during recording PDF barcode renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -71,28 +71,28 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public override async Task Put(PdfBarcodeRendererModel barcodeRenderer)
+        public override async Task Put(PdfBarcodeRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Put)}";
 
             try
             {
-                var spList = CreatePutStoreProcedures(barcodeRenderer);
+                var spList = CreatePutStoreProcedures(model);
                 spList.Add(new PutPdfBarcodeRenderer(
-                    barcodeRenderer.PdfRendererBaseId,
-                    (int?)barcodeRenderer.BarcodeFormat,
-                    barcodeRenderer.ShowBarcodeText,
-                    barcodeRenderer.SqlTemplateId,
-                    barcodeRenderer.SqlId,
-                    barcodeRenderer.SqlResColumn
+                    model.PdfRendererBaseId,
+                    (int?)model.BarcodeFormat,
+                    model.ShowBarcodeText,
+                    model.SqlTemplateId,
+                    model.SqlId,
+                    model.SqlResColumn
                 ));
 
                 var rows = _executor.ExecuteNonQueryAsync(spList.ToArray());
-                Logger.Debug($"Update pdf barcode renderer: {barcodeRenderer.PdfRendererBaseId}, {rows} row affected", procName);
+                Logger.Debug($"Update pdf barcode renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating PDF barcode renderer: {barcodeRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating PDF barcode renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

@@ -19,31 +19,31 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             _executor = new StoredProcedureExecutor();
         }
 
-        public override async Task Post(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Post(PdfAnnotationRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(Post)}";
 
             try
             {
-                var spList = CreatePostStoreProcedures(annotationRenderer);
+                var spList = CreatePostStoreProcedures(model);
 
                 spList.Add(new PostPdfAnnotationRenderer(
-                    annotationRenderer.PdfRendererBaseId,
-                    (byte)annotationRenderer.AnnotationRendererType,
-                    annotationRenderer.Title,
-                    (byte?)annotationRenderer.Icon,
-                    annotationRenderer.Content,
-                    annotationRenderer.SqlTemplateId,
-                    annotationRenderer.SqlId,
-                    annotationRenderer.SqlResColumn
+                    model.PdfRendererBaseId,
+                    (byte)model.AnnotationRendererType,
+                    model.Title,
+                    (byte?)model.Icon,
+                    model.Content,
+                    model.SqlTemplateId,
+                    model.SqlId,
+                    model.SqlResColumn
                 ));
 
                 var rows = await _executor.ExecuteNonQueryAsync(spList.ToArray());
-                Logger.Debug($"Record pdf annotation renderer: {annotationRenderer.PdfRendererBaseId}, {rows} row affected", procName);
+                Logger.Debug($"Record pdf annotation renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during recording PDF annotation renderer: {annotationRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during recording PDF annotation renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }
@@ -75,30 +75,30 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             }
         }
 
-        public override async Task Put(PdfAnnotationRendererModel annotationRenderer)
+        public override async Task Put(PdfAnnotationRendererModel model)
         {
             var procName = $"{this.GetType().Name}.{nameof(PutPdfBarcodeRenderer)}";
 
             try
             {
-                var spList = CreatePutStoreProcedures(annotationRenderer);
+                var spList = CreatePutStoreProcedures(model);
                 spList.Add(new PutPdfAnnotationRenderer(
-                    annotationRenderer.PdfRendererBaseId,
-                    (byte)annotationRenderer.AnnotationRendererType,
-                    annotationRenderer.Title,
-                    (byte?)annotationRenderer.Icon,
-                    annotationRenderer.Content,
-                    annotationRenderer.SqlTemplateId,
-                    annotationRenderer.SqlId,
-                    annotationRenderer.SqlResColumn
+                    model.PdfRendererBaseId,
+                    (byte)model.AnnotationRendererType,
+                    model.Title,
+                    (byte?)model.Icon,
+                    model.Content,
+                    model.SqlTemplateId,
+                    model.SqlId,
+                    model.SqlResColumn
                 ));
 
                 var rows = _executor.ExecuteNonQueryAsync(spList.ToArray());
-                Logger.Debug($"Update pdf annotation renderer: {annotationRenderer.PdfRendererBaseId}, {rows} row affected", procName);
+                Logger.Debug($"Update pdf annotation renderer: {model.PdfRendererBaseId}, {rows} row affected", procName);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception happened during updating PDF annotation renderer: {annotationRenderer.PdfRendererBaseId}. Ex: {ex.Message}", procName);
+                Logger.Error($"Exception happened during updating PDF annotation renderer: {model.PdfRendererBaseId}. Ex: {ex.Message}", procName);
                 throw;
             }
         }

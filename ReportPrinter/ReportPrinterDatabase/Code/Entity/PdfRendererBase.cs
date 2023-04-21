@@ -11,6 +11,11 @@ namespace ReportPrinterDatabase.Code.Entity
         {
             PdfAnnotationRenderers = new HashSet<PdfAnnotationRenderer>();
             PdfBarcodeRenderers = new HashSet<PdfBarcodeRenderer>();
+            PdfImageRenderers = new HashSet<PdfImageRenderer>();
+            PdfPageNumberRenderers = new HashSet<PdfPageNumberRenderer>();
+            PdfReprintMarkRenderers = new HashSet<PdfReprintMarkRenderer>();
+            PdfTextRenderers = new HashSet<PdfTextRenderer>();
+            PdfWaterMarkRenderers = new HashSet<PdfWaterMarkRenderer>();
         }
 
         public Guid PdfRendererBaseId { get; set; }
@@ -38,5 +43,10 @@ namespace ReportPrinterDatabase.Code.Entity
 
         public virtual ICollection<PdfAnnotationRenderer> PdfAnnotationRenderers { get; set; }
         public virtual ICollection<PdfBarcodeRenderer> PdfBarcodeRenderers { get; set; }
+        public virtual ICollection<PdfImageRenderer> PdfImageRenderers { get; set; }
+        public virtual ICollection<PdfPageNumberRenderer> PdfPageNumberRenderers { get; set; }
+        public virtual ICollection<PdfReprintMarkRenderer> PdfReprintMarkRenderers { get; set; }
+        public virtual ICollection<PdfTextRenderer> PdfTextRenderers { get; set; }
+        public virtual ICollection<PdfWaterMarkRenderer> PdfWaterMarkRenderers { get; set; }
     }
 }

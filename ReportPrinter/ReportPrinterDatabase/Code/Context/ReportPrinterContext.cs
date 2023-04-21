@@ -32,15 +32,20 @@ namespace ReportPrinterDatabase.Code.Context
         public ReportPrinterContext(DbContextOptions<ReportPrinterContext> options)
             : base(options) { }
 
+        public virtual DbSet<PdfAnnotationRenderer> PdfAnnotationRenderers { get; set; }
+        public virtual DbSet<PdfBarcodeRenderer> PdfBarcodeRenderers { get; set; }
+        public virtual DbSet<PdfImageRenderer> PdfImageRenderers { get; set; }
+        public virtual DbSet<PdfPageNumberRenderer> PdfPageNumberRenderers { get; set; }
+        public virtual DbSet<PdfRendererBase> PdfRendererBases { get; set; }
+        public virtual DbSet<PdfReprintMarkRenderer> PdfReprintMarkRenderers { get; set; }
+        public virtual DbSet<PdfTextRenderer> PdfTextRenderers { get; set; }
+        public virtual DbSet<PdfWaterMarkRenderer> PdfWaterMarkRenderers { get; set; }
         public virtual DbSet<PrintReportMessage> PrintReportMessages { get; set; }
         public virtual DbSet<PrintReportSqlVariable> PrintReportSqlVariables { get; set; }
         public virtual DbSet<SqlConfig> SqlConfigs { get; set; }
         public virtual DbSet<SqlTemplateConfig> SqlTemplateConfigs { get; set; }
         public virtual DbSet<SqlTemplateConfigSqlConfig> SqlTemplateConfigSqlConfigs { get; set; }
         public virtual DbSet<SqlVariableConfig> SqlVariableConfigs { get; set; }
-        public virtual DbSet<PdfRendererBase> PdfRendererBases { get; set; }
-        public virtual DbSet<PdfAnnotationRenderer> PdfAnnotationRenderers { get; set; }
-        public virtual DbSet<PdfBarcodeRenderer> PdfBarcodeRenderers { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -143,6 +148,196 @@ namespace ReportPrinterDatabase.Code.Context
                     .WithMany(p => p.PdfBarcodeRenderers)
                     .HasForeignKey(d => d.PdfRendererBaseId)
                     .HasConstraintName("FK_PdfBarcodeRenderer_PdfRendererBase_PdfRendererBaseId");
+            });
+
+            modelBuilder.Entity<PdfImageRenderer>(entity =>
+            {
+                entity.HasKey(e => e.PdfImageRendererId)
+                    .HasName("PK_dbo.PdfImageRenderer");
+
+                entity.ToTable("PdfImageRenderer");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfImageRenderer_PdfRendererBaseId");
+
+                entity.Property(e => e.PdfImageRendererId)
+                    .HasColumnName("PIR_PdfImageRendererId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.ImageSource)
+                    .IsRequired()
+                    .IsUnicode(false)
+                    .HasColumnName("PIR_ImageSource");
+
+                entity.Property(e => e.PdfRendererBaseId).HasColumnName("PIR_PdfRendererBaseId");
+
+                entity.Property(e => e.SourceType).HasColumnName("PIR_SourceType");
+
+                entity.HasOne(d => d.PdfRendererBase)
+                    .WithMany(p => p.PdfImageRenderers)
+                    .HasForeignKey(d => d.PdfRendererBaseId)
+                    .HasConstraintName("FK_PdfImageRenderer_PdfRendererBase_PdfRendererBaseId");
+            });
+
+            modelBuilder.Entity<PdfPageNumberRenderer>(entity =>
+            {
+                entity.HasKey(e => e.PdfPageNumberRendererId)
+                    .HasName("PK_dbo.PdfPageNumberRenderer");
+
+                entity.ToTable("PdfPageNumberRenderer");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfPageNumberRenderer_PdfRendererBaseId");
+
+                entity.Property(e => e.PdfPageNumberRendererId)
+                    .HasColumnName("PPNR_PdfPageNumberRendererId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.EndPage).HasColumnName("PPNR_EndPage");
+
+                entity.Property(e => e.PageNumberLocation).HasColumnName("PPNR_PageNumberLocation");
+
+                entity.Property(e => e.PdfRendererBaseId).HasColumnName("PPNR_PdfRendererBaseId");
+
+                entity.Property(e => e.StartPage).HasColumnName("PPNR_StartPage");
+
+                entity.HasOne(d => d.PdfRendererBase)
+                    .WithMany(p => p.PdfPageNumberRenderers)
+                    .HasForeignKey(d => d.PdfRendererBaseId)
+                    .HasConstraintName("FK_PdfPageNumberRenderer_PdfRendererBase_PdfRendererBaseId");
+            });
+
+            modelBuilder.Entity<PdfReprintMarkRenderer>(entity =>
+            {
+                entity.HasKey(e => e.PdfReprintMarkRendererId)
+                    .HasName("PK_dbo.PdfReprintMarkRenderer");
+
+                entity.ToTable("PdfReprintMarkRenderer");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfReprintMarkRenderer_PdfRendererBaseId");
+
+                entity.Property(e => e.PdfReprintMarkRendererId)
+                    .HasColumnName("PRMR_PdfReprintMarkRendererId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.PdfRendererBaseId).HasColumnName("PRMR_PdfRendererBaseId");
+
+                entity.Property(e => e.Text)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PRMR_Text");
+
+                entity.Property(e => e.BoardThickness).HasColumnName("PRRM_BoardThickness");
+
+                entity.Property(e => e.Location).HasColumnName("PRRM_Location");
+
+                entity.HasOne(d => d.PdfRendererBase)
+                    .WithMany(p => p.PdfReprintMarkRenderers)
+                    .HasForeignKey(d => d.PdfRendererBaseId)
+                    .HasConstraintName("FK_PdfReprintMarkRenderer_PdfRendererBase_PdfRendererBaseId");
+            });
+
+            modelBuilder.Entity<PdfTextRenderer>(entity =>
+            {
+                entity.HasKey(e => e.PdfTextRendererId)
+                    .HasName("PK_dbo.PdfTextRenderer");
+
+                entity.ToTable("PdfTextRenderer");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfTextRenderer_PdfRendererBaseId");
+
+                entity.Property(e => e.PdfTextRendererId)
+                    .HasColumnName("PTR_PdfTextRendererId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Content)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PTR_Content");
+
+                entity.Property(e => e.Mask)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PTR_Mask");
+
+                entity.Property(e => e.PdfRendererBaseId).HasColumnName("PTR_PdfRendererBaseId");
+
+                entity.Property(e => e.SqlId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PTR_SqlId");
+
+                entity.Property(e => e.SqlResColumn)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PTR_SqlResColumn");
+
+                entity.Property(e => e.SqlTemplateId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PTR_SqlTemplateId");
+
+                entity.Property(e => e.TextRendererType).HasColumnName("PTR_TextRendererType");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PTR_Title");
+
+                entity.HasOne(d => d.PdfRendererBase)
+                    .WithMany(p => p.PdfTextRenderers)
+                    .HasForeignKey(d => d.PdfRendererBaseId)
+                    .HasConstraintName("FK_PdfTextRenderer_PdfRendererBase_PdfRendererBaseId");
+            });
+
+            modelBuilder.Entity<PdfWaterMarkRenderer>(entity =>
+            {
+                entity.HasKey(e => e.PdfWaterMarkRendererId)
+                    .HasName("PK_dbo.PdfWaterMarkRenderer");
+
+                entity.ToTable("PdfWaterMarkRenderer");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfWaterMarkRenderer_PdfRendererBaseId");
+
+                entity.Property(e => e.PdfWaterMarkRendererId)
+                    .HasColumnName("PWMR_PdfWaterMarkRendererId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Content)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("PWMR_Content");
+
+                entity.Property(e => e.EndPage).HasColumnName("PWMR_EndPage");
+
+                entity.Property(e => e.Location).HasColumnName("PWMR_Location");
+
+                entity.Property(e => e.PdfRendererBaseId).HasColumnName("PWMR_PdfRendererBaseId");
+
+                entity.Property(e => e.Rotate).HasColumnName("PWMR_Rotate");
+
+                entity.Property(e => e.SqlId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PWMR_SqlId");
+
+                entity.Property(e => e.SqlResColumn)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PWMR_SqlResColumn");
+
+                entity.Property(e => e.SqlTemplateId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PWMR_SqlTemplateId");
+
+                entity.Property(e => e.StartPage).HasColumnName("PWMR_StartPage");
+
+                entity.Property(e => e.WaterMarkType).HasColumnName("PWMR_WaterMarkType");
+
+                entity.HasOne(d => d.PdfRendererBase)
+                    .WithMany(p => p.PdfWaterMarkRenderers)
+                    .HasForeignKey(d => d.PdfRendererBaseId)
+                    .HasConstraintName("FK_PdfWaterMarkRenderer_PdfRendererBase_PdfRendererBaseId");
             });
 
             modelBuilder.Entity<PdfRendererBase>(entity =>

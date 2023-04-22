@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
 using System.Threading.Tasks;

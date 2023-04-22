@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfImageRenderer;
-using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
 using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfImageRenderer

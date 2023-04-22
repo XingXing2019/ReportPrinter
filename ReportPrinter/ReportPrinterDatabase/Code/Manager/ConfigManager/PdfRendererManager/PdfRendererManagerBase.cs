@@ -36,36 +36,24 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
             model.RendererType = (PdfRendererType)entity.RendererType;
             model.Margin = entity.Margin;
             model.Padding = entity.Padding;
+            model.HorizontalAlignment = entity.HorizontalAlignment.HasValue ? (HorizontalAlignment?)entity.HorizontalAlignment.Value : null;
+            model.VerticalAlignment = entity.VerticalAlignment.HasValue ? (VerticalAlignment?)entity.VerticalAlignment.Value : null;
+            model.Position = entity.Position.HasValue ? (Position?)entity.Position.Value : null;
             model.Left = entity.Left;
             model.Right = entity.Right;
             model.Top = entity.Top;
             model.Bottom = entity.Bottom;
             model.FontSize = entity.FontSize;
             model.FontFamily = entity.FontFamily;
+            model.FontStyle = entity.FontStyle.HasValue ? (XFontStyle?)entity.FontStyle.Value : null;
             model.Opacity = entity.Opacity;
+            model.BrushColor = entity.BrushColor.HasValue ? (XKnownColor?)entity.BrushColor.Value : null;
+            model.BackgroundColor = entity.BackgroundColor.HasValue ? (XKnownColor?)entity.BackgroundColor.Value : null;
             model.Row = entity.Row;
             model.Column = entity.Column;
             model.RowSpan = entity.RowSpan;
             model.ColumnSpan = entity.ColumnSpan;
-
-            if (entity.HorizontalAlignment.HasValue)
-                model.HorizontalAlignment = (HorizontalAlignment)entity.HorizontalAlignment.Value;
-
-            if (entity.VerticalAlignment.HasValue)
-                model.VerticalAlignment = (VerticalAlignment)entity.VerticalAlignment.Value;
-
-            if (entity.Position.HasValue)
-                model.Position = (Position)entity.Position.Value;
-
-            if (entity.FontStyle.HasValue)
-                model.FontStyle = (XFontStyle)entity.FontStyle.Value;
-
-            if (entity.BrushColor.HasValue)
-                model.BrushColor = (XKnownColor)entity.BrushColor.Value;
-
-            if (entity.BackgroundColor.HasValue)
-                model.BackgroundColor = (XKnownColor)entity.BackgroundColor.Value;
-
+            
             return model;
         }
 

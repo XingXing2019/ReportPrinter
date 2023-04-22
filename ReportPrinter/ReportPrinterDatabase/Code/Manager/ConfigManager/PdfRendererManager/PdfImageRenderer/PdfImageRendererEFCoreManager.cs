@@ -10,7 +10,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfImageRenderer
 {
-    public class PdfImageRendererEFCoreManager : PdfRendererManagerBase<PdfImageRendererModel>
+    public class PdfImageRendererEFCoreManager : PdfRendererManagerBase<PdfImageRendererModel, Entity.PdfImageRenderer>
     {
         public override async Task Post(PdfImageRendererModel model)
         {
@@ -95,7 +95,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        private PdfImageRendererModel CreateDataModel(Entity.PdfImageRenderer entity)
+        protected override PdfImageRendererModel CreateDataModel(Entity.PdfImageRenderer entity)
         {
             var model = CreateDataModel(entity.PdfRendererBase);
 
@@ -105,7 +105,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        private PdfRendererBase CreateEntity(PdfImageRendererModel model, PdfRendererBase pdfRendererBase)
+        protected override PdfRendererBase CreateEntity(PdfImageRendererModel model, PdfRendererBase pdfRendererBase)
         {
             var pdfImageRender = pdfRendererBase.PdfImageRenderers.Single();
 

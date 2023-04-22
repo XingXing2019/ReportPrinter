@@ -12,7 +12,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer
 {
-    public class PdfAnnotationRendererEFCoreManager : PdfRendererManagerBase<PdfAnnotationRendererModel>
+    public class PdfAnnotationRendererEFCoreManager : PdfRendererManagerBase<PdfAnnotationRendererModel, Entity.PdfAnnotationRenderer>
     {
         public override async Task Post(PdfAnnotationRendererModel model)
         {
@@ -96,7 +96,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        private PdfAnnotationRendererModel CreateDataModel(Entity.PdfAnnotationRenderer entity)
+        protected override PdfAnnotationRendererModel CreateDataModel(Entity.PdfAnnotationRenderer entity)
         {
             var model = CreateDataModel(entity.PdfRendererBase);
 
@@ -113,7 +113,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        private PdfRendererBase CreateEntity(PdfAnnotationRendererModel model, PdfRendererBase pdfRendererBase)
+        protected override PdfRendererBase CreateEntity(PdfAnnotationRendererModel model, PdfRendererBase pdfRendererBase)
         {
             var pdfAnnotationRenderer = pdfRendererBase.PdfAnnotationRenderers.Single();
 

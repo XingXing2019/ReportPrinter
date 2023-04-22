@@ -7,7 +7,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfImageRenderer
 {
-    public class PdfImageRendererSPManager : PdfRendererManagerBase<PdfImageRendererModel>
+    public class PdfImageRendererSPManager : PdfRendererManagerBase<PdfImageRendererModel, Entity.PdfImageRenderer>
     {
         public override async Task Post(PdfImageRendererModel model)
         {

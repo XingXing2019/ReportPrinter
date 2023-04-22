@@ -5,6 +5,7 @@ using ReportPrinterLibrary.Code.Enum;
 using System.Threading.Tasks;
 using System;
 using PdfSharp.Pdf.Annotations;
+using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
@@ -20,7 +21,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             try
             {
-                var mgr = (PdfRendererManagerBase<PdfAnnotationRendererModel>)Activator.CreateInstance(managerType);
+                var mgr = (PdfRendererManagerBase<PdfAnnotationRendererModel, PdfAnnotationRenderer>)Activator.CreateInstance(managerType);
 
                 var rendererBaseId = Guid.NewGuid();
                 var rendererType = PdfRendererType.Annotation;

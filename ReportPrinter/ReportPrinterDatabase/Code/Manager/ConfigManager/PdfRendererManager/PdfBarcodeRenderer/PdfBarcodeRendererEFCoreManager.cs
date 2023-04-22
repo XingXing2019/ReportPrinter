@@ -10,7 +10,7 @@ using ZXing;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer
 {
-    public class PdfBarcodeRendererEFCoreManager : PdfRendererManagerBase<PdfBarcodeRendererModel>
+    public class PdfBarcodeRendererEFCoreManager : PdfRendererManagerBase<PdfBarcodeRendererModel, Entity.PdfBarcodeRenderer>
     {
         public override async Task Post(PdfBarcodeRendererModel model)
         {
@@ -94,7 +94,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        private PdfBarcodeRendererModel CreateDataModel(Entity.PdfBarcodeRenderer entity)
+        protected override PdfBarcodeRendererModel CreateDataModel(Entity.PdfBarcodeRenderer entity)
         {
             var model = CreateDataModel(entity.PdfRendererBase);
             
@@ -109,7 +109,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        private PdfRendererBase CreateEntity(PdfBarcodeRendererModel model, PdfRendererBase pdfRendererBase)
+        protected override PdfRendererBase CreateEntity(PdfBarcodeRendererModel model, PdfRendererBase pdfRendererBase)
         {
             var pdfBarcodeRenderer = pdfRendererBase.PdfBarcodeRenderers.Single();
 

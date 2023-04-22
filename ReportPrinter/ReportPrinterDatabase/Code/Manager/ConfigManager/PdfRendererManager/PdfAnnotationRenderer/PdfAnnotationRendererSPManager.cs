@@ -10,7 +10,7 @@ using ZXing.Rendering;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer
 {
-    public class PdfAnnotationRendererSPManager : PdfRendererManagerBase<PdfAnnotationRendererModel>
+    public class PdfAnnotationRendererSPManager : PdfRendererManagerBase<PdfAnnotationRendererModel, Entity.PdfAnnotationRenderer>
     {
         public override async Task Post(PdfAnnotationRendererModel model)
         {

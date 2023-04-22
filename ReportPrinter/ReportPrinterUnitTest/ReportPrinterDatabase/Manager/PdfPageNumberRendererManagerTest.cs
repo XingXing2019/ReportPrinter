@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfImageRenderer;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
 using System.Threading.Tasks;
 using System;
+using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfPageNumberRenderer;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
@@ -20,7 +20,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             try
             {
-                var mgr = (PdfRendererManagerBase<PdfPageNumberRendererModel>)Activator.CreateInstance(managerType);
+                var mgr = (PdfRendererManagerBase<PdfPageNumberRendererModel, PdfPageNumberRenderer>)Activator.CreateInstance(managerType);
 
                 var rendererBaseId = Guid.NewGuid();
                 var rendererType = PdfRendererType.PageNumber;

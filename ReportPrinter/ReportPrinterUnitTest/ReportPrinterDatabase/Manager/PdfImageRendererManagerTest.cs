@@ -4,6 +4,7 @@ using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
 using System.Threading.Tasks;
 using System;
+using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfImageRenderer;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
@@ -19,7 +20,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             try
             {
-                var mgr = (PdfRendererManagerBase<PdfImageRendererModel>)Activator.CreateInstance(managerType);
+                var mgr = (PdfRendererManagerBase<PdfImageRendererModel, PdfImageRenderer>)Activator.CreateInstance(managerType);
 
                 var rendererBaseId = Guid.NewGuid();
                 var rendererType = PdfRendererType.Image;
@@ -27,7 +28,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
 
                 expectedRenderer.SourceType = SourceType.Local;
-                expectedRenderer.ImageSource = createNull ? null : "Test Image Source 1";
+                expectedRenderer.ImageSource = "Test Image Source 1";
 
                 await mgr.Post(expectedRenderer);
 
@@ -39,7 +40,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
 
                 expectedRenderer.SourceType = SourceType.Online;
-                expectedRenderer.ImageSource = createNull ? null : "Test Image Source 2";
+                expectedRenderer.ImageSource = "Test Image Source 2";
 
                 await mgr.Put(expectedRenderer);
 

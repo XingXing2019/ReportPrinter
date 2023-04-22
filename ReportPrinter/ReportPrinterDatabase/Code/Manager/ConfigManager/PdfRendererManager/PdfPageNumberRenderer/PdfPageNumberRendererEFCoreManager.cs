@@ -10,7 +10,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfPageNumberRenderer
 {
-    public class PdfPageNumberRendererEFCoreManager : PdfRendererManagerBase<PdfPageNumberRendererModel>
+    public class PdfPageNumberRendererEFCoreManager : PdfRendererManagerBase<PdfPageNumberRendererModel, Entity.PdfPageNumberRenderer>
     {
         public override async Task Post(PdfPageNumberRendererModel model)
         {
@@ -95,7 +95,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        private PdfPageNumberRendererModel CreateDataModel(Entity.PdfPageNumberRenderer entity)
+        protected override PdfPageNumberRendererModel CreateDataModel(Entity.PdfPageNumberRenderer entity)
         {
             var model = CreateDataModel(entity.PdfRendererBase);
 
@@ -106,14 +106,14 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        private PdfRendererBase CreateEntity(PdfPageNumberRendererModel model, PdfRendererBase pdfRendererBase)
+        protected override PdfRendererBase CreateEntity(PdfPageNumberRendererModel model, PdfRendererBase pdfRendererBase)
         {
-            var pdfImageRender = pdfRendererBase.PdfPageNumberRenderers.Single();
+            var pdfPageNumberRenderer = pdfRendererBase.PdfPageNumberRenderers.Single();
 
-            pdfImageRender.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfImageRender.StartPage = model.StartPage;
-            pdfImageRender.EndPage = model.EndPage;
-            pdfImageRender.PageNumberLocation = (byte?)model.PageNumberLocation;
+            pdfPageNumberRenderer.PdfRendererBaseId = model.PdfRendererBaseId;
+            pdfPageNumberRenderer.StartPage = model.StartPage;
+            pdfPageNumberRenderer.EndPage = model.EndPage;
+            pdfPageNumberRenderer.PageNumberLocation = (byte?)model.PageNumberLocation;
 
             AssignEntity(model, pdfRendererBase);
             return pdfRendererBase;

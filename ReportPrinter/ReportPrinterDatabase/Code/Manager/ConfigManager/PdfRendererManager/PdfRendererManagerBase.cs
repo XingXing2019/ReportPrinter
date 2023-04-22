@@ -11,7 +11,7 @@ using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {
-    public abstract class PdfRendererManagerBase<T> where T : PdfRendererBaseModel
+    public abstract class PdfRendererManagerBase<T, E> where T : PdfRendererBaseModel
     {
         protected readonly StoredProcedureExecutor Executor;
 
@@ -23,6 +23,8 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
         public abstract Task Post(T model);
         public abstract Task<T> Get(Guid pdfRendererBaseId);
         public abstract Task Put(T model);
+        protected virtual T CreateDataModel(E entity) => default(T);
+        protected virtual PdfRendererBase CreateEntity(T model, PdfRendererBase pdfRendererBase) => pdfRendererBase;
 
         protected void AssignRendererBaseModelProperties(PdfRendererBaseModel from, T to)
         {

@@ -25,9 +25,9 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             expectedRenderer.TextRendererType = TextRendererType.Sql;
             expectedRenderer.Content = createNull ? null : "Test Content 1";
-            expectedRenderer.SqlTemplateId = "Test Sql Template 1";
-            expectedRenderer.SqlId = "Test Sql 1";
-            expectedRenderer.SqlResColumn = "Test Res Column 1";
+            expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
+            expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
+            expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
             expectedRenderer.Mask = createNull ? null : "Test Mask 1";
             expectedRenderer.Title = createNull ? null : "Test Title 1";
         }
@@ -36,9 +36,9 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             expectedRenderer.TextRendererType = TextRendererType.Timestamp;
             expectedRenderer.Content = createNull ? null : "Test Content 2";
-            expectedRenderer.SqlTemplateId = "Test Sql Template 2";
-            expectedRenderer.SqlId = "Test Sql 2";
-            expectedRenderer.SqlResColumn = "Test Res Column 2";
+            expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
+            expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
+            expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";
             expectedRenderer.Mask = createNull ? null : "Test Mask 2";
             expectedRenderer.Title = createNull ? null : "Test Title 2";
         }

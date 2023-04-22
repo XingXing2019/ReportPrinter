@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Code\Database\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfWaterMarkRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfTextRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfReprintMarkRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfImageRenderer\" />
@@ -17,7 +18,9 @@
     <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfBarcodeRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
+    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfWaterMarkRenderer\" />
     <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfTextRenderer\" />
+    <Folder Include="Code\StoredProcedures\PdfWaterMarkRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfReprintMarkRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfPageNumberRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfImageRenderer\" />

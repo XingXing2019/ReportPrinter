@@ -9,7 +9,7 @@ using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfPag
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfPageNumberRendererManagerTest : PdfRendererManagerTestBase<PdfPageNumberRendererModel>
+    public class PdfPageNumberRendererManagerTest : PdfRendererManagerTestBase<PdfPageNumberRendererModel, PdfPageNumberRenderer>
     {
         [Test]
         [TestCase(typeof(PdfPageNumberRendererEFCoreManager), true)]
@@ -18,42 +18,21 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfPageNumberRendererSPManager), false)]
         public async Task TesPdfPageNumberRendererEFCoreManager_Get(Type managerType, bool createNull)
         {
-            try
-            {
-                var mgr = (PdfRendererManagerBase<PdfPageNumberRendererModel, PdfPageNumberRenderer>)Activator.CreateInstance(managerType);
+            await DoTest(managerType, createNull);
+        }
 
-                var rendererBaseId = Guid.NewGuid();
-                var rendererType = PdfRendererType.PageNumber;
+        protected override void AssignPostProperties(PdfPageNumberRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.StartPage = createNull ? null : (int?)1;
+            expectedRenderer.EndPage = createNull ? null : (int?)2;
+            expectedRenderer.PageNumberLocation = createNull ? null : (Location?)Location.Footer;
+        }
 
-                var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
-
-                expectedRenderer.StartPage = createNull ? null : (int?)1;
-                expectedRenderer.EndPage = createNull ? null : (int?)2;
-                expectedRenderer.PageNumberLocation = createNull ? null : (Location?)Location.Footer;
-
-                await mgr.Post(expectedRenderer);
-
-                var actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-
-                expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
-
-                expectedRenderer.StartPage = createNull ? null : (int?)5;
-                expectedRenderer.EndPage = createNull ? null : (int?)-2;
-                expectedRenderer.PageNumberLocation = createNull ? null : (Location?)Location.Body;
-
-                await mgr.Put(expectedRenderer);
-
-                actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
+        protected override void AssignPutProperties(PdfPageNumberRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.StartPage = createNull ? null : (int?)5;
+            expectedRenderer.EndPage = createNull ? null : (int?)-2;
+            expectedRenderer.PageNumberLocation = createNull ? null : (Location?)Location.Body;
         }
     }
 }

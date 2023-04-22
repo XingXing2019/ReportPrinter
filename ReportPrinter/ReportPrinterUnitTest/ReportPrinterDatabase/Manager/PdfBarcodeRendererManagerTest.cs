@@ -2,15 +2,13 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Entity;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer;
 using ReportPrinterDatabase.Code.Model;
-using ReportPrinterLibrary.Code.Enum;
 using ZXing;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfBarcodeRendererManagerTest : PdfRendererManagerTestBase<PdfBarcodeRendererModel>
+    public class PdfBarcodeRendererManagerTest : PdfRendererManagerTestBase<PdfBarcodeRendererModel, PdfBarcodeRenderer>
     {
         [Test]
         [TestCase(typeof(PdfBarcodeRendererEFCoreManager), true)]
@@ -19,45 +17,25 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfBarcodeRendererSPManager), false)]
         public async Task TestPdfBarcodeRendererManager_Get(Type managerType, bool createNull)
         {
-            try
-            {
-                var mgr = (PdfRendererManagerBase<PdfBarcodeRendererModel, PdfBarcodeRenderer>)Activator.CreateInstance(managerType);
+            await DoTest(managerType, createNull);
+        }
 
-                var rendererBaseId = Guid.NewGuid();
-                var rendererType = PdfRendererType.Barcode;
+        protected override void AssignPostProperties(PdfBarcodeRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.PHARMA_CODE;
+            expectedRenderer.ShowBarcodeText = true;
+            expectedRenderer.SqlTemplateId = "Test Sql Template 1";
+            expectedRenderer.SqlId = "Test Sql 1";
+            expectedRenderer.SqlResColumn = "Test Res Column 1";
+        }
 
-                var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
-
-                expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.PHARMA_CODE;
-                expectedRenderer.ShowBarcodeText = true;
-                expectedRenderer.SqlTemplateId = "Test Sql Template 1";
-                expectedRenderer.SqlId = "Test Sql 1";
-                expectedRenderer.SqlResColumn = "Test Res Column 1";
-
-                await mgr.Post(expectedRenderer);
-
-                var actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-
-                expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
-
-                expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.UPC_EAN_EXTENSION;
-                expectedRenderer.ShowBarcodeText = false;
-                expectedRenderer.SqlTemplateId = "Test Sql Template 2";
-                expectedRenderer.SqlId = "Test Sql 2";
-                expectedRenderer.SqlResColumn = "Test Res Column 2";
-
-                await mgr.Put(expectedRenderer);
-
-                actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
+        protected override void AssignPutProperties(PdfBarcodeRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.UPC_EAN_EXTENSION;
+            expectedRenderer.ShowBarcodeText = false;
+            expectedRenderer.SqlTemplateId = "Test Sql Template 2";
+            expectedRenderer.SqlId = "Test Sql 2";
+            expectedRenderer.SqlResColumn = "Test Res Column 2";
         }
     }
 }

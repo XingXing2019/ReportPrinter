@@ -10,7 +10,7 @@ using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnn
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfAnnotationRendererManagerTest : PdfRendererManagerTestBase<PdfAnnotationRendererModel>
+    public class PdfAnnotationRendererManagerTest : PdfRendererManagerTestBase<PdfAnnotationRendererModel, PdfAnnotationRenderer>
     {
         [Test]
         [TestCase(typeof(PdfAnnotationRendererEFCoreManager), true)]
@@ -19,48 +19,27 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfAnnotationRendererSPManager), false)]
         public async Task TesPdfAnnotationRendererEFCoreManager_Get(Type managerType, bool createNull)
         {
-            try
-            {
-                var mgr = (PdfRendererManagerBase<PdfAnnotationRendererModel, PdfAnnotationRenderer>)Activator.CreateInstance(managerType);
+            await DoTest(managerType, createNull);
+        }
 
-                var rendererBaseId = Guid.NewGuid();
-                var rendererType = PdfRendererType.Annotation;
+        protected override void AssignPostProperties(PdfAnnotationRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.AnnotationRendererType = AnnotationRendererType.Text;
+            expectedRenderer.Title = createNull ? null : "Test Title 1";
+            expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
+            expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
+            expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
+            expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
+        }
 
-                var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
-
-                expectedRenderer.AnnotationRendererType = AnnotationRendererType.Text;
-                expectedRenderer.Title = createNull ? null : "Test Title 1";
-                expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
-                expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
-                expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
-                expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
-
-                await mgr.Post(expectedRenderer);
-
-                var actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-
-                expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
-
-                expectedRenderer.AnnotationRendererType = AnnotationRendererType.Sql;
-                expectedRenderer.Title = createNull ? null : "Test Title 2";
-                expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
-                expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
-                expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
-                expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";
-
-                await mgr.Put(expectedRenderer);
-
-                actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
+        protected override void AssignPutProperties(PdfAnnotationRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.AnnotationRendererType = AnnotationRendererType.Sql;
+            expectedRenderer.Title = createNull ? null : "Test Title 2";
+            expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
+            expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
+            expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
+            expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";
         }
     }
 }

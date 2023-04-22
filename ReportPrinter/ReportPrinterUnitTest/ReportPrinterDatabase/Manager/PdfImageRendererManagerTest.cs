@@ -9,7 +9,7 @@ using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfIma
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfImageRendererManagerTest : PdfRendererManagerTestBase<PdfImageRendererModel>
+    public class PdfImageRendererManagerTest : PdfRendererManagerTestBase<PdfImageRendererModel, PdfImageRenderer>
     {
         [Test]
         [TestCase(typeof(PdfImageRendererEFCoreManager), true)]
@@ -18,40 +18,19 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfImageRendererSPManager), false)]
         public async Task TesPdfImageRendererEFCoreManager_Get(Type managerType, bool createNull)
         {
-            try
-            {
-                var mgr = (PdfRendererManagerBase<PdfImageRendererModel, PdfImageRenderer>)Activator.CreateInstance(managerType);
+            await DoTest(managerType, createNull);
+        }
 
-                var rendererBaseId = Guid.NewGuid();
-                var rendererType = PdfRendererType.Image;
+        protected override void AssignPostProperties(PdfImageRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.SourceType = SourceType.Local;
+            expectedRenderer.ImageSource = "Test Image Source 1";
+        }
 
-                var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
-
-                expectedRenderer.SourceType = SourceType.Local;
-                expectedRenderer.ImageSource = "Test Image Source 1";
-
-                await mgr.Post(expectedRenderer);
-
-                var actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-
-                expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
-
-                expectedRenderer.SourceType = SourceType.Online;
-                expectedRenderer.ImageSource = "Test Image Source 2";
-
-                await mgr.Put(expectedRenderer);
-
-                actualRenderer = await mgr.Get(rendererBaseId);
-                Assert.IsNotNull(actualRenderer);
-                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
+        protected override void AssignPutProperties(PdfImageRendererModel expectedRenderer, bool createNull)
+        {
+            expectedRenderer.SourceType = SourceType.Online;
+            expectedRenderer.ImageSource = "Test Image Source 2";
         }
     }
 }

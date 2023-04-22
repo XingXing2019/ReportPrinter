@@ -2,13 +2,15 @@
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
 using System;
+using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterUnitTest.Helper;
 using NUnit.Framework;
+using ZXing;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfRendererManagerTestBase<T> where T : PdfRendererBaseModel
+    public abstract class PdfRendererManagerTestBase<T, E> where T : PdfRendererBaseModel
     {
         protected readonly IPdfRendererBaseManager Manager;
         protected readonly AssertHelper AssertHelper;
@@ -18,6 +20,44 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             Manager = new PdfRendererBaseEFCoreManager();
             AssertHelper = new AssertHelper();
         }
+
+        protected async Task DoTest(Type managerType, bool createNull)
+        {
+            try
+            {
+                var mgr = (PdfRendererManagerBase<T, E>)Activator.CreateInstance(managerType);
+
+                var rendererBaseId = Guid.NewGuid();
+                var rendererType = PdfRendererType.Barcode;
+
+                var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
+
+                AssignPostProperties(expectedRenderer, createNull);
+
+                await mgr.Post(expectedRenderer);
+
+                var actualRenderer = await mgr.Get(rendererBaseId);
+                Assert.IsNotNull(actualRenderer);
+                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
+
+                expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
+
+                AssignPutProperties(expectedRenderer, createNull);
+
+                await mgr.Put(expectedRenderer);
+
+                actualRenderer = await mgr.Get(rendererBaseId);
+                Assert.IsNotNull(actualRenderer);
+                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        protected abstract void AssignPostProperties(T expectedRenderer, bool createNull);
+        protected abstract void AssignPutProperties(T expectedRenderer, bool createNull);
 
         [TearDown]
         public void TearDown()

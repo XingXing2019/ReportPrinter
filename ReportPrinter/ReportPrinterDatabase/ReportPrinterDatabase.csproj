@@ -17,7 +17,6 @@
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
     <Folder Include="Code\SqlQuery\Programmability\TableFunction\" />
-    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfReprintMarkRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfReprintMarkRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfPageNumberRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfImageRenderer\" />

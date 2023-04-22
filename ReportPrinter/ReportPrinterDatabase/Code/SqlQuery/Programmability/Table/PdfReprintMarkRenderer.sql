@@ -4,8 +4,8 @@ BEGIN
 		[PRMR_PdfReprintMarkRendererId] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_PdfReprintMarkRenderer_PdfReprintMarkRendererId] DEFAULT(NEWID()),
 		[PRMR_PdfRendererBaseId] UNIQUEIDENTIFIER NOT NULL,
 		[PRMR_Text] VARCHAR(100) NOT NULL,
-		[PRRM_BoardThickness] FLOAT NULL,
-		[PRRM_Location] TINYINT NULL,
+		[PRMR_BoardThickness] FLOAT NULL,
+		[PRMR_Location] TINYINT NULL,
 
 		CONSTRAINT [PK_dbo.PdfReprintMarkRenderer] PRIMARY KEY CLUSTERED ([PRMR_PdfReprintMarkRendererId])
 	);

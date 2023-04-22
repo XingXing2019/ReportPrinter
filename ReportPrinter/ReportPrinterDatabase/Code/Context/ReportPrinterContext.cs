@@ -226,9 +226,9 @@ namespace ReportPrinterDatabase.Code.Context
                     .IsUnicode(false)
                     .HasColumnName("PRMR_Text");
 
-                entity.Property(e => e.BoardThickness).HasColumnName("PRRM_BoardThickness");
+                entity.Property(e => e.BoardThickness).HasColumnName("PRMR_BoardThickness");
 
-                entity.Property(e => e.Location).HasColumnName("PRRM_Location");
+                entity.Property(e => e.Location).HasColumnName("PRMR_Location");
 
                 entity.HasOne(d => d.PdfRendererBase)
                     .WithMany(p => p.PdfReprintMarkRenderers)

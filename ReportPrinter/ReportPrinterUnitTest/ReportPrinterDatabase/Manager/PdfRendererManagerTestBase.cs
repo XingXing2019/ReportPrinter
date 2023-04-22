@@ -4,21 +4,15 @@ using ReportPrinterLibrary.Code.Enum;
 using System;
 using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
-using ReportPrinterUnitTest.Helper;
 using NUnit.Framework;
-using ZXing;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public abstract class PdfRendererManagerTestBase<T, E> where T : PdfRendererBaseModel
+    public abstract class PdfRendererManagerTestBase<T, E> : DatabaseTestBase<PdfRendererBaseModel> where T : PdfRendererBaseModel
     {
-        private readonly IPdfRendererBaseManager _manager;
-        private readonly AssertHelper _assertHelper;
-
         protected PdfRendererManagerTestBase()
         {
-            _manager = new PdfRendererBaseEFCoreManager();
-            _assertHelper = new AssertHelper();
+            Manager = new PdfRendererBaseEFCoreManager();
         }
 
         protected async Task DoTest(Type managerType, bool createNull)
@@ -38,7 +32,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
                 var actualRenderer = await mgr.Get(rendererBaseId);
                 Assert.IsNotNull(actualRenderer);
-                _assertHelper.AssertObject(expectedRenderer, actualRenderer);
+                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
 
                 expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
 
@@ -48,7 +42,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 
                 actualRenderer = await mgr.Get(rendererBaseId);
                 Assert.IsNotNull(actualRenderer);
-                _assertHelper.AssertObject(expectedRenderer, actualRenderer);
+                AssertHelper.AssertObject(expectedRenderer, actualRenderer);
             }
             catch (Exception ex)
             {
@@ -60,9 +54,9 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         protected abstract void AssignPutProperties(T expectedRenderer, bool createNull);
 
         [TearDown]
-        public void TearDown()
+        public new void TearDown()
         {
-            _manager.DeleteAll().Wait();
+            Manager.DeleteAll().Wait();
         }
 
         private T CreatePdfRendererBaseModel(Guid rendererBaseId, PdfRendererType rendererType, bool createNull)

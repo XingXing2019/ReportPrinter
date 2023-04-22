@@ -25,33 +25,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
         public abstract Task Put(T model);
         protected virtual T CreateDataModel(E entity) => default(T);
         protected virtual PdfRendererBase CreateEntity(T model, PdfRendererBase pdfRendererBase) => pdfRendererBase;
-
-        protected void AssignRendererBaseModelProperties(PdfRendererBaseModel from, T to)
-        {
-            to.PdfRendererBaseId = from.PdfRendererBaseId;
-            to.Id = from.Id;
-            to.RendererType = from.RendererType;
-            to.Margin = from.Margin;
-            to.Padding = from.Padding;
-            to.HorizontalAlignment = from.HorizontalAlignment;
-            to.VerticalAlignment = from.VerticalAlignment;
-            to.Position = from.Position;
-            to.Left = from.Left;
-            to.Right = from.Right;
-            to.Top = from.Top;
-            to.Bottom = from.Bottom;
-            to.FontSize = from.FontSize;
-            to.FontFamily = from.FontFamily;
-            to.FontStyle = from.FontStyle;
-            to.Opacity = from.Opacity;
-            to.BrushColor = from.BrushColor;
-            to.BackgroundColor = from.BackgroundColor;
-            to.Row = from.Row;
-            to.Column = from.Column;
-            to.RowSpan = from.RowSpan;
-            to.ColumnSpan = from.ColumnSpan;
-        }
-
+        
         protected T CreateDataModel(PdfRendererBase entity)
         {
             var type = typeof(T);

@@ -43,19 +43,17 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
             try
             {
-                var pdfRendererBase = await Executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
-                var pdfBarcodeRenderer = await Executor.ExecuteQueryOneAsync<PdfBarcodeRendererModel>(new GetPdfBarcodeRenderer(pdfRendererBaseId));
+                var pdfRenderer = await Executor.ExecuteQueryOneAsync<PdfBarcodeRendererModel>(new GetPdfBarcodeRenderer(pdfRendererBaseId));
 
-                if (pdfRendererBase == null || pdfBarcodeRenderer == null)
+                if (pdfRenderer == null)
                 {
                     Logger.Debug($"PDF barcode renderer: {pdfRendererBaseId} does not exist", procName);
                     return null;
                 }
-
-                AssignRendererBaseModelProperties(pdfRendererBase, pdfBarcodeRenderer);
+                
                 Logger.Debug($"Retrieve PDF barcode renderer: {pdfRendererBaseId}", procName);
 
-                return pdfBarcodeRenderer;
+                return pdfRenderer;
             }
             catch (Exception ex)
             {

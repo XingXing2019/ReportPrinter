@@ -40,19 +40,17 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
             try
             {
-                var pdfRendererBase = await Executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
-                var pdfReprintMarkRenderer = await Executor.ExecuteQueryOneAsync<PdfReprintMarkRendererModel>(new GetPdfReprintMarkRenderer(pdfRendererBaseId));
+                var pdfRenderer = await Executor.ExecuteQueryOneAsync<PdfReprintMarkRendererModel>(new GetPdfReprintMarkRenderer(pdfRendererBaseId));
 
-                if (pdfRendererBase == null || pdfReprintMarkRenderer == null)
+                if (pdfRenderer == null)
                 {
                     Logger.Debug($"PDF reprint mark renderer: {pdfRendererBaseId} does not exist", procName);
                     return null;
                 }
-
-                AssignRendererBaseModelProperties(pdfRendererBase, pdfReprintMarkRenderer);
+                
                 Logger.Debug($"Retrieve PDF reprint mark renderer: {pdfRendererBaseId}", procName);
 
-                return pdfReprintMarkRenderer;
+                return pdfRenderer;
             }
             catch (Exception ex)
             {

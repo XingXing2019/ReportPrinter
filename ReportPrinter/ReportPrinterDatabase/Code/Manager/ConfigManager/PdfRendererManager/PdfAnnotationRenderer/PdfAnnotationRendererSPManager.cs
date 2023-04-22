@@ -47,19 +47,17 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
             try
             {
-                var pdfRendererBase = await Executor.ExecuteQueryOneAsync<PdfRendererBaseModel>(new GetPdfRendererBase(pdfRendererBaseId));
-                var pdfAnnotationRenderer = await Executor.ExecuteQueryOneAsync<PdfAnnotationRendererModel>(new GetPdfAnnotationRenderer(pdfRendererBaseId));
+                var pdfRenderer = await Executor.ExecuteQueryOneAsync<PdfAnnotationRendererModel>(new GetPdfAnnotationRenderer(pdfRendererBaseId));
 
-                if (pdfRendererBase == null || pdfAnnotationRenderer == null)
+                if (pdfRenderer == null)
                 {
                     Logger.Debug($"PDF annotation renderer: {pdfRendererBaseId} does not exist", procName);
                     return null;
                 }
-
-                AssignRendererBaseModelProperties(pdfRendererBase, pdfAnnotationRenderer);
+                
                 Logger.Debug($"Retrieve PDF annotation renderer: {pdfRendererBaseId}", procName);
 
-                return pdfAnnotationRenderer;
+                return pdfRenderer;
             }
             catch (Exception ex)
             {

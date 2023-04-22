@@ -14,6 +14,12 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             Manager = new PdfRendererBaseEFCoreManager();
         }
+        
+        [TearDown]
+        public new void TearDown()
+        {
+            Manager.DeleteAll().Wait();
+        }
 
         protected async Task DoTest(Type managerType, bool createNull)
         {
@@ -53,11 +59,6 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         protected abstract void AssignPostProperties(T expectedRenderer, bool createNull);
         protected abstract void AssignPutProperties(T expectedRenderer, bool createNull);
 
-        [TearDown]
-        public new void TearDown()
-        {
-            Manager.DeleteAll().Wait();
-        }
 
         private T CreatePdfRendererBaseModel(Guid rendererBaseId, PdfRendererType rendererType, bool createNull)
         {

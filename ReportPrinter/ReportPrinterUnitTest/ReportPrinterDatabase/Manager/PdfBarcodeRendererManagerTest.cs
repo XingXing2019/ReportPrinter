@@ -26,12 +26,12 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 var rendererType = PdfRendererType.Barcode;
 
                 var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
-                
-                expectedRenderer.BarcodeFormat = BarcodeFormat.PHARMA_CODE;
+
+                expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.PHARMA_CODE;
                 expectedRenderer.ShowBarcodeText = true;
-                expectedRenderer.SqlTemplateId = "Test Sql Template 1";
-                expectedRenderer.SqlId = "Test Sql 1";
-                expectedRenderer.SqlResColumn = "Test Res Column 1";
+                expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
+                expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
+                expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
 
                 await mgr.Post(expectedRenderer);
 
@@ -40,12 +40,12 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 AssertHelper.AssertObject(expectedRenderer, actualRenderer);
 
                 expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
-                
-                expectedRenderer.BarcodeFormat = null;
+
+                expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.UPC_EAN_EXTENSION;
                 expectedRenderer.ShowBarcodeText = false;
-                expectedRenderer.SqlTemplateId = "Test Sql Template 2";
-                expectedRenderer.SqlId = "Test Sql 2";
-                expectedRenderer.SqlResColumn = "Test Res Column 2";
+                expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
+                expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
+                expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";
 
                 await mgr.Put(expectedRenderer);
 

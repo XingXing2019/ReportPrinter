@@ -24,7 +24,6 @@ BEGIN
 
 	BEGIN TRY
 		
-		-- Insert PdfBarcodeRenderer
 		INSERT INTO [PdfAnnotationRenderer] (
 			[PAR_PdfRendererBaseId],
 			[PAR_AnnotationRendererType],

@@ -19,7 +19,6 @@ BEGIN
 
 	BEGIN TRY
 		
-		-- Insert PdfBarcodeRenderer
 		INSERT INTO [PdfImageRenderer] (
 			[PIR_PdfRendererBaseId],
 			[PIR_SourceType],

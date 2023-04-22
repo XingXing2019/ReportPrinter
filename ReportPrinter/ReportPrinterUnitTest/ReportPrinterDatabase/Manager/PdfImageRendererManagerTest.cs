@@ -27,7 +27,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
 
                 expectedRenderer.SourceType = SourceType.Local;
-                expectedRenderer.ImageSource = "Test Image Source 1";
+                expectedRenderer.ImageSource = createNull ? null : "Test Image Source 1";
 
                 await mgr.Post(expectedRenderer);
 
@@ -39,7 +39,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
 
                 expectedRenderer.SourceType = SourceType.Online;
-                expectedRenderer.ImageSource = "Test Image Source 2";
+                expectedRenderer.ImageSource = createNull ? null : "Test Image Source 2";
 
                 await mgr.Put(expectedRenderer);
 

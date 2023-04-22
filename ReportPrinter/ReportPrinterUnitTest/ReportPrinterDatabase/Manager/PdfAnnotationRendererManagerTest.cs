@@ -28,12 +28,12 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, !createNull);
 
                 expectedRenderer.AnnotationRendererType = AnnotationRendererType.Text;
-                expectedRenderer.Title = "Test Title 1";
-                expectedRenderer.Icon = PdfTextAnnotationIcon.Insert;
-                expectedRenderer.SqlTemplateId = "Test Sql Template 1";
-                expectedRenderer.SqlId = "Test Sql 1";
-                expectedRenderer.SqlResColumn = "Test Res Column 1";
-                
+                expectedRenderer.Title = createNull ? null : "Test Title 1";
+                expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
+                expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
+                expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
+                expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
+
                 await mgr.Post(expectedRenderer);
 
                 var actualRenderer = await mgr.Get(rendererBaseId);
@@ -44,11 +44,11 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
 
                 expectedRenderer.AnnotationRendererType = AnnotationRendererType.Sql;
-                expectedRenderer.Title = null;
-                expectedRenderer.Icon = null;
-                expectedRenderer.SqlTemplateId = "Test Sql Template 2";
-                expectedRenderer.SqlId = "Test Sql 2";
-                expectedRenderer.SqlResColumn = "Test Res Column 2";
+                expectedRenderer.Title = createNull ? null : "Test Title 2";
+                expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
+                expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
+                expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
+                expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";
 
                 await mgr.Put(expectedRenderer);
 

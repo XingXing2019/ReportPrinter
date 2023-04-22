@@ -22,7 +22,6 @@ BEGIN
 
 	BEGIN TRY
 		
-		-- Insert PdfBarcodeRenderer
 		INSERT INTO [PdfBarcodeRenderer] (
 			[PBR_PdfRendererBaseId],
 			[PBR_BarcodeFormat],

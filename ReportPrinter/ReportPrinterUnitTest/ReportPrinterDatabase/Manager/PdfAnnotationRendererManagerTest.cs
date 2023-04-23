@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
 using System.Threading.Tasks;
 using System;
-using PdfSharp.Pdf.Annotations;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer;
+using PdfTextAnnotationIcon = ReportPrinterLibrary.Code.Enum.PdfTextAnnotationIcon;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {

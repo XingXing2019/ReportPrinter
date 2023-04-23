@@ -5,6 +5,7 @@ using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer;
 using ReportPrinterDatabase.Code.Model;
 using ZXing;
+using BarcodeFormat = ReportPrinterLibrary.Code.Enum.BarcodeFormat;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {

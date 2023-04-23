@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
+using XKnownColor = ReportPrinterLibrary.Code.Enum.XKnownColor;
+using XFontStyle = ReportPrinterLibrary.Code.Enum.XFontStyle;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {

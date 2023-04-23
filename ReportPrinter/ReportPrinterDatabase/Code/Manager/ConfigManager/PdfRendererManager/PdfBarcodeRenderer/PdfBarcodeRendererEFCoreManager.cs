@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
-using ZXing;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer
 {

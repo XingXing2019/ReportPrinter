@@ -14,6 +14,7 @@ using ReportPrinterLibrary.Code.Log;
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
+using BarcodeFormat = ZXing.BarcodeFormat;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {

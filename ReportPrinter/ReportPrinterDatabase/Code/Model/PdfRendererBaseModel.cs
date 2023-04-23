@@ -1,5 +1,4 @@
-﻿using PdfSharp.Drawing;
-using ReportPrinterLibrary.Code.Enum;
+﻿using ReportPrinterLibrary.Code.Enum;
 using System;
 
 namespace ReportPrinterDatabase.Code.Model

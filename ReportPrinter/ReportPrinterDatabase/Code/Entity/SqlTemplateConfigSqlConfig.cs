@@ -7,6 +7,7 @@ namespace ReportPrinterDatabase.Code.Entity
 {
     public partial class SqlTemplateConfigSqlConfig
     {
+        public Guid SqlTemplateConfigSqlConfigId { get; set; }
         public Guid SqlTemplateConfigId { get; set; }
         public Guid SqlConfigId { get; set; }
 

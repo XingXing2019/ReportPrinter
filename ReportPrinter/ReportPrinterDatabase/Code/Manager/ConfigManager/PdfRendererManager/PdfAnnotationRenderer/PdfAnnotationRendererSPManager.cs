@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfAnnotationRenderer;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfBarcodeRenderer;
-using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
 using ReportPrinterLibrary.Code.Log;
-using ZXing.Rendering;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfAnnotationRenderer
 {

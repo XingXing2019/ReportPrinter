@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PdfSharp.Drawing;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Executor;
 using ReportPrinterDatabase.Code.Model;

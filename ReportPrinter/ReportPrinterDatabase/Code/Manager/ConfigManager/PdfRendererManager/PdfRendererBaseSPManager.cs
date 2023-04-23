@@ -6,7 +6,6 @@ using ReportPrinterDatabase.Code.Model;
 using ReportPrinterDatabase.Code.StoredProcedures.PdfRendererBase;
 using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
-using ZXing.Rendering;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {

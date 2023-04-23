@@ -1,5 +1,4 @@
-﻿using System;
-using ZXing;
+﻿using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterDatabase.Code.Model
 {

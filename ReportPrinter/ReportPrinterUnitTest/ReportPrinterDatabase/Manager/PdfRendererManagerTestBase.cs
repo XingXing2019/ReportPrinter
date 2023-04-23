@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using NUnit.Framework;
+using XFontStyle = ReportPrinterLibrary.Code.Enum.XFontStyle;
+using XKnownColor = ReportPrinterLibrary.Code.Enum.XKnownColor;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {

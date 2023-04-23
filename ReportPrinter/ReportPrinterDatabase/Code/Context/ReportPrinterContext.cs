@@ -547,14 +547,22 @@ namespace ReportPrinterDatabase.Code.Context
 
             modelBuilder.Entity<SqlTemplateConfigSqlConfig>(entity =>
             {
-                entity.HasKey(e => new { StcscSqlTemplateConfigId = e.SqlTemplateConfigId, StcscSqlConfigId = e.SqlConfigId })
+                entity.HasKey(e => e.SqlTemplateConfigSqlConfigId)
                     .HasName("PK_dbo.SqlTemplateConfigSqlConfig");
 
                 entity.ToTable("SqlTemplateConfigSqlConfig");
 
-                entity.Property(e => e.SqlTemplateConfigId).HasColumnName("STCSC_SqlTemplateConfigId");
+                entity.HasIndex(e => e.SqlConfigId, "IX_SqlTemplateConfigSqlConfig_SqlConfigId");
+
+                entity.HasIndex(e => e.SqlTemplateConfigId, "IX_SqlTemplateConfigSqlConfig_SqlTemplateConfigId");
+
+                entity.Property(e => e.SqlTemplateConfigSqlConfigId)
+                    .HasColumnName("STCSC_SqlTemplateConfigSqlConfigId")
+                    .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.SqlConfigId).HasColumnName("STCSC_SqlConfigId");
+
+                entity.Property(e => e.SqlTemplateConfigId).HasColumnName("STCSC_SqlTemplateConfigId");
 
                 entity.HasOne(d => d.SqlConfig)
                     .WithMany(p => p.SqlTemplateConfigSqlConfigs)

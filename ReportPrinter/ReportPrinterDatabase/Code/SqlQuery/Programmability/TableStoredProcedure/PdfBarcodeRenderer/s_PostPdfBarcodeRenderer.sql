@@ -8,8 +8,7 @@ CREATE PROCEDURE [dbo].[s_PostPdfBarcodeRenderer]
 	@pdfRendererBaseId UNIQUEIDENTIFIER,	
 	@barcodeFormat INT,
 	@showBarcodeText BIT,
-	@sqlTemplateId VARCHAR(50),
-	@sqlId VARCHAR(50),
+	@sqlTemplateConfigSqlConfigId UNIQUEIDENTIFIER,
 	@sqlResColumn VARCHAR(50)
 AS
 BEGIN
@@ -26,17 +25,24 @@ BEGIN
 			[PBR_PdfRendererBaseId],
 			[PBR_BarcodeFormat],
 			[PBR_ShowBarcodeText],
-			[PBR_SqlTemplateId],
-			[PBR_SqlId],
-			[PBR_SqlResColumn]
+			[PBR_SqlTemplateConfigSqlConfigId]
 		) VALUES (
 			@pdfRendererBaseId,
 			@barcodeFormat,
 			@showBarcodeText,
-			@sqlTemplateId,
-			@sqlId,
-			@sqlResColumn
+			@sqlTemplateConfigSqlConfigId
 		)
+
+		IF @sqlResColumn IS NOT NULL 
+		BEGIN
+			INSERT INTO [dbo].[SqlResColumnConfig] (
+				[SRCC_PdfRendererBaseId],
+				[SRCC_Name]
+			) VALUES (
+				@pdfRendererBaseId,
+				@sqlResColumn
+			)
+		END
 
 		COMMIT TRANSACTION
 

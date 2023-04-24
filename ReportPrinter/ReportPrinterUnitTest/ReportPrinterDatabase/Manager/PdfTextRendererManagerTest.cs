@@ -16,7 +16,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfTextRendererEFCoreManager), false)]
         [TestCase(typeof(PdfTextRendererSPManager), true)]
         [TestCase(typeof(PdfTextRendererSPManager), false)]
-        public async Task TesPdfImageRendererEFCoreManager_Get(Type managerType, bool createNull)
+        public async Task TesPdfTextRendererEFCoreManager_Get(Type managerType, bool createNull)
         {
             await DoTest(managerType, createNull);
         }
@@ -25,6 +25,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             expectedRenderer.TextRendererType = TextRendererType.Sql;
             expectedRenderer.Content = createNull ? null : "Test Content 1";
+            expectedRenderer.SqlTemplateConfigSqlConfigId = createNull ? null : (Guid?)sqlInfoId;
             expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
             expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
             expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
@@ -36,6 +37,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             expectedRenderer.TextRendererType = TextRendererType.Timestamp;
             expectedRenderer.Content = createNull ? null : "Test Content 2";
+            expectedRenderer.SqlTemplateConfigSqlConfigId = createNull ? null : (Guid?)sqlInfoId;
             expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
             expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
             expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";

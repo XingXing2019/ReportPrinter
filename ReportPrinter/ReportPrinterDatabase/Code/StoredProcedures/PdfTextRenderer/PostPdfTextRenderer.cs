@@ -4,13 +4,12 @@ namespace ReportPrinterDatabase.Code.StoredProcedures.PdfTextRenderer
 {
     public class PostPdfTextRenderer : StoredProcedureBase
     {
-        public PostPdfTextRenderer(Guid pdfRendererBaseId, byte textRendererType, string content, string sqlTemplateId, string sqlId, string sqlResColumn, string mask, string title)
+        public PostPdfTextRenderer(Guid pdfRendererBaseId, byte textRendererType, string content, Guid? sqlTemplateConfigSqlConfigId, string sqlResColumn, string mask, string title)
         {
             Parameters.Add("@pdfRendererBaseId", pdfRendererBaseId);
             Parameters.Add("@textRendererType", textRendererType);
             Parameters.Add("@content", content);
-            Parameters.Add("@sqlTemplateId", sqlTemplateId);
-            Parameters.Add("@sqlId", sqlId);
+            Parameters.Add("@sqlTemplateConfigSqlConfigId", sqlTemplateConfigSqlConfigId);
             Parameters.Add("@sqlResColumn", sqlResColumn);
             Parameters.Add("@mask", mask);
             Parameters.Add("@title", title);

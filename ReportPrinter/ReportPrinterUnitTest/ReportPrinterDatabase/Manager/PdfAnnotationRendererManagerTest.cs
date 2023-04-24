@@ -27,8 +27,8 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             expectedRenderer.Title = createNull ? null : "Test Title 1";
             expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
             expectedRenderer.Content = createNull ? null : "Test Content 1";
-            expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
             expectedRenderer.SqlTemplateConfigSqlConfigId = createNull ? null : (Guid?)sqlInfoId;
+            expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
             expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
             expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
         }

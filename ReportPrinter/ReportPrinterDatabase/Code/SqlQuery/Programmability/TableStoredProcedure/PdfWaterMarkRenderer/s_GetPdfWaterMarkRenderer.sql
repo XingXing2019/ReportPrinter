@@ -36,16 +36,22 @@ BEGIN
 		[PWMR_WaterMarkType] AS WaterMarkType,
 		[PWMR_Content] AS Content,
 		[PWMR_Location] AS Location,
-		[PWMR_SqlTemplateId] AS SqlTemplateId,
-		[PWMR_SqlId] AS SqlId,
-		[PWMR_SqlResColumn] AS SqlResColumn,
 		[PWMR_StartPage] AS StartPage,
 		[PWMR_EndPage] AS EndPage,
-		[PWMR_Rotate] AS Rotate
+		[PWMR_Rotate] AS Rotate,
+
+		[PWMR_SqlTemplateConfigSqlConfigId] AS SqlTemplateConfigSqlConfigId,
+		[SqlTemplateId] AS SqlTemplateId,
+		[SqlId] AS SqlId,
+		[SRCC_Name] AS SqlResColumn
 	FROM
 		[PdfWaterMarkRenderer]
 	CROSS APPLY
 		f_GetPdfRendererBase(@pdfRendererBaseId)
+	OUTER APPLY
+		f_GetPdfRendererSqlInfo([PWMR_SqlTemplateConfigSqlConfigId])
+	LEFT JOIN
+		[dbo].[SqlResColumnConfig] ON [SRCC_PdfRendererBaseId] = [PWMR_PdfRendererBaseId]
 	WHERE
 		[PWMR_PdfRendererBaseId] = @pdfRendererBaseId		
 END

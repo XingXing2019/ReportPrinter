@@ -20,8 +20,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.PdfRendererBaseId,
                     (byte)model.TextRendererType,
                     model.Content,
-                    model.SqlTemplateId,
-                    model.SqlId,
+                    model.SqlTemplateConfigSqlConfigId,
                     model.SqlResColumn,
                     model.Mask,
                     model.Title
@@ -73,8 +72,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.PdfRendererBaseId,
                     (byte)model.TextRendererType,
                     model.Content,
-                    model.SqlTemplateId,
-                    model.SqlId,
+                    model.SqlTemplateConfigSqlConfigId,
                     model.SqlResColumn,
                     model.Mask,
                     model.Title

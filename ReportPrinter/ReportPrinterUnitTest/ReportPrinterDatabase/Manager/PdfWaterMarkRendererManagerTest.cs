@@ -15,7 +15,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfWaterMarkRendererEFCoreManager), false)]
         [TestCase(typeof(PdfWaterMarkRendererSPManager), true)]
         [TestCase(typeof(PdfWaterMarkRendererSPManager), false)]
-        public async Task TesPdfImageRendererEFCoreManager_Get(Type managerType, bool createNull)
+        public async Task TesPdfWaterMarkRendererEFCoreManager_Get(Type managerType, bool createNull)
         {
             await DoTest(managerType, createNull);
         }
@@ -25,6 +25,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             expectedRenderer.WaterMarkType = WaterMarkRendererType.Sql;
             expectedRenderer.Content = createNull ? null : "Test Content 1";
             expectedRenderer.Location = createNull ? null : (Location?)Location.Footer;
+            expectedRenderer.SqlTemplateConfigSqlConfigId = createNull ? null : (Guid?)sqlInfoId;
             expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
             expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
             expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
@@ -38,6 +39,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             expectedRenderer.WaterMarkType = WaterMarkRendererType.Text;
             expectedRenderer.Content = createNull ? null : "Test Content 2";
             expectedRenderer.Location = createNull ? null : (Location?)Location.Footer;
+            expectedRenderer.SqlTemplateConfigSqlConfigId = createNull ? null : (Guid?)sqlInfoId;
             expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
             expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
             expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";

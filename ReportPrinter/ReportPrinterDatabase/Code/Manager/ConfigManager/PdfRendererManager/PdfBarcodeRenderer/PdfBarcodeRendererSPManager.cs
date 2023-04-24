@@ -22,8 +22,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.PdfRendererBaseId,
                     (int?)model.BarcodeFormat,
                     model.ShowBarcodeText,
-                    model.SqlTemplateId,
-                    model.SqlId,
+                    model.SqlTemplateConfigSqlConfigId,
                     model.SqlResColumn
                 ));
 
@@ -73,8 +72,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                     model.PdfRendererBaseId,
                     (int?)model.BarcodeFormat,
                     model.ShowBarcodeText,
-                    model.SqlTemplateId,
-                    model.SqlId,
+                    model.SqlTemplateConfigSqlConfigId,
                     model.SqlResColumn
                 ));
 

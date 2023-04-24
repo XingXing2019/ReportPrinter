@@ -19,11 +19,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-
-                var pdfRendererBase = new PdfRendererBase();
-                pdfRendererBase.PdfTextRenderers.Add(new Entity.PdfTextRenderer());
-
-                pdfRendererBase = CreateEntity(model, pdfRendererBase);
+                var pdfRendererBase = CreateEntity(model);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -43,10 +39,14 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entity = await context.PdfTextRenderers
-                    .Include(x => x.PdfRendererBase)
-                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
 
+                var entity = await context.PdfRendererBases
+                    .Include(x => x.SqlResColumnConfigs)
+                    .Include(x => x.PdfTextRenderers)
+                    .Include(x => x.PdfTextRenderers).ThenInclude(x => x.SqlTemplateConfigSqlConfig).ThenInclude(x => x.SqlTemplateConfig)
+                    .Include(x => x.PdfTextRenderers).ThenInclude(x => x.SqlTemplateConfigSqlConfig).ThenInclude(x => x.SqlConfig)
+                    .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
+                
                 if (entity == null)
                 {
                     Logger.Debug($"PDF text renderer: {pdfRendererBaseId} does not exist", procName);
@@ -70,7 +70,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
+
                 var entity = await context.PdfRendererBases
+                    .Include(x => x.SqlResColumnConfigs)
                     .Include(x => x.PdfTextRenderers)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == model.PdfRendererBaseId);
 
@@ -80,7 +82,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 }
                 else
                 {
-                    entity = CreateEntity(model, entity);
+                    UpdateEntity(entity, model);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf text renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
@@ -95,36 +97,73 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected override PdfTextRendererModel CreateDataModel(Entity.PdfTextRenderer entity)
+        protected PdfTextRendererModel CreateDataModel(PdfRendererBase entity)
         {
-            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity);
+            var renderer = entity.PdfTextRenderers.Single();
 
-            model.TextRendererType = (TextRendererType)entity.TextRendererType;
-            model.Content = entity.Content;
-            model.SqlTemplateId = entity.SqlTemplateId;
-            model.SqlId = entity.SqlId;
-            model.SqlResColumn = entity.SqlResColumn;
-            model.Mask = entity.Mask;
-            model.Title = entity.Title;
+            model.TextRendererType = (TextRendererType)renderer.TextRendererType;
+            model.Content = renderer.Content;
+            
+            model.SqlTemplateConfigSqlConfigId = renderer.SqlTemplateConfigSqlConfigId;
+            model.SqlTemplateId = renderer.SqlTemplateConfigSqlConfigId.HasValue ? renderer.SqlTemplateConfigSqlConfig.SqlTemplateConfig.Id : null;
+            model.SqlId = renderer.SqlTemplateConfigSqlConfigId.HasValue ? renderer.SqlTemplateConfigSqlConfig.SqlConfig.Id : null;
+            model.SqlResColumn = entity.SqlResColumnConfigs.SingleOrDefault()?.Name;
+
+            model.Mask = renderer.Mask;
+            model.Title = renderer.Title;
 
             return model;
         }
 
-        protected override PdfRendererBase CreateEntity(PdfTextRendererModel model, PdfRendererBase pdfRendererBase)
+        protected PdfRendererBase CreateEntity(PdfTextRendererModel model)
         {
-            var pdfTextRender = pdfRendererBase.PdfTextRenderers.Single();
-
-            pdfTextRender.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfTextRender.TextRendererType = (byte)model.TextRendererType;
-            pdfTextRender.Content = model.Content;
-            pdfTextRender.SqlTemplateId = model.SqlTemplateId;
-            pdfTextRender.SqlId = model.SqlId;
-            pdfTextRender.SqlResColumn = model.SqlResColumn;
-            pdfTextRender.Mask = model.Mask;
-            pdfTextRender.Title = model.Title;
-
+            var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
+
+            if (!string.IsNullOrEmpty(model.SqlResColumn))
+            {
+                pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
+                {
+                    PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
+                    Name = model.SqlResColumn
+                });
+            }
+
+            pdfRendererBase.PdfTextRenderers.Add(new Entity.PdfTextRenderer
+            {
+                PdfRendererBaseId = model.PdfRendererBaseId,
+                TextRendererType = (byte)model.TextRendererType,
+                Content = model.Content,
+                SqlTemplateConfigSqlConfigId = model.SqlTemplateConfigSqlConfigId,
+                Mask = model.Mask,
+                Title = model.Title,
+            });
+
             return pdfRendererBase;
+        }
+
+        protected void UpdateEntity(PdfRendererBase pdfRendererBase, PdfTextRendererModel model)
+        {
+            AssignRendererBaseProperties(model, pdfRendererBase);
+
+            var renderer = pdfRendererBase.PdfTextRenderers.Single();
+            renderer.TextRendererType = (byte)model.TextRendererType;
+            renderer.Content = model.Content;
+            renderer.SqlTemplateConfigSqlConfigId = model.SqlTemplateConfigSqlConfigId;
+            renderer.Mask = model.Mask;
+            renderer.Title = model.Title;
+
+            pdfRendererBase.SqlResColumnConfigs.Clear();
+
+            if (!string.IsNullOrEmpty(model.SqlResColumn))
+            {
+                pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
+                {
+                    PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
+                    Name = model.SqlResColumn
+                });
+            }
         }
 
         #endregion

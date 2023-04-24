@@ -5,9 +5,7 @@ BEGIN
 		[PBR_PdfRendererBaseId] UNIQUEIDENTIFIER NOT NULL,
 		[PBR_BarcodeFormat] INT NULL,
 		[PBR_ShowBarcodeText] BIT NOT NULL CONSTRAINT [DF_PdfBarcodeRenderer_ShowBarcodeText] DEFAULT(0),
-		[PBR_SqlTemplateId] VARCHAR(50) NOT NULL,
-		[PBR_SqlId] VARCHAR(50) NOT NULL,
-		[PBR_SqlResColumn] VARCHAR(50) NOT NULL,
+		[PBR_SqlTemplateConfigSqlConfigId] UNIQUEIDENTIFIER NOT NULL,
 
 		CONSTRAINT [PK_dbo.PdfBarcodeRenderer] PRIMARY KEY CLUSTERED ([PBR_PdfBarcodeRendererId])
 	);

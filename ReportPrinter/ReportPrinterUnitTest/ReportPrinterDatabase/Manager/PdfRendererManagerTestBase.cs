@@ -58,6 +58,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 UpdatePdfRendererBaseModel(expectedRenderer, createNull);
                 AssignPutProperties(expectedRenderer, createNull, sqlInfoIds[1]);
 
+                
                 await mgr.Put(expectedRenderer);
 
                 actualRenderer = await mgr.Get(rendererBaseId);

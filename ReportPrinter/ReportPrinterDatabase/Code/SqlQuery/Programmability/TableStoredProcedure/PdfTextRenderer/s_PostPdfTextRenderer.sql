@@ -8,8 +8,7 @@ CREATE PROCEDURE [dbo].[s_PostPdfTextRenderer]
 	@pdfRendererBaseId UNIQUEIDENTIFIER,		
 	@textRendererType TINYINT,
 	@content VARCHAR(200),
-	@sqlTemplateId VARCHAR(50),
-	@sqlId VARCHAR(50),
+	@sqlTemplateConfigSqlConfigId UNIQUEIDENTIFIER,
 	@sqlResColumn VARCHAR(50), 
 	@mask VARCHAR(50),
 	@title VARCHAR(50)
@@ -28,21 +27,28 @@ BEGIN
 			[PTR_PdfRendererBaseId],
 			[PTR_TextRendererType],
 			[PTR_Content],
-			[PTR_SqlTemplateId],
-			[PTR_SqlId],
-			[PTR_SqlResColumn],
+			[PTR_SqlTemplateConfigSqlConfigId],
 			[PTR_Mask],
 			[PTR_Title]
 		) VALUES (
 			@pdfRendererBaseId,
 			@TextRendererType,
 			@Content,
-			@SqlTemplateId,
-			@SqlId,
-			@SqlResColumn, 
+			@sqlTemplateConfigSqlConfigId,
 			@Mask,
 			@Title
 		)
+
+		IF @sqlResColumn IS NOT NULL 
+		BEGIN
+			INSERT INTO [dbo].[SqlResColumnConfig] (
+				[SRCC_PdfRendererBaseId],
+				[SRCC_Name]
+			) VALUES (
+				@pdfRendererBaseId,
+				@sqlResColumn
+			)
+		END
 
 		COMMIT TRANSACTION
 

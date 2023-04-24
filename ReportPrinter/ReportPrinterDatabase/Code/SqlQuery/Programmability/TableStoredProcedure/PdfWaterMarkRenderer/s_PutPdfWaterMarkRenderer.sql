@@ -9,8 +9,7 @@ CREATE PROCEDURE [dbo].[s_PutPdfWaterMarkRenderer]
 	@waterMarkType TINYINT,
 	@content VARCHAR(200),
 	@location TINYINT,
-	@sqlTemplateId VARCHAR(50),
-	@sqlId VARCHAR(50),
+	@sqlTemplateConfigSqlConfigId UNIQUEIDENTIFIER,
 	@sqlResColumn VARCHAR(50),
 	@startPage INT,
 	@endPage INT,
@@ -32,14 +31,26 @@ BEGIN
 			[PWMR_WaterMarkType] = @waterMarkType,
 			[PWMR_Content] = @content,
 			[PWMR_Location] = @location,
-			[PWMR_SqlTemplateId] = @sqlTemplateId,
-			[PWMR_SqlId] = @sqlId,
-			[PWMR_SqlResColumn] = @sqlResColumn,
+			[PWMR_SqlTemplateConfigSqlConfigId] = @sqlTemplateConfigSqlConfigId,
 			[PWMR_StartPage] = @startPage,
 			[PWMR_EndPage] = @endPage,
 			[PWMR_Rotate] = @rotate
 		WHERE
 			[PWMR_PdfRendererBaseId] = @pdfRendererBaseId
+
+		DELETE FROM [dbo].[SqlResColumnConfig]
+		WHERE [SRCC_PdfRendererBaseId] = @pdfRendererBaseId
+		
+		IF @sqlResColumn IS NOT NULL 
+		BEGIN
+			INSERT INTO [dbo].[SqlResColumnConfig] (
+				[SRCC_PdfRendererBaseId],
+				[SRCC_Name]
+			) VALUES (
+				@pdfRendererBaseId,
+				@sqlResColumn
+			)
+		END
 
 		COMMIT TRANSACTION
 

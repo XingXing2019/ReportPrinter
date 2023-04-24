@@ -4,14 +4,13 @@ namespace ReportPrinterDatabase.Code.StoredProcedures.PdfWaterMarkRenderer
 {
     public class PostPdfWaterMarkRenderer : StoredProcedureBase
     {
-        public PostPdfWaterMarkRenderer(Guid pdfRendererBaseId, byte waterMarkType, string content, byte? location, string sqlTemplateId, string sqlId, string sqlResColumn, int? startPage, int? endPage, double? rotate)
+        public PostPdfWaterMarkRenderer(Guid pdfRendererBaseId, byte waterMarkType, string content, byte? location, Guid? sqlTemplateConfigSqlConfigId, string sqlResColumn, int? startPage, int? endPage, double? rotate)
         {
             Parameters.Add("@pdfRendererBaseId", pdfRendererBaseId);
             Parameters.Add("@waterMarkType", waterMarkType);
             Parameters.Add("@content", content);
             Parameters.Add("@location", location);
-            Parameters.Add("@sqlTemplateId", sqlTemplateId);
-            Parameters.Add("@sqlId", sqlId);
+            Parameters.Add("@sqlTemplateConfigSqlConfigId", sqlTemplateConfigSqlConfigId);
             Parameters.Add("@sqlResColumn", sqlResColumn);
             Parameters.Add("@startPage", startPage);
             Parameters.Add("@endPage", endPage);

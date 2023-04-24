@@ -5,9 +5,7 @@ BEGIN
 		[PTR_PdfRendererBaseId] UNIQUEIDENTIFIER NOT NULL,
 		[PTR_TextRendererType] TINYINT NOT NULL,
 		[PTR_Content] VARCHAR(200) NULL, 
-		[PTR_SqlTemplateId] VARCHAR(50) NULL,
-		[PTR_SqlId] VARCHAR(50) NULL,
-		[PTR_SqlResColumn] VARCHAR(50) NULL, 
+		[PTR_SqlTemplateConfigSqlConfigId] UNIQUEIDENTIFIER NULL,
 		[PTR_Mask] VARCHAR(50) NULL,
 		[PTR_Title] VARCHAR(50) NULL,
 

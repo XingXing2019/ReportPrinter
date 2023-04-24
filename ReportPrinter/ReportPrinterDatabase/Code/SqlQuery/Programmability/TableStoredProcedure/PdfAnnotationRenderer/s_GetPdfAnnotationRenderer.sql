@@ -37,6 +37,7 @@ BEGIN
 		[PAR_Title] AS Title,
 		[PAR_Icon] AS Icon,
 		[PAR_Content] AS Content,
+
 		[PAR_SqlTemplateConfigSqlConfigId] AS SqlTemplateConfigSqlConfigId,
 		[SqlTemplateId] AS SqlTemplateId,
 		[SqlId] AS SqlId,

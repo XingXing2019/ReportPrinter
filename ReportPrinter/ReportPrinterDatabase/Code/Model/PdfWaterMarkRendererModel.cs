@@ -1,4 +1,5 @@
 ﻿using ReportPrinterLibrary.Code.Enum;
+using System;
 
 namespace ReportPrinterDatabase.Code.Model
 {
@@ -7,6 +8,7 @@ namespace ReportPrinterDatabase.Code.Model
         public WaterMarkRendererType WaterMarkType { get; set; }
         public string Content { get; set; }
         public Location? Location { get; set; }
+        public Guid? SqlTemplateConfigSqlConfigId { get; set; }
         public string SqlTemplateId { get; set; }
         public string SqlId { get; set; }
         public string SqlResColumn { get; set; }

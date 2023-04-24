@@ -10,10 +10,9 @@ namespace ReportPrinterDatabase.Code.Entity
         public Guid PdfRendererBaseId { get; set; }
         public int? BarcodeFormat { get; set; }
         public bool ShowBarcodeText { get; set; }
-        public string SqlTemplateId { get; set; }
-        public string SqlId { get; set; }
-        public string SqlResColumn { get; set; }
+        public Guid SqlTemplateConfigSqlConfigId { get; set; }
 
         public virtual PdfRendererBase PdfRendererBase { get; set; }
+        public virtual SqlTemplateConfigSqlConfig SqlTemplateConfigSqlConfig { get; set; }
     }
 }

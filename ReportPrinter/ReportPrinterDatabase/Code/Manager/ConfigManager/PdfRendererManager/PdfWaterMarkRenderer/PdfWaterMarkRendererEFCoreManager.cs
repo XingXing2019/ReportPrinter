@@ -19,11 +19,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-
-                var pdfRendererBase = new PdfRendererBase();
-                pdfRendererBase.PdfWaterMarkRenderers.Add(new Entity.PdfWaterMarkRenderer());
-
-                pdfRendererBase = CreateEntity(model, pdfRendererBase);
+                var pdfRendererBase = CreateEntity(model);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -43,8 +39,12 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entity = await context.PdfWaterMarkRenderers
-                    .Include(x => x.PdfRendererBase)
+
+                var entity = await context.PdfRendererBases
+                    .Include(x => x.SqlResColumnConfigs)
+                    .Include(x => x.PdfWaterMarkRenderers)
+                    .Include(x => x.PdfWaterMarkRenderers).ThenInclude(x => x.SqlTemplateConfigSqlConfig).ThenInclude(x => x.SqlTemplateConfig)
+                    .Include(x => x.PdfWaterMarkRenderers).ThenInclude(x => x.SqlTemplateConfigSqlConfig).ThenInclude(x => x.SqlConfig)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
 
                 if (entity == null)
@@ -70,7 +70,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
+
                 var entity = await context.PdfRendererBases
+                    .Include(x => x.SqlResColumnConfigs)
                     .Include(x => x.PdfWaterMarkRenderers)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == model.PdfRendererBaseId);
 
@@ -80,7 +82,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 }
                 else
                 {
-                    entity = CreateEntity(model, entity);
+                    UpdateEntity(entity, model);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf water mark renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
@@ -95,40 +97,79 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected override PdfWaterMarkRendererModel CreateDataModel(Entity.PdfWaterMarkRenderer entity)
+        protected PdfWaterMarkRendererModel CreateDataModel(PdfRendererBase entity)
         {
-            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity);
+            var renderer = entity.PdfWaterMarkRenderers.Single();
 
-            model.WaterMarkType = (WaterMarkRendererType)entity.WaterMarkType;
-            model.Content = entity.Content;
-            model.Location = (Location?)entity.Location;
-            model.SqlTemplateId = entity.SqlTemplateId;
-            model.SqlId = entity.SqlId;
-            model.SqlResColumn = entity.SqlResColumn;
-            model.StartPage = entity.StartPage;
-            model.EndPage = entity.EndPage;
-            model.Rotate = entity.Rotate;
+            model.WaterMarkType = (WaterMarkRendererType)renderer.WaterMarkType;
+            model.Content = renderer.Content;
+            model.Location = (Location?)renderer.Location;
+            
+            model.SqlTemplateConfigSqlConfigId = renderer.SqlTemplateConfigSqlConfigId;
+            model.SqlTemplateId = renderer.SqlTemplateConfigSqlConfigId.HasValue ? renderer.SqlTemplateConfigSqlConfig.SqlTemplateConfig.Id : null;
+            model.SqlId = renderer.SqlTemplateConfigSqlConfigId.HasValue ? renderer.SqlTemplateConfigSqlConfig.SqlConfig.Id : null;
+            model.SqlResColumn = entity.SqlResColumnConfigs.SingleOrDefault()?.Name;
+
+            model.StartPage = renderer.StartPage;
+            model.EndPage = renderer.EndPage;
+            model.Rotate = renderer.Rotate;
 
             return model;
         }
 
-        protected override PdfRendererBase CreateEntity(PdfWaterMarkRendererModel model, PdfRendererBase pdfRendererBase)
+        protected PdfRendererBase CreateEntity(PdfWaterMarkRendererModel model)
         {
-            var pdfImageRender = pdfRendererBase.PdfWaterMarkRenderers.Single();
-
-            pdfImageRender.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfImageRender.WaterMarkType = (byte)model.WaterMarkType;
-            pdfImageRender.Content = model.Content;
-            pdfImageRender.Location = (byte?)model.Location;
-            pdfImageRender.SqlTemplateId = model.SqlTemplateId;
-            pdfImageRender.SqlId = model.SqlId;
-            pdfImageRender.SqlResColumn = model.SqlResColumn;
-            pdfImageRender.StartPage = model.StartPage;
-            pdfImageRender.EndPage = model.EndPage;
-            pdfImageRender.Rotate = model.Rotate;
-
+            var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
+
+            if (!string.IsNullOrEmpty(model.SqlResColumn))
+            {
+                pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
+                {
+                    PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
+                    Name = model.SqlResColumn
+                });
+            }
+
+            pdfRendererBase.PdfWaterMarkRenderers.Add(new Entity.PdfWaterMarkRenderer
+            {
+                PdfRendererBaseId = model.PdfRendererBaseId,
+                WaterMarkType = (byte)model.WaterMarkType,
+                Content = model.Content,
+                Location = (byte?)model.Location,
+                SqlTemplateConfigSqlConfigId = model.SqlTemplateConfigSqlConfigId,
+                StartPage = model.StartPage,
+                EndPage = model.EndPage,
+                Rotate = model.Rotate
+            });
+
             return pdfRendererBase;
+        }
+
+        protected void UpdateEntity(PdfRendererBase pdfRendererBase, PdfWaterMarkRendererModel model)
+        {
+            AssignRendererBaseProperties(model, pdfRendererBase);
+
+            var renderer = pdfRendererBase.PdfWaterMarkRenderers.Single();
+            renderer.WaterMarkType = (byte)model.WaterMarkType;
+            renderer.Content = model.Content;
+            renderer.Location = (byte?)model.Location;
+            renderer.SqlTemplateConfigSqlConfigId = model.SqlTemplateConfigSqlConfigId;
+            renderer.StartPage = model.StartPage;
+            renderer.EndPage = model.EndPage;
+            renderer.Rotate = model.Rotate;
+
+            pdfRendererBase.SqlResColumnConfigs.Clear();
+
+            if (!string.IsNullOrEmpty(model.SqlResColumn))
+            {
+                pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
+                {
+                    PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
+                    Name = model.SqlResColumn
+                });
+            }
         }
 
         #endregion

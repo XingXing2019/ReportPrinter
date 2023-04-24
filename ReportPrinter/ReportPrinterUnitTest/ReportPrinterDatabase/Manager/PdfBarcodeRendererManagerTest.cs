@@ -25,6 +25,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.PHARMA_CODE;
             expectedRenderer.ShowBarcodeText = true;
+            expectedRenderer.SqlTemplateConfigSqlConfigId = sqlInfoId;
             expectedRenderer.SqlTemplateId = "Test Sql Template 1";
             expectedRenderer.SqlId = "Test Sql 1";
             expectedRenderer.SqlResColumn = "Test Res Column 1";
@@ -34,6 +35,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         {
             expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.UPC_EAN_EXTENSION;
             expectedRenderer.ShowBarcodeText = false;
+            expectedRenderer.SqlTemplateConfigSqlConfigId = sqlInfoId;
             expectedRenderer.SqlTemplateId = "Test Sql Template 2";
             expectedRenderer.SqlId = "Test Sql 2";
             expectedRenderer.SqlResColumn = "Test Res Column 2";

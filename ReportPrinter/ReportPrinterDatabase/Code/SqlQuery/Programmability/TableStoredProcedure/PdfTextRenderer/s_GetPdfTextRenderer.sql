@@ -34,16 +34,22 @@ BEGIN
 
 		[PTR_PdfTextRendererId] AS PdfTextRendererId,
 		[PTR_TextRendererType] AS TextRendererType,
-		[PTR_Content] AS Content,
-		[PTR_SqlTemplateId] AS SqlTemplateId,
-		[PTR_SqlId] AS SqlId,
-		[PTR_SqlResColumn] AS SqlResColumn,
+		[PTR_Content] AS Content,		
 		[PTR_Mask] AS Mask,
-		[PTR_Title] AS Title
+		[PTR_Title] AS Title,
+
+		[PTR_SqlTemplateConfigSqlConfigId] AS SqlTemplateConfigSqlConfigId,
+		[SqlTemplateId] AS SqlTemplateId,
+		[SqlId] AS SqlId,
+		[SRCC_Name] AS SqlResColumn
 	FROM
 		[PdfTextRenderer]
 	CROSS APPLY
 		f_GetPdfRendererBase(@pdfRendererBaseId)
+	OUTER APPLY
+		f_GetPdfRendererSqlInfo([PTR_SqlTemplateConfigSqlConfigId])
+	LEFT JOIN
+		[dbo].[SqlResColumnConfig] ON [SRCC_PdfRendererBaseId] = [PTR_PdfRendererBaseId]
 	WHERE
 		[PTR_PdfRendererBaseId] = @pdfRendererBaseId		
 END

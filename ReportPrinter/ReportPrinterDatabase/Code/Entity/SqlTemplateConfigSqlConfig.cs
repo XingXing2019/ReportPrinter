@@ -10,6 +10,9 @@ namespace ReportPrinterDatabase.Code.Entity
         public SqlTemplateConfigSqlConfig()
         {
             PdfAnnotationRenderers = new HashSet<PdfAnnotationRenderer>();
+            PdfBarcodeRenderers = new HashSet<PdfBarcodeRenderer>();
+            PdfTextRenderers = new HashSet<PdfTextRenderer>();
+            PdfWaterMarkRenderers = new HashSet<PdfWaterMarkRenderer>();
         }
 
         public Guid SqlTemplateConfigSqlConfigId { get; set; }
@@ -19,5 +22,8 @@ namespace ReportPrinterDatabase.Code.Entity
         public virtual SqlConfig SqlConfig { get; set; }
         public virtual SqlTemplateConfig SqlTemplateConfig { get; set; }
         public virtual ICollection<PdfAnnotationRenderer> PdfAnnotationRenderers { get; set; }
+        public virtual ICollection<PdfBarcodeRenderer> PdfBarcodeRenderers { get; set; }
+        public virtual ICollection<PdfTextRenderer> PdfTextRenderers { get; set; }
+        public virtual ICollection<PdfWaterMarkRenderer> PdfWaterMarkRenderers { get; set; }
     }
 }

@@ -19,10 +19,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-
-                var pdfRendererBase = new PdfRendererBase();
-                pdfRendererBase.PdfBarcodeRenderers.Add(new Entity.PdfBarcodeRenderer());
-                pdfRendererBase = CreateEntity(model, pdfRendererBase);
+                var pdfRendererBase = CreateEntity(model);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -42,8 +39,12 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entity = await context.PdfBarcodeRenderers
-                    .Include(x => x.PdfRendererBase)
+
+                var entity = await context.PdfRendererBases
+                    .Include(x => x.SqlResColumnConfigs)
+                    .Include(x => x.PdfBarcodeRenderers)
+                    .Include(x => x.PdfBarcodeRenderers).ThenInclude(x => x.SqlTemplateConfigSqlConfig).ThenInclude(x => x.SqlTemplateConfig)
+                    .Include(x => x.PdfBarcodeRenderers).ThenInclude(x => x.SqlTemplateConfigSqlConfig).ThenInclude(x => x.SqlConfig)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
 
                 if (entity == null)
@@ -69,7 +70,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
+
                 var entity = await context.PdfRendererBases
+                    .Include(x => x.SqlResColumnConfigs)
                     .Include(x => x.PdfBarcodeRenderers)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == model.PdfRendererBaseId);
 
@@ -79,7 +82,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 }
                 else
                 {
-                    entity = CreateEntity(model, entity);
+                    UpdateEntity(entity, model);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf barcode renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
@@ -94,34 +97,65 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected override PdfBarcodeRendererModel CreateDataModel(Entity.PdfBarcodeRenderer entity)
+        protected PdfBarcodeRendererModel CreateDataModel(PdfRendererBase entity)
         {
-            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
-            
-            model.ShowBarcodeText = entity.ShowBarcodeText;
-            model.SqlTemplateId = entity.SqlTemplateId;
-            model.SqlId = entity.SqlId;
-            model.SqlResColumn = entity.SqlResColumn;
-            
-            if (entity.BarcodeFormat.HasValue)
-                model.BarcodeFormat = (BarcodeFormat)entity.BarcodeFormat.Value;
+            var model = CreateRendererBaseDataModel(entity);
+            var renderer = entity.PdfBarcodeRenderers.Single();
 
+            model.BarcodeFormat = renderer.BarcodeFormat.HasValue ? (BarcodeFormat?)renderer.BarcodeFormat.Value : null;
+            model.ShowBarcodeText = renderer.ShowBarcodeText;
+            model.SqlTemplateConfigSqlConfigId = renderer.SqlTemplateConfigSqlConfigId;
+            model.SqlTemplateId = renderer.SqlTemplateConfigSqlConfig.SqlTemplateConfig.Id;
+            model.SqlId = renderer.SqlTemplateConfigSqlConfig.SqlConfig.Id;
+            model.SqlResColumn = entity.SqlResColumnConfigs.SingleOrDefault()?.Name;
+            
             return model;
         }
 
-        protected override PdfRendererBase CreateEntity(PdfBarcodeRendererModel model, PdfRendererBase pdfRendererBase)
+        protected PdfRendererBase CreateEntity(PdfBarcodeRendererModel model)
         {
-            var pdfBarcodeRenderer = pdfRendererBase.PdfBarcodeRenderers.Single();
-
-            pdfBarcodeRenderer.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfBarcodeRenderer.BarcodeFormat = model.BarcodeFormat.HasValue ? (int?)model.BarcodeFormat.Value : null;
-            pdfBarcodeRenderer.ShowBarcodeText = model.ShowBarcodeText;
-            pdfBarcodeRenderer.SqlTemplateId = model.SqlTemplateId;
-            pdfBarcodeRenderer.SqlId = model.SqlId;
-            pdfBarcodeRenderer.SqlResColumn = model.SqlResColumn;
-
+            var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
+
+            if (!string.IsNullOrEmpty(model.SqlResColumn))
+            {
+                pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
+                {
+                    PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
+                    Name = model.SqlResColumn
+                });
+            }
+
+            pdfRendererBase.PdfBarcodeRenderers.Add(new Entity.PdfBarcodeRenderer
+            {
+                PdfRendererBaseId = model.PdfRendererBaseId,
+                BarcodeFormat = model.BarcodeFormat.HasValue ? (int?)model.BarcodeFormat.Value : null,
+                ShowBarcodeText = model.ShowBarcodeText,
+                SqlTemplateConfigSqlConfigId = model.SqlTemplateConfigSqlConfigId
+            });
+
             return pdfRendererBase;
+        }
+
+        protected void UpdateEntity(PdfRendererBase pdfRendererBase, PdfBarcodeRendererModel model)
+        {
+            AssignRendererBaseProperties(model, pdfRendererBase);
+
+            var renderer = pdfRendererBase.PdfBarcodeRenderers.Single();
+            renderer.BarcodeFormat = model.BarcodeFormat.HasValue ? (int?)model.BarcodeFormat.Value : null;
+            renderer.ShowBarcodeText = model.ShowBarcodeText;
+            renderer.SqlTemplateConfigSqlConfigId = model.SqlTemplateConfigSqlConfigId;
+
+            pdfRendererBase.SqlResColumnConfigs.Clear();
+
+            if (!string.IsNullOrEmpty(model.SqlResColumn))
+            {
+                pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
+                {
+                    PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
+                    Name = model.SqlResColumn
+                });
+            }
         }
 
         #endregion

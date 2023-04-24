@@ -71,6 +71,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
+
                 var entity = await context.PdfRendererBases
                     .Include(x => x.SqlResColumnConfigs)
                     .Include(x => x.PdfAnnotationRenderers)
@@ -100,7 +101,6 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
         protected PdfAnnotationRendererModel CreateDataModel(PdfRendererBase entity)
         {
             var model = CreateRendererBaseDataModel(entity);
-
             var renderer = entity.PdfAnnotationRenderers.Single();
 
             model.AnnotationRendererType = (AnnotationRendererType)renderer.AnnotationRendererType;
@@ -147,7 +147,6 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             AssignRendererBaseProperties(model, pdfRendererBase);
 
             var renderer = pdfRendererBase.PdfAnnotationRenderers.Single();
-            renderer.PdfRendererBaseId = model.PdfRendererBaseId;
             renderer.AnnotationRendererType = (byte)model.AnnotationRendererType;
             renderer.Title = model.Title;
             renderer.Icon = model.Icon.HasValue ? (byte?)model.Icon : null;

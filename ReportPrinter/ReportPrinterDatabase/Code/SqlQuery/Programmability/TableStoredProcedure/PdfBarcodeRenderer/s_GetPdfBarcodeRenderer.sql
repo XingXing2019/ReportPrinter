@@ -35,13 +35,19 @@ BEGIN
 		[PBR_PdfBarcodeRendererId] AS PdfBarcodeRendererId,
 		[PBR_BarcodeFormat] AS BarcodeFormat,
 		[PBR_ShowBarcodeText] AS ShowBarcodeText,
-		[PBR_SqlTemplateId] AS SqlTemplateId,
-		[PBR_SqlId] AS SqlId,
-		[PBR_SqlResColumn] AS SqlResColumn
+
+		[PBR_SqlTemplateConfigSqlConfigId] AS SqlTemplateConfigSqlConfigId,
+		[SqlTemplateId] AS SqlTemplateId,
+		[SqlId] AS SqlId,
+		[SRCC_Name] AS SqlResColumn
 	FROM
 		[PdfBarcodeRenderer]
 	CROSS APPLY
 		f_GetPdfRendererBase(@pdfRendererBaseId)
+	OUTER APPLY
+		f_GetPdfRendererSqlInfo([PBR_SqlTemplateConfigSqlConfigId])
+	LEFT JOIN
+		[dbo].[SqlResColumnConfig] ON [SRCC_PdfRendererBaseId] = [PBR_PdfRendererBaseId]
 	WHERE
 		[PBR_PdfRendererBaseId] = @pdfRendererBaseId		
 END

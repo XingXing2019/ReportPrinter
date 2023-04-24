@@ -8,8 +8,7 @@ CREATE PROCEDURE [dbo].[s_PutPdfBarcodeRenderer]
 	@pdfRendererBaseId UNIQUEIDENTIFIER,	
 	@barcodeFormat INT,
 	@showBarcodeText BIT,
-	@sqlTemplateId VARCHAR(50),
-	@sqlId VARCHAR(50),
+	@sqlTemplateConfigSqlConfigId UNIQUEIDENTIFIER,
 	@sqlResColumn VARCHAR(50)
 AS
 BEGIN
@@ -27,11 +26,23 @@ BEGIN
 		SET
 			[PBR_BarcodeFormat] = @barcodeFormat,
 			[PBR_ShowBarcodeText] = @showBarcodeText,
-			[PBR_SqlTemplateId] = @sqlTemplateId,
-			[PBR_SqlId] = @sqlId,
-			[PBR_SqlResColumn] = @sqlResColumn
+			[PBR_SqlTemplateConfigSqlConfigId] = @sqlTemplateConfigSqlConfigId
 		WHERE
 			[PBR_PdfRendererBaseId] = @pdfRendererBaseId
+
+		DELETE FROM [dbo].[SqlResColumnConfig]
+		WHERE [SRCC_PdfRendererBaseId] = @pdfRendererBaseId
+		
+		IF @sqlResColumn IS NOT NULL 
+		BEGIN
+			INSERT INTO [dbo].[SqlResColumnConfig] (
+				[SRCC_PdfRendererBaseId],
+				[SRCC_Name]
+			) VALUES (
+				@pdfRendererBaseId,
+				@sqlResColumn
+			)
+		END
 
 		COMMIT TRANSACTION
 

@@ -120,28 +120,17 @@ namespace ReportPrinterDatabase.Code.Context
 
                 entity.Property(e => e.ShowBarcodeText).HasColumnName("PBR_ShowBarcodeText");
 
-                entity.Property(e => e.SqlId)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PBR_SqlId");
-
-                entity.Property(e => e.SqlResColumn)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PBR_SqlResColumn");
-
-                entity.Property(e => e.SqlTemplateId)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PBR_SqlTemplateId");
+                entity.Property(e => e.SqlTemplateConfigSqlConfigId).HasColumnName("PBR_SqlTemplateConfigSqlConfigId");
 
                 entity.HasOne(d => d.PdfRendererBase)
                     .WithMany(p => p.PdfBarcodeRenderers)
                     .HasForeignKey(d => d.PdfRendererBaseId)
                     .HasConstraintName("FK_PdfBarcodeRenderer_PdfRendererBase_PdfRendererBaseId");
+
+                entity.HasOne(d => d.SqlTemplateConfigSqlConfig)
+                    .WithMany(p => p.PdfBarcodeRenderers)
+                    .HasForeignKey(d => d.SqlTemplateConfigSqlConfigId)
+                    .HasConstraintName("FK_PdfBarcodeRenderer_SqlTemplateConfigSqlConfig_SqlTemplateConfigSqlConfigId");
             });
 
             modelBuilder.Entity<PdfImageRenderer>(entity =>
@@ -324,20 +313,7 @@ namespace ReportPrinterDatabase.Code.Context
 
                 entity.Property(e => e.PdfRendererBaseId).HasColumnName("PTR_PdfRendererBaseId");
 
-                entity.Property(e => e.SqlId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PTR_SqlId");
-
-                entity.Property(e => e.SqlResColumn)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PTR_SqlResColumn");
-
-                entity.Property(e => e.SqlTemplateId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PTR_SqlTemplateId");
+                entity.Property(e => e.SqlTemplateConfigSqlConfigId).HasColumnName("PTR_SqlTemplateConfigSqlConfigId");
 
                 entity.Property(e => e.TextRendererType).HasColumnName("PTR_TextRendererType");
 
@@ -350,6 +326,12 @@ namespace ReportPrinterDatabase.Code.Context
                     .WithMany(p => p.PdfTextRenderers)
                     .HasForeignKey(d => d.PdfRendererBaseId)
                     .HasConstraintName("FK_PdfTextRenderer_PdfRendererBase_PdfRendererBaseId");
+
+                entity.HasOne(d => d.SqlTemplateConfigSqlConfig)
+                    .WithMany(p => p.PdfTextRenderers)
+                    .HasForeignKey(d => d.SqlTemplateConfigSqlConfigId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_PdfTextRenderer_SqlTemplateConfigSqlConfig_SqlTemplateConfigSqlConfigId");
             });
 
             modelBuilder.Entity<PdfWaterMarkRenderer>(entity =>
@@ -378,20 +360,7 @@ namespace ReportPrinterDatabase.Code.Context
 
                 entity.Property(e => e.Rotate).HasColumnName("PWMR_Rotate");
 
-                entity.Property(e => e.SqlId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PWMR_SqlId");
-
-                entity.Property(e => e.SqlResColumn)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PWMR_SqlResColumn");
-
-                entity.Property(e => e.SqlTemplateId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PWMR_SqlTemplateId");
+                entity.Property(e => e.SqlTemplateConfigSqlConfigId).HasColumnName("PWMR_SqlTemplateConfigSqlConfigId");
 
                 entity.Property(e => e.StartPage).HasColumnName("PWMR_StartPage");
 
@@ -401,6 +370,12 @@ namespace ReportPrinterDatabase.Code.Context
                     .WithMany(p => p.PdfWaterMarkRenderers)
                     .HasForeignKey(d => d.PdfRendererBaseId)
                     .HasConstraintName("FK_PdfWaterMarkRenderer_PdfRendererBase_PdfRendererBaseId");
+
+                entity.HasOne(d => d.SqlTemplateConfigSqlConfig)
+                    .WithMany(p => p.PdfWaterMarkRenderers)
+                    .HasForeignKey(d => d.SqlTemplateConfigSqlConfigId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_PdfWaterMarkRenderer_SqlTemplateConfigSqlConfig_SqlTemplateConfigSqlConfigId");
             });
 
             modelBuilder.Entity<PrintReportMessage>(entity =>

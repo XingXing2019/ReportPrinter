@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected PdfBarcodeRendererModel CreateDataModel(PdfRendererBase entity)
+        protected override PdfBarcodeRendererModel CreateDataModel(PdfRendererBase entity)
         {
             var model = CreateRendererBaseDataModel(entity);
             var renderer = entity.PdfBarcodeRenderers.Single();
@@ -112,7 +112,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        protected PdfRendererBase CreateEntity(PdfBarcodeRendererModel model)
+        protected override PdfRendererBase CreateEntity(PdfBarcodeRendererModel model)
         {
             var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
@@ -137,7 +137,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return pdfRendererBase;
         }
 
-        protected void UpdateEntity(PdfRendererBase pdfRendererBase, PdfBarcodeRendererModel model)
+        protected override void UpdateEntity(PdfRendererBase pdfRendererBase, PdfBarcodeRendererModel model)
         {
             AssignRendererBaseProperties(model, pdfRendererBase);
 

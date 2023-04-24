@@ -98,7 +98,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected PdfAnnotationRendererModel CreateDataModel(PdfRendererBase entity)
+        protected override PdfAnnotationRendererModel CreateDataModel(PdfRendererBase entity)
         {
             var model = CreateRendererBaseDataModel(entity);
             var renderer = entity.PdfAnnotationRenderers.Single();
@@ -115,7 +115,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        protected PdfRendererBase CreateEntity(PdfAnnotationRendererModel model)
+        protected override PdfRendererBase CreateEntity(PdfAnnotationRendererModel model)
         {
             var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
@@ -142,7 +142,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return pdfRendererBase;
         }
 
-        protected void UpdateEntity(PdfRendererBase pdfRendererBase, PdfAnnotationRendererModel model)
+        protected override void UpdateEntity(PdfRendererBase pdfRendererBase, PdfAnnotationRendererModel model)
         {
             AssignRendererBaseProperties(model, pdfRendererBase);
 

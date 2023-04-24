@@ -19,11 +19,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-
-                var pdfRendererBase = new PdfRendererBase();
-                pdfRendererBase.PdfReprintMarkRenderers.Add(new Entity.PdfReprintMarkRenderer());
-
-                pdfRendererBase = CreateEntity(model, pdfRendererBase);
+                var pdfRendererBase = CreateEntity(model);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -43,8 +39,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entity = await context.PdfReprintMarkRenderers
-                    .Include(x => x.PdfRendererBase)
+
+                var entity = await context.PdfRendererBases
+                    .Include(x => x.PdfReprintMarkRenderers)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
 
                 if (entity == null)
@@ -80,7 +77,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 }
                 else
                 {
-                    entity = CreateEntity(model, entity);
+                    UpdateEntity(entity, model);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf reprint mark renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
@@ -95,28 +92,42 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected override PdfReprintMarkRendererModel CreateDataModel(Entity.PdfReprintMarkRenderer entity)
+        protected override PdfReprintMarkRendererModel CreateDataModel(PdfRendererBase entity)
         {
-            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity);
+            var renderer = entity.PdfReprintMarkRenderers.Single();
 
-            model.Text = entity.Text;
-            model.BoardThickness = entity.BoardThickness;
-            model.Location = (Location?)entity.Location;
+            model.Text = renderer.Text;
+            model.BoardThickness = renderer.BoardThickness;
+            model.Location = (Location?)renderer.Location;
 
             return model;
         }
 
-        protected override PdfRendererBase CreateEntity(PdfReprintMarkRendererModel model, PdfRendererBase pdfRendererBase)
+        protected override PdfRendererBase CreateEntity(PdfReprintMarkRendererModel model)
         {
-            var pdfReprintMarkRender = pdfRendererBase.PdfReprintMarkRenderers.Single();
-
-            pdfReprintMarkRender.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfReprintMarkRender.Text = model.Text;
-            pdfReprintMarkRender.BoardThickness = model.BoardThickness;
-            pdfReprintMarkRender.Location = (byte?)model.Location;
-
+            var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
+
+            pdfRendererBase.PdfReprintMarkRenderers.Add(new Entity.PdfReprintMarkRenderer
+            {
+                PdfRendererBaseId = model.PdfRendererBaseId,
+                Text = model.Text,
+                BoardThickness = model.BoardThickness,
+                Location = (byte?)model.Location,
+            });
+
             return pdfRendererBase;
+        }
+
+        protected override void UpdateEntity(PdfRendererBase pdfRendererBase, PdfReprintMarkRendererModel model)
+        {
+            AssignRendererBaseProperties(model, pdfRendererBase);
+            var renderer = pdfRendererBase.PdfReprintMarkRenderers.Single();
+
+            renderer.Text = model.Text;
+            renderer.BoardThickness = model.BoardThickness;
+            renderer.Location = (byte?)model.Location;
         }
 
         #endregion

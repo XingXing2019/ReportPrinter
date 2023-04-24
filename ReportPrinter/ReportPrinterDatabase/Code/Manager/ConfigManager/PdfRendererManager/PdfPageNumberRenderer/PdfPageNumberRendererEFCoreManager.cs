@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Model;
@@ -19,11 +20,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-
-                var pdfRendererBase = new PdfRendererBase();
-                pdfRendererBase.PdfPageNumberRenderers.Add(new Entity.PdfPageNumberRenderer());
-                
-                pdfRendererBase = CreateEntity(model, pdfRendererBase);
+                var pdfRendererBase = CreateEntity(model);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -43,8 +40,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entity = await context.PdfPageNumberRenderers
-                    .Include(x => x.PdfRendererBase)
+
+                var entity = await context.PdfRendererBases
+                    .Include(x => x.PdfPageNumberRenderers)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
 
                 if (entity == null)
@@ -70,6 +68,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
+
                 var entity = await context.PdfRendererBases
                     .Include(x => x.PdfPageNumberRenderers)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == model.PdfRendererBaseId);
@@ -80,7 +79,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 }
                 else
                 {
-                    entity = CreateEntity(model, entity);
+                    UpdateEntity(entity, model);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf page number renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
@@ -95,28 +94,42 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected override PdfPageNumberRendererModel CreateDataModel(Entity.PdfPageNumberRenderer entity)
+        protected override PdfPageNumberRendererModel CreateDataModel(PdfRendererBase entity)
         {
-            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity);
+            var renderer = entity.PdfPageNumberRenderers.Single();
 
-            model.StartPage = entity.StartPage;
-            model.EndPage = entity.EndPage;
-            model.PageNumberLocation = (Location?)entity.PageNumberLocation;
+            model.StartPage = renderer.StartPage;
+            model.EndPage = renderer.EndPage;
+            model.PageNumberLocation = (Location?)renderer.PageNumberLocation;
 
             return model;
         }
 
-        protected override PdfRendererBase CreateEntity(PdfPageNumberRendererModel model, PdfRendererBase pdfRendererBase)
+        protected override PdfRendererBase CreateEntity(PdfPageNumberRendererModel model)
         {
-            var pdfPageNumberRenderer = pdfRendererBase.PdfPageNumberRenderers.Single();
-
-            pdfPageNumberRenderer.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfPageNumberRenderer.StartPage = model.StartPage;
-            pdfPageNumberRenderer.EndPage = model.EndPage;
-            pdfPageNumberRenderer.PageNumberLocation = (byte?)model.PageNumberLocation;
-
+            var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
+
+            pdfRendererBase.PdfPageNumberRenderers.Add(new Entity.PdfPageNumberRenderer
+            {
+                PdfRendererBaseId = model.PdfRendererBaseId,
+                StartPage = model.StartPage,
+                EndPage = model.EndPage,
+                PageNumberLocation = (byte?)model.PageNumberLocation,
+            });
+
             return pdfRendererBase;
+        }
+
+        protected override void UpdateEntity(PdfRendererBase pdfRendererBase, PdfPageNumberRendererModel model)
+        {
+            AssignRendererBaseProperties(model, pdfRendererBase);
+            var renderer = pdfRendererBase.PdfPageNumberRenderers.Single();
+
+            renderer.StartPage = model.StartPage;
+            renderer.EndPage = model.EndPage;
+            renderer.PageNumberLocation = (byte?)model.PageNumberLocation;
         }
 
         #endregion

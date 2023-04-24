@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected PdfTextRendererModel CreateDataModel(PdfRendererBase entity)
+        protected override PdfTextRendererModel CreateDataModel(PdfRendererBase entity)
         {
             var model = CreateRendererBaseDataModel(entity);
             var renderer = entity.PdfTextRenderers.Single();
@@ -116,7 +116,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        protected PdfRendererBase CreateEntity(PdfTextRendererModel model)
+        protected override PdfRendererBase CreateEntity(PdfTextRendererModel model)
         {
             var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
@@ -143,11 +143,11 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return pdfRendererBase;
         }
 
-        protected void UpdateEntity(PdfRendererBase pdfRendererBase, PdfTextRendererModel model)
+        protected override void UpdateEntity(PdfRendererBase pdfRendererBase, PdfTextRendererModel model)
         {
             AssignRendererBaseProperties(model, pdfRendererBase);
-
             var renderer = pdfRendererBase.PdfTextRenderers.Single();
+
             renderer.TextRendererType = (byte)model.TextRendererType;
             renderer.Content = model.Content;
             renderer.SqlTemplateConfigSqlConfigId = model.SqlTemplateConfigSqlConfigId;

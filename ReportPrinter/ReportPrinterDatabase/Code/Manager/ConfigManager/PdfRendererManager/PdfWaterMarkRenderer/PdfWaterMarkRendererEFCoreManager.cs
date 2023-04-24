@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected PdfWaterMarkRendererModel CreateDataModel(PdfRendererBase entity)
+        protected override PdfWaterMarkRendererModel CreateDataModel(PdfRendererBase entity)
         {
             var model = CreateRendererBaseDataModel(entity);
             var renderer = entity.PdfWaterMarkRenderers.Single();
@@ -118,7 +118,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return model;
         }
 
-        protected PdfRendererBase CreateEntity(PdfWaterMarkRendererModel model)
+        protected override PdfRendererBase CreateEntity(PdfWaterMarkRendererModel model)
         {
             var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
@@ -147,7 +147,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             return pdfRendererBase;
         }
 
-        protected void UpdateEntity(PdfRendererBase pdfRendererBase, PdfWaterMarkRendererModel model)
+        protected override void UpdateEntity(PdfRendererBase pdfRendererBase, PdfWaterMarkRendererModel model)
         {
             AssignRendererBaseProperties(model, pdfRendererBase);
 

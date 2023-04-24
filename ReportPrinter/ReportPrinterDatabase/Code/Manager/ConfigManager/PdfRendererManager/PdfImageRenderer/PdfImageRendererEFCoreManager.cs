@@ -19,11 +19,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-
-                var pdfRendererBase = new PdfRendererBase();
-                pdfRendererBase.PdfImageRenderers.Add(new Entity.PdfImageRenderer());
-                
-                pdfRendererBase = CreateEntity(model, pdfRendererBase);
+                var pdfRendererBase = CreateEntity(model);
 
                 context.PdfRendererBases.Add(pdfRendererBase);
                 var rows = await context.SaveChangesAsync();
@@ -43,8 +39,9 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             try
             {
                 await using var context = new ReportPrinterContext();
-                var entity = await context.PdfImageRenderers
-                    .Include(x => x.PdfRendererBase)
+
+                var entity = await context.PdfRendererBases
+                    .Include(x => x.PdfImageRenderers)
                     .FirstOrDefaultAsync(x => x.PdfRendererBaseId == pdfRendererBaseId);
 
                 if (entity == null)
@@ -80,7 +77,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 }
                 else
                 {
-                    entity = CreateEntity(model, entity);
+                    UpdateEntity(entity, model);
                     var rows = await context.SaveChangesAsync();
                     Logger.Debug($"Update pdf image renderer: {entity.PdfRendererBaseId}, {rows} row affected", procName);
                 }
@@ -95,26 +92,39 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         #region Helper
 
-        protected override PdfImageRendererModel CreateDataModel(Entity.PdfImageRenderer entity)
+        protected override PdfImageRendererModel CreateDataModel(PdfRendererBase entity)
         {
-            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity);
+            var renderer = entity.PdfImageRenderers.Single();
 
-            model.SourceType = (SourceType)entity.SourceType;
-            model.ImageSource = entity.ImageSource;
+            model.SourceType = (SourceType)renderer.SourceType;
+            model.ImageSource = renderer.ImageSource;
 
             return model;
         }
 
-        protected override PdfRendererBase CreateEntity(PdfImageRendererModel model, PdfRendererBase pdfRendererBase)
+        protected override PdfRendererBase CreateEntity(PdfImageRendererModel model)
         {
-            var pdfImageRender = pdfRendererBase.PdfImageRenderers.Single();
-
-            pdfImageRender.PdfRendererBaseId = model.PdfRendererBaseId;
-            pdfImageRender.SourceType = (byte)model.SourceType;
-            pdfImageRender.ImageSource = model.ImageSource;
-
+            var pdfRendererBase = new PdfRendererBase();
             AssignRendererBaseProperties(model, pdfRendererBase);
+
+            pdfRendererBase.PdfImageRenderers.Add(new Entity.PdfImageRenderer
+            {
+                PdfRendererBaseId = model.PdfRendererBaseId,
+                SourceType = (byte)model.SourceType,
+                ImageSource = model.ImageSource,
+            });
+
             return pdfRendererBase;
+        }
+
+        protected override void UpdateEntity(PdfRendererBase pdfRendererBase, PdfImageRendererModel model)
+        {
+            AssignRendererBaseProperties(model, pdfRendererBase);
+            var renderer = pdfRendererBase.PdfImageRenderers.Single();
+
+            renderer.SourceType = (byte)model.SourceType;
+            renderer.ImageSource = model.ImageSource;
         }
 
         #endregion

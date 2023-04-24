@@ -8,7 +8,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer
 {
-    public class PdfBarcodeRendererSPManager : PdfRendererManagerBase<PdfBarcodeRendererModel, Entity.PdfBarcodeRenderer>
+    public class PdfBarcodeRendererSPManager : PdfRendererManagerBase<PdfBarcodeRendererModel>
     {
         public override async Task Post(PdfBarcodeRendererModel model)
         {

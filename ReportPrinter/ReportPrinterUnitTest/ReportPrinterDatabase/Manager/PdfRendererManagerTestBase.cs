@@ -16,7 +16,7 @@ using ReportPrinterUnitTest.StoredProcedure;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public abstract class PdfRendererManagerTestBase<T, E> : DatabaseTestBase<PdfRendererBaseModel> where T : PdfRendererBaseModel
+    public abstract class PdfRendererManagerTestBase<T> : DatabaseTestBase<PdfRendererBaseModel> where T : PdfRendererBaseModel
     {
         private readonly ISqlConfigManager _sqlConfigMgr;
         private readonly ISqlTemplateConfigManager _sqlTemplateConfigMgr;
@@ -41,7 +41,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             try
             {
                 var sqlInfoIds = await PostSqlInfo();
-                var mgr = (PdfRendererManagerBase<T, E>)Activator.CreateInstance(managerType);
+                var mgr = (PdfRendererManagerBase<T>)Activator.CreateInstance(managerType);
 
                 var rendererBaseId = Guid.NewGuid();
                 var rendererType = PdfRendererType.Barcode;

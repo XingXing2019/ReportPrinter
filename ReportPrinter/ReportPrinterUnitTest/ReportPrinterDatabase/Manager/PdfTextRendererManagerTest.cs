@@ -9,7 +9,7 @@ using ZXing;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfTextRendererManagerTest : PdfRendererManagerTestBase<PdfTextRendererModel, PdfTextRenderer>
+    public class PdfTextRendererManagerTest : PdfRendererManagerTestBase<PdfTextRendererModel>
     {
         [Test]
         [TestCase(typeof(PdfTextRendererEFCoreManager), true)]

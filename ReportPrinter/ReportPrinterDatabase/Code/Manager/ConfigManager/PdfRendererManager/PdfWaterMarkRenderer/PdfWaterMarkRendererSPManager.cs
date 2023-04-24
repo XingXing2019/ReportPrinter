@@ -6,7 +6,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfWaterMarkRenderer
 {
-    public class PdfWaterMarkRendererSPManager : PdfRendererManagerBase<PdfWaterMarkRendererModel, Entity.PdfWaterMarkRenderer>
+    public class PdfWaterMarkRendererSPManager : PdfRendererManagerBase<PdfWaterMarkRendererModel>
     {
         public override async Task Post(PdfWaterMarkRendererModel model)
         {

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using ReportPrinterDatabase.Code.Context;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Model;
@@ -11,7 +10,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfPageNumberRenderer
 {
-    public class PdfPageNumberRendererEFCoreManager : PdfRendererManagerBase<PdfPageNumberRendererModel, Entity.PdfPageNumberRenderer>
+    public class PdfPageNumberRendererEFCoreManager : PdfRendererManagerBase<PdfPageNumberRendererModel>
     {
         public override async Task Post(PdfPageNumberRendererModel model)
         {

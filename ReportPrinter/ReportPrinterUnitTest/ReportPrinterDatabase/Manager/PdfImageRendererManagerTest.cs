@@ -8,7 +8,7 @@ using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfIma
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfImageRendererManagerTest : PdfRendererManagerTestBase<PdfImageRendererModel, PdfImageRenderer>
+    public class PdfImageRendererManagerTest : PdfRendererManagerTestBase<PdfImageRendererModel>
     {
         [Test]
         [TestCase(typeof(PdfImageRendererEFCoreManager), true)]

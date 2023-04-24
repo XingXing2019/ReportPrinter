@@ -9,7 +9,7 @@ using BarcodeFormat = ReportPrinterLibrary.Code.Enum.BarcodeFormat;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfBarcodeRendererManagerTest : PdfRendererManagerTestBase<PdfBarcodeRendererModel, PdfBarcodeRenderer>
+    public class PdfBarcodeRendererManagerTest : PdfRendererManagerTestBase<PdfBarcodeRendererModel>
     {
         [Test]
         [TestCase(typeof(PdfBarcodeRendererEFCoreManager), true)]

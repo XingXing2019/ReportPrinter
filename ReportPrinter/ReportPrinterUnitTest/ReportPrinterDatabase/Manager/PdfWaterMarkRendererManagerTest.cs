@@ -8,7 +8,7 @@ using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfWaterMarkRendererManagerTest : PdfRendererManagerTestBase<PdfWaterMarkRendererModel, PdfWaterMarkRenderer>
+    public class PdfWaterMarkRendererManagerTest : PdfRendererManagerTestBase<PdfWaterMarkRendererModel>
     {
         [Test]
         [TestCase(typeof(PdfWaterMarkRendererEFCoreManager), true)]

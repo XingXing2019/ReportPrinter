@@ -10,7 +10,7 @@ using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
 {
-    public abstract class PdfRendererManagerBase<M, E> where M : PdfRendererBaseModel
+    public abstract class PdfRendererManagerBase<T> where T : PdfRendererBaseModel
     {
         protected readonly StoredProcedureExecutor Executor;
 
@@ -19,21 +19,21 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
             Executor = new StoredProcedureExecutor();
         }
 
-        public abstract Task Post(M model);
-        public abstract Task<M> Get(Guid pdfRendererBaseId);
-        public abstract Task Put(M model);
+        public abstract Task Post(T model);
+        public abstract Task<T> Get(Guid pdfRendererBaseId);
+        public abstract Task Put(T model);
 
-        protected virtual M CreateDataModel(PdfRendererBase entity) => default;
+        protected virtual T CreateDataModel(PdfRendererBase entity) => default;
 
-        protected virtual PdfRendererBase CreateEntity(M model) => default;
+        protected virtual PdfRendererBase CreateEntity(T model) => default;
 
-        protected virtual void UpdateEntity(PdfRendererBase pdfRendererBase, M model) { }
+        protected virtual void UpdateEntity(PdfRendererBase pdfRendererBase, T model) { }
 
 
-        protected M CreateRendererBaseDataModel(PdfRendererBase entity)
+        protected T CreateRendererBaseDataModel(PdfRendererBase entity)
         {
-            var type = typeof(M);
-            var model = (M)Activator.CreateInstance(type);
+            var type = typeof(T);
+            var model = (T)Activator.CreateInstance(type);
 
             model.PdfRendererBaseId = entity.PdfRendererBaseId;
             model.Id = entity.Id;
@@ -61,7 +61,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
             return model;
         }
 
-        protected void AssignRendererBaseProperties(M model, PdfRendererBase pdfRendererBase)
+        protected void AssignRendererBaseProperties(T model, PdfRendererBase pdfRendererBase)
         {
             pdfRendererBase.PdfRendererBaseId = model.PdfRendererBaseId;
             pdfRendererBase.Id = model.Id;
@@ -87,7 +87,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
             pdfRendererBase.ColumnSpan = model.ColumnSpan;
         }
 
-        protected List<StoredProcedureBase> CreatePostStoreProcedures(M model)
+        protected List<StoredProcedureBase> CreatePostStoreProcedures(T model)
         {
             var spList = new List<StoredProcedureBase>
             {
@@ -120,7 +120,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
             return spList;
         }
 
-        protected List<StoredProcedureBase> CreatePutStoreProcedures(M model)
+        protected List<StoredProcedureBase> CreatePutStoreProcedures(T model)
         {
             var spList = new List<StoredProcedureBase>
             {

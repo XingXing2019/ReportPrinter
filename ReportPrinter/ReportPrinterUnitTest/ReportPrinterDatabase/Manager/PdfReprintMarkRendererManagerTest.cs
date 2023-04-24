@@ -8,7 +8,7 @@ using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfReprintMarkRendererManagerTest : PdfRendererManagerTestBase<PdfReprintMarkRendererModel, PdfReprintMarkRenderer>
+    public class PdfReprintMarkRendererManagerTest : PdfRendererManagerTestBase<PdfReprintMarkRendererModel>
     {
         [Test]
         [TestCase(typeof(PdfReprintMarkRendererEFCoreManager), true)]

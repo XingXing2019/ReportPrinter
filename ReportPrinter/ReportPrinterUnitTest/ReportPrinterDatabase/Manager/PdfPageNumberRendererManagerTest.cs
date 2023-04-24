@@ -9,7 +9,7 @@ using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfPag
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfPageNumberRendererManagerTest : PdfRendererManagerTestBase<PdfPageNumberRendererModel, PdfPageNumberRenderer>
+    public class PdfPageNumberRendererManagerTest : PdfRendererManagerTestBase<PdfPageNumberRendererModel>
     {
         [Test]
         [TestCase(typeof(PdfPageNumberRendererEFCoreManager), true)]

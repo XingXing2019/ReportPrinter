@@ -9,7 +9,7 @@ using PdfTextAnnotationIcon = ReportPrinterLibrary.Code.Enum.PdfTextAnnotationIc
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {
-    public class PdfAnnotationRendererManagerTest : PdfRendererManagerTestBase<PdfAnnotationRendererModel, PdfAnnotationRenderer>
+    public class PdfAnnotationRendererManagerTest : PdfRendererManagerTestBase<PdfAnnotationRendererModel>
     {
         [Test]
         [TestCase(typeof(PdfAnnotationRendererEFCoreManager), true)]

@@ -7,7 +7,7 @@ using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfPageNumberRenderer
 {
-    public class PdfPageNumberRendererSPManager : PdfRendererManagerBase<PdfPageNumberRendererModel, Entity.PdfPageNumberRenderer>
+    public class PdfPageNumberRendererSPManager : PdfRendererManagerBase<PdfPageNumberRendererModel>
     {
         public override async Task Post(PdfPageNumberRendererModel model)
         {

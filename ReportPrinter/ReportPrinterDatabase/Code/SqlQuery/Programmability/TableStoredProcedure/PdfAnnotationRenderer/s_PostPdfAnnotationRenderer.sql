@@ -10,8 +10,7 @@ CREATE PROCEDURE [dbo].[s_PostPdfAnnotationRenderer]
 	@title NVARCHAR(MAX),
 	@icon TINYINT,
 	@content VARCHAR(MAX),
-	@sqlTemplateId VARCHAR(50),
-	@sqlId VARCHAR(50),
+	@sqlTemplateConfigSqlConfigId UNIQUEIDENTIFIER,
 	@sqlResColumn VARCHAR(50)
 AS
 BEGIN
@@ -24,25 +23,32 @@ BEGIN
 
 	BEGIN TRY
 		
-		INSERT INTO [PdfAnnotationRenderer] (
+		INSERT INTO [dbo].[PdfAnnotationRenderer] (
 			[PAR_PdfRendererBaseId],
 			[PAR_AnnotationRendererType],
 			[PAR_Title],
 			[PAR_Icon],
 			[PAR_Content],
-			[PAR_SqlTemplateId],
-			[PAR_SqlId],
-			[PAR_SqlResColumn]
+			[PAR_SqlTemplateConfigSqlConfigId]
 		) VALUES (
 			@pdfRendererBaseId,
 			@annotationRendererType,
 			@title,
 			@icon,
 			@content,
-			@sqlTemplateId,
-			@sqlId,
-			@sqlResColumn
+			@sqlTemplateConfigSqlConfigId
 		)
+
+		IF @sqlResColumn IS NOT NULL 
+		BEGIN
+			INSERT INTO [dbo].[SqlResColumnConfig] (
+				[SRCC_PdfRendererBaseId],
+				[SRCC_Name]
+			) VALUES (
+				@pdfRendererBaseId,
+				@sqlResColumn
+			)
+		END
 
 		COMMIT TRANSACTION
 

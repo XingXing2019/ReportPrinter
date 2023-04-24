@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
 
-#nullable disable
+using System;
 
 namespace ReportPrinterDatabase.Code.Entity
 {
@@ -13,10 +12,9 @@ namespace ReportPrinterDatabase.Code.Entity
         public string Title { get; set; }
         public byte? Icon { get; set; }
         public string Content { get; set; }
-        public string SqlTemplateId { get; set; }
-        public string SqlId { get; set; }
-        public string SqlResColumn { get; set; }
+        public Guid? SqlTemplateConfigSqlConfigId { get; set; }
 
         public virtual PdfRendererBase PdfRendererBase { get; set; }
+        public virtual SqlTemplateConfigSqlConfig SqlTemplateConfigSqlConfig { get; set; }
     }
 }

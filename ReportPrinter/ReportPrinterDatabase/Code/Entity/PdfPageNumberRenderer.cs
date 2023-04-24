@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
 
-#nullable disable
+using System;
 
 namespace ReportPrinterDatabase.Code.Entity
 {

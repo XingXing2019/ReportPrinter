@@ -25,7 +25,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
         protected virtual T CreateDataModel(E entity) => default(T);
         protected virtual PdfRendererBase CreateEntity(T model, PdfRendererBase pdfRendererBase) => pdfRendererBase;
         
-        protected T CreateDataModel(PdfRendererBase entity)
+        protected T CreateRendererBaseDataModel(PdfRendererBase entity)
         {
             var type = typeof(T);
             var model = (T)Activator.CreateInstance(type);
@@ -56,7 +56,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager
             return model;
         }
 
-        protected void AssignEntity(T model, PdfRendererBase pdfRendererBase)
+        protected void AssignRendererBaseProperties(T model, PdfRendererBase pdfRendererBase)
         {
             pdfRendererBase.PdfRendererBaseId = model.PdfRendererBaseId;
             pdfRendererBase.Id = model.Id;

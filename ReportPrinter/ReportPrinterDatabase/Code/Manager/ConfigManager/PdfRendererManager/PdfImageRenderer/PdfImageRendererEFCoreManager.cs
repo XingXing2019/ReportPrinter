@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         protected override PdfImageRendererModel CreateDataModel(Entity.PdfImageRenderer entity)
         {
-            var model = CreateDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
 
             model.SourceType = (SourceType)entity.SourceType;
             model.ImageSource = entity.ImageSource;
@@ -113,7 +113,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             pdfImageRender.SourceType = (byte)model.SourceType;
             pdfImageRender.ImageSource = model.ImageSource;
 
-            AssignEntity(model, pdfRendererBase);
+            AssignRendererBaseProperties(model, pdfRendererBase);
             return pdfRendererBase;
         }
 

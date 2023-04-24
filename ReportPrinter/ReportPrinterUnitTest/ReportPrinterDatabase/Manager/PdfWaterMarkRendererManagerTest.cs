@@ -20,7 +20,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             await DoTest(managerType, createNull);
         }
 
-        protected override void AssignPostProperties(PdfWaterMarkRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPostProperties(PdfWaterMarkRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.WaterMarkType = WaterMarkRendererType.Sql;
             expectedRenderer.Content = createNull ? null : "Test Content 1";
@@ -33,7 +33,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             expectedRenderer.Rotate = createNull ? null : (double?)65.2;
         }
 
-        protected override void AssignPutProperties(PdfWaterMarkRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPutProperties(PdfWaterMarkRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.WaterMarkType = WaterMarkRendererType.Text;
             expectedRenderer.Content = createNull ? null : "Test Content 2";

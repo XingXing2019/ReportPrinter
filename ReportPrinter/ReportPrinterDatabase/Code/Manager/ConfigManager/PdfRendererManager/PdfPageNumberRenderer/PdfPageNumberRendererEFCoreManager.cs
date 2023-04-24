@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         protected override PdfPageNumberRendererModel CreateDataModel(Entity.PdfPageNumberRenderer entity)
         {
-            var model = CreateDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
 
             model.StartPage = entity.StartPage;
             model.EndPage = entity.EndPage;
@@ -115,7 +115,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             pdfPageNumberRenderer.EndPage = model.EndPage;
             pdfPageNumberRenderer.PageNumberLocation = (byte?)model.PageNumberLocation;
 
-            AssignEntity(model, pdfRendererBase);
+            AssignRendererBaseProperties(model, pdfRendererBase);
             return pdfRendererBase;
         }
 

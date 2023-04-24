@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         protected override PdfReprintMarkRendererModel CreateDataModel(Entity.PdfReprintMarkRenderer entity)
         {
-            var model = CreateDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
 
             model.Text = entity.Text;
             model.BoardThickness = entity.BoardThickness;
@@ -115,7 +115,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             pdfReprintMarkRender.BoardThickness = model.BoardThickness;
             pdfReprintMarkRender.Location = (byte?)model.Location;
 
-            AssignEntity(model, pdfRendererBase);
+            AssignRendererBaseProperties(model, pdfRendererBase);
             return pdfRendererBase;
         }
 

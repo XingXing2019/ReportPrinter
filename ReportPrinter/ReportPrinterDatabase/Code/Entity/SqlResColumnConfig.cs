@@ -4,12 +4,11 @@ using System;
 
 namespace ReportPrinterDatabase.Code.Entity
 {
-    public partial class PdfImageRenderer
+    public partial class SqlResColumnConfig
     {
-        public Guid PdfImageRendererId { get; set; }
+        public Guid SqlResColumnConfigId { get; set; }
         public Guid PdfRendererBaseId { get; set; }
-        public byte SourceType { get; set; }
-        public string ImageSource { get; set; }
+        public string Name { get; set; }
 
         public virtual PdfRendererBase PdfRendererBase { get; set; }
     }

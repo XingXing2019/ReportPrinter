@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable disable
 
-#nullable disable
+using System;
+using System.Collections.Generic;
 
 namespace ReportPrinterDatabase.Code.Entity
 {
@@ -16,6 +16,7 @@ namespace ReportPrinterDatabase.Code.Entity
             PdfReprintMarkRenderers = new HashSet<PdfReprintMarkRenderer>();
             PdfTextRenderers = new HashSet<PdfTextRenderer>();
             PdfWaterMarkRenderers = new HashSet<PdfWaterMarkRenderer>();
+            SqlResColumnConfigs = new HashSet<SqlResColumnConfig>();
         }
 
         public Guid PdfRendererBaseId { get; set; }
@@ -48,5 +49,6 @@ namespace ReportPrinterDatabase.Code.Entity
         public virtual ICollection<PdfReprintMarkRenderer> PdfReprintMarkRenderers { get; set; }
         public virtual ICollection<PdfTextRenderer> PdfTextRenderers { get; set; }
         public virtual ICollection<PdfWaterMarkRenderer> PdfWaterMarkRenderers { get; set; }
+        public virtual ICollection<SqlResColumnConfig> SqlResColumnConfigs { get; set; }
     }
 }

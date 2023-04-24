@@ -21,14 +21,14 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             await DoTest(managerType, createNull);
         }
 
-        protected override void AssignPostProperties(PdfPageNumberRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPostProperties(PdfPageNumberRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.StartPage = createNull ? null : (int?)1;
             expectedRenderer.EndPage = createNull ? null : (int?)2;
             expectedRenderer.PageNumberLocation = createNull ? null : (Location?)Location.Footer;
         }
 
-        protected override void AssignPutProperties(PdfPageNumberRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPutProperties(PdfPageNumberRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.StartPage = createNull ? null : (int?)5;
             expectedRenderer.EndPage = createNull ? null : (int?)-2;

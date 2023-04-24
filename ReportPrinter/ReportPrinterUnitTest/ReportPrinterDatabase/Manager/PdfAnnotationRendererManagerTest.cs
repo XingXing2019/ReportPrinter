@@ -21,21 +21,25 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             await DoTest(managerType, createNull);
         }
 
-        protected override void AssignPostProperties(PdfAnnotationRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPostProperties(PdfAnnotationRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.AnnotationRendererType = AnnotationRendererType.Text;
             expectedRenderer.Title = createNull ? null : "Test Title 1";
             expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
+            expectedRenderer.Content = createNull ? null : "Test Content 1";
             expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 1";
+            expectedRenderer.SqlTemplateConfigSqlConfigId = createNull ? null : (Guid?)sqlInfoId;
             expectedRenderer.SqlId = createNull ? null : "Test Sql 1";
             expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 1";
         }
 
-        protected override void AssignPutProperties(PdfAnnotationRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPutProperties(PdfAnnotationRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.AnnotationRendererType = AnnotationRendererType.Sql;
             expectedRenderer.Title = createNull ? null : "Test Title 2";
             expectedRenderer.Icon = createNull ? null : (PdfTextAnnotationIcon?)PdfTextAnnotationIcon.Insert;
+            expectedRenderer.Content = createNull ? null : "Test Content 2";
+            expectedRenderer.SqlTemplateConfigSqlConfigId = createNull ? null : (Guid?)sqlInfoId;
             expectedRenderer.SqlTemplateId = createNull ? null : "Test Sql Template 2";
             expectedRenderer.SqlId = createNull ? null : "Test Sql 2";
             expectedRenderer.SqlResColumn = createNull ? null : "Test Res Column 2";

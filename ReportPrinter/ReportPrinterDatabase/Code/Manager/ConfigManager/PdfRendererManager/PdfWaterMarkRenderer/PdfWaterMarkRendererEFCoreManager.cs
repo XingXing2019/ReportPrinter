@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         protected override PdfWaterMarkRendererModel CreateDataModel(Entity.PdfWaterMarkRenderer entity)
         {
-            var model = CreateDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
 
             model.WaterMarkType = (WaterMarkRendererType)entity.WaterMarkType;
             model.Content = entity.Content;
@@ -127,7 +127,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             pdfImageRender.EndPage = model.EndPage;
             pdfImageRender.Rotate = model.Rotate;
 
-            AssignEntity(model, pdfRendererBase);
+            AssignRendererBaseProperties(model, pdfRendererBase);
             return pdfRendererBase;
         }
 

@@ -97,7 +97,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         protected override PdfTextRendererModel CreateDataModel(Entity.PdfTextRenderer entity)
         {
-            var model = CreateDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
 
             model.TextRendererType = (TextRendererType)entity.TextRendererType;
             model.Content = entity.Content;
@@ -123,7 +123,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             pdfTextRender.Mask = model.Mask;
             pdfTextRender.Title = model.Title;
 
-            AssignEntity(model, pdfRendererBase);
+            AssignRendererBaseProperties(model, pdfRendererBase);
             return pdfRendererBase;
         }
 

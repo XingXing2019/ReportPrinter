@@ -9,6 +9,7 @@ namespace ReportPrinterDatabase.Code.Model
         public string Title { get; set; }
         public PdfTextAnnotationIcon? Icon { get; set; }
         public string Content { get; set; }
+        public Guid? SqlTemplateConfigSqlConfigId { get; set; }
         public string SqlTemplateId { get; set; }
         public string SqlId { get; set; }
         public string SqlResColumn { get; set; }

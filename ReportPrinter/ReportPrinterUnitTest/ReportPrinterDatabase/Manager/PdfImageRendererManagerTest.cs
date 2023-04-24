@@ -20,13 +20,13 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             await DoTest(managerType, createNull);
         }
 
-        protected override void AssignPostProperties(PdfImageRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPostProperties(PdfImageRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.SourceType = SourceType.Local;
             expectedRenderer.ImageSource = "Test Image Source 1";
         }
 
-        protected override void AssignPutProperties(PdfImageRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPutProperties(PdfImageRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.SourceType = SourceType.Online;
             expectedRenderer.ImageSource = "Test Image Source 2";

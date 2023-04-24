@@ -43,6 +43,7 @@ namespace ReportPrinterDatabase.Code.Context
         public virtual DbSet<PrintReportMessage> PrintReportMessages { get; set; }
         public virtual DbSet<PrintReportSqlVariable> PrintReportSqlVariables { get; set; }
         public virtual DbSet<SqlConfig> SqlConfigs { get; set; }
+        public virtual DbSet<SqlResColumnConfig> SqlResColumnConfigs { get; set; }
         public virtual DbSet<SqlTemplateConfig> SqlTemplateConfigs { get; set; }
         public virtual DbSet<SqlTemplateConfigSqlConfig> SqlTemplateConfigSqlConfigs { get; set; }
         public virtual DbSet<SqlVariableConfig> SqlVariableConfigs { get; set; }
@@ -82,20 +83,7 @@ namespace ReportPrinterDatabase.Code.Context
 
                 entity.Property(e => e.PdfRendererBaseId).HasColumnName("PAR_PdfRendererBaseId");
 
-                entity.Property(e => e.SqlId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PAR_SqlId");
-
-                entity.Property(e => e.SqlResColumn)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PAR_SqlResColumn");
-
-                entity.Property(e => e.SqlTemplateId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PAR_SqlTemplateId");
+                entity.Property(e => e.SqlTemplateConfigSqlConfigId).HasColumnName("PAR_SqlTemplateConfigSqlConfigId");
 
                 entity.Property(e => e.Title)
                     .IsUnicode(false)
@@ -105,6 +93,12 @@ namespace ReportPrinterDatabase.Code.Context
                     .WithMany(p => p.PdfAnnotationRenderers)
                     .HasForeignKey(d => d.PdfRendererBaseId)
                     .HasConstraintName("FK_PdfAnnotationRenderer_PdfRendererBase_PdfRendererBaseId");
+
+                entity.HasOne(d => d.SqlTemplateConfigSqlConfig)
+                    .WithMany(p => p.PdfAnnotationRenderers)
+                    .HasForeignKey(d => d.SqlTemplateConfigSqlConfigId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_PdfAnnotationRenderer_SqlTemplateConfigSqlConfig_SqlTemplateConfigSqlConfigId");
             });
 
             modelBuilder.Entity<PdfBarcodeRenderer>(entity =>
@@ -121,7 +115,7 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.BarcodeFormat).HasColumnName("PBR_BarcodeFormat");
-                
+
                 entity.Property(e => e.PdfRendererBaseId).HasColumnName("PBR_PdfRendererBaseId");
 
                 entity.Property(e => e.ShowBarcodeText).HasColumnName("PBR_ShowBarcodeText");
@@ -205,6 +199,75 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasConstraintName("FK_PdfPageNumberRenderer_PdfRendererBase_PdfRendererBaseId");
             });
 
+            modelBuilder.Entity<PdfRendererBase>(entity =>
+            {
+                entity.HasKey(e => e.PdfRendererBaseId)
+                    .HasName("PK_dbo.PdfRendererBase");
+
+                entity.ToTable("PdfRendererBase");
+
+                entity.HasIndex(e => e.Id, "IX_PdfRendererBase_Id");
+
+                entity.Property(e => e.PdfRendererBaseId)
+                    .HasColumnName("PRB_PdfRendererBaseId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.BackgroundColor).HasColumnName("PRB_BackgroundColor");
+
+                entity.Property(e => e.Bottom).HasColumnName("PRB_Bottom");
+
+                entity.Property(e => e.BrushColor).HasColumnName("PRB_BrushColor");
+
+                entity.Property(e => e.Column).HasColumnName("PRB_Column");
+
+                entity.Property(e => e.ColumnSpan).HasColumnName("PRB_ColumnSpan");
+
+                entity.Property(e => e.FontFamily)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PRB_FontFamily");
+
+                entity.Property(e => e.FontSize).HasColumnName("PRB_FontSize");
+
+                entity.Property(e => e.FontStyle).HasColumnName("PRB_FontStyle");
+
+                entity.Property(e => e.HorizontalAlignment).HasColumnName("PRB_HorizontalAlignment");
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PRB_Id");
+
+                entity.Property(e => e.Left).HasColumnName("PRB_Left");
+
+                entity.Property(e => e.Margin)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PRB_Margin");
+
+                entity.Property(e => e.Opacity).HasColumnName("PRB_Opacity");
+
+                entity.Property(e => e.Padding)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("PRB_Padding");
+
+                entity.Property(e => e.Position).HasColumnName("PRB_Position");
+
+                entity.Property(e => e.RendererType).HasColumnName("PRB_RendererType");
+
+                entity.Property(e => e.Right).HasColumnName("PRB_Right");
+
+                entity.Property(e => e.Row).HasColumnName("PRB_Row");
+
+                entity.Property(e => e.RowSpan).HasColumnName("PRB_RowSpan");
+
+                entity.Property(e => e.Top).HasColumnName("PRB_Top");
+
+                entity.Property(e => e.VerticalAlignment).HasColumnName("PRB_VerticalAlignment");
+            });
+
             modelBuilder.Entity<PdfReprintMarkRenderer>(entity =>
             {
                 entity.HasKey(e => e.PdfReprintMarkRendererId)
@@ -218,6 +281,10 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasColumnName("PRMR_PdfReprintMarkRendererId")
                     .HasDefaultValueSql("(newid())");
 
+                entity.Property(e => e.BoardThickness).HasColumnName("PRMR_BoardThickness");
+
+                entity.Property(e => e.Location).HasColumnName("PRMR_Location");
+
                 entity.Property(e => e.PdfRendererBaseId).HasColumnName("PRMR_PdfRendererBaseId");
 
                 entity.Property(e => e.Text)
@@ -225,10 +292,6 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PRMR_Text");
-
-                entity.Property(e => e.BoardThickness).HasColumnName("PRMR_BoardThickness");
-
-                entity.Property(e => e.Location).HasColumnName("PRMR_Location");
 
                 entity.HasOne(d => d.PdfRendererBase)
                     .WithMany(p => p.PdfReprintMarkRenderers)
@@ -338,75 +401,6 @@ namespace ReportPrinterDatabase.Code.Context
                     .WithMany(p => p.PdfWaterMarkRenderers)
                     .HasForeignKey(d => d.PdfRendererBaseId)
                     .HasConstraintName("FK_PdfWaterMarkRenderer_PdfRendererBase_PdfRendererBaseId");
-            });
-
-            modelBuilder.Entity<PdfRendererBase>(entity =>
-            {
-                entity.HasKey(e => e.PdfRendererBaseId)
-                    .HasName("PK_dbo.PdfRendererBase");
-
-                entity.ToTable("PdfRendererBase");
-
-                entity.HasIndex(e => e.Id, "IX_PdfRendererBase_Id");
-
-                entity.Property(e => e.PdfRendererBaseId)
-                    .HasColumnName("PRB_PdfRendererBaseId")
-                    .HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.BackgroundColor).HasColumnName("PRB_BackgroundColor");
-
-                entity.Property(e => e.Bottom).HasColumnName("PRB_Bottom");
-
-                entity.Property(e => e.BrushColor).HasColumnName("PRB_BrushColor");
-
-                entity.Property(e => e.Column).HasColumnName("PRB_Column");
-
-                entity.Property(e => e.ColumnSpan).HasColumnName("PRB_ColumnSpan");
-
-                entity.Property(e => e.FontFamily)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PRB_FontFamily");
-
-                entity.Property(e => e.FontSize).HasColumnName("PRB_FontSize");
-
-                entity.Property(e => e.FontStyle).HasColumnName("PRB_FontStyle");
-
-                entity.Property(e => e.HorizontalAlignment).HasColumnName("PRB_HorizontalAlignment");
-
-                entity.Property(e => e.Id)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("PRB_Id");
-
-                entity.Property(e => e.Left).HasColumnName("PRB_Left");
-
-                entity.Property(e => e.Margin)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("PRB_Margin");
-
-                entity.Property(e => e.Opacity).HasColumnName("PRB_Opacity");
-
-                entity.Property(e => e.Padding)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("PRB_Padding");
-
-                entity.Property(e => e.Position).HasColumnName("PRB_Position");
-
-                entity.Property(e => e.RendererType).HasColumnName("PRB_RendererType");
-
-                entity.Property(e => e.Right).HasColumnName("PRB_Right");
-
-                entity.Property(e => e.Row).HasColumnName("PRB_Row");
-
-                entity.Property(e => e.RowSpan).HasColumnName("PRB_RowSpan");
-
-                entity.Property(e => e.Top).HasColumnName("PRB_Top");
-
-                entity.Property(e => e.VerticalAlignment).HasColumnName("PRB_VerticalAlignment");
             });
 
             modelBuilder.Entity<PrintReportMessage>(entity =>
@@ -523,6 +517,33 @@ namespace ReportPrinterDatabase.Code.Context
                 entity.Property(e => e.Query)
                     .IsRequired()
                     .HasColumnName("SC_Query");
+            });
+
+            modelBuilder.Entity<SqlResColumnConfig>(entity =>
+            {
+                entity.HasKey(e => e.SqlResColumnConfigId)
+                    .HasName("PK_dbo.SqlResColumnConfig");
+
+                entity.ToTable("SqlResColumnConfig");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_SqlResColumnConfig_PdfRendererBaseId");
+
+                entity.Property(e => e.SqlResColumnConfigId)
+                    .HasColumnName("SRCC_SqlResColumnConfigId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("SRCC_Name");
+
+                entity.Property(e => e.PdfRendererBaseId).HasColumnName("SRCC_PdfRendererBaseId");
+
+                entity.HasOne(d => d.PdfRendererBase)
+                    .WithMany(p => p.SqlResColumnConfigs)
+                    .HasForeignKey(d => d.PdfRendererBaseId)
+                    .HasConstraintName("FK_SqlResColumnConfig_PdfRendererBase_PdfRendererBaseId");
             });
 
             modelBuilder.Entity<SqlTemplateConfig>(entity =>

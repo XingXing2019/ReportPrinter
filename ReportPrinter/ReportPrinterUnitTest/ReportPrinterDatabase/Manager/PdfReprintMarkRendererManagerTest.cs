@@ -20,14 +20,14 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             await DoTest(managerType, createNull);
         }
 
-        protected override void AssignPostProperties(PdfReprintMarkRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPostProperties(PdfReprintMarkRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.Text = "Test reprint mark 1";
             expectedRenderer.BoardThickness = createNull ? null : (double?)2.1;
             expectedRenderer.Location = createNull ? null : (Location?)Location.Footer;
         }
 
-        protected override void AssignPutProperties(PdfReprintMarkRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPutProperties(PdfReprintMarkRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.Text = "Test reprint mark 2";
             expectedRenderer.BoardThickness = createNull ? null : (double?)3.6;

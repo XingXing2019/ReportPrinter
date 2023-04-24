@@ -21,7 +21,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             await DoTest(managerType, createNull);
         }
 
-        protected override void AssignPostProperties(PdfBarcodeRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPostProperties(PdfBarcodeRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.PHARMA_CODE;
             expectedRenderer.ShowBarcodeText = true;
@@ -30,7 +30,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             expectedRenderer.SqlResColumn = "Test Res Column 1";
         }
 
-        protected override void AssignPutProperties(PdfBarcodeRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPutProperties(PdfBarcodeRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.BarcodeFormat = createNull ? null : (BarcodeFormat?)BarcodeFormat.UPC_EAN_EXTENSION;
             expectedRenderer.ShowBarcodeText = false;

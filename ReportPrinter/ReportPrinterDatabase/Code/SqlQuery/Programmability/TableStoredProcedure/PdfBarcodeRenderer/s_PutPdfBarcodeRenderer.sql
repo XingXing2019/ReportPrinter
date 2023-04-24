@@ -1,15 +1,13 @@
-IF OBJECT_ID('[dbo].[s_PutPdfAnnotationRenderer]', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[s_PutPdfBarcodeRenderer]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE [dbo].[s_PutPdfAnnotationRenderer]
+	DROP PROCEDURE [dbo].[s_PutPdfBarcodeRenderer]
 END
 GO
 
-CREATE PROCEDURE [dbo].[s_PutPdfAnnotationRenderer]
+CREATE PROCEDURE [dbo].[s_PutPdfBarcodeRenderer]
 	@pdfRendererBaseId UNIQUEIDENTIFIER,	
-	@annotationRendererType TINYINT,
-	@title NVARCHAR(MAX),
-	@icon TINYINT,
-	@content VARCHAR(MAX),
+	@barcodeFormat INT,
+	@showBarcodeText BIT,
 	@sqlTemplateId VARCHAR(50),
 	@sqlId VARCHAR(50),
 	@sqlResColumn VARCHAR(50)
@@ -25,17 +23,15 @@ BEGIN
 	BEGIN TRY	
 		
 		UPDATE 
-			[PdfAnnotationRenderer]
+			[PdfBarcodeRenderer]
 		SET
-			[PAR_AnnotationRendererType] = @annotationRendererType,
-			[PAR_Title] = @title,
-			[PAR_Icon] = @icon,
-			[PAR_Content] = @content,
-			[PAR_SqlTemplateId] = @sqlTemplateId,
-			[PAR_SqlId] = @sqlId,
-			[PAR_SqlResColumn] = @sqlResColumn
+			[PBR_BarcodeFormat] = @barcodeFormat,
+			[PBR_ShowBarcodeText] = @showBarcodeText,
+			[PBR_SqlTemplateId] = @sqlTemplateId,
+			[PBR_SqlId] = @sqlId,
+			[PBR_SqlResColumn] = @sqlResColumn
 		WHERE
-			[PAR_PdfRendererBaseId] = @pdfRendererBaseId
+			[PBR_PdfRendererBaseId] = @pdfRendererBaseId
 
 		COMMIT TRANSACTION
 

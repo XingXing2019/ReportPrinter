@@ -21,7 +21,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             await DoTest(managerType, createNull);
         }
 
-        protected override void AssignPostProperties(PdfTextRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPostProperties(PdfTextRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.TextRendererType = TextRendererType.Sql;
             expectedRenderer.Content = createNull ? null : "Test Content 1";
@@ -32,7 +32,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             expectedRenderer.Title = createNull ? null : "Test Title 1";
         }
 
-        protected override void AssignPutProperties(PdfTextRendererModel expectedRenderer, bool createNull)
+        protected override void AssignPutProperties(PdfTextRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.TextRendererType = TextRendererType.Timestamp;
             expectedRenderer.Content = createNull ? null : "Test Content 2";

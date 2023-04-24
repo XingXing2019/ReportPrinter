@@ -96,7 +96,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
 
         protected override PdfBarcodeRendererModel CreateDataModel(Entity.PdfBarcodeRenderer entity)
         {
-            var model = CreateDataModel(entity.PdfRendererBase);
+            var model = CreateRendererBaseDataModel(entity.PdfRendererBase);
             
             model.ShowBarcodeText = entity.ShowBarcodeText;
             model.SqlTemplateId = entity.SqlTemplateId;
@@ -120,7 +120,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             pdfBarcodeRenderer.SqlId = model.SqlId;
             pdfBarcodeRenderer.SqlResColumn = model.SqlResColumn;
 
-            AssignEntity(model, pdfRendererBase);
+            AssignRendererBaseProperties(model, pdfRendererBase);
             return pdfRendererBase;
         }
 

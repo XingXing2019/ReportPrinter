@@ -14,6 +14,7 @@ namespace ReportPrinterDatabase.Code.Entity
             PdfImageRenderers = new HashSet<PdfImageRenderer>();
             PdfPageNumberRenderers = new HashSet<PdfPageNumberRenderer>();
             PdfReprintMarkRenderers = new HashSet<PdfReprintMarkRenderer>();
+            PdfTableRenderers = new HashSet<PdfTableRenderer>();
             PdfTextRenderers = new HashSet<PdfTextRenderer>();
             PdfWaterMarkRenderers = new HashSet<PdfWaterMarkRenderer>();
             SqlResColumnConfigs = new HashSet<SqlResColumnConfig>();
@@ -47,6 +48,7 @@ namespace ReportPrinterDatabase.Code.Entity
         public virtual ICollection<PdfImageRenderer> PdfImageRenderers { get; set; }
         public virtual ICollection<PdfPageNumberRenderer> PdfPageNumberRenderers { get; set; }
         public virtual ICollection<PdfReprintMarkRenderer> PdfReprintMarkRenderers { get; set; }
+        public virtual ICollection<PdfTableRenderer> PdfTableRenderers { get; set; }
         public virtual ICollection<PdfTextRenderer> PdfTextRenderers { get; set; }
         public virtual ICollection<PdfWaterMarkRenderer> PdfWaterMarkRenderers { get; set; }
         public virtual ICollection<SqlResColumnConfig> SqlResColumnConfigs { get; set; }

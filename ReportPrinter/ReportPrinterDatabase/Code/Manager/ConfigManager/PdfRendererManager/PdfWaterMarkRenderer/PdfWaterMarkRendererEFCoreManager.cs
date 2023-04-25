@@ -109,7 +109,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
             model.SqlTemplateConfigSqlConfigId = renderer.SqlTemplateConfigSqlConfigId;
             model.SqlTemplateId = renderer.SqlTemplateConfigSqlConfigId.HasValue ? renderer.SqlTemplateConfigSqlConfig.SqlTemplateConfig.Id : null;
             model.SqlId = renderer.SqlTemplateConfigSqlConfigId.HasValue ? renderer.SqlTemplateConfigSqlConfig.SqlConfig.Id : null;
-            model.SqlResColumn = entity.SqlResColumnConfigs.SingleOrDefault()?.Name;
+            model.SqlResColumn = entity.SqlResColumnConfigs.SingleOrDefault()?.Id;
 
             model.StartPage = renderer.StartPage;
             model.EndPage = renderer.EndPage;
@@ -128,7 +128,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
                 {
                     PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
-                    Name = model.SqlResColumn
+                    Id = model.SqlResColumn
                 });
             }
 
@@ -167,7 +167,7 @@ namespace ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.Pd
                 pdfRendererBase.SqlResColumnConfigs.Add(new SqlResColumnConfig
                 {
                     PdfRendererBaseId = pdfRendererBase.PdfRendererBaseId,
-                    Name = model.SqlResColumn
+                    Id = model.SqlResColumn
                 });
             }
         }

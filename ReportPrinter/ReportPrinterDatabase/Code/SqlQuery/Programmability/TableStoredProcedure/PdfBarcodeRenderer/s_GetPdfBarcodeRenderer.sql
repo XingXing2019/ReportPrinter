@@ -39,7 +39,7 @@ BEGIN
 		[PBR_SqlTemplateConfigSqlConfigId] AS SqlTemplateConfigSqlConfigId,
 		[SqlTemplateId] AS SqlTemplateId,
 		[SqlId] AS SqlId,
-		[SRCC_Name] AS SqlResColumn
+		[SRCC_Id] AS SqlResColumn
 	FROM
 		[PdfBarcodeRenderer]
 	CROSS APPLY

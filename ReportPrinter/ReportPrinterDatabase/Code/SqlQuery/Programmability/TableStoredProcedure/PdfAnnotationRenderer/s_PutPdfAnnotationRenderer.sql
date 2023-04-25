@@ -41,7 +41,7 @@ BEGIN
 		BEGIN
 			INSERT INTO [dbo].[SqlResColumnConfig] (
 				[SRCC_PdfRendererBaseId],
-				[SRCC_Name]
+				[SRCC_Id]
 			) VALUES (
 				@pdfRendererBaseId,
 				@sqlResColumn

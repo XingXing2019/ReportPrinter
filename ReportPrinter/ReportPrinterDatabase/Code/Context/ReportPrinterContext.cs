@@ -38,6 +38,7 @@ namespace ReportPrinterDatabase.Code.Context
         public virtual DbSet<PdfPageNumberRenderer> PdfPageNumberRenderers { get; set; }
         public virtual DbSet<PdfRendererBase> PdfRendererBases { get; set; }
         public virtual DbSet<PdfReprintMarkRenderer> PdfReprintMarkRenderers { get; set; }
+        public virtual DbSet<PdfTableRenderer> PdfTableRenderers { get; set; }
         public virtual DbSet<PdfTextRenderer> PdfTextRenderers { get; set; }
         public virtual DbSet<PdfWaterMarkRenderer> PdfWaterMarkRenderers { get; set; }
         public virtual DbSet<PrintReportMessage> PrintReportMessages { get; set; }
@@ -288,6 +289,60 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasConstraintName("FK_PdfReprintMarkRenderer_PdfRendererBase_PdfRendererBaseId");
             });
 
+            modelBuilder.Entity<PdfTableRenderer>(entity =>
+            {
+                entity.HasKey(e => e.PdfTableRendererId)
+                    .HasName("PK_dbo.PdfTableRenderer");
+
+                entity.ToTable("PdfTableRenderer");
+
+                entity.HasIndex(e => e.PdfRendererBaseId, "IX_PdfTableRenderer_PdfRendererBaseId");
+
+                entity.Property(e => e.PdfTableRendererId)
+                    .HasColumnName("PTR_PdfTableRendererId")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.BoardThickness).HasColumnName("PTR_BoardThickness");
+
+                entity.Property(e => e.HideTitle).HasColumnName("PTR_HideTitle");
+
+                entity.Property(e => e.LineSpace).HasColumnName("PTR_LineSpace");
+
+                entity.Property(e => e.PdfRendererBaseId).HasColumnName("PTR_PdfRendererBaseId");
+
+                entity.Property(e => e.Space).HasColumnName("PTR_Space");
+
+                entity.Property(e => e.SqlTemplateConfigSqlConfigId).HasColumnName("PTR_SqlTemplateConfigSqlConfigId");
+
+                entity.Property(e => e.SqlVariable)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("PTR_SqlVariable");
+
+                entity.Property(e => e.SubPdfTableRendererId).HasColumnName("PTR_SubPdfTableRendererId");
+
+                entity.Property(e => e.TitleColor).HasColumnName("PTR_TitleColor");
+
+                entity.Property(e => e.TitleColorOpacity).HasColumnName("PTR_TitleColorOpacity");
+
+                entity.Property(e => e.TitleHorizontalAlignment).HasColumnName("PTR_TitleHorizontalAlignment");
+
+                entity.HasOne(d => d.PdfRendererBase)
+                    .WithMany(p => p.PdfTableRenderers)
+                    .HasForeignKey(d => d.PdfRendererBaseId)
+                    .HasConstraintName("FK_PdfTableRenderer_PdfRendererBase_PdfRendererBaseId");
+
+                entity.HasOne(d => d.SqlTemplateConfigSqlConfig)
+                    .WithMany(p => p.PdfTableRenderers)
+                    .HasForeignKey(d => d.SqlTemplateConfigSqlConfigId)
+                    .HasConstraintName("FK_PdfTableRenderer_SqlTemplateConfigSqlConfig_SqlTemplateConfigSqlConfigId");
+
+                entity.HasOne(d => d.SubPdfTableRenderer)
+                    .WithMany(p => p.InverseSubPdfTableRenderer)
+                    .HasForeignKey(d => d.SubPdfTableRendererId)
+                    .HasConstraintName("FK_PdfTableRenderer_PdfTableRenderer_PdfTableRendererId");
+            });
+
             modelBuilder.Entity<PdfTextRenderer>(entity =>
             {
                 entity.HasKey(e => e.PdfTextRendererId)
@@ -507,13 +562,26 @@ namespace ReportPrinterDatabase.Code.Context
                     .HasColumnName("SRCC_SqlResColumnConfigId")
                     .HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.Id)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("SRCC_Name");
+                    .HasColumnName("SRCC_Id");
+
+                entity.Property(e => e.Left).HasColumnName("SRCC_Left");
 
                 entity.Property(e => e.PdfRendererBaseId).HasColumnName("SRCC_PdfRendererBaseId");
+
+                entity.Property(e => e.Position).HasColumnName("SRCC_Position");
+
+                entity.Property(e => e.Right).HasColumnName("SRCC_Right");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("SRCC_Title");
+
+                entity.Property(e => e.WidthRatio).HasColumnName("SRCC_WidthRatio");
 
                 entity.HasOne(d => d.PdfRendererBase)
                     .WithMany(p => p.SqlResColumnConfigs)

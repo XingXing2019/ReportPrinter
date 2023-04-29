@@ -1,9 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Common.SqlResultCacheManager;
-using RaphaelLibrary.Code.Print;
-using ReportPrinterLibrary.Code.Config.Configuration;
-using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
 {
@@ -12,7 +10,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlResultCacheManager
         [Test]
         [TestCase(CacheManagerType.Memory, typeof(SqlResultMemoryCacheManager))]
         [TestCase(CacheManagerType.Redis, typeof(SqlResultRedisCacheManager))]
-        [TestCase(2, null)]
+        [TestCase((byte)2, null)]
         public void TestCreateSqlResultCacheManager(CacheManagerType managerType, Type expectedType)
         {
             try

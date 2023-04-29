@@ -8,6 +8,7 @@ using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 

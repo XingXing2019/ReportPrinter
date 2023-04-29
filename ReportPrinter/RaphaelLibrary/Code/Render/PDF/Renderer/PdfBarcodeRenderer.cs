@@ -9,10 +9,12 @@ using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
+using BarcodeFormat = ZXing.BarcodeFormat;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace ReportPrinterDatabase.Code.Manager

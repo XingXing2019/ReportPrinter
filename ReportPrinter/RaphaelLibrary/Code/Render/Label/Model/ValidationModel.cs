@@ -1,5 +1,6 @@
 ﻿using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Render.Label.Renderer;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace RaphaelLibrary.Code.Render.Label.Model
 {

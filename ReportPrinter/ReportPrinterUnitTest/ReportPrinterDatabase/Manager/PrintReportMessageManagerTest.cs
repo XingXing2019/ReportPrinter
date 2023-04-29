@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -19,7 +20,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TearDown]
         public new void TearDown()
         {
-            Manager.DeleteAll();
+            Manager.DeleteAll().Wait();
         }
 
         [Test]

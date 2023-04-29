@@ -6,6 +6,7 @@ using RaphaelLibrary.Code.Render.Label.Helper;
 using RaphaelLibrary.Code.Render.Label.Model;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.PDF.Model;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.Label.Renderer
@@ -95,22 +96,5 @@ namespace RaphaelLibrary.Code.Render.Label.Renderer
 
             return true;
         }
-    }
-    
-
-    public enum ValidationType
-    {
-        Text,
-        Structure
-    }
-
-    public enum Comparator
-    {
-        Equals,
-        NotEquals,
-        Greater,
-        GreaterOrEquals,
-        Less,
-        LessOrEquals
     }
 }

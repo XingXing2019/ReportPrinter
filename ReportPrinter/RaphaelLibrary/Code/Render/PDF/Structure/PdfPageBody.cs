@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using RaphaelLibrary.Code.Render.PDF.Manager;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Render.PDF.Structure

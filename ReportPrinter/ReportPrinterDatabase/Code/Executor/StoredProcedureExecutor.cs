@@ -4,6 +4,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using GreenPipes.Internals.Extensions;
 using Microsoft.Data.SqlClient;
 using ReportPrinterDatabase.Code.Database;
 using ReportPrinterDatabase.Code.StoredProcedures;
@@ -26,7 +27,7 @@ namespace ReportPrinterDatabase.Code.Executor
 
             _connectionString = connectionString;
         }
-        
+
         public async Task<int> ExecuteNonQueryAsync(params StoredProcedureBase[] storedProcedures)
         {
             using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
@@ -41,11 +42,12 @@ namespace ReportPrinterDatabase.Code.Executor
                 cmd.CommandType = CommandType.StoredProcedure;
                 foreach (var parameter in storedProcedure.Parameters.Keys)
                 {
-                    cmd.Parameters.AddWithValue(parameter, storedProcedure.Parameters[parameter]);
+                    var value = storedProcedure.Parameters[parameter] == null ? DBNull.Value : storedProcedure.Parameters[parameter];
+                    cmd.Parameters.AddWithValue(parameter, value);
                 }
 
-                rows += await cmd.ExecuteNonQueryAsync();
                 LogExecutedStoredProcedure(cmd);
+                rows += await cmd.ExecuteNonQueryAsync();
             }
 
             scope.Complete();
@@ -63,11 +65,12 @@ namespace ReportPrinterDatabase.Code.Executor
             cmd.CommandType = CommandType.StoredProcedure;
             foreach (var parameter in storedProcedure.Parameters.Keys)
             {
-                cmd.Parameters.AddWithValue(parameter, storedProcedure.Parameters[parameter]);
+                var value = storedProcedure.Parameters[parameter] == null ? DBNull.Value : storedProcedure.Parameters[parameter];
+                cmd.Parameters.AddWithValue(parameter, value);
             }
 
-            var reader = await cmd.ExecuteReaderAsync();
             LogExecutedStoredProcedure(cmd);
+            var reader = await cmd.ExecuteReaderAsync();
 
             var dataTable = new DataTable();
             dataTable.Load(reader);
@@ -102,11 +105,12 @@ namespace ReportPrinterDatabase.Code.Executor
             cmd.CommandType = CommandType.StoredProcedure;
             foreach (var parameter in storedProcedure.Parameters.Keys)
             {
-                cmd.Parameters.AddWithValue(parameter, storedProcedure.Parameters[parameter]);
+                var value = storedProcedure.Parameters[parameter] == null ? DBNull.Value : storedProcedure.Parameters[parameter];
+                cmd.Parameters.AddWithValue(parameter, value);
             }
 
-            var reader = await cmd.ExecuteReaderAsync();
             LogExecutedStoredProcedure(cmd);
+            var reader = await cmd.ExecuteReaderAsync();
 
             var dataTable = new DataTable();
             dataTable.Load(reader);
@@ -138,6 +142,14 @@ namespace ReportPrinterDatabase.Code.Executor
                 if (!columns.Contains(propInfo.Name)) continue;
                 var value = row[propInfo.Name];
                 if (value == DBNull.Value) continue;
+
+                if (propInfo.PropertyType.IsNullable())
+                {
+                    var nullableType = typeof(Nullable<>).MakeGenericType(propInfo.PropertyType.GetGenericArguments()[0]);
+                    var underlineType = Nullable.GetUnderlyingType(nullableType);
+                    value = underlineType.IsEnum ? Enum.ToObject(underlineType, value) : Convert.ChangeType(value, underlineType);
+                }
+
                 propInfo.SetValue(entity, value);
             }
 
@@ -147,20 +159,20 @@ namespace ReportPrinterDatabase.Code.Executor
         private void LogExecutedStoredProcedure(SqlCommand cmd)
         {
             var procName = $"{this.GetType().Name}.{nameof(LogExecutedStoredProcedure)}";
-            
+
             var storedProcedureName = cmd.CommandText;
             var parameters = new List<string>();
 
             foreach (SqlParameter parameter in cmd.Parameters)
             {
                 var val = parameter.Value;
-                if (val == DBNull.Value)
+                if (val == DBNull.Value || val == null)
                     parameters.Add("NULL");
                 else if (val is string || val is DateTime || val is Guid)
                     parameters.Add($"'{val}'");
                 else if (val is bool)
                     parameters.Add((bool)val ? "1" : "0");
-                else 
+                else
                     parameters.Add(val.ToString());
             }
 

@@ -6,6 +6,7 @@ using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.Label.PlaceHolder;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Render.Label.PlaceHolder

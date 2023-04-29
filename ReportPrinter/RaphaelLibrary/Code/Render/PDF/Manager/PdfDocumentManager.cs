@@ -4,6 +4,7 @@ using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace RaphaelLibrary.Code.Render.PDF.Manager

@@ -1,4 +1,5 @@
 ﻿using System;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 

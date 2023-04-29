@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MassTransit;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage
 {

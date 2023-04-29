@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using RaphaelLibrary.Code.MessageHandler.PrintReportMessageHandler;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 

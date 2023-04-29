@@ -14,6 +14,7 @@ using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
 using RaphaelLibrary.Code.Render.PDF.Structure;
 using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
@@ -270,11 +271,5 @@ namespace RaphaelLibrary.Code.Init.PDF
                 sqlResultManager.RemoveSqlResult(message.MessageId);
             }
         }
-    }
-
-    public enum Orientation
-    {
-        Portrait,
-        Landscape
     }
 }

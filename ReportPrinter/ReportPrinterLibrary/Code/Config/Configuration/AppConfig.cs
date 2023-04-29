@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MassTransit.Internals.Reflection;
 using ReportPrinterLibrary.Code.Config.Helper;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterLibrary.Code.Config.Configuration
 {

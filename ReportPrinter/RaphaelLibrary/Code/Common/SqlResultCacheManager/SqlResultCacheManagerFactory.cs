@@ -1,5 +1,5 @@
 ﻿using System;
-using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Common.SqlResultCacheManager

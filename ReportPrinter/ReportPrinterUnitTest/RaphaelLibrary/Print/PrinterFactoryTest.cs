@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Print;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Print
@@ -10,7 +11,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Print
         [Test]
         [TestCase(ReportTypeEnum.PDF, typeof(PdfPrinter))]
         [TestCase(ReportTypeEnum.Label, typeof(LabelPrinter))]
-        [TestCase(2, null)]
+        [TestCase((byte)2, null)]
         public void TestCreatePrinter(ReportTypeEnum reportType, Type expectedType)
         {
             try

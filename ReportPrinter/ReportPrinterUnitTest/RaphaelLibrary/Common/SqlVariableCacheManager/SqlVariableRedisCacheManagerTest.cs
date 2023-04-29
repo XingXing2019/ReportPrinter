@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using NUnit.Framework;
 using RaphaelLibrary.Code.Common;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf.Annotations;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase
@@ -37,7 +40,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase
         protected SqlConfig CreateSqlConfig(Guid sqlConfigId, string id, string databaseId, string query, List<string> sqlVariableNames)
         {
             var sqlVariableConfigs = sqlVariableNames.Select(x => new SqlVariableConfig { SqlConfigId = sqlConfigId, Name = x }).ToList();
-            
+
             return new SqlConfig
             {
                 SqlConfigId = sqlConfigId,

@@ -9,7 +9,7 @@ namespace ReportPrinterDatabase.Code.StoredProcedures
 
         protected StoredProcedureBase()
         {
-            StoredProcedureName = this.GetType().Name;
+            StoredProcedureName = $"s_{GetType().Name}";
             Parameters = new Dictionary<string, object>();
         }
     }

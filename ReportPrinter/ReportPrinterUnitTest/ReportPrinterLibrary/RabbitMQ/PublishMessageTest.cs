@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CosmoService.Code.Producer.PrintReportCommand;
 using NUnit.Framework;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 using ReportPrinterLibrary.Code.RabbitMQ.MessageQueue;
@@ -20,7 +21,7 @@ namespace ReportPrinterUnitTest.ReportPrinterLibrary.RabbitMQ
         [TearDown]
         public void TearDown()
         {
-            Manager.DeleteAll();
+            Manager.DeleteAll().Wait();
         }
 
         [Test]

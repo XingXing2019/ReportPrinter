@@ -9,9 +9,10 @@ using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
-using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
+using XFontStyle = PdfSharp.Drawing.XFontStyle;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {
@@ -456,25 +457,5 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         }
 
         #endregion
-    }
-
-    public enum HorizontalAlignment
-    {
-        Left,
-        Center,
-        Right
-    }
-
-    public enum VerticalAlignment
-    {
-        Top,
-        Center,
-        Bottom
-    }
-
-    public enum Position
-    {
-        Static,
-        Relative
     }
 }

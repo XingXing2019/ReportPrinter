@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.RabbitMQ.Message;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
 

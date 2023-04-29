@@ -6,9 +6,10 @@ using PdfSharp.Pdf.Annotations;
 using RaphaelLibrary.Code.Render.PDF.Helper;
 using RaphaelLibrary.Code.Render.PDF.Manager;
 using RaphaelLibrary.Code.Render.PDF.Model;
-using RaphaelLibrary.Code.Render.PDF.Structure;
 using RaphaelLibrary.Code.Render.SQL;
+using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterLibrary.Code.Log;
+using PdfTextAnnotationIcon = PdfSharp.Pdf.Annotations.PdfTextAnnotationIcon;
 
 namespace RaphaelLibrary.Code.Render.PDF.Renderer
 {
@@ -68,7 +69,7 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
 
                 if (sqlResColumnList.Count != 1)
                 {
-                    Logger.Error($"{this.GetType().Name} cna only have one sql resutle column", procName);
+                    Logger.Error($"{this.GetType().Name} can only have one sql result column", procName);
                     return false;
                 }
 
@@ -131,11 +132,5 @@ namespace RaphaelLibrary.Code.Render.PDF.Renderer
         }
 
         #endregion
-    }
-
-    public enum AnnotationRendererType
-    {
-        Text,
-        Sql
     }
 }

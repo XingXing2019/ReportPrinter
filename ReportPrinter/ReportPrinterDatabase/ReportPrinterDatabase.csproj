@@ -5,14 +5,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumn\**" />
+    <EmbeddedResource Remove="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumn\**" />
+    <None Remove="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumn\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Code\SqlQuery\Programmability\TableStoredProcedure\DeletePrintReportSqlVariable.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Code\Database\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfTableRenderer\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfWaterMarkRenderer\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfTextRenderer\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfReprintMarkRenderer\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfImageRenderer\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfAnnotationRenderer\" />
+    <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfBarcodeRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
-    <Folder Include="Code\SqlQuery\Programmability\TableFunction\" />
+    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumnConfig\" />
+    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfWaterMarkRenderer\" />
+    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfTextRenderer\" />
+    <Folder Include="Code\StoredProcedures\SqlResColumnConfig\" />
+    <Folder Include="Code\StoredProcedures\PdfWaterMarkRenderer\" />
+    <Folder Include="Code\StoredProcedures\PdfReprintMarkRenderer\" />
+    <Folder Include="Code\StoredProcedures\PdfPageNumberRenderer\" />
+    <Folder Include="Code\StoredProcedures\PdfImageRenderer\" />
+    <Folder Include="Code\StoredProcedures\PdfAnnotationRenderer\" />
+    <Folder Include="Code\StoredProcedures\PdfBarcodeRenderer\" />
     <Folder Include="Code\StoredProcedures\SqlVariableConfig\" />
   </ItemGroup>
 

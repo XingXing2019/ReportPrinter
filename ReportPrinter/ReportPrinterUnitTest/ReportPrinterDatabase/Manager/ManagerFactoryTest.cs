@@ -2,10 +2,10 @@
 using System;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager;
-using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterDatabase.Code.Manager.MessageManager.PrintReportMessage;
 using ReportPrinterLibrary.Code.RabbitMQ.Message.PrintReportMessage;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
 {

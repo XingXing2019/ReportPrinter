@@ -1,4 +1,5 @@
 ﻿using RaphaelLibrary.Code.Render.PDF.Renderer;
+using ReportPrinterLibrary.Code.Enum;
 
 namespace RaphaelLibrary.Code.Render.PDF.Model
 {

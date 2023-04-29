@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using RaphaelLibrary.Code.Common.SqlResultCacheManager;
 using RaphaelLibrary.Code.Common.SqlVariableCacheManager;
-using ReportPrinterLibrary.Code.Config.Configuration;
+using ReportPrinterLibrary.Code.Enum;
 using System;
 
 namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
@@ -11,7 +10,7 @@ namespace ReportPrinterUnitTest.RaphaelLibrary.Common.SqlVariableCacheManager
         [Test]
         [TestCase(CacheManagerType.Memory, typeof(SqlVariableMemoryCacheManager))]
         [TestCase(CacheManagerType.Redis, typeof(SqlVariableRedisCacheManager))]
-        [TestCase(2, null)]
+        [TestCase((byte)2, null)]
         public void TestCreateSqlResultCacheManager(CacheManagerType managerType, Type expectedType)
         {
             try

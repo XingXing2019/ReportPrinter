@@ -16,11 +16,15 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [Test]
         [TestCase(typeof(PdfTableRendererEFCoreManager), true)]
         [TestCase(typeof(PdfTableRendererEFCoreManager), false)]
+        [TestCase(typeof(PdfTableRendererSPManager), false)]
+        [TestCase(typeof(PdfTableRendererSPManager), false)]
         public async Task TestPdfTableRendererManager_Get(Type managerType, bool createNull)
         {
             _subTableRenderer = await PostPdfTableRenderer(managerType);
             await DoTest(managerType, PdfRendererType.Barcode, createNull);
         }
+
+
         protected override void AssignPostProperties(PdfTableRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)
         {
             expectedRenderer.BoardThickness = createNull ? null : (double?)1.7;

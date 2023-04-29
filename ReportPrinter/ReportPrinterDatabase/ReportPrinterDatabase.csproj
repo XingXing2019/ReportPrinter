@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumn\**" />
+    <EmbeddedResource Remove="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumn\**" />
+    <None Remove="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumn\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Code\SqlQuery\Programmability\TableStoredProcedure\DeletePrintReportSqlVariable.sql" />
   </ItemGroup>
 
@@ -19,10 +25,10 @@
     <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfBarcodeRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
-    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfTableRenderer\" />
+    <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumnConfig\" />
     <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfWaterMarkRenderer\" />
     <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfTextRenderer\" />
-    <Folder Include="Code\StoredProcedures\PdfTableRenderer\" />
+    <Folder Include="Code\StoredProcedures\SqlResColumnConfig\" />
     <Folder Include="Code\StoredProcedures\PdfWaterMarkRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfReprintMarkRenderer\" />
     <Folder Include="Code\StoredProcedures\PdfPageNumberRenderer\" />

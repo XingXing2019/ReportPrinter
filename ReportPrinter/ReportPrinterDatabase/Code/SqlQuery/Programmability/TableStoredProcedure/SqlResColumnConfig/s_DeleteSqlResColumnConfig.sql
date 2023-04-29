@@ -1,0 +1,34 @@
+IF OBJECT_ID('[dbo].[s_DeleteSqlResColumnConfig]', 'P') IS NOT NULL
+BEGIN
+	DROP PROCEDURE [dbo].[s_DeleteSqlResColumnConfig]
+END
+GO
+
+CREATE PROCEDURE [dbo].[s_DeleteSqlResColumnConfig]
+	@pdfRendererBaseId UNIQUEIDENTIFIER
+AS
+BEGIN
+	IF @@TRANCOUNT = 0
+	BEGIN
+		SET TRANSACTION ISOLATION LEVEL SNAPSHOT
+	END
+
+	BEGIN TRANSACTION
+
+	BEGIN TRY
+		
+		DELETE FROM [dbo].[SqlResColumnConfig]
+		WHERE [SRCC_PdfRendererBaseId] = @pdfRendererBaseId
+
+		COMMIT TRANSACTION
+
+	END TRY
+
+	BEGIN CATCH
+		
+		ROLLBACK TRANSACTION
+		DECLARE @errorMsg NVARCHAR(2048) = ERROR_MESSAGE()
+		RAISERROR(@errorMsg, 16, 1)
+
+	END CATCH
+END

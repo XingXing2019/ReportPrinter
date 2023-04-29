@@ -336,11 +336,6 @@ namespace ReportPrinterDatabase.Code.Context
                     .WithMany(p => p.PdfTableRenderers)
                     .HasForeignKey(d => d.SqlTemplateConfigSqlConfigId)
                     .HasConstraintName("FK_PdfTableRenderer_SqlTemplateConfigSqlConfig_SqlTemplateConfigSqlConfigId");
-
-                entity.HasOne(d => d.SubPdfTableRenderer)
-                    .WithMany(p => p.InverseSubPdfTableRenderer)
-                    .HasForeignKey(d => d.SubPdfTableRendererId)
-                    .HasConstraintName("FK_PdfTableRenderer_PdfTableRenderer_PdfTableRendererId");
             });
 
             modelBuilder.Entity<PdfTextRenderer>(entity =>

@@ -17,7 +17,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfReprintMarkRendererSPManager), false)]
         public async Task TestPdfReprintMarkRendererManager_Get(Type managerType, bool createNull)
         {
-            await DoTest(managerType, createNull);
+            await DoTest(managerType, PdfRendererType.ReprintMark, createNull);
         }
 
         protected override void AssignPostProperties(PdfReprintMarkRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)

@@ -7,11 +7,6 @@ namespace ReportPrinterDatabase.Code.Entity
 {
     public partial class PdfTableRenderer
     {
-        public PdfTableRenderer()
-        {
-            InverseSubPdfTableRenderer = new HashSet<PdfTableRenderer>();
-        }
-
         public Guid PdfTableRendererId { get; set; }
         public Guid PdfRendererBaseId { get; set; }
         public double? BoardThickness { get; set; }
@@ -27,7 +22,5 @@ namespace ReportPrinterDatabase.Code.Entity
 
         public virtual PdfRendererBase PdfRendererBase { get; set; }
         public virtual SqlTemplateConfigSqlConfig SqlTemplateConfigSqlConfig { get; set; }
-        public virtual PdfTableRenderer SubPdfTableRenderer { get; set; }
-        public virtual ICollection<PdfTableRenderer> InverseSubPdfTableRenderer { get; set; }
     }
 }

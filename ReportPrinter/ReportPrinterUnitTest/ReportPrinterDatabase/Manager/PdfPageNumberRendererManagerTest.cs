@@ -18,7 +18,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfPageNumberRendererSPManager), false)]
         public async Task TesPdfPageNumberRendererEFCoreManager_Get(Type managerType, bool createNull)
         {
-            await DoTest(managerType, createNull);
+            await DoTest(managerType, PdfRendererType.PageNumber, createNull);
         }
 
         protected override void AssignPostProperties(PdfPageNumberRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)

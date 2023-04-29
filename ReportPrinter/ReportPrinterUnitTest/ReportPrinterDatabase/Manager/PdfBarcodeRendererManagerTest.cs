@@ -4,6 +4,7 @@ using NUnit.Framework;
 using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterLibrary.Code.Enum;
 using ZXing;
 using BarcodeFormat = ReportPrinterLibrary.Code.Enum.BarcodeFormat;
 
@@ -18,7 +19,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfBarcodeRendererSPManager), false)]
         public async Task TestPdfBarcodeRendererManager_Get(Type managerType, bool createNull)
         {
-            await DoTest(managerType, createNull);
+            await DoTest(managerType, PdfRendererType.Barcode, createNull);
         }
 
         protected override void AssignPostProperties(PdfBarcodeRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)

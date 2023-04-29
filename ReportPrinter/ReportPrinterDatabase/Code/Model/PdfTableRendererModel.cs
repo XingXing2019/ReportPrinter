@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterLibrary.Code.Enum;
 
 namespace ReportPrinterDatabase.Code.Model
@@ -17,9 +16,9 @@ namespace ReportPrinterDatabase.Code.Model
         public Guid SqlTemplateConfigSqlConfigId { get; set; }
         public string SqlTemplateId { get; set; }
         public string SqlId { get; set; }
-        public List<SqlResColumnConfig> SqlResColumns { get; set; }
+        public List<SqlResColumnModel> SqlResColumns { get; set; }
         public string SqlVariable { get; set; }
         public Guid? SubPdfTableRendererId { get; set; }
-        public PdfTableRenderer SubPdfTableRenderer { get; set; }
+        public PdfTableRendererModel SubPdfTableRenderer { get; set; }
     }
 }

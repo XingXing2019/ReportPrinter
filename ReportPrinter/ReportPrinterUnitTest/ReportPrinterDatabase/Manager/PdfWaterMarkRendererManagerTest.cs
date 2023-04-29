@@ -17,7 +17,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         [TestCase(typeof(PdfWaterMarkRendererSPManager), false)]
         public async Task TesPdfWaterMarkRendererEFCoreManager_Get(Type managerType, bool createNull)
         {
-            await DoTest(managerType, createNull);
+            await DoTest(managerType, PdfRendererType.Watermark, createNull);
         }
 
         protected override void AssignPostProperties(PdfWaterMarkRendererModel expectedRenderer, bool createNull, Guid sqlInfoId)

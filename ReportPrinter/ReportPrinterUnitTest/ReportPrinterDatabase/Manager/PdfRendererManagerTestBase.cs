@@ -36,7 +36,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             _sqlTemplateConfigMgr.DeleteAll().Wait();
         }
 
-        protected async Task DoTest(Type managerType, bool createNull)
+        protected async Task DoTest(Type managerType, PdfRendererType rendererType, bool createNull)
         {
             try
             {
@@ -44,7 +44,6 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
                 var mgr = (PdfRendererManagerBase<T>)Activator.CreateInstance(managerType);
 
                 var rendererBaseId = Guid.NewGuid();
-                var rendererType = PdfRendererType.Barcode;
 
                 var expectedRenderer = CreatePdfRendererBaseModel(rendererBaseId, rendererType, createNull);
                 AssignPostProperties(expectedRenderer, createNull, sqlInfoIds[0]);
@@ -75,7 +74,7 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
         protected abstract void AssignPutProperties(T expectedRenderer, bool createNull, Guid sqlInfoId);
 
 
-        private T CreatePdfRendererBaseModel(Guid rendererBaseId, PdfRendererType rendererType, bool createNull)
+        protected T CreatePdfRendererBaseModel(Guid rendererBaseId, PdfRendererType rendererType, bool createNull)
         {
             var renderer = Activator.CreateInstance<T>();
 
@@ -129,12 +128,12 @@ namespace ReportPrinterUnitTest.ReportPrinterDatabase.Manager
             renderer.ColumnSpan = createNull ? null : (int?)1;
         }
 
-        private async Task<List<Guid>> PostSqlInfo()
+        protected async Task<List<Guid>> PostSqlInfo()
         {
             var sqlInfoIds = new List<Guid>();
             var executor = new StoredProcedureExecutor();
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var sqlConfigId = Guid.NewGuid();
                 var id = $"Test Sql {i + 1}";

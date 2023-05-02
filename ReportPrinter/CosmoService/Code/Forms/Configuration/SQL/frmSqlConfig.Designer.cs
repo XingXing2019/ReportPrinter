@@ -62,11 +62,9 @@
             groupBox2.Controls.Add(btnRefreshSqlTemplate);
             groupBox2.Controls.Add(btnDeleteSqlTemplate);
             groupBox2.Controls.Add(btnAddSqlTemplate);
-            groupBox2.Location = new System.Drawing.Point(531, 14);
-            groupBox2.Margin = new System.Windows.Forms.Padding(2);
+            groupBox2.Location = new System.Drawing.Point(796, 21);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            groupBox2.Size = new System.Drawing.Size(350, 541);
+            groupBox2.Size = new System.Drawing.Size(525, 812);
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "SQL Template Config";
@@ -79,12 +77,13 @@
             dgvSqlTemplateConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvSqlTemplateConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn });
             dgvSqlTemplateConfigs.DataSource = sqlTemplateConfigDataBindingSource;
-            dgvSqlTemplateConfigs.Location = new System.Drawing.Point(12, 73);
+            dgvSqlTemplateConfigs.Location = new System.Drawing.Point(18, 110);
+            dgvSqlTemplateConfigs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             dgvSqlTemplateConfigs.Name = "dgvSqlTemplateConfigs";
             dgvSqlTemplateConfigs.RowHeadersVisible = false;
             dgvSqlTemplateConfigs.RowHeadersWidth = 51;
             dgvSqlTemplateConfigs.RowTemplate.Height = 29;
-            dgvSqlTemplateConfigs.Size = new System.Drawing.Size(327, 410);
+            dgvSqlTemplateConfigs.Size = new System.Drawing.Size(490, 615);
             dgvSqlTemplateConfigs.TabIndex = 14;
             // 
             // sqlTemplateConfigDataBindingSource
@@ -94,18 +93,18 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(12, 41);
-            label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label2.Location = new System.Drawing.Point(18, 62);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(91, 20);
+            label2.Size = new System.Drawing.Size(126, 30);
             label2.TabIndex = 13;
             label2.Text = "Template Id:";
             // 
             // btnModifySqlTemplate
             // 
-            btnModifySqlTemplate.Location = new System.Drawing.Point(90, 500);
+            btnModifySqlTemplate.Location = new System.Drawing.Point(135, 750);
+            btnModifySqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnModifySqlTemplate.Name = "btnModifySqlTemplate";
-            btnModifySqlTemplate.Size = new System.Drawing.Size(71, 27);
+            btnModifySqlTemplate.Size = new System.Drawing.Size(106, 40);
             btnModifySqlTemplate.TabIndex = 13;
             btnModifySqlTemplate.Text = "Modify";
             btnModifySqlTemplate.UseVisualStyleBackColor = true;
@@ -113,17 +112,17 @@
             // 
             // txtTemplateIdPrefix
             // 
-            txtTemplateIdPrefix.Location = new System.Drawing.Point(107, 41);
-            txtTemplateIdPrefix.Margin = new System.Windows.Forms.Padding(2);
+            txtTemplateIdPrefix.Location = new System.Drawing.Point(160, 62);
             txtTemplateIdPrefix.Name = "txtTemplateIdPrefix";
-            txtTemplateIdPrefix.Size = new System.Drawing.Size(142, 27);
+            txtTemplateIdPrefix.Size = new System.Drawing.Size(211, 35);
             txtTemplateIdPrefix.TabIndex = 12;
             // 
             // btnRefreshSqlTemplate
             // 
-            btnRefreshSqlTemplate.Location = new System.Drawing.Point(254, 41);
+            btnRefreshSqlTemplate.Location = new System.Drawing.Point(381, 62);
+            btnRefreshSqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnRefreshSqlTemplate.Name = "btnRefreshSqlTemplate";
-            btnRefreshSqlTemplate.Size = new System.Drawing.Size(85, 27);
+            btnRefreshSqlTemplate.Size = new System.Drawing.Size(128, 40);
             btnRefreshSqlTemplate.TabIndex = 11;
             btnRefreshSqlTemplate.Text = "Refresh";
             btnRefreshSqlTemplate.UseVisualStyleBackColor = true;
@@ -131,9 +130,10 @@
             // 
             // btnDeleteSqlTemplate
             // 
-            btnDeleteSqlTemplate.Location = new System.Drawing.Point(166, 500);
+            btnDeleteSqlTemplate.Location = new System.Drawing.Point(249, 750);
+            btnDeleteSqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnDeleteSqlTemplate.Name = "btnDeleteSqlTemplate";
-            btnDeleteSqlTemplate.Size = new System.Drawing.Size(71, 27);
+            btnDeleteSqlTemplate.Size = new System.Drawing.Size(106, 40);
             btnDeleteSqlTemplate.TabIndex = 12;
             btnDeleteSqlTemplate.Text = "Delete";
             btnDeleteSqlTemplate.UseVisualStyleBackColor = true;
@@ -141,9 +141,10 @@
             // 
             // btnAddSqlTemplate
             // 
-            btnAddSqlTemplate.Location = new System.Drawing.Point(14, 500);
+            btnAddSqlTemplate.Location = new System.Drawing.Point(21, 750);
+            btnAddSqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             btnAddSqlTemplate.Name = "btnAddSqlTemplate";
-            btnAddSqlTemplate.Size = new System.Drawing.Size(71, 27);
+            btnAddSqlTemplate.Size = new System.Drawing.Size(106, 40);
             btnAddSqlTemplate.TabIndex = 11;
             btnAddSqlTemplate.Text = "Add";
             btnAddSqlTemplate.UseVisualStyleBackColor = true;
@@ -151,10 +152,10 @@
             // 
             // ucSqlConfig
             // 
-            ucSqlConfig.Location = new System.Drawing.Point(4, 12);
-            ucSqlConfig.Margin = new System.Windows.Forms.Padding(1);
+            ucSqlConfig.Location = new System.Drawing.Point(6, 18);
+            ucSqlConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             ucSqlConfig.Name = "ucSqlConfig";
-            ucSqlConfig.Size = new System.Drawing.Size(524, 554);
+            ucSqlConfig.Size = new System.Drawing.Size(786, 831);
             ucSqlConfig.TabIndex = 7;
             // 
             // isSelectedDataGridViewCheckBoxColumn
@@ -169,7 +170,7 @@
             // 
             idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             idDataGridViewTextBoxColumn.HeaderText = "Template Id";
             idDataGridViewTextBoxColumn.MinimumWidth = 6;
@@ -177,12 +178,13 @@
             // 
             // frmSqlConfig
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(890, 573);
+            ClientSize = new System.Drawing.Size(1335, 860);
             Controls.Add(ucSqlConfig);
             Controls.Add(groupBox2);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             Name = "frmSqlConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "Config SQL Template";

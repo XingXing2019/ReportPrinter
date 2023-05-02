@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using ReportPrinterLibrary.Code.Log;
 
-namespace ReportPrinterLibrary.Code.Winform.Helper
+namespace ReportPrinterLibrary.Code.Helper
 {
     public class ConfigPreviewHelper
     {
@@ -18,8 +18,8 @@ namespace ReportPrinterLibrary.Code.Winform.Helper
 
             var settings = new XmlWriterSettings
             {
-                OmitXmlDeclaration = true, 
-                Indent = true, 
+                OmitXmlDeclaration = true,
+                Indent = true,
                 IndentChars = "  ",
             };
 

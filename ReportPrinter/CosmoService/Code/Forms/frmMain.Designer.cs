@@ -29,17 +29,18 @@
         private void InitializeComponent()
         {
             menuStrip1 = new System.Windows.Forms.MenuStrip();
-            tsmiSqlConfig = new System.Windows.Forms.ToolStripMenuItem();
-            sQLConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            publishMessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            tsmiPublishMessage = new System.Windows.Forms.ToolStripMenuItem();
+            configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            sqlConfiguration = new System.Windows.Forms.ToolStripMenuItem();
+            pdfConfiguration = new System.Windows.Forms.ToolStripMenuItem();
+            messageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            publishMessage = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiSqlConfig, publishMessageToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { configurationToolStripMenuItem, messageToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
@@ -47,34 +48,41 @@
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
-            // tsmiSqlConfig
+            // configurationToolStripMenuItem
             // 
-            tsmiSqlConfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { sQLConfigToolStripMenuItem });
-            tsmiSqlConfig.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            tsmiSqlConfig.Name = "tsmiSqlConfig";
-            tsmiSqlConfig.Size = new System.Drawing.Size(158, 34);
-            tsmiSqlConfig.Text = "Configuration";
+            configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { sqlConfiguration, pdfConfiguration });
+            configurationToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
+            configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
+            configurationToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
+            configurationToolStripMenuItem.Text = "Configuration";
             // 
-            // sQLConfigToolStripMenuItem
+            // sqlConfiguration
             // 
-            sQLConfigToolStripMenuItem.Name = "sQLConfigToolStripMenuItem";
-            sQLConfigToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
-            sQLConfigToolStripMenuItem.Text = "SQL Template";
-            sQLConfigToolStripMenuItem.Click += sQLConfigToolStripMenuItem_Click;
+            sqlConfiguration.Name = "sqlConfiguration";
+            sqlConfiguration.Size = new System.Drawing.Size(315, 40);
+            sqlConfiguration.Text = "SQL Configuration";
+            sqlConfiguration.Click += sqlConfiguration_Click;
             // 
-            // publishMessageToolStripMenuItem
+            // pdfConfiguration
             // 
-            publishMessageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiPublishMessage });
-            publishMessageToolStripMenuItem.Name = "publishMessageToolStripMenuItem";
-            publishMessageToolStripMenuItem.Size = new System.Drawing.Size(113, 34);
-            publishMessageToolStripMenuItem.Text = "Message";
+            pdfConfiguration.Name = "pdfConfiguration";
+            pdfConfiguration.Size = new System.Drawing.Size(315, 40);
+            pdfConfiguration.Text = "PDF Configuration";
+            pdfConfiguration.Click += pdfConfiguration_Click;
             // 
-            // tsmiPublishMessage
+            // messageToolStripMenuItem
             // 
-            tsmiPublishMessage.Name = "tsmiPublishMessage";
-            tsmiPublishMessage.Size = new System.Drawing.Size(286, 40);
-            tsmiPublishMessage.Text = "Publish Message";
-            tsmiPublishMessage.Click += tsmiPublishMessage_Click;
+            messageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { publishMessage });
+            messageToolStripMenuItem.Name = "messageToolStripMenuItem";
+            messageToolStripMenuItem.Size = new System.Drawing.Size(113, 34);
+            messageToolStripMenuItem.Text = "Message";
+            // 
+            // publishMessage
+            // 
+            publishMessage.Name = "publishMessage";
+            publishMessage.Size = new System.Drawing.Size(286, 40);
+            publishMessage.Text = "Publish Message";
+            publishMessage.Click += publishMessage_Click;
             // 
             // frmMain
             // 
@@ -82,7 +90,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1552, 986);
             Controls.Add(menuStrip1);
-            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            Margin = new System.Windows.Forms.Padding(4);
             Name = "frmMain";
             Text = "Report Printer";
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -95,9 +103,10 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem publishMessageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmiPublishMessage;
-        private System.Windows.Forms.ToolStripMenuItem tsmiSqlConfig;
-        private System.Windows.Forms.ToolStripMenuItem sQLConfigToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem messageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem publishMessage;
+        private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sqlConfiguration;
+        private System.Windows.Forms.ToolStripMenuItem pdfConfiguration;
     }
 }

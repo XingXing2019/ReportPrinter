@@ -41,12 +41,12 @@
             btnDelete = new System.Windows.Forms.Button();
             btnAdd = new System.Windows.Forms.Button();
             dgvSqlVariables = new System.Windows.Forms.DataGridView();
+            isSelectedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             sqlVariableConfigDataBindingSource = new System.Windows.Forms.BindingSource(components);
             btnPreview = new System.Windows.Forms.Button();
             btnSave = new System.Windows.Forms.Button();
             epAddSqlConfig = new System.Windows.Forms.ErrorProvider(components);
-            isSelectedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSqlVariables).BeginInit();
@@ -170,6 +170,25 @@
             dgvSqlVariables.Size = new System.Drawing.Size(196, 245);
             dgvSqlVariables.TabIndex = 0;
             // 
+            // isSelectedDataGridViewCheckBoxColumn
+            // 
+            isSelectedDataGridViewCheckBoxColumn.DataPropertyName = "IsSelected";
+            isSelectedDataGridViewCheckBoxColumn.HeaderText = " ";
+            isSelectedDataGridViewCheckBoxColumn.MinimumWidth = 9;
+            isSelectedDataGridViewCheckBoxColumn.Name = "isSelectedDataGridViewCheckBoxColumn";
+            isSelectedDataGridViewCheckBoxColumn.Width = 40;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            nameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            nameDataGridViewTextBoxColumn.MinimumWidth = 9;
+            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
             // sqlVariableConfigDataBindingSource
             // 
             sqlVariableConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlVariableConfigData);
@@ -198,25 +217,6 @@
             // 
             epAddSqlConfig.ContainerControl = this;
             // 
-            // isSelectedDataGridViewCheckBoxColumn
-            // 
-            isSelectedDataGridViewCheckBoxColumn.DataPropertyName = "IsSelected";
-            isSelectedDataGridViewCheckBoxColumn.HeaderText = " ";
-            isSelectedDataGridViewCheckBoxColumn.MinimumWidth = 9;
-            isSelectedDataGridViewCheckBoxColumn.Name = "isSelectedDataGridViewCheckBoxColumn";
-            isSelectedDataGridViewCheckBoxColumn.Width = 40;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            nameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            nameDataGridViewTextBoxColumn.MinimumWidth = 9;
-            nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
             // frmUpsertSqlConfig
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -229,7 +229,6 @@
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             Name = "frmUpsertSqlConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "Add SQL Config";
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);

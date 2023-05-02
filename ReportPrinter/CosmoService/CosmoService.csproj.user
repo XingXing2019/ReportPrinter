@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="Code\CustomControls\EnumComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Code\Forms\Configuration\frmConfigPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Code\Forms\Configuration\PDF\frmPdfConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Code\Forms\Configuration\PDF\frmUpsertPdfRenderer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Code\Forms\Configuration\SQL\frmGenerateSqlTemplateConfig.cs">
@@ -24,6 +33,9 @@
     </Compile>
     <Compile Update="Code\Forms\Configuration\SQL\frmSqlConfig.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Code\UserControls\ucPdfRenderer.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Code\UserControls\ucSqlConfig.cs">
       <SubType>UserControl</SubType>

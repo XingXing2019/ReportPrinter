@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 
-namespace ReportPrinterLibrary.Code.Config.Helper
+namespace ReportPrinterLibrary.Code.Helper
 {
     public class ConfigPath
     {
         private const string S_FILE_NAME = "Config.xml";
         public string GetConfigPath()
         {
-            var currentLocation = this.GetType().Assembly.Location;
+            var currentLocation = GetType().Assembly.Location;
             var directory = Path.GetDirectoryName(currentLocation);
 
             var path = Path.Combine(directory, S_FILE_NAME);
@@ -17,7 +17,7 @@ namespace ReportPrinterLibrary.Code.Config.Helper
 
         public string GetAppConfigPath()
         {
-            var currentLocation = this.GetType().Assembly.Location;
+            var currentLocation = GetType().Assembly.Location;
             var directory = Path.GetDirectoryName(currentLocation);
             var appName = AppDomain.CurrentDomain.FriendlyName;
 

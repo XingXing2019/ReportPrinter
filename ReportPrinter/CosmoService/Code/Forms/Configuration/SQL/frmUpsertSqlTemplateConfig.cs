@@ -6,8 +6,8 @@ using ReportPrinterDatabase.Code.Entity;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterLibrary.Code.Helper;
 using ReportPrinterLibrary.Code.Winform.Configuration;
-using ReportPrinterLibrary.Code.Winform.Helper;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {

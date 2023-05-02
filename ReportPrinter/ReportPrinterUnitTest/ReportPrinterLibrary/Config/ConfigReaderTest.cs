@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using ReportPrinterLibrary.Code.Config.Configuration;
-using ReportPrinterLibrary.Code.Config.Helper;
+using ReportPrinterLibrary.Code.Helper;
 
 namespace ReportPrinterUnitTest.ReportPrinterLibrary.Config
 {

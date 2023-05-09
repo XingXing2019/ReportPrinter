@@ -5,7 +5,7 @@ using RaphaelLibrary.Code.Init.Label;
 using RaphaelLibrary.Code.Init.PDF;
 using RaphaelLibrary.Code.Init.SQL;
 using RaphaelLibrary.Code.Render.PDF.Helper;
-using ReportPrinterLibrary.Code.Config.Helper;
+using ReportPrinterLibrary.Code.Helper;
 using ReportPrinterLibrary.Code.Log;
 
 namespace RaphaelLibrary.Code.Init

@@ -34,10 +34,13 @@
     <Compile Update="Code\Forms\Configuration\SQL\frmSqlConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Code\UserControls\ucPdfRenderer.cs">
+    <Compile Update="Code\UserControls\ucPdfAnnotationRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Code\UserControls\ucSqlConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Code\UserControls\ucSqlSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

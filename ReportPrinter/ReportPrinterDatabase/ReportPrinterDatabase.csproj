@@ -25,6 +25,7 @@
     <Folder Include="Code\Manager\ConfigManager\PdfRendererManager\PdfBarcodeRenderer\" />
     <Folder Include="Code\Manager\ConfigManager\SqlTemplateConfigManager\" />
     <Folder Include="Code\Manager\ConfigManager\SqlConfigManager\" />
+    <Folder Include="Code\Helper\" />
     <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\SqlResColumnConfig\" />
     <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfWaterMarkRenderer\" />
     <Folder Include="Code\SqlQuery\Programmability\TableStoredProcedure\PdfTextRenderer\" />

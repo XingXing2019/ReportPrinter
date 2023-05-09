@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.IO;
-using ReportPrinterLibrary.Code.Config.Helper;
+using ReportPrinterLibrary.Code.Helper;
 
 namespace ReportPrinterUnitTest.ReportPrinterLibrary.Config
 {

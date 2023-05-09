@@ -35,6 +35,8 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             ucPdfPageNumberRenderer.Visible = false;
             ucPdfReprintMarkRenderer.Visible = false;
 
+            ucPdfWaterMarkRenderer.Visible = false;
+
             var rendererType = (PdfRendererType)ecbRendererType.SelectedValue;
 
             if (rendererType == PdfRendererType.Annotation)
@@ -61,6 +63,11 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             {
                 ucPdfReprintMarkRenderer.Visible = true;
                 _selectedUserControl = ucPdfReprintMarkRenderer;
+            }
+            else if (rendererType == PdfRendererType.Watermark)
+            {
+                ucPdfWaterMarkRenderer.Visible = true;
+                _selectedUserControl = ucPdfWaterMarkRenderer;
             }
         }
 

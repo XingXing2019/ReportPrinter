@@ -29,7 +29,7 @@ namespace CosmoService.Code.UserControls.SQL
 
         public void Init()
         {
-            Task.Run(SetupScreen).Wait();
+            SetupScreen();
         }
 
         public Guid GetSelectedSql()
@@ -37,15 +37,16 @@ namespace CosmoService.Code.UserControls.SQL
             if (cbSql.SelectedItem == null) 
                 return Guid.Empty;
             var sql = (SqlConfig)cbSql.SelectedItem;
-            return sql.SqlTemplateConfigSqlConfigs.Single().SqlTemplateConfigSqlConfigId;
+            var sqlTemplateId = ((SqlTemplateConfigModel)cbSqlTemplate.SelectedItem).SqlTemplateConfigId;
+            return sql.SqlTemplateConfigSqlConfigs.Single(x => x.SqlTemplateConfigId == sqlTemplateId).SqlTemplateConfigSqlConfigId;
         }
 
         #region Helper
 
-        private async Task SetupScreen()
+        private void SetupScreen()
         {
             var sqlTemplateConfigManager = (ISqlTemplateConfigManager)ManagerFactory.CreateManager<SqlTemplateConfigModel>(typeof(ISqlTemplateConfigManager), AppConfig.Instance.DatabaseManagerType);
-            var sqlTemplates = await sqlTemplateConfigManager.GetAll();
+            var sqlTemplates = Task.Run(sqlTemplateConfigManager.GetAll).Result;
 
             cbSqlTemplate.DisplayMember = nameof(SqlTemplateConfigModel.Id);
             cbSqlTemplate.Items.Clear();

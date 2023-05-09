@@ -31,7 +31,8 @@ namespace CosmoService.Code.Forms.Configuration.PDF
         {
             ucPdfAnnotationRenderer.Visible = false;
             ucPdfBarcodeRenderer.Visible = false;
-            
+            ucPdfImageRenderer.Visible = false;
+
             var rendererType = (PdfRendererType)ecbRendererType.SelectedValue;
 
             if (rendererType == PdfRendererType.Annotation)
@@ -44,7 +45,11 @@ namespace CosmoService.Code.Forms.Configuration.PDF
                 ucPdfBarcodeRenderer.Visible = true;
                 _selectedUserControl = ucPdfBarcodeRenderer;
             }
-
+            else if (rendererType == PdfRendererType.Image)
+            {
+                ucPdfImageRenderer.Visible = true;
+                _selectedUserControl = ucPdfImageRenderer;
+            }
         }
 
 

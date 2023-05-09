@@ -44,7 +44,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             btnAddSqlTemplate = new System.Windows.Forms.Button();
             ucSqlConfig = new ucSqlConfig();
             isSelectedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)sqlConfigDataBindingSource).BeginInit();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSqlTemplateConfigs).BeginInit();
@@ -76,16 +76,17 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             dgvSqlTemplateConfigs.AllowUserToAddRows = false;
             dgvSqlTemplateConfigs.AllowUserToDeleteRows = false;
             dgvSqlTemplateConfigs.AutoGenerateColumns = false;
+            dgvSqlTemplateConfigs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             dgvSqlTemplateConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSqlTemplateConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn });
+            dgvSqlTemplateConfigs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, Id });
             dgvSqlTemplateConfigs.DataSource = sqlTemplateConfigDataBindingSource;
             dgvSqlTemplateConfigs.Location = new System.Drawing.Point(18, 110);
-            dgvSqlTemplateConfigs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            dgvSqlTemplateConfigs.Margin = new System.Windows.Forms.Padding(4);
             dgvSqlTemplateConfigs.Name = "dgvSqlTemplateConfigs";
             dgvSqlTemplateConfigs.RowHeadersVisible = false;
             dgvSqlTemplateConfigs.RowHeadersWidth = 51;
             dgvSqlTemplateConfigs.RowTemplate.Height = 29;
-            dgvSqlTemplateConfigs.Size = new System.Drawing.Size(490, 615);
+            dgvSqlTemplateConfigs.Size = new System.Drawing.Size(491, 615);
             dgvSqlTemplateConfigs.TabIndex = 14;
             // 
             // sqlTemplateConfigDataBindingSource
@@ -104,7 +105,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // btnModifySqlTemplate
             // 
             btnModifySqlTemplate.Location = new System.Drawing.Point(135, 750);
-            btnModifySqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            btnModifySqlTemplate.Margin = new System.Windows.Forms.Padding(4);
             btnModifySqlTemplate.Name = "btnModifySqlTemplate";
             btnModifySqlTemplate.Size = new System.Drawing.Size(106, 40);
             btnModifySqlTemplate.TabIndex = 13;
@@ -122,7 +123,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // btnRefreshSqlTemplate
             // 
             btnRefreshSqlTemplate.Location = new System.Drawing.Point(381, 62);
-            btnRefreshSqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            btnRefreshSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
             btnRefreshSqlTemplate.Name = "btnRefreshSqlTemplate";
             btnRefreshSqlTemplate.Size = new System.Drawing.Size(128, 40);
             btnRefreshSqlTemplate.TabIndex = 11;
@@ -133,7 +134,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // btnDeleteSqlTemplate
             // 
             btnDeleteSqlTemplate.Location = new System.Drawing.Point(249, 750);
-            btnDeleteSqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            btnDeleteSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
             btnDeleteSqlTemplate.Name = "btnDeleteSqlTemplate";
             btnDeleteSqlTemplate.Size = new System.Drawing.Size(106, 40);
             btnDeleteSqlTemplate.TabIndex = 12;
@@ -144,7 +145,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // btnAddSqlTemplate
             // 
             btnAddSqlTemplate.Location = new System.Drawing.Point(21, 750);
-            btnAddSqlTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            btnAddSqlTemplate.Margin = new System.Windows.Forms.Padding(4);
             btnAddSqlTemplate.Name = "btnAddSqlTemplate";
             btnAddSqlTemplate.Size = new System.Drawing.Size(106, 40);
             btnAddSqlTemplate.TabIndex = 11;
@@ -155,7 +156,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // ucSqlConfig
             // 
             ucSqlConfig.Location = new System.Drawing.Point(6, 18);
-            ucSqlConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            ucSqlConfig.Margin = new System.Windows.Forms.Padding(2);
             ucSqlConfig.Name = "ucSqlConfig";
             ucSqlConfig.Size = new System.Drawing.Size(786, 831);
             ucSqlConfig.TabIndex = 7;
@@ -164,19 +165,19 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // 
             isSelectedDataGridViewCheckBoxColumn.DataPropertyName = "IsSelected";
             isSelectedDataGridViewCheckBoxColumn.HeaderText = " ";
-            isSelectedDataGridViewCheckBoxColumn.MinimumWidth = 6;
+            isSelectedDataGridViewCheckBoxColumn.MinimumWidth = 9;
             isSelectedDataGridViewCheckBoxColumn.Name = "isSelectedDataGridViewCheckBoxColumn";
             isSelectedDataGridViewCheckBoxColumn.Width = 40;
             // 
-            // idDataGridViewTextBoxColumn
+            // Id
             // 
-            idDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            idDataGridViewTextBoxColumn.HeaderText = "Template Id";
-            idDataGridViewTextBoxColumn.MinimumWidth = 6;
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            Id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            Id.DataPropertyName = "Id";
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            Id.DefaultCellStyle = dataGridViewCellStyle1;
+            Id.HeaderText = "Template Id";
+            Id.MinimumWidth = 9;
+            Id.Name = "Id";
             // 
             // frmSqlConfig
             // 
@@ -186,7 +187,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             Controls.Add(ucSqlConfig);
             Controls.Add(groupBox2);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            Margin = new System.Windows.Forms.Padding(4);
             Name = "frmSqlConfig";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "Config SQL Template";
@@ -208,9 +209,10 @@ namespace CosmoService.Code.Forms.Configuration.SQL
         private System.Windows.Forms.TextBox txtTemplateIdPrefix;
         private System.Windows.Forms.Button btnRefreshSqlTemplate;
         private ucSqlConfig ucSqlConfig;
-        private System.Windows.Forms.DataGridView dgvSqlTemplateConfigs;
         private System.Windows.Forms.BindingSource sqlTemplateConfigDataBindingSource;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridView dgvSqlTemplateConfigs;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
     }
 }

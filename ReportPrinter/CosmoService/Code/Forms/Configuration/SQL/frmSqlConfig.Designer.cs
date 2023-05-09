@@ -1,4 +1,6 @@
-﻿namespace CosmoService.Code.Forms.Configuration.SQL
+﻿using CosmoService.Code.UserControls.SQL;
+
+namespace CosmoService.Code.Forms.Configuration.SQL
 {
     partial class frmSqlConfig
     {
@@ -40,7 +42,7 @@
             btnRefreshSqlTemplate = new System.Windows.Forms.Button();
             btnDeleteSqlTemplate = new System.Windows.Forms.Button();
             btnAddSqlTemplate = new System.Windows.Forms.Button();
-            ucSqlConfig = new UserControls.ucSqlConfig();
+            ucSqlConfig = new ucSqlConfig();
             isSelectedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)sqlConfigDataBindingSource).BeginInit();
@@ -205,7 +207,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtTemplateIdPrefix;
         private System.Windows.Forms.Button btnRefreshSqlTemplate;
-        private UserControls.ucSqlConfig ucSqlConfig;
+        private ucSqlConfig ucSqlConfig;
         private System.Windows.Forms.DataGridView dgvSqlTemplateConfigs;
         private System.Windows.Forms.BindingSource sqlTemplateConfigDataBindingSource;
         private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;

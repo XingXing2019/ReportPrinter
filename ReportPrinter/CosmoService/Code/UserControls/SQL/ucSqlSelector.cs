@@ -1,14 +1,14 @@
-﻿using ReportPrinterDatabase.Code.Manager;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager;
-using ReportPrinterLibrary.Code.Config.Configuration;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ReportPrinterDatabase.Code.Entity;
+using ReportPrinterDatabase.Code.Manager;
+using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlTemplateConfigManager;
 using ReportPrinterDatabase.Code.Model;
+using ReportPrinterLibrary.Code.Config.Configuration;
 
-namespace CosmoService.Code.UserControls
+namespace CosmoService.Code.UserControls.SQL
 {
     public partial class ucSqlSelector : UserControl
     {

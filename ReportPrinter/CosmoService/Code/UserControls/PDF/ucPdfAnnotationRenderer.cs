@@ -8,41 +8,20 @@ using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Enum;
 
-namespace CosmoService.Code.UserControls
+namespace CosmoService.Code.UserControls.PDF
 {
-    public partial class ucPdfAnnotationRenderer : UserControl
+    public partial class ucPdfAnnotationRenderer : UserControl, IPdfRendererUserControl
     {
         private PdfRendererManagerBase<PdfAnnotationRendererModel> _manager;
 
         public ucPdfAnnotationRenderer()
         {
             InitializeComponent();
-            SetupScreen();
-        }
-
-        public void Save(PdfRendererBaseModel rendererBase)
-        {
-            if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
-                _manager = new PdfAnnotationRendererEFCoreManager();
-            else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
-                _manager = new PdfAnnotationRendererSPManager();
-
-            var annotationRenderer = PdfRendererHelper<PdfAnnotationRendererModel>.CreatePdfRenderer(rendererBase);
-
-            annotationRenderer.AnnotationRendererType = (AnnotationRendererType)ecbAnnotationRendererType.SelectedValue;
-            annotationRenderer.Title = string.IsNullOrEmpty(tbTitle.Text.Trim()) ? null : tbTitle.Text.Trim();
-            annotationRenderer.Icon = (PdfTextAnnotationIcon)ecbIcon.SelectedValue;
-
-            if (annotationRenderer.AnnotationRendererType == AnnotationRendererType.Sql)
-                annotationRenderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
-            else
-                annotationRenderer.Content = tbContent.Text.Trim();
-
-            _manager.Post(annotationRenderer);
         }
 
         public bool ValidateInput()
         {
+            epRendererInfo.Clear();
             var isValid = true;
 
             var annotationRendererType = (AnnotationRendererType)ecbAnnotationRendererType.SelectedValue;
@@ -66,6 +45,22 @@ namespace CosmoService.Code.UserControls
             return isValid;
         }
 
+        public void Save(PdfRendererBaseModel rendererBase)
+        {
+            var renderer = PdfRendererHelper<PdfAnnotationRendererModel>.CreatePdfRenderer(rendererBase);
+
+            renderer.AnnotationRendererType = (AnnotationRendererType)ecbAnnotationRendererType.SelectedValue;
+            renderer.Title = string.IsNullOrEmpty(tbTitle.Text.Trim()) ? null : tbTitle.Text.Trim();
+            renderer.Icon = (PdfTextAnnotationIcon)ecbIcon.SelectedValue;
+
+            if (renderer.AnnotationRendererType == AnnotationRendererType.Sql)
+                renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
+            else
+                renderer.Content = tbContent.Text.Trim();
+
+            _manager.Post(renderer);
+        }
+        
         private void ecbAnnotationRendererType_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             var type = (AnnotationRendererType)ecbAnnotationRendererType.SelectedValue;
@@ -75,8 +70,6 @@ namespace CosmoService.Code.UserControls
                 lblContent.Visible = tbContent.Visible = false;
                 gbRendererInfo.Height = 325;
                 Height = 330;
-
-                ucSqlSelector.Init();
             }
             else
             {
@@ -90,6 +83,18 @@ namespace CosmoService.Code.UserControls
             }
         }
 
+        private void ucPdfAnnotationRenderer_Load(object sender, EventArgs e)
+        {
+            SetupScreen();
+
+            if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
+                _manager = new PdfAnnotationRendererEFCoreManager();
+            else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
+                _manager = new PdfAnnotationRendererSPManager();
+
+            ucSqlSelector.Init();
+        }
+
         #region Helper
 
         private void SetupScreen()
@@ -98,8 +103,6 @@ namespace CosmoService.Code.UserControls
             ecbAnnotationRendererType.SelectedItem = AnnotationRendererType.Text;
             ecbIcon.EnumType = typeof(PdfTextAnnotationIcon);
         }
-
-
 
         #endregion
     }

@@ -1,15 +1,14 @@
-﻿using CosmoService.Code.Forms.Configuration;
-using CosmoService.Code.Forms.Configuration.SQL;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
-using ReportPrinterLibrary.Code.Winform.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ReportPrinterDatabase.Code.Entity;
+using CosmoService.Code.Forms.Configuration;
+using CosmoService.Code.Forms.Configuration.SQL;
+using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
+using ReportPrinterLibrary.Code.Winform.Configuration;
 
-namespace CosmoService.Code.UserControls
+namespace CosmoService.Code.UserControls.SQL
 {
     public partial class ucSqlConfig : UserControl
     {

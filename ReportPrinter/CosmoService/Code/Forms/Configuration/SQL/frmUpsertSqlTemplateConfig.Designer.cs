@@ -1,4 +1,6 @@
-﻿namespace CosmoService.Code.Forms.Configuration.SQL
+﻿using CosmoService.Code.UserControls.SQL;
+
+namespace CosmoService.Code.Forms.Configuration.SQL
 {
     partial class frmUpsertSqlTemplateConfig
     {
@@ -33,7 +35,7 @@
             txtTemplateId = new System.Windows.Forms.TextBox();
             lblTemplateId = new System.Windows.Forms.Label();
             epAddSqlTemplateConfig = new System.Windows.Forms.ErrorProvider(components);
-            ucSqlConfig = new UserControls.ucSqlConfig();
+            ucSqlConfig = new ucSqlConfig();
             lblSqlConfigError = new System.Windows.Forms.Label();
             btnPreview = new System.Windows.Forms.Button();
             btnGenerate = new System.Windows.Forms.Button();
@@ -135,7 +137,7 @@
         private System.Windows.Forms.TextBox txtTemplateId;
         private System.Windows.Forms.Label lblTemplateId;
         private System.Windows.Forms.ErrorProvider epAddSqlTemplateConfig;
-        private UserControls.ucSqlConfig ucSqlConfig;
+        private ucSqlConfig ucSqlConfig;
         private System.Windows.Forms.Label lblSqlConfigError;
         private System.Windows.Forms.Button btnPreview;
         private System.Windows.Forms.Button btnGenerate;

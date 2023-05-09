@@ -1,4 +1,6 @@
-﻿namespace CosmoService.Code.UserControls
+﻿using CosmoService.Code.UserControls.SQL;
+
+namespace CosmoService.Code.UserControls.PDF
 {
     partial class ucPdfAnnotationRenderer
     {
@@ -59,7 +61,7 @@
             gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
             gbRendererInfo.Name = "gbRendererInfo";
             gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(694, 634);
+            gbRendererInfo.Size = new System.Drawing.Size(685, 634);
             gbRendererInfo.TabIndex = 3;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
@@ -161,7 +163,8 @@
             Controls.Add(gbRendererInfo);
             Margin = new System.Windows.Forms.Padding(4);
             Name = "ucPdfAnnotationRenderer";
-            Size = new System.Drawing.Size(702, 645);
+            Size = new System.Drawing.Size(697, 645);
+            Load += ucPdfAnnotationRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)epRendererInfo).EndInit();

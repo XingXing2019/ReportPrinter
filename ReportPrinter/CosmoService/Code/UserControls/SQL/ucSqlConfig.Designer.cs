@@ -1,4 +1,4 @@
-﻿namespace CosmoService.Code.UserControls
+﻿namespace CosmoService.Code.UserControls.SQL
 {
     partial class ucSqlConfig
     {

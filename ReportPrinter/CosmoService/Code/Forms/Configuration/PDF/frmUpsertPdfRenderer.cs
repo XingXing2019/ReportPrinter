@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using CosmoService.Code.UserControls;
+using CosmoService.Code.UserControls.PDF;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Enum;
 using HorizontalAlignment = ReportPrinterLibrary.Code.Enum.HorizontalAlignment;
@@ -14,21 +9,43 @@ namespace CosmoService.Code.Forms.Configuration.PDF
 {
     public partial class frmUpsertPdfRenderer : Form
     {
+        private IPdfRendererUserControl _selectedUserControl;
+
         public frmUpsertPdfRenderer()
         {
             InitializeComponent();
+            Text = "Add Pdf Renderer Config";
             SetupScreen();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (TryGetBasicInfo(out var rendererBase) && ucPdfAnnotationRenderer.ValidateInput())
+            if (TryGetBasicInfo(out var rendererBase) && _selectedUserControl.ValidateInput())
             {
-                ucPdfAnnotationRenderer.Save(rendererBase);
+                _selectedUserControl.Save(rendererBase);
                 Close();
             }
         }
 
+        private void ecbRendererType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ucPdfAnnotationRenderer.Visible = false;
+            ucPdfBarcodeRenderer.Visible = false;
+            
+            var rendererType = (PdfRendererType)ecbRendererType.SelectedValue;
+
+            if (rendererType == PdfRendererType.Annotation)
+            {
+                ucPdfAnnotationRenderer.Visible = true;
+                _selectedUserControl = ucPdfAnnotationRenderer;
+            }
+            else if (rendererType == PdfRendererType.Barcode)
+            {
+                ucPdfBarcodeRenderer.Visible = true;
+                _selectedUserControl = ucPdfBarcodeRenderer;
+            }
+
+        }
 
 
         #region Helper
@@ -36,6 +53,8 @@ namespace CosmoService.Code.Forms.Configuration.PDF
         private void SetupScreen()
         {
             ecbRendererType.EnumType = typeof(PdfRendererType);
+            ecbRendererType.SelectedItem = PdfRendererType.Annotation;
+
             ecbHAlignment.EnumType = typeof(HorizontalAlignment);
             ecbVAlignment.EnumType = typeof(VerticalAlignment);
             ecbPosition.EnumType = typeof(Position);
@@ -182,5 +201,6 @@ namespace CosmoService.Code.Forms.Configuration.PDF
         }
 
         #endregion
+
     }
 }

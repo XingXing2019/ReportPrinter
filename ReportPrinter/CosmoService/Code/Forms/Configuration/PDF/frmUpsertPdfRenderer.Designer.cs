@@ -1,4 +1,6 @@
-﻿namespace CosmoService.Code.Forms.Configuration.PDF
+﻿using CosmoService.Code.UserControls.PDF;
+
+namespace CosmoService.Code.Forms.Configuration.PDF
 {
     partial class frmUpsertPdfRenderer
     {
@@ -81,7 +83,8 @@
             label1 = new System.Windows.Forms.Label();
             btnSave = new System.Windows.Forms.Button();
             epPdfConfig = new System.Windows.Forms.ErrorProvider(components);
-            ucPdfAnnotationRenderer = new UserControls.ucPdfAnnotationRenderer();
+            ucPdfAnnotationRenderer = new ucPdfAnnotationRenderer();
+            ucPdfBarcodeRenderer = new ucPdfBarcodeRenderer();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudColumnSpan).BeginInit();
@@ -633,6 +636,7 @@
             ecbRendererType.Name = "ecbRendererType";
             ecbRendererType.Size = new System.Drawing.Size(222, 38);
             ecbRendererType.TabIndex = 3;
+            ecbRendererType.SelectedIndexChanged += ecbRendererType_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -661,17 +665,25 @@
             // 
             // ucPdfAnnotationRenderer
             // 
-            ucPdfAnnotationRenderer.Location = new System.Drawing.Point(860, 31);
+            ucPdfAnnotationRenderer.Location = new System.Drawing.Point(860, 32);
             ucPdfAnnotationRenderer.Margin = new System.Windows.Forms.Padding(4);
             ucPdfAnnotationRenderer.Name = "ucPdfAnnotationRenderer";
-            ucPdfAnnotationRenderer.Size = new System.Drawing.Size(707, 537);
+            ucPdfAnnotationRenderer.Size = new System.Drawing.Size(698, 530);
             ucPdfAnnotationRenderer.TabIndex = 2;
+            // 
+            // ucPdfBarcodeRenderer
+            // 
+            ucPdfBarcodeRenderer.Location = new System.Drawing.Point(860, 32);
+            ucPdfBarcodeRenderer.Name = "ucPdfBarcodeRenderer";
+            ucPdfBarcodeRenderer.Size = new System.Drawing.Size(698, 278);
+            ucPdfBarcodeRenderer.TabIndex = 3;
             // 
             // frmUpsertPdfRenderer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1571, 907);
+            Controls.Add(ucPdfBarcodeRenderer);
             Controls.Add(ucPdfAnnotationRenderer);
             Controls.Add(btnSave);
             Controls.Add(groupBox1);
@@ -757,6 +769,7 @@
         private System.Windows.Forms.NumericUpDown nudRow;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ErrorProvider epPdfConfig;
-        private UserControls.ucPdfAnnotationRenderer ucPdfAnnotationRenderer;
+        private ucPdfAnnotationRenderer ucPdfAnnotationRenderer;
+        private ucPdfBarcodeRenderer ucPdfBarcodeRenderer;
     }
 }

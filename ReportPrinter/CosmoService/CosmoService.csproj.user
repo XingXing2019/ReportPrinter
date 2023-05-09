@@ -34,13 +34,16 @@
     <Compile Update="Code\Forms\Configuration\SQL\frmSqlConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Code\UserControls\ucPdfAnnotationRenderer.cs">
+    <Compile Update="Code\UserControls\PDF\ucPdfAnnotationRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Code\UserControls\ucSqlConfig.cs">
+    <Compile Update="Code\UserControls\PDF\ucPdfBarcodeRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Code\UserControls\ucSqlSelector.cs">
+    <Compile Update="Code\UserControls\SQL\ucSqlConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Code\UserControls\SQL\ucSqlSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
@@ -49,6 +52,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Code\Forms\Message\frmPublishPrintReport.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Code\UserControls\PDF\ucPdfBarcodeRenderer.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

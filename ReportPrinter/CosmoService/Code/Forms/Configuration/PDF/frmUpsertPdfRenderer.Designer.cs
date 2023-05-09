@@ -86,6 +86,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             ucPdfAnnotationRenderer = new ucPdfAnnotationRenderer();
             ucPdfBarcodeRenderer = new ucPdfBarcodeRenderer();
             ucPdfImageRenderer = new ucPdfImageRenderer();
+            ucPdfPageNumberRenderer = new ucPdfPageNumberRenderer();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudColumnSpan).BeginInit();
@@ -686,11 +687,19 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             ucPdfImageRenderer.Size = new System.Drawing.Size(699, 278);
             ucPdfImageRenderer.TabIndex = 33;
             // 
+            // ucPdfPageNumberRenderer
+            // 
+            ucPdfPageNumberRenderer.Location = new System.Drawing.Point(859, 32);
+            ucPdfPageNumberRenderer.Name = "ucPdfPageNumberRenderer";
+            ucPdfPageNumberRenderer.Size = new System.Drawing.Size(699, 211);
+            ucPdfPageNumberRenderer.TabIndex = 34;
+            // 
             // frmUpsertPdfRenderer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1571, 907);
+            Controls.Add(ucPdfPageNumberRenderer);
             Controls.Add(ucPdfImageRenderer);
             Controls.Add(ucPdfBarcodeRenderer);
             Controls.Add(ucPdfAnnotationRenderer);
@@ -781,5 +790,6 @@ namespace CosmoService.Code.Forms.Configuration.PDF
         private ucPdfAnnotationRenderer ucPdfAnnotationRenderer;
         private ucPdfBarcodeRenderer ucPdfBarcodeRenderer;
         private ucPdfImageRenderer ucPdfImageRenderer;
+        private ucPdfPageNumberRenderer ucPdfPageNumberRenderer;
     }
 }

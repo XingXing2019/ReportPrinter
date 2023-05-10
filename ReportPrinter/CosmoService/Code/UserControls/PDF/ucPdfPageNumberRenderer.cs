@@ -35,6 +35,11 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ucPdfPageNumberRenderer_Load(object sender, EventArgs e)
         {
+            if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
+                _manager = new PdfPageNumberRendererEFCoreManager();
+            else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
+                _manager = new PdfPageNumberRendererSPManager();
+
             SetupScreen();
         }
 
@@ -43,11 +48,6 @@ namespace CosmoService.Code.UserControls.PDF
         private void SetupScreen()
         {
             ecbPageNumberLocation.EnumType = typeof(Location);
-
-            if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
-                _manager = new PdfPageNumberRendererEFCoreManager();
-            else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
-                _manager = new PdfPageNumberRendererSPManager();
         }
 
         #endregion

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using ReportPrinterLibrary.Code.Helper;
-using ReportPrinterLibrary.Code.Winform.Configuration;
+using ReportPrinterLibrary.Code.Winform.Configuration.SQL;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {

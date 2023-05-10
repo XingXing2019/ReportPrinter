@@ -13,6 +13,9 @@
     <Compile Update="Code\Forms\Configuration\PDF\frmUpsertPdfRenderer.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Code\Forms\Configuration\SQL\frmAddSqlResColumnConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Code\Forms\Configuration\SQL\frmGenerateSqlTemplateConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -47,6 +50,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Code\UserControls\PDF\ucPdfReprintMarkRenderer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Code\UserControls\PDF\ucPdfTableRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Code\UserControls\PDF\ucPdfTextRenderer.cs">

@@ -45,13 +45,12 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ucPdfBarcodeRenderer_Load(object sender, EventArgs e)
         {
-            SetupScreen();
-
             if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
                 _manager = new PdfBarcodeRendererEFCoreManager();
             else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
                 _manager = new PdfBarcodeRendererSPManager();
 
+            SetupScreen();
             ucSqlSelector.Init();
         }
 

@@ -1,4 +1,6 @@
-﻿namespace CosmoService.Code.Forms.Configuration.SQL
+﻿using ReportPrinterLibrary.Code.Winform.Configuration.SQL;
+
+namespace CosmoService.Code.Forms.Configuration.SQL
 {
     partial class frmUpsertSqlConfig
     {
@@ -191,7 +193,7 @@
             // 
             // sqlVariableConfigDataBindingSource
             // 
-            sqlVariableConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlVariableConfigData);
+            sqlVariableConfigDataBindingSource.DataSource = typeof(SqlVariableConfigData);
             // 
             // btnPreview
             // 

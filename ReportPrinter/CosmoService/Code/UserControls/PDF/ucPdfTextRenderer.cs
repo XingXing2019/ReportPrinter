@@ -76,13 +76,12 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ucPdfTextRenderer_Load(object sender, EventArgs e)
         {
-            SetupScreen();
-
             if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
                 _manager = new PdfTextRendererEFCoreManager();
             else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
                 _manager = new PdfTextRendererSPManager();
 
+            SetupScreen();
             ucSqlSelector.Init();
         }
 

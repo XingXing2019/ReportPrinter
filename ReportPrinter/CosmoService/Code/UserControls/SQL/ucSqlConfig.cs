@@ -7,6 +7,7 @@ using CosmoService.Code.Forms.Configuration;
 using CosmoService.Code.Forms.Configuration.SQL;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.SqlConfigManager;
 using ReportPrinterLibrary.Code.Winform.Configuration;
+using ReportPrinterLibrary.Code.Winform.Configuration.SQL;
 
 namespace CosmoService.Code.UserControls.SQL
 {

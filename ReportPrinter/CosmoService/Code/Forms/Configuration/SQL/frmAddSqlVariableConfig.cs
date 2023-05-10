@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using ReportPrinterLibrary.Code.Winform.Configuration;
+using ReportPrinterLibrary.Code.Winform.Configuration.SQL;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {
     public partial class frmAddSqlVariableConfig : Form
     {
         private readonly BindingList<SqlVariableConfigData> _sqlVariableConfigs;
+
         public frmAddSqlVariableConfig(BindingList<SqlVariableConfigData> sqlVariableConfigs)
         {
             InitializeComponent();

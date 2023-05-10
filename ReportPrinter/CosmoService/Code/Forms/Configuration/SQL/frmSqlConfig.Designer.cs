@@ -1,4 +1,5 @@
 ﻿using CosmoService.Code.UserControls.SQL;
+using ReportPrinterLibrary.Code.Winform.Configuration.SQL;
 
 namespace CosmoService.Code.Forms.Configuration.SQL
 {
@@ -53,7 +54,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // 
             // sqlConfigDataBindingSource
             // 
-            sqlConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlConfigData);
+            sqlConfigDataBindingSource.DataSource = typeof(SqlConfigData);
             // 
             // groupBox2
             // 
@@ -91,7 +92,7 @@ namespace CosmoService.Code.Forms.Configuration.SQL
             // 
             // sqlTemplateConfigDataBindingSource
             // 
-            sqlTemplateConfigDataBindingSource.DataSource = typeof(ReportPrinterLibrary.Code.Winform.Configuration.SqlTemplateConfigData);
+            sqlTemplateConfigDataBindingSource.DataSource = typeof(SqlTemplateConfigData);
             // 
             // label2
             // 

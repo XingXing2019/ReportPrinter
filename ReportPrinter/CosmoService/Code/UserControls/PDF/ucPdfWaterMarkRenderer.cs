@@ -93,13 +93,12 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ucPdfWaterMarkRenderer_Load(object sender, EventArgs e)
         {
-            SetupScreen();
-
             if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
                 _manager = new PdfWaterMarkRendererEFCoreManager();
             else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
                 _manager = new PdfWaterMarkRendererSPManager();
 
+            SetupScreen();
             ucSqlSelector.Init();
         }
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace ReportPrinterLibrary.Code.Winform.Configuration
+namespace ReportPrinterLibrary.Code.Winform.Configuration.SQL
 {
     [XmlRoot("Variable")]
     public class SqlVariableConfigData

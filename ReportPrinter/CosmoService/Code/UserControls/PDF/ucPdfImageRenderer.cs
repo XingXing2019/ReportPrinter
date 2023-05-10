@@ -49,12 +49,12 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ucPdfImageRenderer_Load(object sender, EventArgs e)
         {
-            SetupScreen();
-
             if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
                 _manager = new PdfImageRendererEFCoreManager();
             else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
                 _manager = new PdfImageRendererSPManager();
+
+            SetupScreen();
         }
 
         #region Helper

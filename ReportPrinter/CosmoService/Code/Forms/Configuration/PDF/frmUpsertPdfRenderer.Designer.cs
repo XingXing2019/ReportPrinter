@@ -90,6 +90,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             ucPdfReprintMarkRenderer = new ucPdfReprintMarkRenderer();
             ucPdfWaterMarkRenderer = new ucPdfWaterMarkRenderer();
             ucPdfTextRenderer = new ucPdfTextRenderer();
+            ucPdfTableRenderer = new ucPdfTableRenderer();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudColumnSpan).BeginInit();
@@ -718,11 +719,19 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             ucPdfTextRenderer.Size = new System.Drawing.Size(699, 340);
             ucPdfTextRenderer.TabIndex = 37;
             // 
+            // ucPdfTableRenderer
+            // 
+            ucPdfTableRenderer.Location = new System.Drawing.Point(858, 32);
+            ucPdfTableRenderer.Name = "ucPdfTableRenderer";
+            ucPdfTableRenderer.Size = new System.Drawing.Size(700, 792);
+            ucPdfTableRenderer.TabIndex = 38;
+            // 
             // frmUpsertPdfRenderer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1571, 907);
+            Controls.Add(ucPdfTableRenderer);
             Controls.Add(ucPdfTextRenderer);
             Controls.Add(ucPdfWaterMarkRenderer);
             Controls.Add(ucPdfReprintMarkRenderer);
@@ -822,5 +831,6 @@ namespace CosmoService.Code.Forms.Configuration.PDF
         private ucPdfReprintMarkRenderer ucPdfReprintMarkRenderer;
         private ucPdfWaterMarkRenderer ucPdfWaterMarkRenderer;
         private ucPdfTextRenderer ucPdfTextRenderer;
+        private ucPdfTableRenderer ucPdfTableRenderer;
     }
 }

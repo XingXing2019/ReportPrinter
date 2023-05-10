@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using ReportPrinterLibrary.Code.Helper;
-using ReportPrinterLibrary.Code.Winform.Configuration;
+using ReportPrinterLibrary.Code.Winform.Configuration.SQL;
 
 namespace ReportPrinterUnitTest.ReportPrinterLibrary.Winform.Helper
 {

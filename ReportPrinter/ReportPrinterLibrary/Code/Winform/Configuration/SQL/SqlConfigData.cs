@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace ReportPrinterLibrary.Code.Winform.Configuration
+namespace ReportPrinterLibrary.Code.Winform.Configuration.SQL
 {
     [XmlRoot("Sql")]
     public class SqlConfigData
@@ -28,7 +28,7 @@ namespace ReportPrinterLibrary.Code.Winform.Configuration
         [XmlElement("Query")]
         [Browsable(false)]
         public string Query { get; set; }
-        
+
         [XmlElement("Variable")]
         [Browsable(false)]
         public List<SqlVariableConfigData> SqlVariableConfigs { get; set; }

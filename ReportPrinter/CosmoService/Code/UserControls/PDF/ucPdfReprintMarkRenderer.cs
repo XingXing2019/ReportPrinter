@@ -51,12 +51,12 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ucPdfReprintMarkRenderer_Load(object sender, EventArgs e)
         {
-            SetupScreen();
-
             if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
                 _manager = new PdfReprintMarkRendererEFCoreManager();
             else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
                 _manager = new PdfReprintMarkRendererSPManager();
+
+            SetupScreen();
         }
 
         #region Helper

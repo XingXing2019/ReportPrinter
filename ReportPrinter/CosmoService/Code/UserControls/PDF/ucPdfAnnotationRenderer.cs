@@ -85,13 +85,12 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ucPdfAnnotationRenderer_Load(object sender, EventArgs e)
         {
-            SetupScreen();
-
             if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)
                 _manager = new PdfAnnotationRendererEFCoreManager();
             else if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.SP)
                 _manager = new PdfAnnotationRendererSPManager();
 
+            SetupScreen();
             ucSqlSelector.Init();
         }
 

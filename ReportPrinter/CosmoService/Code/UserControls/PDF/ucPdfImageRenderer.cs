@@ -28,7 +28,7 @@ namespace CosmoService.Code.UserControls.PDF
                 epRendererInfo.SetError(tbImageSource, "Image source is required");
                 isValid = false;
             }
-            else if ((SourceType)ecbSourceType.SelectedValue == SourceType.Local && !File.Exists(tbImageSource.Text.Trim()))
+            else if ((SourceType)ecbSourceType.SelectedItem == SourceType.Local && !File.Exists(tbImageSource.Text.Trim()))
             {
                 epRendererInfo.SetError(tbImageSource, "Image source does not exist");
                 isValid = false;
@@ -41,7 +41,7 @@ namespace CosmoService.Code.UserControls.PDF
         {
             var renderer = PdfRendererHelper<PdfImageRendererModel>.CreatePdfRenderer(rendererBase);
 
-            renderer.SourceType = (SourceType)ecbSourceType.SelectedValue;
+            renderer.SourceType = (SourceType)ecbSourceType.SelectedItem;
             renderer.ImageSource = tbImageSource.Text.Trim();
 
             _manager.Post(renderer);

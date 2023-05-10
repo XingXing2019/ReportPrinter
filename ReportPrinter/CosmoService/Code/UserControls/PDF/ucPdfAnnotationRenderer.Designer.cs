@@ -71,7 +71,7 @@ namespace CosmoService.Code.UserControls.PDF
             ucSqlSelector.Location = new System.Drawing.Point(9, 200);
             ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(657, 118);
+            ucSqlSelector.Size = new System.Drawing.Size(646, 118);
             ucSqlSelector.TabIndex = 12;
             // 
             // tbContent

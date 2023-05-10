@@ -29,7 +29,7 @@ namespace CosmoService.Code.UserControls.PDF
             epRendererInfo.Clear();
             var isValid = true;
 
-            var waterMarkRendererType = (WaterMarkRendererType)ecbWaterMarkType.SelectedValue;
+            var waterMarkRendererType = (WaterMarkRendererType)ecbWaterMarkType.SelectedItem;
             if (waterMarkRendererType == WaterMarkRendererType.Text)
             {
                 if (string.IsNullOrEmpty(tbContent.Text))
@@ -71,7 +71,7 @@ namespace CosmoService.Code.UserControls.PDF
 
         private void ecbWaterMarkType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var type = (WaterMarkRendererType)ecbWaterMarkType.SelectedValue;
+            var type = (WaterMarkRendererType)ecbWaterMarkType.SelectedItem;
             if (type == WaterMarkRendererType.Sql)
             {
                 ucSqlSelector.Visible = true;

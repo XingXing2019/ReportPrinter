@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
-using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfBarcodeRenderer;
 using ReportPrinterDatabase.Code.Model;
 using ReportPrinterLibrary.Code.Config.Configuration;
 using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfReprintMarkRenderer;
-using CosmoService.Code.UserControls.SQL;
 using ReportPrinterDatabase.Code.Helper;
 
 namespace CosmoService.Code.UserControls.PDF

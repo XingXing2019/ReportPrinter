@@ -36,7 +36,7 @@ namespace CosmoService.Code.UserControls.PDF
         {
             var renderer = PdfRendererHelper<PdfBarcodeRendererModel>.CreatePdfRenderer(rendererBase);
 
-            renderer.BarcodeFormat = (BarcodeFormat)ecbBarcodeFormat.SelectedValue;
+            renderer.BarcodeFormat = (BarcodeFormat)ecbBarcodeFormat.SelectedItem;
             renderer.ShowBarcodeText = cbShowBarcodeText.Checked;
             renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
 

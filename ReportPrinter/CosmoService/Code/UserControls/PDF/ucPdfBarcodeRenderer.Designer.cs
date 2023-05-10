@@ -82,7 +82,7 @@ namespace CosmoService.Code.UserControls.PDF
             ucSqlSelector.Location = new System.Drawing.Point(6, 133);
             ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(657, 118);
+            ucSqlSelector.Size = new System.Drawing.Size(648, 118);
             ucSqlSelector.TabIndex = 12;
             // 
             // label2

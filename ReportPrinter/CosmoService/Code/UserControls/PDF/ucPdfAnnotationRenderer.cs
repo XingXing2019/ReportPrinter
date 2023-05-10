@@ -24,7 +24,7 @@ namespace CosmoService.Code.UserControls.PDF
             epRendererInfo.Clear();
             var isValid = true;
 
-            var annotationRendererType = (AnnotationRendererType)ecbAnnotationRendererType.SelectedValue;
+            var annotationRendererType = (AnnotationRendererType)ecbAnnotationRendererType.SelectedItem;
             if (annotationRendererType == AnnotationRendererType.Text)
             {
                 if (string.IsNullOrEmpty(tbContent.Text))
@@ -49,9 +49,9 @@ namespace CosmoService.Code.UserControls.PDF
         {
             var renderer = PdfRendererHelper<PdfAnnotationRendererModel>.CreatePdfRenderer(rendererBase);
 
-            renderer.AnnotationRendererType = (AnnotationRendererType)ecbAnnotationRendererType.SelectedValue;
+            renderer.AnnotationRendererType = (AnnotationRendererType)ecbAnnotationRendererType.SelectedItem;
             renderer.Title = string.IsNullOrEmpty(tbTitle.Text.Trim()) ? null : tbTitle.Text.Trim();
-            renderer.Icon = (PdfTextAnnotationIcon)ecbIcon.SelectedValue;
+            renderer.Icon = (PdfTextAnnotationIcon)ecbIcon.SelectedItem;
 
             if (renderer.AnnotationRendererType == AnnotationRendererType.Sql)
                 renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
@@ -60,10 +60,10 @@ namespace CosmoService.Code.UserControls.PDF
 
             _manager.Post(renderer);
         }
-        
+
         private void ecbAnnotationRendererType_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            var type = (AnnotationRendererType)ecbAnnotationRendererType.SelectedValue;
+            var type = (AnnotationRendererType)ecbAnnotationRendererType.SelectedItem;
             if (type == AnnotationRendererType.Sql)
             {
                 ucSqlSelector.Visible = true;

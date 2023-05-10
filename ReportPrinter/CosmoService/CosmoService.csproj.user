@@ -49,6 +49,9 @@
     <Compile Update="Code\UserControls\PDF\ucPdfReprintMarkRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Code\UserControls\PDF\ucPdfTextRenderer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Code\UserControls\PDF\ucPdfWaterMarkRenderer.cs">
       <SubType>UserControl</SubType>
     </Compile>

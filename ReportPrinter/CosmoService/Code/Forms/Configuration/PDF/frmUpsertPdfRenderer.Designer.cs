@@ -89,6 +89,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             ucPdfPageNumberRenderer = new ucPdfPageNumberRenderer();
             ucPdfReprintMarkRenderer = new ucPdfReprintMarkRenderer();
             ucPdfWaterMarkRenderer = new ucPdfWaterMarkRenderer();
+            ucPdfTextRenderer = new ucPdfTextRenderer();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudColumnSpan).BeginInit();
@@ -707,14 +708,22 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // 
             ucPdfWaterMarkRenderer.Location = new System.Drawing.Point(859, 32);
             ucPdfWaterMarkRenderer.Name = "ucPdfWaterMarkRenderer";
-            ucPdfWaterMarkRenderer.Size = new System.Drawing.Size(700, 606);
+            ucPdfWaterMarkRenderer.Size = new System.Drawing.Size(700, 600);
             ucPdfWaterMarkRenderer.TabIndex = 36;
+            // 
+            // ucPdfTextRenderer
+            // 
+            ucPdfTextRenderer.Location = new System.Drawing.Point(860, 32);
+            ucPdfTextRenderer.Name = "ucPdfTextRenderer";
+            ucPdfTextRenderer.Size = new System.Drawing.Size(699, 340);
+            ucPdfTextRenderer.TabIndex = 37;
             // 
             // frmUpsertPdfRenderer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1571, 907);
+            Controls.Add(ucPdfTextRenderer);
             Controls.Add(ucPdfWaterMarkRenderer);
             Controls.Add(ucPdfReprintMarkRenderer);
             Controls.Add(ucPdfPageNumberRenderer);
@@ -725,6 +734,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             Controls.Add(groupBox1);
             Margin = new System.Windows.Forms.Padding(4);
             Name = "frmUpsertPdfRenderer";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox6.ResumeLayout(false);
@@ -811,5 +821,6 @@ namespace CosmoService.Code.Forms.Configuration.PDF
         private ucPdfPageNumberRenderer ucPdfPageNumberRenderer;
         private ucPdfReprintMarkRenderer ucPdfReprintMarkRenderer;
         private ucPdfWaterMarkRenderer ucPdfWaterMarkRenderer;
+        private ucPdfTextRenderer ucPdfTextRenderer;
     }
 }

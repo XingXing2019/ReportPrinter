@@ -101,7 +101,7 @@
             ucSqlSelector.Location = new System.Drawing.Point(12, 269);
             ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(657, 118);
+            ucSqlSelector.Size = new System.Drawing.Size(646, 118);
             ucSqlSelector.TabIndex = 41;
             // 
             // tbContent

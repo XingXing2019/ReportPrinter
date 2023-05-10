@@ -34,10 +34,10 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             ucPdfImageRenderer.Visible = false;
             ucPdfPageNumberRenderer.Visible = false;
             ucPdfReprintMarkRenderer.Visible = false;
-
+            ucPdfTextRenderer.Visible = false;
             ucPdfWaterMarkRenderer.Visible = false;
 
-            var rendererType = (PdfRendererType)ecbRendererType.SelectedValue;
+            var rendererType = (PdfRendererType)ecbRendererType.SelectedItem;
 
             if (rendererType == PdfRendererType.Annotation)
             {
@@ -63,6 +63,11 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             {
                 ucPdfReprintMarkRenderer.Visible = true;
                 _selectedUserControl = ucPdfReprintMarkRenderer;
+            }
+            else if (rendererType == PdfRendererType.Text)
+            {
+                ucPdfTextRenderer.Visible = true;
+                _selectedUserControl = ucPdfTextRenderer;
             }
             else if (rendererType == PdfRendererType.Watermark)
             {
@@ -90,11 +95,11 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             var isValid = true;
             rendererBase = new PdfRendererBaseModel
             {
-                RendererType = (PdfRendererType)ecbRendererType.SelectedValue,
-                HorizontalAlignment = (HorizontalAlignment)ecbHAlignment.SelectedValue,
-                VerticalAlignment = (VerticalAlignment)ecbVAlignment.SelectedValue,
-                Position = (Position)ecbPosition.SelectedValue,
-                FontStyle = (XFontStyle)ecbFontStyle.SelectedValue,
+                RendererType = (PdfRendererType)ecbRendererType.SelectedItem,
+                HorizontalAlignment = (HorizontalAlignment)ecbHAlignment.SelectedItem,
+                VerticalAlignment = (VerticalAlignment)ecbVAlignment.SelectedItem,
+                Position = (Position)ecbPosition.SelectedItem,
+                FontStyle = (XFontStyle)ecbFontStyle.SelectedItem,
                 Row = int.Parse(nudRow.Text),
                 Column = int.Parse(nudColumn.Text)
             };

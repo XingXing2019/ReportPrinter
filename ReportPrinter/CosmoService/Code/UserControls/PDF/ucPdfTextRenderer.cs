@@ -21,7 +21,29 @@ namespace CosmoService.Code.UserControls.PDF
 
         public bool ValidateInput()
         {
-            throw new NotImplementedException();
+            epRendererInfo.Clear();
+            var isValid = true;
+
+            var type = (TextRendererType)ecbTextRendererType.SelectedItem;
+
+            if (type == TextRendererType.Sql)
+            {
+                if (ucSqlSelector.GetSelectedSql() == Guid.Empty)
+                {
+                    epRendererInfo.SetError(ucSqlSelector, "Sql is required");
+                    isValid = false;
+                }
+            }
+            else if (type == TextRendererType.Text)
+            {
+                if (string.IsNullOrEmpty(tbContent.Text.Trim()))
+                {
+                    epRendererInfo.SetError(tbContent, "Content is required");
+                    isValid = false;
+                }
+            }
+
+            return isValid;
         }
 
         public void Save(PdfRendererBaseModel rendererBase)

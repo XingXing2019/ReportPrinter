@@ -92,6 +92,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
 
         private bool TryGetBasicInfo(out PdfRendererBaseModel rendererBase)
         {
+            epPdfConfig.Clear();
             var isValid = true;
             rendererBase = new PdfRendererBaseModel
             {
@@ -197,7 +198,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             {
                 if (!Enum.TryParse(tbBackgroundColor.Text.Trim(), out XKnownColor backgroudnColor))
                 {
-                    epPdfConfig.SetError(tbBackgroundColor, "Brush color input is invalid");
+                    epPdfConfig.SetError(tbBackgroundColor, "Background color input is invalid");
                     isValid = false;
                 }
                 else

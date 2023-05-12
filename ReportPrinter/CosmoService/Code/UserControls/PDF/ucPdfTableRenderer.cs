@@ -94,6 +94,7 @@ namespace CosmoService.Code.UserControls.PDF
 
             renderer.TitleColorOpacity = double.Parse(nudTitleOpacity.Text);
             renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.SelectedSql;
+            renderer.SqlVariable = tbSqlVariable.Text.Trim();
 
             if (cbSubTable.SelectedItem != null)
             {

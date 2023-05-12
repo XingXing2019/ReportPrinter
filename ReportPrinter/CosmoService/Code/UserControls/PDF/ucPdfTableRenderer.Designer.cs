@@ -58,6 +58,8 @@
             label2 = new System.Windows.Forms.Label();
             ecbTitleHAlignment = new CustomControls.EnumComboBox();
             epRendererInfo = new System.Windows.Forms.ErrorProvider(components);
+            tbSqlVariable = new System.Windows.Forms.TextBox();
+            label7 = new System.Windows.Forms.Label();
             gbRendererInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSqlResultColumns).BeginInit();
             ((System.ComponentModel.ISupportInitialize)sqlResColumnDataBindingSource).BeginInit();
@@ -70,6 +72,8 @@
             // 
             // gbRendererInfo
             // 
+            gbRendererInfo.Controls.Add(tbSqlVariable);
+            gbRendererInfo.Controls.Add(label7);
             gbRendererInfo.Controls.Add(btnDelete);
             gbRendererInfo.Controls.Add(btnAdd);
             gbRendererInfo.Controls.Add(lblSqlresColumns);
@@ -93,14 +97,14 @@
             gbRendererInfo.Controls.Add(ecbTitleHAlignment);
             gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Size = new System.Drawing.Size(457, 519);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 557);
             gbRendererInfo.TabIndex = 5;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
             // 
             // btnDelete
             // 
-            btnDelete.Location = new System.Drawing.Point(354, 252);
+            btnDelete.Location = new System.Drawing.Point(354, 285);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new System.Drawing.Size(83, 27);
             btnDelete.TabIndex = 46;
@@ -110,7 +114,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new System.Drawing.Point(265, 252);
+            btnAdd.Location = new System.Drawing.Point(265, 285);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new System.Drawing.Size(83, 27);
             btnAdd.TabIndex = 45;
@@ -121,7 +125,7 @@
             // lblSqlresColumns
             // 
             lblSqlresColumns.AutoSize = true;
-            lblSqlresColumns.Location = new System.Drawing.Point(18, 252);
+            lblSqlresColumns.Location = new System.Drawing.Point(18, 285);
             lblSqlresColumns.Name = "lblSqlresColumns";
             lblSqlresColumns.Size = new System.Drawing.Size(143, 20);
             lblSqlresColumns.TabIndex = 44;
@@ -136,8 +140,8 @@
             dgvSqlResultColumns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvSqlResultColumns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn, titleDataGridViewTextBoxColumn });
             dgvSqlResultColumns.DataSource = sqlResColumnDataBindingSource;
-            dgvSqlResultColumns.Location = new System.Drawing.Point(19, 285);
-            dgvSqlResultColumns.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            dgvSqlResultColumns.Location = new System.Drawing.Point(19, 318);
+            dgvSqlResultColumns.Margin = new System.Windows.Forms.Padding(2);
             dgvSqlResultColumns.Name = "dgvSqlResultColumns";
             dgvSqlResultColumns.RowHeadersVisible = false;
             dgvSqlResultColumns.RowHeadersWidth = 72;
@@ -180,7 +184,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(19, 219);
+            label6.Location = new System.Drawing.Point(19, 252);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(76, 20);
             label6.TabIndex = 42;
@@ -189,7 +193,7 @@
             // cbSubTable
             // 
             cbSubTable.FormattingEnabled = true;
-            cbSubTable.Location = new System.Drawing.Point(155, 216);
+            cbSubTable.Location = new System.Drawing.Point(155, 249);
             cbSubTable.Name = "cbSubTable";
             cbSubTable.Size = new System.Drawing.Size(281, 28);
             cbSubTable.TabIndex = 41;
@@ -262,7 +266,7 @@
             // 
             cbHideTitle.AutoSize = true;
             cbHideTitle.Location = new System.Drawing.Point(421, 63);
-            cbHideTitle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            cbHideTitle.Margin = new System.Windows.Forms.Padding(2);
             cbHideTitle.Name = "cbHideTitle";
             cbHideTitle.Size = new System.Drawing.Size(18, 17);
             cbHideTitle.TabIndex = 33;
@@ -308,8 +312,8 @@
             // 
             // ucSqlSelector
             // 
-            ucSqlSelector.Location = new System.Drawing.Point(7, 141);
-            ucSqlSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            ucSqlSelector.Location = new System.Drawing.Point(7, 174);
+            ucSqlSelector.Margin = new System.Windows.Forms.Padding(4);
             ucSqlSelector.Name = "ucSqlSelector";
             ucSqlSelector.Size = new System.Drawing.Size(449, 79);
             ucSqlSelector.TabIndex = 12;
@@ -336,14 +340,30 @@
             // 
             epRendererInfo.ContainerControl = this;
             // 
+            // tbSqlVariable
+            // 
+            tbSqlVariable.Location = new System.Drawing.Point(155, 150);
+            tbSqlVariable.Name = "tbSqlVariable";
+            tbSqlVariable.Size = new System.Drawing.Size(280, 27);
+            tbSqlVariable.TabIndex = 48;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(18, 153);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(96, 20);
+            label7.TabIndex = 47;
+            label7.Text = "SQL Variable:";
+            // 
             // ucPdfTableRenderer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
-            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            Margin = new System.Windows.Forms.Padding(2);
             Name = "ucPdfTableRenderer";
-            Size = new System.Drawing.Size(465, 527);
+            Size = new System.Drawing.Size(465, 563);
             Load += ucPdfTableRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();
@@ -386,5 +406,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TextBox tbSqlVariable;
+        private System.Windows.Forms.Label label7;
     }
 }

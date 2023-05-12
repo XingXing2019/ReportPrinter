@@ -121,7 +121,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new System.Drawing.Point(12, 24);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(556, 572);
+            groupBox1.Size = new System.Drawing.Size(556, 601);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Basic Info";
@@ -136,7 +136,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             groupBox6.Controls.Add(label18);
             groupBox6.Controls.Add(nudRow);
             groupBox6.Controls.Add(label17);
-            groupBox6.Location = new System.Drawing.Point(17, 443);
+            groupBox6.Location = new System.Drawing.Point(17, 468);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new System.Drawing.Size(522, 114);
             groupBox6.TabIndex = 32;
@@ -218,7 +218,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             groupBox5.Controls.Add(label13);
             groupBox5.Controls.Add(label14);
             groupBox5.Controls.Add(label15);
-            groupBox5.Location = new System.Drawing.Point(281, 296);
+            groupBox5.Location = new System.Drawing.Point(281, 311);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new System.Drawing.Size(258, 141);
             groupBox5.TabIndex = 30;
@@ -293,7 +293,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             groupBox4.Controls.Add(label10);
             groupBox4.Controls.Add(ecbFontStyle);
             groupBox4.Controls.Add(label11);
-            groupBox4.Location = new System.Drawing.Point(17, 296);
+            groupBox4.Location = new System.Drawing.Point(17, 311);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new System.Drawing.Size(258, 141);
             groupBox4.TabIndex = 4;
@@ -380,7 +380,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             groupBox3.Controls.Add(ecbVAlignment);
             groupBox3.Controls.Add(ecbPosition);
             groupBox3.Controls.Add(label9);
-            groupBox3.Location = new System.Drawing.Point(17, 77);
+            groupBox3.Location = new System.Drawing.Point(17, 81);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new System.Drawing.Size(522, 213);
             groupBox3.TabIndex = 3;
@@ -601,7 +601,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // 
             // btnSave
             // 
-            btnSave.Location = new System.Drawing.Point(938, 567);
+            btnSave.Location = new System.Drawing.Point(938, 596);
             btnSave.Name = "btnSave";
             btnSave.Size = new System.Drawing.Size(94, 29);
             btnSave.TabIndex = 1;
@@ -623,7 +623,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // ucPdfBarcodeRenderer
             // 
             ucPdfBarcodeRenderer.Location = new System.Drawing.Point(573, 21);
-            ucPdfBarcodeRenderer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucPdfBarcodeRenderer.Margin = new System.Windows.Forms.Padding(1);
             ucPdfBarcodeRenderer.Name = "ucPdfBarcodeRenderer";
             ucPdfBarcodeRenderer.Size = new System.Drawing.Size(465, 227);
             ucPdfBarcodeRenderer.TabIndex = 3;
@@ -631,7 +631,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // ucPdfImageRenderer
             // 
             ucPdfImageRenderer.Location = new System.Drawing.Point(573, 21);
-            ucPdfImageRenderer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucPdfImageRenderer.Margin = new System.Windows.Forms.Padding(1);
             ucPdfImageRenderer.Name = "ucPdfImageRenderer";
             ucPdfImageRenderer.Size = new System.Drawing.Size(466, 185);
             ucPdfImageRenderer.TabIndex = 33;
@@ -639,7 +639,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // ucPdfPageNumberRenderer
             // 
             ucPdfPageNumberRenderer.Location = new System.Drawing.Point(573, 21);
-            ucPdfPageNumberRenderer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucPdfPageNumberRenderer.Margin = new System.Windows.Forms.Padding(1);
             ucPdfPageNumberRenderer.Name = "ucPdfPageNumberRenderer";
             ucPdfPageNumberRenderer.Size = new System.Drawing.Size(466, 141);
             ucPdfPageNumberRenderer.TabIndex = 34;
@@ -647,7 +647,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // ucPdfReprintMarkRenderer
             // 
             ucPdfReprintMarkRenderer.Location = new System.Drawing.Point(573, 21);
-            ucPdfReprintMarkRenderer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucPdfReprintMarkRenderer.Margin = new System.Windows.Forms.Padding(1);
             ucPdfReprintMarkRenderer.Name = "ucPdfReprintMarkRenderer";
             ucPdfReprintMarkRenderer.Size = new System.Drawing.Size(465, 151);
             ucPdfReprintMarkRenderer.TabIndex = 35;
@@ -655,7 +655,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // ucPdfWaterMarkRenderer
             // 
             ucPdfWaterMarkRenderer.Location = new System.Drawing.Point(573, 21);
-            ucPdfWaterMarkRenderer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucPdfWaterMarkRenderer.Margin = new System.Windows.Forms.Padding(1);
             ucPdfWaterMarkRenderer.Name = "ucPdfWaterMarkRenderer";
             ucPdfWaterMarkRenderer.Size = new System.Drawing.Size(467, 400);
             ucPdfWaterMarkRenderer.TabIndex = 36;
@@ -663,7 +663,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // ucPdfTextRenderer
             // 
             ucPdfTextRenderer.Location = new System.Drawing.Point(573, 21);
-            ucPdfTextRenderer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucPdfTextRenderer.Margin = new System.Windows.Forms.Padding(1);
             ucPdfTextRenderer.Name = "ucPdfTextRenderer";
             ucPdfTextRenderer.Size = new System.Drawing.Size(466, 227);
             ucPdfTextRenderer.TabIndex = 37;
@@ -671,16 +671,16 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             // ucPdfTableRenderer
             // 
             ucPdfTableRenderer.Location = new System.Drawing.Point(572, 21);
-            ucPdfTableRenderer.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            ucPdfTableRenderer.Margin = new System.Windows.Forms.Padding(1);
             ucPdfTableRenderer.Name = "ucPdfTableRenderer";
-            ucPdfTableRenderer.Size = new System.Drawing.Size(467, 528);
+            ucPdfTableRenderer.Size = new System.Drawing.Size(467, 559);
             ucPdfTableRenderer.TabIndex = 38;
             // 
             // frmUpsertPdfRenderer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1047, 605);
+            ClientSize = new System.Drawing.Size(1049, 644);
             Controls.Add(ucPdfTableRenderer);
             Controls.Add(ucPdfTextRenderer);
             Controls.Add(ucPdfWaterMarkRenderer);
@@ -691,6 +691,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
             Controls.Add(ucPdfAnnotationRenderer);
             Controls.Add(btnSave);
             Controls.Add(groupBox1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             Name = "frmUpsertPdfRenderer";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             groupBox1.ResumeLayout(false);

@@ -36,6 +36,12 @@ namespace CosmoService.Code.UserControls.PDF
             _manager.Post(renderer);
         }
 
+        public void ClearError()
+        {
+            epRendererInfo.Clear();
+            ucSqlSelector.ClearError();
+        }
+
         private void ucPdfBarcodeRenderer_Load(object sender, EventArgs e)
         {
             if (AppConfig.Instance.DatabaseManagerType == DatabaseManagerType.EFCore)

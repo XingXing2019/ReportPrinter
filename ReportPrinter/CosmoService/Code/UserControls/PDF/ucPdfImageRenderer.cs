@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using CosmoService.Code.UserControls.SQL;
 using ReportPrinterDatabase.Code.Helper;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfImageRenderer;
@@ -45,6 +46,11 @@ namespace CosmoService.Code.UserControls.PDF
             renderer.ImageSource = tbImageSource.Text.Trim();
 
             _manager.Post(renderer);
+        }
+
+        public void ClearError()
+        {
+            epRendererInfo.Clear();
         }
 
         private void ucPdfImageRenderer_Load(object sender, EventArgs e)

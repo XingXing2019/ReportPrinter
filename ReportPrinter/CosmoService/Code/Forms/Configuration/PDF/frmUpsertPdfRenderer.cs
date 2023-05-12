@@ -30,13 +30,28 @@ namespace CosmoService.Code.Forms.Configuration.PDF
         private void ecbRendererType_SelectedIndexChanged(object sender, EventArgs e)
         {
             ucPdfAnnotationRenderer.Visible = false;
+            ucPdfAnnotationRenderer.ClearError();
+
             ucPdfBarcodeRenderer.Visible = false;
+            ucPdfBarcodeRenderer.ClearError();
+
             ucPdfImageRenderer.Visible = false;
+            ucPdfImageRenderer.ClearError();
+
             ucPdfPageNumberRenderer.Visible = false;
+            ucPdfPageNumberRenderer.ClearError();
+
             ucPdfReprintMarkRenderer.Visible = false;
+            ucPdfReprintMarkRenderer.ClearError();
+
             ucPdfTableRenderer.Visible = false;
+            ucPdfTableRenderer.ClearError();
+
             ucPdfTextRenderer.Visible = false;
+            ucPdfTextRenderer.ClearError();
+
             ucPdfWaterMarkRenderer.Visible = false;
+            ucPdfWaterMarkRenderer.ClearError();
 
             var rendererType = (PdfRendererType)ecbRendererType.SelectedItem;
 

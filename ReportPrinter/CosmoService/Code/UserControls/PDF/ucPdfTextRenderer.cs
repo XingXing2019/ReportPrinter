@@ -69,6 +69,12 @@ namespace CosmoService.Code.UserControls.PDF
             _manager.Post(renderer);
         }
 
+        public void ClearError()
+        {
+            epRendererInfo.Clear();
+            ucSqlSelector.ClearError();
+        }
+
         public ucPdfTextRenderer()
         {
             InitializeComponent();

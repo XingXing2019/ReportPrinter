@@ -68,6 +68,11 @@ namespace CosmoService.Code.UserControls.SQL
             return isValid;
         }
 
+        public void ClearError()
+        {
+            epSqlSelector.Clear();
+        }
+
         #region Helper
 
         private void SetupScreen(bool showSqlRes)

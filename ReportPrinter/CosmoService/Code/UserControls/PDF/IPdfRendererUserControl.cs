@@ -6,5 +6,6 @@ namespace CosmoService.Code.UserControls.PDF
     {
         bool ValidateInput();
         void Save(PdfRendererBaseModel rendererBase);
+        void ClearError();
     }
 }

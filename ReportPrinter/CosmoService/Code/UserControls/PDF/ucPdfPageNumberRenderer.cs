@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using CosmoService.Code.UserControls.SQL;
 using ReportPrinterDatabase.Code.Helper;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfPageNumberRenderer;
@@ -41,6 +42,11 @@ namespace CosmoService.Code.UserControls.PDF
                 _manager = new PdfPageNumberRendererSPManager();
 
             SetupScreen();
+        }
+
+        public void ClearError()
+        {
+            epRendererInfo.Clear();
         }
 
         #region Helper

@@ -63,6 +63,12 @@ namespace CosmoService.Code.UserControls.PDF
             _manager.Post(renderer);
         }
 
+        public void ClearError()
+        {
+            epRendererInfo.Clear();
+            ucSqlSelector.ClearError();
+        }
+
         private void ecbAnnotationRendererType_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             var type = (AnnotationRendererType)ecbAnnotationRendererType.SelectedItem;

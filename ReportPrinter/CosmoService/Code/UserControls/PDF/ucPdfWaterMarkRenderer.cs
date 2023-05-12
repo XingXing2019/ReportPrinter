@@ -70,6 +70,11 @@ namespace CosmoService.Code.UserControls.PDF
             _manager.Post(renderer);
         }
 
+        public void ClearError()
+        {
+            epRendererInfo.Clear();
+            ucSqlSelector.ClearError();
+        }
 
         private void ecbWaterMarkType_SelectedIndexChanged(object sender, EventArgs e)
         {

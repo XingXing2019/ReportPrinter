@@ -6,6 +6,7 @@ using ReportPrinterLibrary.Code.Enum;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager;
 using ReportPrinterDatabase.Code.Manager.ConfigManager.PdfRendererManager.PdfReprintMarkRenderer;
 using ReportPrinterDatabase.Code.Helper;
+using CosmoService.Code.UserControls.SQL;
 
 namespace CosmoService.Code.UserControls.PDF
 {
@@ -47,6 +48,11 @@ namespace CosmoService.Code.UserControls.PDF
             renderer.Location = (Location)ecbReprintMarkLocation.SelectedItem;
 
             _manager.Post(renderer);
+        }
+
+        public void ClearError()
+        {
+            epRendererInfo.Clear();
         }
 
         private void ucPdfReprintMarkRenderer_Load(object sender, EventArgs e)

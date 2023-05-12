@@ -35,9 +35,8 @@ namespace CosmoService.Code.UserControls.PDF
             }
             else
             {
-                if (ucSqlSelector.GetSelectedSql() == Guid.Empty)
+                if (!ucSqlSelector.ValidateInput())
                 {
-                    epRendererInfo.SetError(ucSqlSelector, "Sql is required");
                     isValid = false;
                 }
             }
@@ -54,7 +53,10 @@ namespace CosmoService.Code.UserControls.PDF
             renderer.Icon = (PdfTextAnnotationIcon)ecbIcon.SelectedItem;
 
             if (renderer.AnnotationRendererType == AnnotationRendererType.Sql)
-                renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
+            {
+                renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.SelectedSql;
+                renderer.SqlResColumn = ucSqlSelector.SqlResult;
+            }
             else
                 renderer.Content = tbContent.Text.Trim();
 
@@ -91,7 +93,7 @@ namespace CosmoService.Code.UserControls.PDF
                 _manager = new PdfAnnotationRendererSPManager();
 
             SetupScreen();
-            ucSqlSelector.Init();
+            ucSqlSelector.Init(true);
         }
 
 

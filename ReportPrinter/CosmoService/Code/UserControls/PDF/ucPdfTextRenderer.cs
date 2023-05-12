@@ -28,9 +28,8 @@ namespace CosmoService.Code.UserControls.PDF
 
             if (type == TextRendererType.Sql)
             {
-                if (ucSqlSelector.GetSelectedSql() == Guid.Empty)
+                if (!ucSqlSelector.ValidateInput())
                 {
-                    epRendererInfo.SetError(ucSqlSelector, "Sql is required");
                     isValid = false;
                 }
             }
@@ -53,13 +52,14 @@ namespace CosmoService.Code.UserControls.PDF
 
             if (renderer.TextRendererType == TextRendererType.Sql)
             {
-                renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
-                renderer.Title = tbTitle.Text.Trim();
+                renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.SelectedSql;
+                renderer.SqlResColumn = ucSqlSelector.SqlResult;
+                renderer.Title = string.IsNullOrEmpty(tbTitle.Text.Trim()) ? null : tbTitle.Text.Trim();
             }
             else if (renderer.TextRendererType == TextRendererType.Timestamp)
             {
-                renderer.Title = tbTitle.Text.Trim();
-                renderer.Mask = tbMask.Text.Trim();
+                renderer.Title = string.IsNullOrEmpty(tbTitle.Text.Trim()) ? null : tbTitle.Text.Trim();
+                renderer.Mask = string.IsNullOrEmpty(tbMask.Text.Trim()) ? null : tbMask.Text.Trim();
             }
             else if (renderer.TextRendererType == TextRendererType.Text)
             {
@@ -82,7 +82,7 @@ namespace CosmoService.Code.UserControls.PDF
                 _manager = new PdfTextRendererSPManager();
 
             SetupScreen();
-            ucSqlSelector.Init();
+            ucSqlSelector.Init(true);
         }
 
 

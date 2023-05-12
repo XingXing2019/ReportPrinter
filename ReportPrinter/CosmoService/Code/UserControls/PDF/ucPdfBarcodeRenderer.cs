@@ -21,15 +21,7 @@ namespace CosmoService.Code.UserControls.PDF
         public bool ValidateInput()
         {
             epRendererInfo.Clear();
-            var isValid = true;
-
-            if (ucSqlSelector.GetSelectedSql() == Guid.Empty)
-            {
-                epRendererInfo.SetError(ucSqlSelector, "Sql is required");
-                isValid = false;
-            }
-
-            return isValid;
+            return ucSqlSelector.ValidateInput();
         }
 
         public void Save(PdfRendererBaseModel rendererBase)
@@ -38,7 +30,8 @@ namespace CosmoService.Code.UserControls.PDF
 
             renderer.BarcodeFormat = (BarcodeFormat)ecbBarcodeFormat.SelectedItem;
             renderer.ShowBarcodeText = cbShowBarcodeText.Checked;
-            renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
+            renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.SelectedSql;
+            renderer.SqlResColumn = ucSqlSelector.SqlResult;
 
             _manager.Post(renderer);
         }
@@ -51,7 +44,7 @@ namespace CosmoService.Code.UserControls.PDF
                 _manager = new PdfBarcodeRendererSPManager();
 
             SetupScreen();
-            ucSqlSelector.Init();
+            ucSqlSelector.Init(true);
         }
 
         #region Helper

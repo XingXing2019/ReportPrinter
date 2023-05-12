@@ -12,10 +12,25 @@ namespace CosmoService.Code.UserControls.SQL
 {
     public partial class ucSqlSelector : UserControl
     {
+        private bool _showSqlRes;
+
+        public Guid SelectedSql
+        {
+            get
+            {
+                if (cbSql.SelectedItem == null)
+                    return Guid.Empty;
+                var sql = (SqlConfig)cbSql.SelectedItem;
+                var sqlTemplateId = ((SqlTemplateConfigModel)cbSqlTemplate.SelectedItem).SqlTemplateConfigId;
+                return sql.SqlTemplateConfigSqlConfigs.Single(x => x.SqlTemplateConfigId == sqlTemplateId).SqlTemplateConfigSqlConfigId;
+            }
+        }
+
+        public string SqlResult => tbSqlRes.Text.Trim();
+
         public ucSqlSelector()
         {
             InitializeComponent();
-            
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -27,24 +42,38 @@ namespace CosmoService.Code.UserControls.SQL
             sqls.ForEach(x => cbSql.Items.Add(x));
         }
 
-        public void Init()
+        public void Init(bool showSqlRes)
         {
-            SetupScreen();
+            _showSqlRes = showSqlRes;
+            SetupScreen(showSqlRes);
         }
 
-        public Guid GetSelectedSql()
+        public bool ValidateInput()
         {
-            if (cbSql.SelectedItem == null) 
-                return Guid.Empty;
-            var sql = (SqlConfig)cbSql.SelectedItem;
-            var sqlTemplateId = ((SqlTemplateConfigModel)cbSqlTemplate.SelectedItem).SqlTemplateConfigId;
-            return sql.SqlTemplateConfigSqlConfigs.Single(x => x.SqlTemplateConfigId == sqlTemplateId).SqlTemplateConfigSqlConfigId;
+            epSqlSelector.Clear();
+            var isValid = true;
+
+            if (_showSqlRes && string.IsNullOrEmpty(tbSqlRes.Text.Trim()))
+            {
+                epSqlSelector.SetError(tbSqlRes, "Sql result is required");
+                isValid = false;
+            }
+
+            if (SelectedSql == Guid.Empty)
+            {
+                epSqlSelector.SetError(cbSql, "Sql is required");
+                isValid = false;
+            }
+
+            return isValid;
         }
 
         #region Helper
 
-        private void SetupScreen()
+        private void SetupScreen(bool showSqlRes)
         {
+            lblSqlRes.Visible = tbSqlRes.Visible = showSqlRes;
+
             var sqlTemplateConfigManager = (ISqlTemplateConfigManager)ManagerFactory.CreateManager<SqlTemplateConfigModel>(typeof(ISqlTemplateConfigManager), AppConfig.Instance.DatabaseManagerType);
             var sqlTemplates = Task.Run(sqlTemplateConfigManager.GetAll).Result;
 

@@ -127,7 +127,7 @@ namespace CosmoService.Code.Forms.Configuration.PDF
                 }
                 else
                 {
-                    rendererBase.Margin = tbMargin.Text.Trim();
+                    rendererBase.Margin = string.Join(' ', tbMargin.Text.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries));
                 }
             }
 
@@ -140,26 +140,26 @@ namespace CosmoService.Code.Forms.Configuration.PDF
                 }
                 else
                 {
-                    rendererBase.Padding = tbPadding.Text.Trim();
+                    rendererBase.Padding = string.Join(' ', tbPadding.Text.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries));
                 }
             }
 
             if (rbLeft.Checked)
             {
-                rendererBase.Left = double.Parse(nudLeftRight.Text);
+                rendererBase.Left = nudLeftRight.Value == 0 ? null : (double?)double.Parse(nudLeftRight.Text);
             }
             else if (rbRight.Checked)
             {
-                rendererBase.Right = double.Parse(nudLeftRight.Text);
+                rendererBase.Right = nudLeftRight.Value == 0 ? null : (double?)double.Parse(nudLeftRight.Text);
             }
 
             if (rbTop.Checked)
             {
-                rendererBase.Top = double.Parse(nudTopBottom.Text);
+                rendererBase.Top = nudTopBottom.Value == 0 ? null : (double?)double.Parse(nudTopBottom.Text);
             }
             else if (rbBottom.Checked)
             {
-                rendererBase.Bottom = double.Parse(nudTopBottom.Text);
+                rendererBase.Bottom = nudTopBottom.Value == 0 ? null : (double?)double.Parse(nudTopBottom.Text);
             }
 
             if (nudFontSize.Value == 0)

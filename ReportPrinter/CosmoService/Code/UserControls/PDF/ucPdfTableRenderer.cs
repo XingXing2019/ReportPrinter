@@ -62,9 +62,8 @@ namespace CosmoService.Code.UserControls.PDF
                 isValid = false;
             }
 
-            if (ucSqlSelector.GetSelectedSql() == Guid.Empty)
+            if (!ucSqlSelector.ValidateInput())
             {
-                epRendererInfo.SetError(ucSqlSelector, "SQL is required");
                 isValid = false;
             }
 
@@ -94,7 +93,7 @@ namespace CosmoService.Code.UserControls.PDF
             }
 
             renderer.TitleColorOpacity = double.Parse(nudTitleOpacity.Text);
-            renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.GetSelectedSql();
+            renderer.SqlTemplateConfigSqlConfigId = ucSqlSelector.SelectedSql;
 
             if (cbSubTable.SelectedItem != null)
             {
@@ -127,7 +126,7 @@ namespace CosmoService.Code.UserControls.PDF
                 _manager = new PdfTableRendererSPManager();
 
             SetupScreen();
-            ucSqlSelector.Init();
+            ucSqlSelector.Init(false);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

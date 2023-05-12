@@ -22,16 +22,12 @@ namespace CosmoService.Code.UserControls.PDF
 
         public bool ValidateInput()
         {
+            epRendererInfo.Clear();
             var isValid = true;
 
             if (string.IsNullOrEmpty(tbImageSource.Text.Trim()))
             {
                 epRendererInfo.SetError(tbImageSource, "Image source is required");
-                isValid = false;
-            }
-            else if ((SourceType)ecbSourceType.SelectedItem == SourceType.Local && !File.Exists(tbImageSource.Text.Trim()))
-            {
-                epRendererInfo.SetError(tbImageSource, "Image source does not exist");
                 isValid = false;
             }
 

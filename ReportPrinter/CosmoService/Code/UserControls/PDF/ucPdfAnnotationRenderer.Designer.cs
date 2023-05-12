@@ -57,49 +57,44 @@ namespace CosmoService.Code.UserControls.PDF
             gbRendererInfo.Controls.Add(label1);
             gbRendererInfo.Controls.Add(label2);
             gbRendererInfo.Controls.Add(ecbAnnotationRendererType);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 634);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 461);
             gbRendererInfo.TabIndex = 3;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
             // 
             // ucSqlSelector
             // 
-            ucSqlSelector.Location = new System.Drawing.Point(9, 200);
-            ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
+            ucSqlSelector.Location = new System.Drawing.Point(6, 133);
+            ucSqlSelector.Margin = new System.Windows.Forms.Padding(4);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(646, 118);
+            ucSqlSelector.Size = new System.Drawing.Size(449, 106);
             ucSqlSelector.TabIndex = 12;
             // 
             // tbContent
             // 
-            tbContent.Location = new System.Drawing.Point(232, 324);
-            tbContent.Margin = new System.Windows.Forms.Padding(4);
+            tbContent.Location = new System.Drawing.Point(155, 246);
             tbContent.Multiline = true;
             tbContent.Name = "tbContent";
-            tbContent.Size = new System.Drawing.Size(416, 288);
+            tbContent.Size = new System.Drawing.Size(279, 193);
             tbContent.TabIndex = 11;
             // 
             // lblContent
             // 
             lblContent.AutoSize = true;
-            lblContent.Location = new System.Drawing.Point(24, 328);
-            lblContent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblContent.Location = new System.Drawing.Point(16, 249);
             lblContent.Name = "lblContent";
-            lblContent.Size = new System.Drawing.Size(92, 30);
+            lblContent.Size = new System.Drawing.Size(64, 20);
             lblContent.TabIndex = 10;
             lblContent.Text = "Content:";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(24, 153);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Location = new System.Drawing.Point(16, 102);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(58, 30);
+            label3.Size = new System.Drawing.Size(40, 20);
             label3.TabIndex = 8;
             label3.Text = "Icon:";
             // 
@@ -107,37 +102,33 @@ namespace CosmoService.Code.UserControls.PDF
             // 
             ecbIcon.EnumType = null;
             ecbIcon.FormattingEnabled = true;
-            ecbIcon.Location = new System.Drawing.Point(232, 148);
-            ecbIcon.Margin = new System.Windows.Forms.Padding(4);
+            ecbIcon.Location = new System.Drawing.Point(155, 99);
             ecbIcon.Name = "ecbIcon";
-            ecbIcon.Size = new System.Drawing.Size(416, 38);
+            ecbIcon.Size = new System.Drawing.Size(279, 28);
             ecbIcon.TabIndex = 9;
             // 
             // tbTitle
             // 
-            tbTitle.Location = new System.Drawing.Point(232, 99);
-            tbTitle.Margin = new System.Windows.Forms.Padding(4);
+            tbTitle.Location = new System.Drawing.Point(155, 66);
             tbTitle.Name = "tbTitle";
-            tbTitle.Size = new System.Drawing.Size(416, 35);
+            tbTitle.Size = new System.Drawing.Size(279, 27);
             tbTitle.TabIndex = 7;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(24, 104);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(16, 69);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(57, 30);
+            label1.Size = new System.Drawing.Size(41, 20);
             label1.TabIndex = 6;
             label1.Text = "Title:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(24, 52);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(16, 35);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(61, 30);
+            label2.Size = new System.Drawing.Size(43, 20);
             label2.TabIndex = 4;
             label2.Text = "Type:";
             // 
@@ -145,10 +136,9 @@ namespace CosmoService.Code.UserControls.PDF
             // 
             ecbAnnotationRendererType.EnumType = null;
             ecbAnnotationRendererType.FormattingEnabled = true;
-            ecbAnnotationRendererType.Location = new System.Drawing.Point(232, 48);
-            ecbAnnotationRendererType.Margin = new System.Windows.Forms.Padding(4);
+            ecbAnnotationRendererType.Location = new System.Drawing.Point(155, 32);
             ecbAnnotationRendererType.Name = "ecbAnnotationRendererType";
-            ecbAnnotationRendererType.Size = new System.Drawing.Size(416, 38);
+            ecbAnnotationRendererType.Size = new System.Drawing.Size(279, 28);
             ecbAnnotationRendererType.TabIndex = 5;
             ecbAnnotationRendererType.SelectedIndexChanged += ecbAnnotationRendererType_SelectedIndexChanged;
             // 
@@ -158,12 +148,11 @@ namespace CosmoService.Code.UserControls.PDF
             // 
             // ucPdfAnnotationRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
-            Margin = new System.Windows.Forms.Padding(4);
             Name = "ucPdfAnnotationRenderer";
-            Size = new System.Drawing.Size(697, 645);
+            Size = new System.Drawing.Size(465, 468);
             Load += ucPdfAnnotationRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

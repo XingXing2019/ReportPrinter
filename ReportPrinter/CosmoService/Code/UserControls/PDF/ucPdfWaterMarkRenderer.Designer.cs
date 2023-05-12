@@ -66,11 +66,9 @@
             gbRendererInfo.Controls.Add(nudStartPage);
             gbRendererInfo.Controls.Add(label1);
             gbRendererInfo.Controls.Add(label2);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 706);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 501);
             gbRendererInfo.TabIndex = 6;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
@@ -79,47 +77,43 @@
             // 
             nudRotate.DecimalPlaces = 1;
             nudRotate.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudRotate.Location = new System.Drawing.Point(235, 183);
-            nudRotate.Margin = new System.Windows.Forms.Padding(4);
+            nudRotate.Location = new System.Drawing.Point(157, 122);
             nudRotate.Maximum = new decimal(new int[] { 360, 0, 0, 0 });
             nudRotate.Name = "nudRotate";
-            nudRotate.Size = new System.Drawing.Size(166, 35);
+            nudRotate.Size = new System.Drawing.Size(111, 27);
             nudRotate.TabIndex = 42;
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(27, 185);
-            label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label12.Location = new System.Drawing.Point(18, 123);
             label12.Name = "label12";
-            label12.Size = new System.Drawing.Size(78, 30);
+            label12.Size = new System.Drawing.Size(56, 20);
             label12.TabIndex = 43;
             label12.Text = "Rotate:";
             // 
             // ucSqlSelector
             // 
-            ucSqlSelector.Location = new System.Drawing.Point(12, 269);
-            ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
+            ucSqlSelector.Location = new System.Drawing.Point(8, 179);
+            ucSqlSelector.Margin = new System.Windows.Forms.Padding(4);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(646, 118);
+            ucSqlSelector.Size = new System.Drawing.Size(447, 108);
             ucSqlSelector.TabIndex = 41;
             // 
             // tbContent
             // 
-            tbContent.Location = new System.Drawing.Point(235, 393);
-            tbContent.Margin = new System.Windows.Forms.Padding(4);
+            tbContent.Location = new System.Drawing.Point(157, 291);
             tbContent.Multiline = true;
             tbContent.Name = "tbContent";
-            tbContent.Size = new System.Drawing.Size(416, 288);
+            tbContent.Size = new System.Drawing.Size(279, 193);
             tbContent.TabIndex = 40;
             // 
             // lblContent
             // 
             lblContent.AutoSize = true;
-            lblContent.Location = new System.Drawing.Point(27, 402);
-            lblContent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblContent.Location = new System.Drawing.Point(21, 297);
             lblContent.Name = "lblContent";
-            lblContent.Size = new System.Drawing.Size(92, 30);
+            lblContent.Size = new System.Drawing.Size(64, 20);
             lblContent.TabIndex = 39;
             lblContent.Text = "Content:";
             // 
@@ -127,20 +121,18 @@
             // 
             ecbWaterMarkType.EnumType = null;
             ecbWaterMarkType.FormattingEnabled = true;
-            ecbWaterMarkType.Location = new System.Drawing.Point(235, 51);
-            ecbWaterMarkType.Margin = new System.Windows.Forms.Padding(4);
+            ecbWaterMarkType.Location = new System.Drawing.Point(157, 34);
             ecbWaterMarkType.Name = "ecbWaterMarkType";
-            ecbWaterMarkType.Size = new System.Drawing.Size(416, 38);
+            ecbWaterMarkType.Size = new System.Drawing.Size(279, 28);
             ecbWaterMarkType.TabIndex = 38;
             ecbWaterMarkType.SelectedIndexChanged += ecbWaterMarkType_SelectedIndexChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(27, 52);
-            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Location = new System.Drawing.Point(18, 35);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(175, 30);
+            label4.Size = new System.Drawing.Size(123, 20);
             label4.TabIndex = 37;
             label4.Text = "Water Mark Type:";
             // 
@@ -148,58 +140,52 @@
             // 
             ecbWaterMarkLocation.EnumType = null;
             ecbWaterMarkLocation.FormattingEnabled = true;
-            ecbWaterMarkLocation.Location = new System.Drawing.Point(235, 226);
-            ecbWaterMarkLocation.Margin = new System.Windows.Forms.Padding(4);
+            ecbWaterMarkLocation.Location = new System.Drawing.Point(157, 151);
             ecbWaterMarkLocation.Name = "ecbWaterMarkLocation";
-            ecbWaterMarkLocation.Size = new System.Drawing.Size(416, 38);
+            ecbWaterMarkLocation.Size = new System.Drawing.Size(279, 28);
             ecbWaterMarkLocation.TabIndex = 36;
             // 
             // nudEndPage
             // 
-            nudEndPage.Location = new System.Drawing.Point(235, 140);
-            nudEndPage.Margin = new System.Windows.Forms.Padding(4);
+            nudEndPage.Location = new System.Drawing.Point(157, 93);
             nudEndPage.Maximum = new decimal(new int[] { 1, 0, 0, int.MinValue });
             nudEndPage.Minimum = new decimal(new int[] { 100, 0, 0, int.MinValue });
             nudEndPage.Name = "nudEndPage";
-            nudEndPage.Size = new System.Drawing.Size(166, 35);
+            nudEndPage.Size = new System.Drawing.Size(111, 27);
             nudEndPage.TabIndex = 35;
             nudEndPage.Value = new decimal(new int[] { 1, 0, 0, int.MinValue });
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(27, 142);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Location = new System.Drawing.Point(18, 95);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(104, 30);
+            label3.Size = new System.Drawing.Size(73, 20);
             label3.TabIndex = 34;
             label3.Text = "End Page:";
             // 
             // nudStartPage
             // 
-            nudStartPage.Location = new System.Drawing.Point(235, 97);
-            nudStartPage.Margin = new System.Windows.Forms.Padding(4);
+            nudStartPage.Location = new System.Drawing.Point(157, 65);
             nudStartPage.Name = "nudStartPage";
-            nudStartPage.Size = new System.Drawing.Size(166, 35);
+            nudStartPage.Size = new System.Drawing.Size(111, 27);
             nudStartPage.TabIndex = 33;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(27, 229);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(18, 153);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(97, 30);
+            label1.Size = new System.Drawing.Size(69, 20);
             label1.TabIndex = 14;
             label1.Text = "Loaction:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(27, 99);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(18, 66);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(111, 30);
+            label2.Size = new System.Drawing.Size(79, 20);
             label2.TabIndex = 4;
             label2.Text = "Start Page:";
             // 
@@ -209,11 +195,12 @@
             // 
             // ucPdfWaterMarkRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
+            Margin = new System.Windows.Forms.Padding(2);
             Name = "ucPdfWaterMarkRenderer";
-            Size = new System.Drawing.Size(698, 722);
+            Size = new System.Drawing.Size(465, 512);
             Load += ucPdfWaterMarkRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

@@ -57,7 +57,7 @@
             gbRendererInfo.Controls.Add(label4);
             gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Size = new System.Drawing.Size(457, 363);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 397);
             gbRendererInfo.TabIndex = 7;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
@@ -96,15 +96,15 @@
             // 
             // ucSqlSelector
             // 
-            ucSqlSelector.Location = new System.Drawing.Point(7, 120);
+            ucSqlSelector.Location = new System.Drawing.Point(6, 120);
             ucSqlSelector.Margin = new System.Windows.Forms.Padding(4);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(429, 74);
+            ucSqlSelector.Size = new System.Drawing.Size(449, 107);
             ucSqlSelector.TabIndex = 41;
             // 
             // tbContent
             // 
-            tbContent.Location = new System.Drawing.Point(154, 205);
+            tbContent.Location = new System.Drawing.Point(153, 234);
             tbContent.Multiline = true;
             tbContent.Name = "tbContent";
             tbContent.Size = new System.Drawing.Size(282, 143);
@@ -113,7 +113,7 @@
             // lblContent
             // 
             lblContent.AutoSize = true;
-            lblContent.Location = new System.Drawing.Point(19, 211);
+            lblContent.Location = new System.Drawing.Point(18, 240);
             lblContent.Name = "lblContent";
             lblContent.Size = new System.Drawing.Size(64, 20);
             lblContent.TabIndex = 39;
@@ -149,7 +149,7 @@
             Controls.Add(gbRendererInfo);
             Margin = new System.Windows.Forms.Padding(2);
             Name = "ucPdfTextRenderer";
-            Size = new System.Drawing.Size(464, 368);
+            Size = new System.Drawing.Size(464, 404);
             Load += ucPdfTextRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

@@ -70,8 +70,8 @@ namespace CosmoService.Code.UserControls.PDF
             {
                 ucSqlSelector.Visible = true;
                 lblContent.Visible = tbContent.Visible = false;
-                gbRendererInfo.Height = 325;
-                Height = 330;
+                gbRendererInfo.Height = 255;
+                Height = 260;
             }
             else
             {

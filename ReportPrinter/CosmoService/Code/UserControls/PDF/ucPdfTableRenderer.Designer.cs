@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             gbRendererInfo = new System.Windows.Forms.GroupBox();
             btnDelete = new System.Windows.Forms.Button();
             btnAdd = new System.Windows.Forms.Button();
@@ -91,21 +91,18 @@
             gbRendererInfo.Controls.Add(ucSqlSelector);
             gbRendererInfo.Controls.Add(label2);
             gbRendererInfo.Controls.Add(ecbTitleHAlignment);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 778);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 519);
             gbRendererInfo.TabIndex = 5;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
             // 
             // btnDelete
             // 
-            btnDelete.Location = new System.Drawing.Point(531, 378);
-            btnDelete.Margin = new System.Windows.Forms.Padding(4);
+            btnDelete.Location = new System.Drawing.Point(354, 252);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new System.Drawing.Size(124, 40);
+            btnDelete.Size = new System.Drawing.Size(83, 27);
             btnDelete.TabIndex = 46;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -113,10 +110,9 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new System.Drawing.Point(397, 378);
-            btnAdd.Margin = new System.Windows.Forms.Padding(4);
+            btnAdd.Location = new System.Drawing.Point(265, 252);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new System.Drawing.Size(124, 40);
+            btnAdd.Size = new System.Drawing.Size(83, 27);
             btnAdd.TabIndex = 45;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
@@ -125,10 +121,9 @@
             // lblSqlresColumns
             // 
             lblSqlresColumns.AutoSize = true;
-            lblSqlresColumns.Location = new System.Drawing.Point(27, 378);
-            lblSqlresColumns.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblSqlresColumns.Location = new System.Drawing.Point(18, 252);
             lblSqlresColumns.Name = "lblSqlresColumns";
-            lblSqlresColumns.Size = new System.Drawing.Size(204, 30);
+            lblSqlresColumns.Size = new System.Drawing.Size(143, 20);
             lblSqlresColumns.TabIndex = 44;
             lblSqlresColumns.Text = "SQL Result Columns:";
             // 
@@ -141,12 +136,13 @@
             dgvSqlResultColumns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvSqlResultColumns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { isSelectedDataGridViewCheckBoxColumn, idDataGridViewTextBoxColumn, titleDataGridViewTextBoxColumn });
             dgvSqlResultColumns.DataSource = sqlResColumnDataBindingSource;
-            dgvSqlResultColumns.Location = new System.Drawing.Point(29, 428);
+            dgvSqlResultColumns.Location = new System.Drawing.Point(19, 285);
+            dgvSqlResultColumns.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             dgvSqlResultColumns.Name = "dgvSqlResultColumns";
             dgvSqlResultColumns.RowHeadersVisible = false;
             dgvSqlResultColumns.RowHeadersWidth = 72;
             dgvSqlResultColumns.RowTemplate.Height = 37;
-            dgvSqlResultColumns.Size = new System.Drawing.Size(624, 332);
+            dgvSqlResultColumns.Size = new System.Drawing.Size(416, 221);
             dgvSqlResultColumns.TabIndex = 43;
             // 
             // isSelectedDataGridViewCheckBoxColumn
@@ -160,8 +156,8 @@
             // idDataGridViewTextBoxColumn
             // 
             idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            idDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             idDataGridViewTextBoxColumn.HeaderText = "Id";
             idDataGridViewTextBoxColumn.MinimumWidth = 9;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
@@ -171,8 +167,8 @@
             // 
             titleDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
-            titleDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 2, 10, 2);
+            titleDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             titleDataGridViewTextBoxColumn.HeaderText = "Title";
             titleDataGridViewTextBoxColumn.MinimumWidth = 9;
             titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
@@ -184,59 +180,53 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(29, 329);
-            label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label6.Location = new System.Drawing.Point(19, 219);
             label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(107, 30);
+            label6.Size = new System.Drawing.Size(76, 20);
             label6.TabIndex = 42;
             label6.Text = "Sub Table:";
             // 
             // cbSubTable
             // 
             cbSubTable.FormattingEnabled = true;
-            cbSubTable.Location = new System.Drawing.Point(233, 324);
-            cbSubTable.Margin = new System.Windows.Forms.Padding(4);
+            cbSubTable.Location = new System.Drawing.Point(155, 216);
             cbSubTable.Name = "cbSubTable";
-            cbSubTable.Size = new System.Drawing.Size(420, 38);
+            cbSubTable.Size = new System.Drawing.Size(281, 28);
             cbSubTable.TabIndex = 41;
             // 
             // nudTitleOpacity
             // 
             nudTitleOpacity.DecimalPlaces = 1;
             nudTitleOpacity.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudTitleOpacity.Location = new System.Drawing.Point(519, 175);
-            nudTitleOpacity.Margin = new System.Windows.Forms.Padding(4);
+            nudTitleOpacity.Location = new System.Drawing.Point(346, 117);
             nudTitleOpacity.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
             nudTitleOpacity.Name = "nudTitleOpacity";
-            nudTitleOpacity.Size = new System.Drawing.Size(134, 35);
+            nudTitleOpacity.Size = new System.Drawing.Size(89, 27);
             nudTitleOpacity.TabIndex = 39;
             nudTitleOpacity.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(387, 175);
-            label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label5.Location = new System.Drawing.Point(258, 117);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(134, 30);
+            label5.Size = new System.Drawing.Size(96, 20);
             label5.TabIndex = 40;
             label5.Text = "Title Opacity:";
             // 
             // tbTitleColor
             // 
-            tbTitleColor.Location = new System.Drawing.Point(233, 175);
-            tbTitleColor.Margin = new System.Windows.Forms.Padding(4);
+            tbTitleColor.Location = new System.Drawing.Point(155, 117);
             tbTitleColor.Name = "tbTitleColor";
-            tbTitleColor.Size = new System.Drawing.Size(134, 35);
+            tbTitleColor.Size = new System.Drawing.Size(91, 27);
             tbTitleColor.TabIndex = 38;
             // 
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new System.Drawing.Point(27, 180);
-            label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label15.Location = new System.Drawing.Point(18, 120);
             label15.Name = "label15";
-            label15.Size = new System.Drawing.Size(112, 30);
+            label15.Size = new System.Drawing.Size(81, 20);
             label15.TabIndex = 37;
             label15.Text = "Title Color:";
             // 
@@ -244,39 +234,37 @@
             // 
             nudSpace.DecimalPlaces = 1;
             nudSpace.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudSpace.Location = new System.Drawing.Point(233, 86);
-            nudSpace.Margin = new System.Windows.Forms.Padding(4);
+            nudSpace.Location = new System.Drawing.Point(155, 57);
             nudSpace.Name = "nudSpace";
-            nudSpace.Size = new System.Drawing.Size(134, 35);
+            nudSpace.Size = new System.Drawing.Size(89, 27);
             nudSpace.TabIndex = 35;
             nudSpace.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(27, 88);
-            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Location = new System.Drawing.Point(18, 59);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(73, 30);
+            label4.Size = new System.Drawing.Size(52, 20);
             label4.TabIndex = 36;
             label4.Text = "Space:";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(387, 88);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Location = new System.Drawing.Point(258, 59);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(106, 30);
+            label3.Size = new System.Drawing.Size(77, 20);
             label3.TabIndex = 34;
             label3.Text = "Hide Title:";
             // 
             // cbHideTitle
             // 
             cbHideTitle.AutoSize = true;
-            cbHideTitle.Location = new System.Drawing.Point(631, 94);
+            cbHideTitle.Location = new System.Drawing.Point(421, 63);
+            cbHideTitle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             cbHideTitle.Name = "cbHideTitle";
-            cbHideTitle.Size = new System.Drawing.Size(22, 21);
+            cbHideTitle.Size = new System.Drawing.Size(18, 17);
             cbHideTitle.TabIndex = 33;
             cbHideTitle.UseVisualStyleBackColor = true;
             // 
@@ -284,20 +272,18 @@
             // 
             nudLineSpace.DecimalPlaces = 1;
             nudLineSpace.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudLineSpace.Location = new System.Drawing.Point(519, 47);
-            nudLineSpace.Margin = new System.Windows.Forms.Padding(4);
+            nudLineSpace.Location = new System.Drawing.Point(346, 31);
             nudLineSpace.Name = "nudLineSpace";
-            nudLineSpace.Size = new System.Drawing.Size(134, 35);
+            nudLineSpace.Size = new System.Drawing.Size(89, 27);
             nudLineSpace.TabIndex = 31;
             nudLineSpace.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(387, 47);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(258, 31);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(117, 30);
+            label1.Size = new System.Drawing.Size(83, 20);
             label1.TabIndex = 32;
             label1.Text = "Line Space:";
             // 
@@ -305,38 +291,35 @@
             // 
             nudBoardThickness.DecimalPlaces = 1;
             nudBoardThickness.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudBoardThickness.Location = new System.Drawing.Point(233, 43);
-            nudBoardThickness.Margin = new System.Windows.Forms.Padding(4);
+            nudBoardThickness.Location = new System.Drawing.Point(155, 29);
             nudBoardThickness.Name = "nudBoardThickness";
-            nudBoardThickness.Size = new System.Drawing.Size(134, 35);
+            nudBoardThickness.Size = new System.Drawing.Size(89, 27);
             nudBoardThickness.TabIndex = 29;
             nudBoardThickness.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(27, 45);
-            label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label12.Location = new System.Drawing.Point(18, 30);
             label12.Name = "label12";
-            label12.Size = new System.Drawing.Size(167, 30);
+            label12.Size = new System.Drawing.Size(118, 20);
             label12.TabIndex = 30;
             label12.Text = "Board Thickness:";
             // 
             // ucSqlSelector
             // 
-            ucSqlSelector.Location = new System.Drawing.Point(10, 211);
-            ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
+            ucSqlSelector.Location = new System.Drawing.Point(7, 141);
+            ucSqlSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(648, 118);
+            ucSqlSelector.Size = new System.Drawing.Size(449, 79);
             ucSqlSelector.TabIndex = 12;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(27, 132);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(18, 88);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(159, 30);
+            label2.Size = new System.Drawing.Size(114, 20);
             label2.TabIndex = 4;
             label2.Text = "Title Alignment:";
             // 
@@ -344,10 +327,9 @@
             // 
             ecbTitleHAlignment.EnumType = null;
             ecbTitleHAlignment.FormattingEnabled = true;
-            ecbTitleHAlignment.Location = new System.Drawing.Point(233, 129);
-            ecbTitleHAlignment.Margin = new System.Windows.Forms.Padding(4);
+            ecbTitleHAlignment.Location = new System.Drawing.Point(155, 86);
             ecbTitleHAlignment.Name = "ecbTitleHAlignment";
-            ecbTitleHAlignment.Size = new System.Drawing.Size(420, 38);
+            ecbTitleHAlignment.Size = new System.Drawing.Size(281, 28);
             ecbTitleHAlignment.TabIndex = 5;
             // 
             // epRendererInfo
@@ -356,11 +338,12 @@
             // 
             // ucPdfTableRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
+            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             Name = "ucPdfTableRenderer";
-            Size = new System.Drawing.Size(698, 791);
+            Size = new System.Drawing.Size(465, 527);
             Load += ucPdfTableRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

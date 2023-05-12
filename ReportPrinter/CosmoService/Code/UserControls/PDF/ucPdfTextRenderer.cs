@@ -96,9 +96,9 @@ namespace CosmoService.Code.UserControls.PDF
                 lblContent.Visible = tbContent.Visible = false;
                 lblMask.Visible = tbMask.Visible = false;
 
-                ucSqlSelector.Location = new Point(10, 130);
-                gbRendererInfo.Height = 260;
-                Height = 265;
+                ucSqlSelector.Location = new Point(5, 95);
+                gbRendererInfo.Height = 215;
+                Height = 220;
             }
             else if (type == TextRendererType.Text)
             {
@@ -117,8 +117,8 @@ namespace CosmoService.Code.UserControls.PDF
                 lblTitle.Visible = tbTitle.Visible = true;
                 lblMask.Visible = tbMask.Visible = true;
 
-                gbRendererInfo.Height = 195;
-                Height = 200;
+                gbRendererInfo.Height = 135;
+                Height = 140;
             }
         }
 

@@ -106,10 +106,10 @@ namespace CosmoService.Code.UserControls.PDF
                 lblContent.Visible = tbContent.Visible = true;
                 lblMask.Visible = tbMask.Visible = false;
 
-                tbContent.Location = new Point(232, 100);
-                lblContent.Location = new Point(24, 100);
-                gbRendererInfo.Height = 335;
-                Height = 340;
+                tbContent.Location = new Point(154, 75);
+                lblContent.Location = new Point(18, 75);
+                gbRendererInfo.Height = 235;
+                Height = 240;
             }
             else if (type == TextRendererType.Timestamp)
             {

@@ -55,11 +55,9 @@
             gbRendererInfo.Controls.Add(nudStartPage);
             gbRendererInfo.Controls.Add(label1);
             gbRendererInfo.Controls.Add(label2);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 196);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 131);
             gbRendererInfo.TabIndex = 5;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
@@ -68,68 +66,63 @@
             // 
             ecbPageNumberLocation.EnumType = null;
             ecbPageNumberLocation.FormattingEnabled = true;
-            ecbPageNumberLocation.Location = new System.Drawing.Point(281, 138);
-            ecbPageNumberLocation.Margin = new System.Windows.Forms.Padding(4);
+            ecbPageNumberLocation.Location = new System.Drawing.Point(187, 92);
             ecbPageNumberLocation.Name = "ecbPageNumberLocation";
-            ecbPageNumberLocation.Size = new System.Drawing.Size(382, 38);
+            ecbPageNumberLocation.Size = new System.Drawing.Size(256, 28);
             ecbPageNumberLocation.TabIndex = 36;
             // 
             // nudEndPage
             // 
-            nudEndPage.Location = new System.Drawing.Point(281, 92);
-            nudEndPage.Margin = new System.Windows.Forms.Padding(4);
+            nudEndPage.Location = new System.Drawing.Point(187, 61);
             nudEndPage.Maximum = new decimal(new int[] { 1, 0, 0, int.MinValue });
             nudEndPage.Minimum = new decimal(new int[] { 100, 0, 0, int.MinValue });
             nudEndPage.Name = "nudEndPage";
-            nudEndPage.Size = new System.Drawing.Size(382, 35);
+            nudEndPage.Size = new System.Drawing.Size(255, 27);
             nudEndPage.TabIndex = 35;
             nudEndPage.Value = new decimal(new int[] { 1, 0, 0, int.MinValue });
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(26, 97);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Location = new System.Drawing.Point(17, 65);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(104, 30);
+            label3.Size = new System.Drawing.Size(73, 20);
             label3.TabIndex = 34;
             label3.Text = "End Page:";
             // 
             // nudStartPage
             // 
-            nudStartPage.Location = new System.Drawing.Point(281, 49);
-            nudStartPage.Margin = new System.Windows.Forms.Padding(4);
+            nudStartPage.Location = new System.Drawing.Point(187, 33);
             nudStartPage.Name = "nudStartPage";
-            nudStartPage.Size = new System.Drawing.Size(382, 35);
+            nudStartPage.Size = new System.Drawing.Size(255, 27);
             nudStartPage.TabIndex = 33;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(26, 138);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(18, 95);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(230, 30);
+            label1.Size = new System.Drawing.Size(163, 20);
             label1.TabIndex = 14;
             label1.Text = "Page Number Loaction:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(26, 54);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(17, 36);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(111, 30);
+            label2.Size = new System.Drawing.Size(79, 20);
             label2.TabIndex = 4;
             label2.Text = "Start Page:";
             // 
             // ucPdfPageNumberRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
+            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             Name = "ucPdfPageNumberRenderer";
-            Size = new System.Drawing.Size(698, 209);
+            Size = new System.Drawing.Size(465, 139);
             Load += ucPdfPageNumberRenderer_Load;
             ((System.ComponentModel.ISupportInitialize)epRendererInfo).EndInit();
             gbRendererInfo.ResumeLayout(false);

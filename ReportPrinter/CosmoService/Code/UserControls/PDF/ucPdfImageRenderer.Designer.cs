@@ -45,51 +45,47 @@
             gbRendererInfo.Controls.Add(label1);
             gbRendererInfo.Controls.Add(label2);
             gbRendererInfo.Controls.Add(ecbSourceType);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 259);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 173);
             gbRendererInfo.TabIndex = 5;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
             // 
             // tbImageSource
             // 
-            tbImageSource.Location = new System.Drawing.Point(232, 98);
+            tbImageSource.Location = new System.Drawing.Point(155, 65);
+            tbImageSource.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             tbImageSource.Multiline = true;
             tbImageSource.Name = "tbImageSource";
-            tbImageSource.Size = new System.Drawing.Size(416, 140);
+            tbImageSource.Size = new System.Drawing.Size(279, 95);
             tbImageSource.TabIndex = 15;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(26, 98);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(17, 65);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(145, 30);
+            label1.Size = new System.Drawing.Size(103, 20);
             label1.TabIndex = 14;
             label1.Text = "Image Source:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(26, 54);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(17, 36);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(194, 30);
+            label2.Size = new System.Drawing.Size(89, 20);
             label2.TabIndex = 4;
-            label2.Text = "Image Source Type:";
+            label2.Text = "Image Type:";
             // 
             // ecbSourceType
             // 
             ecbSourceType.EnumType = null;
             ecbSourceType.FormattingEnabled = true;
-            ecbSourceType.Location = new System.Drawing.Point(232, 48);
-            ecbSourceType.Margin = new System.Windows.Forms.Padding(4);
+            ecbSourceType.Location = new System.Drawing.Point(155, 32);
             ecbSourceType.Name = "ecbSourceType";
-            ecbSourceType.Size = new System.Drawing.Size(416, 38);
+            ecbSourceType.Size = new System.Drawing.Size(279, 28);
             ecbSourceType.TabIndex = 5;
             // 
             // epRendererInfo
@@ -98,11 +94,12 @@
             // 
             // ucPdfImageRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
+            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             Name = "ucPdfImageRenderer";
-            Size = new System.Drawing.Size(696, 271);
+            Size = new System.Drawing.Size(464, 181);
             Load += ucPdfImageRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

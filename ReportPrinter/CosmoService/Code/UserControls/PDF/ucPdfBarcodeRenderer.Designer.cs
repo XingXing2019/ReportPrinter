@@ -49,11 +49,9 @@ namespace CosmoService.Code.UserControls.PDF
             gbRendererInfo.Controls.Add(ucSqlSelector);
             gbRendererInfo.Controls.Add(label2);
             gbRendererInfo.Controls.Add(ecbBarcodeFormat);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 259);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 173);
             gbRendererInfo.TabIndex = 4;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
@@ -61,37 +59,36 @@ namespace CosmoService.Code.UserControls.PDF
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(25, 97);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(17, 67);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(192, 30);
+            label1.Size = new System.Drawing.Size(79, 20);
             label1.TabIndex = 14;
-            label1.Text = "Show Barcode Text:";
+            label1.Text = "Show Text:";
             // 
             // cbShowBarcodeText
             // 
             cbShowBarcodeText.AutoSize = true;
-            cbShowBarcodeText.Location = new System.Drawing.Point(232, 105);
+            cbShowBarcodeText.Location = new System.Drawing.Point(155, 70);
+            cbShowBarcodeText.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             cbShowBarcodeText.Name = "cbShowBarcodeText";
-            cbShowBarcodeText.Size = new System.Drawing.Size(22, 21);
+            cbShowBarcodeText.Size = new System.Drawing.Size(18, 17);
             cbShowBarcodeText.TabIndex = 13;
             cbShowBarcodeText.UseVisualStyleBackColor = true;
             // 
             // ucSqlSelector
             // 
-            ucSqlSelector.Location = new System.Drawing.Point(6, 133);
-            ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
+            ucSqlSelector.Location = new System.Drawing.Point(4, 89);
+            ucSqlSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(648, 118);
+            ucSqlSelector.Size = new System.Drawing.Size(432, 79);
             ucSqlSelector.TabIndex = 12;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(25, 53);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(17, 35);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(164, 30);
+            label2.Size = new System.Drawing.Size(118, 20);
             label2.TabIndex = 4;
             label2.Text = "Barcode Format:";
             // 
@@ -99,10 +96,9 @@ namespace CosmoService.Code.UserControls.PDF
             // 
             ecbBarcodeFormat.EnumType = null;
             ecbBarcodeFormat.FormattingEnabled = true;
-            ecbBarcodeFormat.Location = new System.Drawing.Point(232, 48);
-            ecbBarcodeFormat.Margin = new System.Windows.Forms.Padding(4);
+            ecbBarcodeFormat.Location = new System.Drawing.Point(155, 32);
             ecbBarcodeFormat.Name = "ecbBarcodeFormat";
-            ecbBarcodeFormat.Size = new System.Drawing.Size(416, 38);
+            ecbBarcodeFormat.Size = new System.Drawing.Size(279, 28);
             ecbBarcodeFormat.TabIndex = 5;
             // 
             // epRendererInfo
@@ -111,11 +107,12 @@ namespace CosmoService.Code.UserControls.PDF
             // 
             // ucPdfBarcodeRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
+            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             Name = "ucPdfBarcodeRenderer";
-            Size = new System.Drawing.Size(701, 273);
+            Size = new System.Drawing.Size(467, 182);
             Load += ucPdfBarcodeRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

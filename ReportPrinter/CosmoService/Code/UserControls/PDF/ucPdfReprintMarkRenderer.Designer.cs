@@ -50,11 +50,9 @@
             gbRendererInfo.Controls.Add(nudBoardThickness);
             gbRendererInfo.Controls.Add(tbText);
             gbRendererInfo.Controls.Add(label2);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 211);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 141);
             gbRendererInfo.TabIndex = 5;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
@@ -63,29 +61,26 @@
             // 
             ecbReprintMarkLocation.EnumType = null;
             ecbReprintMarkLocation.FormattingEnabled = true;
-            ecbReprintMarkLocation.Location = new System.Drawing.Point(283, 150);
-            ecbReprintMarkLocation.Margin = new System.Windows.Forms.Padding(4);
+            ecbReprintMarkLocation.Location = new System.Drawing.Point(189, 100);
             ecbReprintMarkLocation.Name = "ecbReprintMarkLocation";
-            ecbReprintMarkLocation.Size = new System.Drawing.Size(365, 38);
+            ecbReprintMarkLocation.Size = new System.Drawing.Size(245, 28);
             ecbReprintMarkLocation.TabIndex = 38;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(26, 153);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Location = new System.Drawing.Point(17, 104);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(222, 30);
+            label3.Size = new System.Drawing.Size(158, 20);
             label3.TabIndex = 37;
             label3.Text = "Reprint Mark Loaction:";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(26, 103);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(17, 69);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(167, 30);
+            label1.Size = new System.Drawing.Size(118, 20);
             label1.TabIndex = 32;
             label1.Text = "Board Thickness:";
             // 
@@ -93,27 +88,26 @@
             // 
             nudBoardThickness.DecimalPlaces = 1;
             nudBoardThickness.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudBoardThickness.Location = new System.Drawing.Point(283, 98);
-            nudBoardThickness.Margin = new System.Windows.Forms.Padding(4);
+            nudBoardThickness.Location = new System.Drawing.Point(189, 65);
             nudBoardThickness.Name = "nudBoardThickness";
-            nudBoardThickness.Size = new System.Drawing.Size(365, 35);
+            nudBoardThickness.Size = new System.Drawing.Size(243, 27);
             nudBoardThickness.TabIndex = 31;
             nudBoardThickness.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // tbText
             // 
-            tbText.Location = new System.Drawing.Point(283, 48);
+            tbText.Location = new System.Drawing.Point(189, 32);
+            tbText.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             tbText.Name = "tbText";
-            tbText.Size = new System.Drawing.Size(365, 35);
+            tbText.Size = new System.Drawing.Size(245, 27);
             tbText.TabIndex = 6;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(26, 54);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(17, 36);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(55, 30);
+            label2.Size = new System.Drawing.Size(39, 20);
             label2.TabIndex = 4;
             label2.Text = "Text:";
             // 
@@ -123,11 +117,12 @@
             // 
             // ucPdfReprintMarkRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
+            Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             Name = "ucPdfReprintMarkRenderer";
-            Size = new System.Drawing.Size(698, 222);
+            Size = new System.Drawing.Size(465, 148);
             Load += ucPdfReprintMarkRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

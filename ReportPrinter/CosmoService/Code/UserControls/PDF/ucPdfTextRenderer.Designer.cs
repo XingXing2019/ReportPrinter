@@ -55,75 +55,67 @@
             gbRendererInfo.Controls.Add(lblContent);
             gbRendererInfo.Controls.Add(ecbTextRendererType);
             gbRendererInfo.Controls.Add(label4);
-            gbRendererInfo.Location = new System.Drawing.Point(4, 4);
-            gbRendererInfo.Margin = new System.Windows.Forms.Padding(4);
+            gbRendererInfo.Location = new System.Drawing.Point(3, 3);
             gbRendererInfo.Name = "gbRendererInfo";
-            gbRendererInfo.Padding = new System.Windows.Forms.Padding(4);
-            gbRendererInfo.Size = new System.Drawing.Size(685, 545);
+            gbRendererInfo.Size = new System.Drawing.Size(457, 363);
             gbRendererInfo.TabIndex = 7;
             gbRendererInfo.TabStop = false;
             gbRendererInfo.Text = "Renderer Info";
             // 
             // tbMask
             // 
-            tbMask.Location = new System.Drawing.Point(231, 142);
-            tbMask.Margin = new System.Windows.Forms.Padding(4);
+            tbMask.Location = new System.Drawing.Point(154, 95);
             tbMask.Name = "tbMask";
-            tbMask.Size = new System.Drawing.Size(420, 35);
+            tbMask.Size = new System.Drawing.Size(281, 27);
             tbMask.TabIndex = 45;
             // 
             // lblMask
             // 
             lblMask.AutoSize = true;
-            lblMask.Location = new System.Drawing.Point(28, 147);
-            lblMask.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblMask.Location = new System.Drawing.Point(19, 98);
             lblMask.Name = "lblMask";
-            lblMask.Size = new System.Drawing.Size(67, 30);
+            lblMask.Size = new System.Drawing.Size(46, 20);
             lblMask.TabIndex = 44;
             lblMask.Text = "Mask:";
             // 
             // tbTitle
             // 
-            tbTitle.Location = new System.Drawing.Point(231, 99);
-            tbTitle.Margin = new System.Windows.Forms.Padding(4);
+            tbTitle.Location = new System.Drawing.Point(154, 66);
             tbTitle.Name = "tbTitle";
-            tbTitle.Size = new System.Drawing.Size(420, 35);
+            tbTitle.Size = new System.Drawing.Size(281, 27);
             tbTitle.TabIndex = 43;
             // 
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            lblTitle.Location = new System.Drawing.Point(28, 104);
-            lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblTitle.Location = new System.Drawing.Point(19, 69);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new System.Drawing.Size(57, 30);
+            lblTitle.Size = new System.Drawing.Size(41, 20);
             lblTitle.TabIndex = 42;
             lblTitle.Text = "Title:";
             // 
             // ucSqlSelector
             // 
-            ucSqlSelector.Location = new System.Drawing.Point(10, 180);
-            ucSqlSelector.Margin = new System.Windows.Forms.Padding(6);
+            ucSqlSelector.Location = new System.Drawing.Point(7, 120);
+            ucSqlSelector.Margin = new System.Windows.Forms.Padding(4);
             ucSqlSelector.Name = "ucSqlSelector";
-            ucSqlSelector.Size = new System.Drawing.Size(644, 111);
+            ucSqlSelector.Size = new System.Drawing.Size(429, 74);
             ucSqlSelector.TabIndex = 41;
             // 
             // tbContent
             // 
-            tbContent.Location = new System.Drawing.Point(233, 307);
-            tbContent.Margin = new System.Windows.Forms.Padding(4);
+            tbContent.Location = new System.Drawing.Point(154, 205);
             tbContent.Multiline = true;
             tbContent.Name = "tbContent";
-            tbContent.Size = new System.Drawing.Size(418, 213);
+            tbContent.Size = new System.Drawing.Size(282, 143);
             tbContent.TabIndex = 40;
             // 
             // lblContent
             // 
             lblContent.AutoSize = true;
-            lblContent.Location = new System.Drawing.Point(28, 317);
-            lblContent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblContent.Location = new System.Drawing.Point(19, 211);
             lblContent.Name = "lblContent";
-            lblContent.Size = new System.Drawing.Size(92, 30);
+            lblContent.Size = new System.Drawing.Size(64, 20);
             lblContent.TabIndex = 39;
             lblContent.Text = "Content:";
             // 
@@ -131,22 +123,20 @@
             // 
             ecbTextRendererType.EnumType = null;
             ecbTextRendererType.FormattingEnabled = true;
-            ecbTextRendererType.Location = new System.Drawing.Point(231, 51);
-            ecbTextRendererType.Margin = new System.Windows.Forms.Padding(4);
+            ecbTextRendererType.Location = new System.Drawing.Point(154, 34);
             ecbTextRendererType.Name = "ecbTextRendererType";
-            ecbTextRendererType.Size = new System.Drawing.Size(420, 38);
+            ecbTextRendererType.Size = new System.Drawing.Size(281, 28);
             ecbTextRendererType.TabIndex = 38;
             ecbTextRendererType.SelectedIndexChanged += ecbTextRendererType_SelectedIndexChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(28, 53);
-            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Location = new System.Drawing.Point(19, 37);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(193, 30);
+            label4.Size = new System.Drawing.Size(74, 20);
             label4.TabIndex = 37;
-            label4.Text = "Text Renderer Type:";
+            label4.Text = "Text Type:";
             // 
             // epRendererInfo
             // 
@@ -154,11 +144,12 @@
             // 
             // ucPdfTextRenderer
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(gbRendererInfo);
+            Margin = new System.Windows.Forms.Padding(2);
             Name = "ucPdfTextRenderer";
-            Size = new System.Drawing.Size(696, 552);
+            Size = new System.Drawing.Size(464, 368);
             Load += ucPdfTextRenderer_Load;
             gbRendererInfo.ResumeLayout(false);
             gbRendererInfo.PerformLayout();

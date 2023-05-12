@@ -76,10 +76,10 @@ namespace CosmoService.Code.UserControls.PDF
                 ucSqlSelector.Visible = false;
                 lblContent.Visible = tbContent.Visible = true;
 
-                tbContent.Location = new Point(232, 215);
-                lblContent.Location = new Point(24, 215);
-                gbRendererInfo.Height = 525;
-                Height = 530;
+                tbContent.Location = new Point(155, 145);
+                lblContent.Location = new Point(16, 145);
+                gbRendererInfo.Height = 355;
+                Height = 360;
             }
         }
 
